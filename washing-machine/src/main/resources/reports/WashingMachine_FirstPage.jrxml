@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="WashingMachine_FirstPage" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="95d78610-7fd0-4fc9-9e1b-33a5291603d6">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.report.description" value=""/>
+	<style name="RecommendationText">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$P{recommendation}.equals("DISASSEMBLE")]]></conditionExpression>
+			<style forecolor="#FFFFFF"/>
+		</conditionalStyle>
+	</style>
+	<style name="RecommendationBackground">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$P{recommendation}.equals( "DISASSEMBLE" )]]></conditionExpression>
+			<style backcolor="#FA5252"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$P{recommendation}.equals( "REPAIR" )]]></conditionExpression>
+			<style backcolor="#FFA94D"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$P{recommendation}.equals( "REPACKAGE" )]]></conditionExpression>
+			<style backcolor="#A5D8FF"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$P{recommendation}.equals( "RESALE" )]]></conditionExpression>
+			<style backcolor="#C0EB75"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="hephaestusLogo" class="java.io.InputStream" isForPrompting="false"/>
+	<parameter name="HARServicesLogo" class="java.io.InputStream" isForPrompting="false"/>
+	<parameter name="damageLevel" class="java.lang.Integer"/>
+	<parameter name="createdAt" class="java.lang.String"/>
+	<parameter name="category" class="java.lang.String"/>
+	<parameter name="manufacturer" class="java.lang.String"/>
+	<parameter name="serialNumber" class="java.lang.String"/>
+	<parameter name="model" class="java.lang.String"/>
+	<parameter name="type" class="java.lang.String"/>
+	<parameter name="damageType" class="java.lang.String"/>
+	<parameter name="returnType" class="java.lang.String"/>
+	<parameter name="identificationMode" class="java.lang.String"/>
+	<parameter name="image01" class="java.io.InputStream" isForPrompting="false"/>
+	<parameter name="image02" class="java.io.InputStream" isForPrompting="false"/>
+	<parameter name="image03" class="java.io.InputStream" isForPrompting="false"/>
+	<parameter name="recommendation" class="java.lang.String"/>
+	<parameter name="secondPage" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="secondPageParameters" class="java.util.Map"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="60" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="60" backcolor="#D0EBFF" uuid="5c56b46f-5a26-44ab-a0ea-8700e7b0053b"/>
+				<staticText>
+					<reportElement x="154" y="0" width="246" height="60" uuid="a3b184ef-7890-40e1-8e97-44db1614f13a"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="DejaVu Sans" size="16" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Household Appliance Recommendation Services]]></text>
+				</staticText>
+				<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle">
+					<reportElement x="10" y="10" width="130" height="40" isRemoveLineWhenBlank="true" uuid="a67a75f2-1f34-4302-9bc2-42ab9db8e219">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<imageExpression><![CDATA[$P{hephaestusLogo}]]></imageExpression>
+				</image>
+				<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle">
+					<reportElement x="441" y="10" width="80" height="40" isRemoveLineWhenBlank="true" uuid="f88a4130-4bb7-4598-b8f0-57aaca5379c9">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<imageExpression><![CDATA[$P{HARServicesLogo}]]></imageExpression>
+				</image>
+			</frame>
+		</band>
+	</title>
+	<detail>
+		<band height="705" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="0" y="10" width="555" height="25" uuid="e0ae9525-a29e-49d0-bf45-6fd6f5255ed9">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Overview]]></text>
+			</staticText>
+			<rectangle radius="0">
+				<reportElement mode="Opaque" x="0" y="0" width="130" height="10" backcolor="#6FA889" uuid="33a79442-5e32-4a3f-af28-390a2fa65fa4">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[false]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0" lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle radius="0">
+				<reportElement mode="Opaque" x="0" y="35" width="130" height="10" backcolor="#6FA889" uuid="235aa44e-16cf-45bd-9ce1-af4b8b273606">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[false]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0" lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+			<frame>
+				<reportElement x="0" y="45" width="555" height="141" uuid="18289557-59a5-4599-993b-72a26ef0acd4"/>
+				<staticText>
+					<reportElement x="0" y="0" width="555" height="25" uuid="cb9041e1-b68c-4680-9c5d-a0e2dd408299">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box bottomPadding="0">
+						<pen lineColor="#2121FF"/>
+						<bottomPen lineWidth="1.5"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="DejaVu Sans" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Recommendation]]></text>
+				</staticText>
+				<rectangle radius="0">
+					<reportElement mode="Opaque" x="0" y="25" width="220" height="15" backcolor="#FAB855" uuid="b2306967-47d6-426b-858f-e2648323f27e">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<printWhenExpression><![CDATA[false]]></printWhenExpression>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0" lineStyle="Solid"/>
+					</graphicElement>
+				</rectangle>
+				<textField>
+					<reportElement x="0" y="91" width="280" height="25" uuid="364c2d2b-7181-47fd-9ed2-f94446231bdf"/>
+					<textElement verticalAlignment="Top">
+						<font fontName="DejaVu Sans" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Damage Level: "+$P{damageLevel}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="116" width="280" height="25" uuid="2574c3be-2df8-4c7f-8d1d-e8de60d000c9">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement verticalAlignment="Top">
+						<font fontName="DejaVu Sans" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Created: "+$P{createdAt}]]></textFieldExpression>
+				</textField>
+				<rectangle radius="18">
+					<reportElement style="RecommendationBackground" x="192" y="40" width="170" height="36" uuid="a0fc7150-7e4f-4cbd-9317-8467936c985e">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<textField>
+					<reportElement style="RecommendationText" x="177" y="43" width="200" height="30" uuid="f6562106-a50f-4f4a-8d7e-9805dec3bbe4">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="DejaVu Sans" size="20"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{recommendation}]]></textFieldExpression>
+				</textField>
+				<rectangle radius="0">
+					<reportElement mode="Opaque" x="0" y="76" width="220" height="15" backcolor="#FAB855" uuid="3a750c67-5f8f-44d7-8752-109dda08293a">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<printWhenExpression><![CDATA[false]]></printWhenExpression>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0" lineStyle="Solid"/>
+					</graphicElement>
+				</rectangle>
+			</frame>
+			<rectangle radius="0">
+				<reportElement mode="Opaque" x="0" y="186" width="130" height="10" backcolor="#6FA889" uuid="f30a666e-6c97-42fa-8f9d-53c7f1c04182">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[false]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0" lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+			<frame>
+				<reportElement x="0" y="196" width="555" height="165" uuid="d7098bc1-dfc3-45fa-90de-7124b28d9e93"/>
+				<staticText>
+					<reportElement x="0" y="0" width="555" height="25" uuid="ae42f85b-fe9f-45db-90e2-251d3a608d85">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box bottomPadding="0">
+						<pen lineColor="#2121FF"/>
+						<bottomPen lineWidth="1.5"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="DejaVu Sans" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Product Information]]></text>
+				</staticText>
+				<rectangle radius="0">
+					<reportElement mode="Opaque" x="0" y="25" width="220" height="15" backcolor="#FAB855" uuid="4f7f53a4-3f5b-403a-b75c-b36a36ebeb38">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<printWhenExpression><![CDATA[false]]></printWhenExpression>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0" lineStyle="Solid"/>
+					</graphicElement>
+				</rectangle>
+				<textField>
+					<reportElement x="0" y="40" width="280" height="25" uuid="54afba8e-ede8-48ab-ac22-cfadbe9be6c6">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement verticalAlignment="Top">
+						<font fontName="DejaVu Sans" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Category: "+$P{category}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="65" width="280" height="25" uuid="e50ba75b-a0a2-40b0-ba1d-517300d349a8"/>
+					<textElement verticalAlignment="Top">
+						<font fontName="DejaVu Sans" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Manufacturer: "+$P{manufacturer}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="90" width="280" height="25" uuid="3967f82b-3f68-4236-926d-2b32ea89bc13"/>
+					<textElement verticalAlignment="Top">
+						<font fontName="DejaVu Sans" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Serial Number: "+$P{serialNumber}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="115" width="280" height="25" uuid="b7e7c5be-1a9b-47df-a9b7-1dfe04cc63f2"/>
+					<textElement verticalAlignment="Top">
+						<font fontName="DejaVu Sans" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Model: "+$P{model}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="140" width="280" height="25" uuid="31af5273-90c3-4377-88d6-87d3cbbff754"/>
+					<textElement verticalAlignment="Top">
+						<font fontName="DejaVu Sans" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Type: "+$P{type}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<rectangle radius="0">
+				<reportElement mode="Opaque" x="0" y="361" width="130" height="10" backcolor="#6FA889" uuid="cec04cb1-88ce-44b4-9349-086047540d88">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[false]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0" lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+			<frame>
+				<reportElement x="0" y="371" width="555" height="115" uuid="b378e9ae-5344-47b9-8dc2-d4d4aaf55eae"/>
+				<staticText>
+					<reportElement x="0" y="0" width="555" height="25" uuid="8a6dc5ec-4195-45fc-8885-2a5812b3137b">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box bottomPadding="0">
+						<pen lineColor="#2121FF"/>
+						<bottomPen lineWidth="1.5"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="DejaVu Sans" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Damage Type and Identification Mode]]></text>
+				</staticText>
+				<rectangle radius="0">
+					<reportElement mode="Opaque" x="0" y="25" width="220" height="15" backcolor="#FAB855" uuid="c1c5a8ab-f49e-45a7-8975-8924c9072a5a">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<printWhenExpression><![CDATA[false]]></printWhenExpression>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0" lineStyle="Solid"/>
+					</graphicElement>
+				</rectangle>
+				<textField>
+					<reportElement x="0" y="40" width="280" height="25" uuid="13e0a5ed-5574-4fd2-9c6f-651c8be152c9"/>
+					<textElement verticalAlignment="Top">
+						<font fontName="DejaVu Sans" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Damage Type: "+$P{damageType}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="65" width="280" height="25" uuid="75357a1e-e17e-4c67-ae8c-46b6d3ca5755"/>
+					<textElement verticalAlignment="Top">
+						<font fontName="DejaVu Sans" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Return Type: "+$P{returnType}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="90" width="280" height="25" uuid="b3efed1e-445a-461f-908b-aa71c2e32c90">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement verticalAlignment="Top">
+						<font fontName="DejaVu Sans" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Identification Mode: "+$P{identificationMode}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement x="0" y="496" width="555" height="130" uuid="a19d93eb-5c8e-4d07-ac7c-ed25f4d8c6d6"/>
+				<rectangle radius="0">
+					<reportElement mode="Opaque" x="0" y="25" width="220" height="15" backcolor="#FAB855" uuid="342609ca-1a3f-4052-b61f-f4ab61b6253b">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<printWhenExpression><![CDATA[false]]></printWhenExpression>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0" lineStyle="Solid"/>
+					</graphicElement>
+				</rectangle>
+				<staticText>
+					<reportElement x="0" y="0" width="555" height="25" uuid="a9073bf1-9b15-4b04-98fd-9d7107ba338c">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box bottomPadding="0">
+						<pen lineColor="#2121FF"/>
+						<bottomPen lineWidth="1.5"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="DejaVu Sans" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Damaged Product Images]]></text>
+				</staticText>
+				<image scaleImage="FillFrame" onErrorType="Blank">
+					<reportElement x="0" y="40" width="180" height="90" uuid="845b73c2-a6f5-4441-bbff-bdb9cf6a34d4">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<imageExpression><![CDATA[$P{image01}]]></imageExpression>
+				</image>
+				<image scaleImage="FillFrame" onErrorType="Blank">
+					<reportElement x="375" y="40" width="180" height="90" uuid="3eace86a-f5b0-4a7f-b72f-61bc67a08223">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<imageExpression><![CDATA[$P{image03}]]></imageExpression>
+				</image>
+				<image scaleImage="FillFrame" onErrorType="Blank">
+					<reportElement x="187" y="40" width="180" height="90" uuid="b5d96fcb-55e8-4a9a-9249-db35d5a41c94">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<imageExpression><![CDATA[$P{image02}]]></imageExpression>
+				</image>
+			</frame>
+			<rectangle radius="0">
+				<reportElement mode="Opaque" x="0" y="486" width="130" height="10" backcolor="#6FA889" uuid="155ccf28-07a8-4b59-a5ff-ad61e8b41960">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[false]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0" lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+		</band>
+		<band height="20">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="20" uuid="a1495941-a073-4e3e-bdec-38d99de7aea2"/>
+				<parametersMapExpression><![CDATA[$P{secondPageParameters}]]></parametersMapExpression>
+				<dataSourceExpression><![CDATA[new JREmptyDataSource()]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{secondPage}]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="15" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="15" backcolor="#E7F5FF" uuid="6b85ed3e-a1b7-4a9e-a981-2e076d4dd394"/>
+				<textField>
+					<reportElement x="480" y="0" width="40" height="15" uuid="5c3f4e2b-770d-49de-be03-c8684e055b1b">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font fontName="DejaVu Serif"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Report">
+					<reportElement x="520" y="0" width="35" height="15" uuid="b760a99c-e98f-48d3-9832-67bb442a6dd5">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Left">
+						<font fontName="DejaVu Serif"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" of " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+</jasperReport>

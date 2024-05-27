@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="WashingMachine_SecondPage" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="95d78610-7fd0-4fc9-9e1b-33a5291603d6">
+	<parameter name="applicablePackageDamage" class="java.lang.Boolean"/>
+	<parameter name="packageDamaged" class="java.lang.Boolean"/>
+	<parameter name="packageDirty" class="java.lang.Boolean"/>
+	<parameter name="packageMaterialAvailable" class="java.lang.Boolean"/>
+	<parameter name="applicableVisibleSurfacesDamage" class="java.lang.Boolean"/>
+	<parameter name="visibleSurfacesHasScratches" class="java.lang.Boolean"/>
+	<parameter name="visibleSurfacesScratchesLength" class="java.lang.Double"/>
+	<parameter name="visibleSurfacesHasDents" class="java.lang.Boolean"/>
+	<parameter name="visibleSurfacesDentsDepth" class="java.lang.Double"/>
+	<parameter name="visibleSurfacesHasSmallDamage" class="java.lang.Boolean"/>
+	<parameter name="visibleSurfacesSmallDamage" class="java.lang.String"/>
+	<parameter name="visibleSurfacesHasBigDamage" class="java.lang.Boolean"/>
+	<parameter name="visibleSurfacesBigDamage" class="java.lang.String"/>
+	<parameter name="applicableHiddenSurfacesDamage" class="java.lang.Boolean"/>
+	<parameter name="hiddenSurfacesHasScratches" class="java.lang.Boolean"/>
+	<parameter name="hiddenSurfacesScratchesLength" class="java.lang.Double"/>
+	<parameter name="hiddenSurfacesHasDents" class="java.lang.Boolean"/>
+	<parameter name="hiddenSurfacesDentsDepth" class="java.lang.Double"/>
+	<parameter name="hiddenSurfacesHasSmallDamage" class="java.lang.Boolean"/>
+	<parameter name="hiddenSurfacesSmallDamage" class="java.lang.String"/>
+	<parameter name="hiddenSurfacesHasBigDamage" class="java.lang.Boolean"/>
+	<parameter name="hiddenSurfacesBigDamage" class="java.lang.String"/>
+	<parameter name="price" class="java.lang.Integer"/>
+	<parameter name="repairPrice" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<detail>
+		<band height="598" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="25" uuid="ae42f85b-fe9f-45db-90e2-251d3a608d85">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box bottomPadding="0">
+					<pen lineColor="#2121FF"/>
+					<bottomPen lineWidth="1.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Damages]]></text>
+			</staticText>
+			<rectangle radius="0">
+				<reportElement mode="Opaque" x="0" y="25" width="220" height="15" backcolor="#FAB855" uuid="27ef9523-4eb2-4fcf-a3a9-39e1ec2d2fcc">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[false]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0" lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+			<frame>
+				<reportElement positionType="Float" x="0" y="40" width="555" height="100" isRemoveLineWhenBlank="true" uuid="d7098bc1-dfc3-45fa-90de-7124b28d9e93">
+					<printWhenExpression><![CDATA[$P{applicablePackageDamage}]]></printWhenExpression>
+				</reportElement>
+				<staticText>
+					<reportElement x="0" y="0" width="100" height="20" uuid="e3847b77-c71d-4af3-9ff2-51e0e932d0a5">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="DejaVu Sans" size="12" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Package]]></text>
+				</staticText>
+				<rectangle radius="0">
+					<reportElement mode="Opaque" x="0" y="20" width="130" height="10" backcolor="#6FA889" uuid="0fa8b994-6659-43ad-9e63-e42579e5e492">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<printWhenExpression><![CDATA[false]]></printWhenExpression>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0" lineStyle="Solid"/>
+					</graphicElement>
+				</rectangle>
+				<textField>
+					<reportElement positionType="Float" x="20" y="30" width="280" height="20" isRemoveLineWhenBlank="true" uuid="e50ba75b-a0a2-40b0-ba1d-517300d349a8">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<printWhenExpression><![CDATA[$P{packageDamaged}]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Top">
+						<font fontName="DejaVu Sans" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA["\u2022 Damaged Package"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement positionType="Float" x="20" y="50" width="280" height="20" isRemoveLineWhenBlank="true" uuid="3967f82b-3f68-4236-926d-2b32ea89bc13">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<printWhenExpression><![CDATA[$P{packageDirty}]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Top">
+						<font fontName="DejaVu Sans" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA["\u2022 Dirty Package"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement positionType="Float" x="20" y="70" width="280" height="20" isRemoveLineWhenBlank="true" uuid="b7e7c5be-1a9b-47df-a9b7-1dfe04cc63f2">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<printWhenExpression><![CDATA[$P{packageMaterialAvailable}]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Top">
+						<font fontName="DejaVu Sans" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA["\u2022 Package Material Available"]]></textFieldExpression>
+				</textField>
+				<rectangle radius="0">
+					<reportElement mode="Opaque" x="0" y="90" width="130" height="10" backcolor="#6FA889" uuid="cec04cb1-88ce-44b4-9349-086047540d88">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<printWhenExpression><![CDATA[false]]></printWhenExpression>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0" lineStyle="Solid"/>
+					</graphicElement>
+				</rectangle>
+			</frame>
+			<frame>
+				<reportElement positionType="Float" x="0" y="140" width="555" height="120" isRemoveLineWhenBlank="true" uuid="a1337cb6-a2a7-43e3-9e7a-1118abe5778d">
+					<printWhenExpression><![CDATA[$P{applicableVisibleSurfacesDamage}]]></printWhenExpression>
+				</reportElement>
+				<staticText>
+					<reportElement x="0" y="0" width="100" height="20" uuid="87805320-9cf5-4821-b800-f5a55bbbdf1b">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="DejaVu Sans" size="12" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Visible Surfaces]]></text>
+				</staticText>
+				<rectangle radius="0">
+					<reportElement mode="Opaque" x="0" y="20" width="130" height="10" backcolor="#6FA889" uuid="41862a45-3d99-4b21-a283-afa952500726">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<printWhenExpression><![CDATA[false]]></printWhenExpression>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0" lineStyle="Solid"/>
+					</graphicElement>
+				</rectangle>
+				<textField>
+					<reportElement positionType="Float" x="20" y="30" width="280" height="20" isRemoveLineWhenBlank="true" uuid="3c3837d7-3152-4c80-abd2-925498a25d6c">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<printWhenExpression><![CDATA[$P{visibleSurfacesHasScratches}]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Top">
+						<font fontName="DejaVu Sans" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA["\u2022 Scratches length: "
++(new java.text.DecimalFormat("#.##").format($P{visibleSurfacesScratchesLength}))
++" cm"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement positionType="Float" x="20" y="50" width="280" height="20" isRemoveLineWhenBlank="true" uuid="56403094-f845-44f3-bdf4-043c04682a4d">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<printWhenExpression><![CDATA[$P{visibleSurfacesHasDents}]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Top">
+						<font fontName="DejaVu Sans" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA["\u2022 Dents depth: "
++(new java.text.DecimalFormat("#.##").format($P{visibleSurfacesDentsDepth}))
++" cm"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement positionType="Float" x="20" y="70" width="115" height="20" isRemoveLineWhenBlank="true" uuid="77766dec-ba96-4126-84fa-a36a464290b6">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<printWhenExpression><![CDATA[$P{visibleSurfacesHasSmallDamage}]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Top">
+						<font fontName="DejaVu Sans" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA["\u2022 Small Damages: "+$P{visibleSurfacesSmallDamage}]]></textFieldExpression>
+				</textField>
+				<rectangle radius="0">
+					<reportElement mode="Opaque" x="0" y="110" width="130" height="10" backcolor="#6FA889" uuid="3823108c-05be-40a0-9abc-6f477f7d8097">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<printWhenExpression><![CDATA[false]]></printWhenExpression>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0" lineStyle="Solid"/>
+					</graphicElement>
+				</rectangle>
+				<textField textAdjust="StretchHeight">
+					<reportElement positionType="Float" x="135" y="70" width="420" height="20" isRemoveLineWhenBlank="true" uuid="6c6f77cb-9599-4fba-9393-768cbcbcaeed">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<printWhenExpression><![CDATA[$P{visibleSurfacesHasSmallDamage}]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Top">
+						<font fontName="DejaVu Sans" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{visibleSurfacesSmallDamage}]]></textFieldExpression>
+				</textField>
+				<frame>
+					<reportElement positionType="Float" x="20" y="90" width="535" height="20" isRemoveLineWhenBlank="true" uuid="a86b78bf-10cb-4996-8da3-aa09bb5dd431">
+						<printWhenExpression><![CDATA[$P{visibleSurfacesHasBigDamage}]]></printWhenExpression>
+					</reportElement>
+					<textField>
+						<reportElement positionType="Float" x="0" y="0" width="100" height="20" isRemoveLineWhenBlank="true" uuid="48618b71-aa45-490c-baae-96271c5b2240">
+							<property name="com.jaspersoft.studio.unit.x" value="px"/>
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<printWhenExpression><![CDATA[$P{visibleSurfacesHasBigDamage}]]></printWhenExpression>
+						</reportElement>
+						<textElement verticalAlignment="Top">
+							<font fontName="DejaVu Sans" size="12"/>
+						</textElement>
+						<textFieldExpression><![CDATA["\u2022 Big Damages: "]]></textFieldExpression>
+					</textField>
+					<textField textAdjust="StretchHeight">
+						<reportElement positionType="Float" x="100" y="0" width="435" height="20" isRemoveLineWhenBlank="true" uuid="ab8871de-42da-465e-aafa-4d78f84d3794">
+							<property name="com.jaspersoft.studio.unit.x" value="px"/>
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<printWhenExpression><![CDATA[$P{visibleSurfacesHasBigDamage}]]></printWhenExpression>
+						</reportElement>
+						<textElement verticalAlignment="Top">
+							<font fontName="DejaVu Sans" size="12"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$P{visibleSurfacesBigDamage}]]></textFieldExpression>
+					</textField>
+				</frame>
+			</frame>
+			<frame>
+				<reportElement positionType="Float" x="0" y="260" width="555" height="120" isRemoveLineWhenBlank="true" uuid="9d4fd192-138b-4a32-8bd1-4f0b10043d17">
+					<printWhenExpression><![CDATA[$P{applicableHiddenSurfacesDamage}]]></printWhenExpression>
+				</reportElement>
+				<staticText>
+					<reportElement x="0" y="0" width="100" height="20" uuid="48bd31a3-7287-43e4-911b-bccd2983eefb">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="DejaVu Sans" size="12" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Hidden Surfaces]]></text>
+				</staticText>
+				<rectangle radius="0">
+					<reportElement mode="Opaque" x="0" y="20" width="130" height="10" backcolor="#6FA889" uuid="636e7670-60a6-411a-bbf9-51fc49468845">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<printWhenExpression><![CDATA[false]]></printWhenExpression>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0" lineStyle="Solid"/>
+					</graphicElement>
+				</rectangle>
+				<textField>
+					<reportElement positionType="Float" x="20" y="30" width="280" height="20" isRemoveLineWhenBlank="true" uuid="10efc05a-7d33-4673-8773-8bc540b6e609">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<printWhenExpression><![CDATA[$P{hiddenSurfacesHasScratches}]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Top">
+						<font fontName="DejaVu Sans" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA["\u2022 Scratches length: "
++(new java.text.DecimalFormat("#.##").format($P{hiddenSurfacesScratchesLength}))
++" cm"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement positionType="Float" x="20" y="50" width="280" height="20" isRemoveLineWhenBlank="true" uuid="64c79182-5b0d-411c-80f5-34d9dadce875">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<printWhenExpression><![CDATA[$P{hiddenSurfacesHasDents}]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Top">
+						<font fontName="DejaVu Sans" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA["\u2022 Dents depth: "
++(new java.text.DecimalFormat("#.##").format($P{hiddenSurfacesDentsDepth}))
++" cm"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement positionType="Float" x="20" y="70" width="115" height="20" isRemoveLineWhenBlank="true" uuid="fbdab9e2-67ab-4262-a5dd-7b019d41ab8e">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<printWhenExpression><![CDATA[$P{hiddenSurfacesHasSmallDamage}]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Top">
+						<font fontName="DejaVu Sans" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA["\u2022 Small Damages: "]]></textFieldExpression>
+				</textField>
+				<rectangle radius="0">
+					<reportElement mode="Opaque" x="0" y="110" width="130" height="10" backcolor="#6FA889" uuid="a746244b-3442-47c5-81f6-2f10fb09f30d">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<printWhenExpression><![CDATA[false]]></printWhenExpression>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.0" lineStyle="Solid"/>
+					</graphicElement>
+				</rectangle>
+				<frame>
+					<reportElement positionType="Float" x="20" y="90" width="535" height="20" isRemoveLineWhenBlank="true" uuid="9abd4671-ea9b-46ad-b8e2-9b335caa35da">
+						<printWhenExpression><![CDATA[$P{hiddenSurfacesHasBigDamage}]]></printWhenExpression>
+					</reportElement>
+					<box bottomPadding="0"/>
+					<textField>
+						<reportElement positionType="Float" x="0" y="0" width="100" height="20" isRemoveLineWhenBlank="true" uuid="270a0dc0-5014-4d49-9ece-cff752414319">
+							<property name="com.jaspersoft.studio.unit.x" value="px"/>
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<printWhenExpression><![CDATA[$P{hiddenSurfacesHasBigDamage}]]></printWhenExpression>
+						</reportElement>
+						<textElement verticalAlignment="Top">
+							<font fontName="DejaVu Sans" size="12"/>
+						</textElement>
+						<textFieldExpression><![CDATA["\u2022 Big Damages: "]]></textFieldExpression>
+					</textField>
+					<textField textAdjust="StretchHeight">
+						<reportElement positionType="Float" x="100" y="0" width="435" height="20" isRemoveLineWhenBlank="true" uuid="f9aa68c8-999a-4493-a04b-0ccab3e9d2e9">
+							<property name="com.jaspersoft.studio.unit.x" value="px"/>
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<printWhenExpression><![CDATA[$P{hiddenSurfacesHasBigDamage}]]></printWhenExpression>
+						</reportElement>
+						<textElement verticalAlignment="Top">
+							<font fontName="DejaVu Sans" size="12"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$P{hiddenSurfacesBigDamage}]]></textFieldExpression>
+					</textField>
+				</frame>
+				<textField textAdjust="StretchHeight">
+					<reportElement positionType="Float" x="135" y="70" width="420" height="20" isRemoveLineWhenBlank="true" uuid="acc6188f-5474-4963-96f8-038c62e4020a">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<printWhenExpression><![CDATA[$P{hiddenSurfacesHasSmallDamage}]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Top">
+						<font fontName="DejaVu Sans" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{hiddenSurfacesSmallDamage}]]></textFieldExpression>
+				</textField>
+				<frame>
+					<reportElement positionType="Float" x="0" y="120" width="555" height="70" isRemoveLineWhenBlank="true" uuid="efba423a-4992-48f8-8482-5dcf654664e7">
+						<printWhenExpression><![CDATA[$P{price} > 0 && $P{repairPrice}>0]]></printWhenExpression>
+					</reportElement>
+					<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0"/>
+					<staticText>
+						<reportElement x="0" y="0" width="100" height="20" uuid="bcb940c5-ddcd-4acb-8a73-262363836cbb">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						</reportElement>
+						<textElement textAlignment="Left" verticalAlignment="Middle">
+							<font fontName="DejaVu Sans" size="12" isBold="false"/>
+						</textElement>
+						<text><![CDATA[Pricing]]></text>
+					</staticText>
+					<rectangle radius="0">
+						<reportElement mode="Opaque" x="0" y="20" width="130" height="10" backcolor="#6FA889" uuid="4199b65a-abcf-4e4d-97ba-ebdb8d834441">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<printWhenExpression><![CDATA[false]]></printWhenExpression>
+						</reportElement>
+						<graphicElement>
+							<pen lineWidth="0.0" lineStyle="Solid"/>
+						</graphicElement>
+					</rectangle>
+					<textField>
+						<reportElement positionType="Float" x="20" y="30" width="280" height="20" uuid="57b984a3-cc62-4b15-913f-b0924c3d87df">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						</reportElement>
+						<textElement verticalAlignment="Top">
+							<font fontName="DejaVu Sans" size="12"/>
+						</textElement>
+						<textFieldExpression><![CDATA["\u2022 Product price: "
++ $P{price}
++" €"]]></textFieldExpression>
+					</textField>
+					<textField>
+						<reportElement positionType="Float" x="20" y="50" width="280" height="20" uuid="d15e9c93-f8b0-44b1-a6b2-0f7697fd1d23">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						</reportElement>
+						<textElement verticalAlignment="Top">
+							<font fontName="DejaVu Sans" size="12"/>
+						</textElement>
+						<textFieldExpression><![CDATA["\u2022 Repair price: "
++ $P{repairPrice}
++" €"]]></textFieldExpression>
+					</textField>
+				</frame>
+			</frame>
+		</band>
+	</detail>
+</jasperReport>
