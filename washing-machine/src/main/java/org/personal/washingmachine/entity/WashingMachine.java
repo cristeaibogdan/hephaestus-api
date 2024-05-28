@@ -1,6 +1,5 @@
 package org.personal.washingmachine.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -61,20 +60,13 @@ public class WashingMachine extends BaseEntity {
     private LocalDateTime createdAt;
 
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "washing_machine_details_id")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private WashingMachineDetails washingMachineDetails;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "washingMachine", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "washing_machine_id")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<WashingMachineImage> washingMachineImages = new ArrayList<>();
-
-    public void setWashingMachineImages(List<WashingMachineImage> washingMachineImages) {
-        washingMachineImages.forEach(image -> {
-            image.setWashingMachine(this);
-            this.washingMachineImages.add(image);
-        });
-    }
 
     public WashingMachineDTO toWashingMachineDTO() {
         return new WashingMachineDTO(

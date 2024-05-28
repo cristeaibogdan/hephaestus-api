@@ -1,12 +1,13 @@
 package org.personal.washingmachine.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.personal.washingmachine.entity.dtos.WashingMachineImageDTO;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 import static lombok.AccessLevel.PROTECTED;
 
@@ -22,11 +23,6 @@ public class WashingMachineImage extends BaseEntity {
 
     @Column(name = "image")
     private byte[] image;
-
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "washing_machine_id")
-    private WashingMachine washingMachine;
 
     public WashingMachineImage(String imagePrefix, byte[] image) {
         this.imagePrefix = imagePrefix;
