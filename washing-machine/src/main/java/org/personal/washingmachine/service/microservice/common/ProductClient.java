@@ -1,7 +1,7 @@
 package org.personal.washingmachine.service.microservice.common;
 
 import org.personal.washingmachine.entity.dtos.ProductModelTypeDTO;
-import org.personal.washingmachine.service.microservice.FeignClientConfiguration;
+import org.personal.washingmachine.service.microservice.CustomErrorDecoder;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,7 +10,7 @@ import java.util.List;
 
 @FeignClient(
         value = "PRODUCT",
-        configuration = FeignClientConfiguration.class,
+        configuration = CustomErrorDecoder.class,
         url = "http://localhost:8081/products"
 )
 public interface ProductClient {
