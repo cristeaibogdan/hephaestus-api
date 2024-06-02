@@ -7,6 +7,8 @@ import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineDetails;
 import org.personal.washingmachine.entity.WashingMachineImage;
 import org.personal.washingmachine.entity.dtos.WashingMachineReportDTO;
+import org.personal.washingmachine.exception.CustomException;
+import org.personal.washingmachine.exception.ErrorCode;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
@@ -22,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class ReportGenerator {
 
-    public Optional<WashingMachineReportDTO> getWashingMachineReport(WashingMachine washingMachine) {
+    public WashingMachineReportDTO getWashingMachineReport(WashingMachine washingMachine) {
         try {
             StopWatch stopWatch = StopWatch.createStarted();
 
@@ -98,15 +100,12 @@ public class ReportGenerator {
                     + stopWatch.getTime(TimeUnit.MILLISECONDS) + "(milliseconds)");
 
             // 5. Export report
-            return Optional.of(
-                    new WashingMachineReportDTO(
+            return new WashingMachineReportDTO(
                             JasperExportManager.exportReportToPdf(print),
-                            washingMachine.getCreatedAt().toString()
-                    ));
+                            washingMachine.getCreatedAt().toString());
 
         } catch (JRException e) {
-            log.error("Error generating report " + e);
-            return Optional.empty();
+            throw new CustomException(e, ErrorCode.E_1011, "Exception while creating Jasper report");
         }
     }
 

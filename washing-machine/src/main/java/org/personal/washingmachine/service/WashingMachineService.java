@@ -131,9 +131,7 @@ public class WashingMachineService {
                 .findBySerialNumber(serialNumber)
                 .orElseThrow(() -> new CustomException(ErrorCode.E_1010, "No product with serial number found"));
 
-        return reportGenerator
-                .getWashingMachineReport(washingMachine)
-                .orElseThrow(() -> new CustomException(ErrorCode.E_1011, "Error while creating Jasper report"));
+        return reportGenerator.getWashingMachineReport(washingMachine);
     }
 
 //*********************************************************************************************
