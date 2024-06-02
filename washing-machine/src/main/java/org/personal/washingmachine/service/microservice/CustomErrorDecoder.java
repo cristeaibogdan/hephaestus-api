@@ -54,12 +54,12 @@ public class CustomErrorDecoder implements ErrorDecoder {
         }
 
         /*
-        **** HANDLE UNCAUGHT EXCEPTIONS THROWN BY THE BACKEND USING THE FEIGN CLIENT ****
+        **** HANDLE UNCAUGHT EXCEPTIONS THROWN BY THE BACKEND USING THE FEIGN CLIENT 4xx ****
         Examples:
         1. Method not allowed (e.g., using @GetMapping in Feign client while backend expects @PostMapping).
         2. Not Found (e.g., setting wrong endpoints in Feign client interface).
 
-        **** HANDLE UNCAUGHT EXCEPTIONS THROWN BY THE SERVER BACKEND ****
+        **** HANDLE UNCAUGHT EXCEPTIONS THROWN BY THE SERVER BACKEND 5xx ****
         Examples: IllegalArgumentException, NullPointerException, etc.
 
         Note: OpenFeign's FeignException doesn't bind to a specific HTTP status (i.e., doesn't use Spring's @ResponseStatus annotation),
