@@ -10,6 +10,8 @@ import java.io.IOException;
 
 public class CustomErrorDecoder implements ErrorDecoder {
 
+    private final ErrorDecoder defaultErrorDecoder = new Default();
+
     @Override
     public Exception decode(String methodKey, Response response) {
 
@@ -51,25 +53,25 @@ public class CustomErrorDecoder implements ErrorDecoder {
             }
         }
 
-//*****************************************************************************************************
-// HANDLE UNCAUGHT EXCEPTIONS THROWN BY THE BACKEND USING THE FEIGN CLIENT
-// EX: 1.Method not allowed, using @GetMapping in feign client while backend expects @PostMapping
-// EX: 2.Not Found, setting wrong endpoints in feign client interface
-//*****************************************************************************************************
-        if (responseStatus.is4xxClientError()) {
-            return new Feign4xxClientException(ErrorCode.F_0001,
-                    "ErrorDecoder => uncaught exception thrown by backend using the feign client: \n" + response);
-        } else {
-//*****************************************************************************************************
-// HANDLE UNCAUGHT EXCEPTIONS THROWN BY THE SERVER BACKEND
-// EX: IllegalArgumentException, NullPointerException, etc.
-//*****************************************************************************************************
-/* OpenFeign's FeignException doesn't bind to a specific HTTP status
-(i.e. doesn't use Spring's @ResponseStatus annotation), which makes Spring
-default to 500 whenever faced with a FeignException */
+        /*
+        Delegate the other error types to the default error decoder.
+        These thrown exceptions will be handled by handleException,
+        in the Global Exception Handler.
+         */
+        return defaultErrorDecoder.decode(methodKey, response);
 
-            return new Feign5xxClientException(ErrorCode.F_0002,
-                    "ErrorDecoder => uncaught exception thrown by the server backend: \n" + response);
-        }
+////*****************************************************************************************************
+//// HANDLE UNCAUGHT EXCEPTIONS THROWN BY THE BACKEND USING THE FEIGN CLIENT
+//// EX: 1.Method not allowed, using @GetMapping in feign client while backend expects @PostMapping
+//// EX: 2.Not Found, setting wrong endpoints in feign client interface
+////*****************************************************************************************************
+
+////*****************************************************************************************************
+//// HANDLE UNCAUGHT EXCEPTIONS THROWN BY THE SERVER BACKEND
+//// EX: IllegalArgumentException, NullPointerException, etc.
+////*****************************************************************************************************
+///* OpenFeign's FeignException doesn't bind to a specific HTTP status
+//(i.e. doesn't use Spring's @ResponseStatus annotation), which makes Spring
+//default to 500 whenever faced with a FeignException */
     }
 }
