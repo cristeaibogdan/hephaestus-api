@@ -54,24 +54,20 @@ public class CustomErrorDecoder implements ErrorDecoder {
         }
 
         /*
+        **** HANDLE UNCAUGHT EXCEPTIONS THROWN BY THE BACKEND USING THE FEIGN CLIENT ****
+        Examples:
+        1. Method not allowed (e.g., using @GetMapping in Feign client while backend expects @PostMapping).
+        2. Not Found (e.g., setting wrong endpoints in Feign client interface).
+
+        **** HANDLE UNCAUGHT EXCEPTIONS THROWN BY THE SERVER BACKEND ****
+        Examples: IllegalArgumentException, NullPointerException, etc.
+
+        Note: OpenFeign's FeignException doesn't bind to a specific HTTP status (i.e., doesn't use Spring's @ResponseStatus annotation),
+        which makes Spring default to 500 whenever faced with a FeignException.
+
         Delegate the other error types to the default error decoder.
-        These thrown exceptions will be handled by handleException,
-        in the Global Exception Handler.
-         */
+        These thrown exceptions will be handled by handleException, in the Global Exception Handler.
+        */
         return defaultErrorDecoder.decode(methodKey, response);
-
-////*****************************************************************************************************
-//// HANDLE UNCAUGHT EXCEPTIONS THROWN BY THE BACKEND USING THE FEIGN CLIENT
-//// EX: 1.Method not allowed, using @GetMapping in feign client while backend expects @PostMapping
-//// EX: 2.Not Found, setting wrong endpoints in feign client interface
-////*****************************************************************************************************
-
-////*****************************************************************************************************
-//// HANDLE UNCAUGHT EXCEPTIONS THROWN BY THE SERVER BACKEND
-//// EX: IllegalArgumentException, NullPointerException, etc.
-////*****************************************************************************************************
-///* OpenFeign's FeignException doesn't bind to a specific HTTP status
-//(i.e. doesn't use Spring's @ResponseStatus annotation), which makes Spring
-//default to 500 whenever faced with a FeignException */
     }
 }
