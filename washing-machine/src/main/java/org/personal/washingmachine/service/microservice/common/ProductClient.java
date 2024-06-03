@@ -11,7 +11,7 @@ import java.util.List;
 @FeignClient(
         value = "PRODUCT",
         configuration = CustomErrorDecoder.class,
-        url = "http://localhost:8081/products"
+        url = "http://localhost:8081/api/v1/products"
 )
 public interface ProductClient {
 

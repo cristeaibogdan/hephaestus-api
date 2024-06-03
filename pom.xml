@@ -14,6 +14,7 @@
     <modules>
         <module>product</module>
         <module>washing-machine</module>
+        <module>api-gateway</module>
     </modules>
 
     <properties>

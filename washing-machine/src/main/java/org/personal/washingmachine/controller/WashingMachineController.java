@@ -11,9 +11,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/washing-machines")
-@RestController
 class WashingMachineController {
 
     private final WashingMachineService washingMachineService;
