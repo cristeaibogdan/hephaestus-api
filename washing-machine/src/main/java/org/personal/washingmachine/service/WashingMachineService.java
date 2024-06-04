@@ -1,15 +1,17 @@
 package org.personal.washingmachine.service;
 
+import com.querydsl.core.BooleanBuilder;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.personal.washingmachine.entity.QWashingMachine;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineImage;
-import org.personal.washingmachine.entity.WashingMachine_;
 import org.personal.washingmachine.entity.dtos.*;
 import org.personal.washingmachine.exception.CustomException;
 import org.personal.washingmachine.exception.ErrorCode;
 import org.personal.washingmachine.repository.WashingMachineRepository;
 import org.personal.washingmachine.service.utils.DamageCalculator;
+import org.personal.washingmachine.service.utils.QueryDSLUtils;
 import org.personal.washingmachine.service.utils.ReportGenerator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -25,6 +27,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.personal.washingmachine.entity.QWashingMachine.*;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -32,34 +36,34 @@ public class WashingMachineService {
 
     private final WashingMachineRepository washingMachineRepository;
     private final ReportGenerator reportGenerator;
-    private final SpecBuilder<WashingMachine> specBuilder = new SpecBuilder<>();
 
     public Page<WashingMachineDTO> getPaginatedAndFilteredWashingMachines(PageRequestDTO pageRequestDTO) {
 
         PageRequest pageRequest = PageRequest.of(
                 pageRequestDTO.pageIndex(),
                 pageRequestDTO.pageSize(),
-                Sort.by(WashingMachine_.CREATED_AT).descending()
+                Sort.by(QWashingMachine.washingMachine.createdAt.getMetadata().getName()).descending()
         );
 
-        Specification<WashingMachine> specification = specBuilder
-                .addStringLikeCondition(WashingMachine_.CATEGORY, pageRequestDTO.category())
-                .and(specBuilder.addStringLikeCondition(WashingMachine_.MANUFACTURER, pageRequestDTO.manufacturer()))
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
 
-                .and(specBuilder.addStringLikeCondition(WashingMachine_.DAMAGE_TYPE, pageRequestDTO.damageType()))
-                .and(specBuilder.addStringLikeCondition(WashingMachine_.RETURN_TYPE, pageRequestDTO.returnType()))
-                .and(specBuilder.addStringLikeCondition(WashingMachine_.IDENTIFICATION_MODE, pageRequestDTO.identificationMode()))
+        booleanBuilder.and(QueryDSLUtils.addStringLikeCondition(QWashingMachine.washingMachine.category, pageRequestDTO.category()))
+                .and(QueryDSLUtils.addStringLikeCondition(QWashingMachine.washingMachine.manufacturer, pageRequestDTO.manufacturer()))
 
-                .and(specBuilder.addStringLikeCondition(WashingMachine_.SERIAL_NUMBER, pageRequestDTO.serialNumber()))
-                .and(specBuilder.addStringLikeCondition(WashingMachine_.MODEL, pageRequestDTO.model()))
-                .and(specBuilder.addStringLikeCondition(WashingMachine_.TYPE, pageRequestDTO.type()))
-                .and(specBuilder.addStringLikeCondition(WashingMachine_.RECOMMENDATION, pageRequestDTO.recommendation()))
+                .and(QueryDSLUtils.addStringLikeCondition(QWashingMachine.washingMachine.damageType, pageRequestDTO.damageType()))
+                .and(QueryDSLUtils.addStringLikeCondition(QWashingMachine.washingMachine.returnType, pageRequestDTO.returnType()))
+                .and(QueryDSLUtils.addStringLikeCondition(QWashingMachine.washingMachine.identificationMode, pageRequestDTO.identificationMode()))
 
-                .and(specBuilder.addIntegerEqualCondition(WashingMachine_.DAMAGE_LEVEL, pageRequestDTO.damageLevel()))
+                .and(QueryDSLUtils.addStringLikeCondition(QWashingMachine.washingMachine.serialNumber, pageRequestDTO.serialNumber()))
+                .and(QueryDSLUtils.addStringLikeCondition(QWashingMachine.washingMachine.model, pageRequestDTO.model()))
+                .and(QueryDSLUtils.addStringLikeCondition(QWashingMachine.washingMachine.type, pageRequestDTO.type()))
+                .and(QueryDSLUtils.addStringLikeCondition(QWashingMachine.washingMachine.recommendation, pageRequestDTO.recommendation()))
 
-                .and(specBuilder.addTimestampEqualCondition(WashingMachine_.CREATED_AT, pageRequestDTO.createdAt()));
+                .and(QueryDSLUtils.addIntegerEqualCondition(QWashingMachine.washingMachine.damageLevel, pageRequestDTO.damageLevel()))
 
-        Page<WashingMachine> responsePage = washingMachineRepository.findAll(specification, pageRequest);
+                .and(QueryDSLUtils.addTimestampEqualCondition(QWashingMachine.washingMachine.createdAt, pageRequestDTO.createdAt()));
+
+        Page<WashingMachine> responsePage = washingMachineRepository.findAll(booleanBuilder, pageRequest);
 
         if (responsePage.isEmpty()) {
             throw new CustomException(ErrorCode.E_1006, "Requested page is empty");
