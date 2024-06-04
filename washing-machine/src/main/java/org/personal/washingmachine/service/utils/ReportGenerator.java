@@ -17,7 +17,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -101,8 +100,8 @@ public class ReportGenerator {
 
             // 5. Export report
             return new WashingMachineReportDTO(
-                            JasperExportManager.exportReportToPdf(print),
-                            washingMachine.getCreatedAt().toString());
+                    JasperExportManager.exportReportToPdf(print),
+                    washingMachine.getCreatedAt().toString());
 
         } catch (JRException e) {
             throw new CustomException(e, ErrorCode.E_1011, "Exception while creating Jasper report");

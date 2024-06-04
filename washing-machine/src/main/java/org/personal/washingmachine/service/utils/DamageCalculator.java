@@ -1,17 +1,13 @@
 package org.personal.washingmachine.service.utils;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.personal.washingmachine.entity.dtos.WashingMachineDetailsDTO;
 import org.personal.washingmachine.exception.CustomException;
 import org.personal.washingmachine.exception.ErrorCode;
 
+@NoArgsConstructor(access = AccessLevel.NONE)
 public final class DamageCalculator {
-
-    /**
-     * <p>{@code DamageCalculator} instances should NOT be constructed in
-     * standard programming. Instead, the class should be used as
-     * {@code DamageCalculator.calculateDamageLevelForPackage();}.</p>
-     */
-    private DamageCalculator(){}
 
     public static int calculateDamageLevelForPackage(WashingMachineDetailsDTO washingMachineDetailsDTO) {
         int damageLevelForPackage = 0;

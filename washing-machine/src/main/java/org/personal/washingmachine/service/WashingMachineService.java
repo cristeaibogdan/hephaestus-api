@@ -3,7 +3,6 @@ package org.personal.washingmachine.service;
 import com.querydsl.core.BooleanBuilder;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.math.NumberUtils;
-import org.personal.washingmachine.entity.QWashingMachine;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineImage;
 import org.personal.washingmachine.entity.dtos.*;
@@ -17,7 +16,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,7 +25,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.personal.washingmachine.entity.QWashingMachine.*;
+import static org.personal.washingmachine.entity.QWashingMachine.washingMachine;
 
 @Service
 @Transactional
@@ -42,26 +40,26 @@ public class WashingMachineService {
         PageRequest pageRequest = PageRequest.of(
                 pageRequestDTO.pageIndex(),
                 pageRequestDTO.pageSize(),
-                Sort.by(QWashingMachine.washingMachine.createdAt.getMetadata().getName()).descending()
+                Sort.by(washingMachine.createdAt.getMetadata().getName()).descending()
         );
 
         BooleanBuilder booleanBuilder = new BooleanBuilder();
 
-        booleanBuilder.and(QueryDSLUtils.addStringLikeCondition(QWashingMachine.washingMachine.category, pageRequestDTO.category()))
-                .and(QueryDSLUtils.addStringLikeCondition(QWashingMachine.washingMachine.manufacturer, pageRequestDTO.manufacturer()))
+        booleanBuilder.and(QueryDSLUtils.addStringLikeCondition(washingMachine.category, pageRequestDTO.category()))
+                .and(QueryDSLUtils.addStringLikeCondition(washingMachine.manufacturer, pageRequestDTO.manufacturer()))
 
-                .and(QueryDSLUtils.addStringLikeCondition(QWashingMachine.washingMachine.damageType, pageRequestDTO.damageType()))
-                .and(QueryDSLUtils.addStringLikeCondition(QWashingMachine.washingMachine.returnType, pageRequestDTO.returnType()))
-                .and(QueryDSLUtils.addStringLikeCondition(QWashingMachine.washingMachine.identificationMode, pageRequestDTO.identificationMode()))
+                .and(QueryDSLUtils.addStringLikeCondition(washingMachine.damageType, pageRequestDTO.damageType()))
+                .and(QueryDSLUtils.addStringLikeCondition(washingMachine.returnType, pageRequestDTO.returnType()))
+                .and(QueryDSLUtils.addStringLikeCondition(washingMachine.identificationMode, pageRequestDTO.identificationMode()))
 
-                .and(QueryDSLUtils.addStringLikeCondition(QWashingMachine.washingMachine.serialNumber, pageRequestDTO.serialNumber()))
-                .and(QueryDSLUtils.addStringLikeCondition(QWashingMachine.washingMachine.model, pageRequestDTO.model()))
-                .and(QueryDSLUtils.addStringLikeCondition(QWashingMachine.washingMachine.type, pageRequestDTO.type()))
-                .and(QueryDSLUtils.addStringLikeCondition(QWashingMachine.washingMachine.recommendation, pageRequestDTO.recommendation()))
+                .and(QueryDSLUtils.addStringLikeCondition(washingMachine.serialNumber, pageRequestDTO.serialNumber()))
+                .and(QueryDSLUtils.addStringLikeCondition(washingMachine.model, pageRequestDTO.model()))
+                .and(QueryDSLUtils.addStringLikeCondition(washingMachine.type, pageRequestDTO.type()))
+                .and(QueryDSLUtils.addStringLikeCondition(washingMachine.recommendation, pageRequestDTO.recommendation()))
 
-                .and(QueryDSLUtils.addIntegerEqualCondition(QWashingMachine.washingMachine.damageLevel, pageRequestDTO.damageLevel()))
+                .and(QueryDSLUtils.addIntegerEqualCondition(washingMachine.damageLevel, pageRequestDTO.damageLevel()))
 
-                .and(QueryDSLUtils.addTimestampEqualCondition(QWashingMachine.washingMachine.createdAt, pageRequestDTO.createdAt()));
+                .and(QueryDSLUtils.addTimestampEqualCondition(washingMachine.createdAt, pageRequestDTO.createdAt()));
 
         Page<WashingMachine> responsePage = washingMachineRepository.findAll(booleanBuilder, pageRequest);
 
