@@ -19,7 +19,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     ErrorResponse handleException(Exception e) { // This is the last safety net!
         log.error("Unexpected: " + e);
-        return new ErrorResponse(9999);
+        return new ErrorResponse(ErrorCode.E_9999);
     }
 
     @ExceptionHandler(CustomException.class)

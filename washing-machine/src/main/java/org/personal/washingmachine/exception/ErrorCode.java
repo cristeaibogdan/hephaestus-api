@@ -17,11 +17,12 @@ public final class ErrorCode {
 
     // FEIGN ERRORS
     public static final int F_0001 = 1;
-    public static final int F_0002 = 2;
-    public static final int F_0003 = 3;
 
     // COMMON BACKEND CONNECTION ERROR
     public static final int E_2000 = 2000;
+
+    // DEFAULT ERROR
+    public static final int E_9999 = 999;
 
     /**
      * <p>{@code ErrorCode} instances should NOT be constructed in

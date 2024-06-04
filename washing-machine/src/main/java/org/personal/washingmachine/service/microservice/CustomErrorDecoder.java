@@ -49,7 +49,7 @@ public class CustomErrorDecoder implements ErrorDecoder {
                 return new FeignPropagatedException(errorResponse.getErrorCode(), "Handled via custom decoder");
 
             } catch (IOException e) {
-                return new CustomException(e, ErrorCode.F_0003, "Error while reading error response in feign CustomErrorDecoder");
+                return new CustomException(e, ErrorCode.F_0001, "Error while reading error response in feign CustomErrorDecoder");
             }
         }
 
