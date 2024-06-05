@@ -1,5 +1,9 @@
 package org.personal.washingmachine.exception;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.NONE)
 public final class ErrorCode {
 
     // CORE ERRORS
@@ -22,12 +26,5 @@ public final class ErrorCode {
     public static final int E_2000 = 2000;
 
     // DEFAULT ERROR
-    public static final int E_9999 = 999;
-
-    /**
-     * <p>{@code ErrorCode} instances should NOT be constructed in
-     * standard programming. Instead, the class should be used as
-     * {@code ErrorCode.E_1001;}.</p>
-     */
-    private ErrorCode(){}
+    public static final int E_9999 = 9999;
 }
