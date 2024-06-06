@@ -64,6 +64,8 @@ public class WashingMachine extends BaseEntity {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private WashingMachineDetails washingMachineDetails;
 
+    // TODO: Consider making the getter for this immutable.
+    // TODO: and add it to constructor as a nonNull argument.
     @JoinColumn(name = "washing_machine_id")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<WashingMachineImage> washingMachineImages = new ArrayList<>();
