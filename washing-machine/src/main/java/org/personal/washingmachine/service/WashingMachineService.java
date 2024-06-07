@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.personal.washingmachine.entity.QWashingMachine.washingMachine;
+import static org.personal.washingmachine.entity.dtos.Mapper.*;
 
 @Service
 @Transactional
@@ -35,7 +36,7 @@ public class WashingMachineService {
     private final WashingMachineRepository washingMachineRepository;
     private final ReportGenerator reportGenerator;
 
-    public Page<WashingMachineDTO> getPaginatedAndFilteredWashingMachines(PageRequestDTO pageRequestDTO) {
+    public Page<WashingMachineSimpleDTO> getPaginatedAndFilteredWashingMachines(PageRequestDTO pageRequestDTO) {
 
         PageRequest pageRequest = PageRequest.of(
                 pageRequestDTO.pageIndex(),
@@ -68,9 +69,9 @@ public class WashingMachineService {
         }
 
         // Transform entities to DTOs before returning
-        return new PageImpl<WashingMachineDTO>(
+        return new PageImpl<WashingMachineSimpleDTO>(
                 responsePage.getContent().stream()
-                        .map(washingMachine -> washingMachine.toWashingMachineDTO())
+                        .map(washingMachine -> WashingMachineMapper.toSimpleDTO(washingMachine))
                         .toList(),
                 responsePage.getPageable(),
                 responsePage.getTotalElements()
@@ -80,7 +81,7 @@ public class WashingMachineService {
     public WashingMachineExpandedDTO getWashingMachineExpanded(String serialNumber) {
         return washingMachineRepository
                 .findBySerialNumber(serialNumber)
-                .map(washingMachine -> washingMachine.toWashingMachineExpandedDTO())
+                .map(washingMachine -> WashingMachineMapper.toExpandedDTO(washingMachine))
                 .orElseThrow(() -> new CustomException(ErrorCode.E_1010, "No product with serial number found"));
     }
 

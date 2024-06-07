@@ -1,7 +1,6 @@
 package org.personal.washingmachine.entity.dtos;
 
 import lombok.Builder;
-import org.personal.washingmachine.entity.User;
 
 @Builder
 public record UserDTO(
@@ -13,14 +12,4 @@ public record UserDTO(
         String username,
         String password
 ) {
-    public User toUser() {
-        return new User(
-                this.code,
-                this.organization,
-                this.country,
-                this.email,
-                this.username,
-                this.password
-        );
-    }
 }

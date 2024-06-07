@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-import org.personal.washingmachine.entity.dtos.UserDTO;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -51,16 +50,5 @@ public class User extends BaseEntity {
         this.email = email;
         this.username = username;
         this.password = password;
-    }
-
-    public UserDTO toUserDTO() {
-        return new UserDTO(
-                this.code,
-                this.organization,
-                this.country,
-                this.email,
-                this.username,
-                null
-        );
     }
 }

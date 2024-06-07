@@ -1,6 +1,5 @@
 package org.personal.washingmachine.service;
 
-
 import lombok.RequiredArgsConstructor;
 import org.personal.washingmachine.entity.User;
 import org.personal.washingmachine.entity.dtos.OrganizationAndCountryDTO;
@@ -16,6 +15,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import static org.personal.washingmachine.entity.dtos.Mapper.*;
 
 @Service
 @Transactional
@@ -70,7 +71,7 @@ public class UserService {
         }
 
         // Convert to entity and save
-        User user = userDTO.toUser();
+        User user = UserMapper.toEntity(userDTO);
         userRepository.save(user);
     }
 
@@ -83,7 +84,7 @@ public class UserService {
                 .findByUsernameAndPassword(
                         userCredentialsDTO.username(),
                         userCredentialsDTO.password())
-                .map(user -> user.toUserDTO())
+                .map(user -> UserMapper.toDTO(user))
                 .orElseThrow(() -> new CustomException(ErrorCode.E_1004, "Invalid username or password"));
     }
 }

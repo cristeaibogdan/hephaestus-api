@@ -10,6 +10,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.personal.washingmachine.entity.dtos.Mapper;
 import org.personal.washingmachine.entity.dtos.OrganizationAndCountryDTO;
 import org.personal.washingmachine.entity.dtos.UserCredentialsDTO;
 import org.personal.washingmachine.entity.dtos.UserDTO;
@@ -188,7 +189,7 @@ class UserServiceTest {
                     .build();
 
             given(userRepositoryMock.findByUsernameAndPassword(userCredentialsDTO.username(), userCredentialsDTO.password()))
-                    .willReturn(Optional.of(expected.toUser()));
+                    .willReturn(Optional.of(Mapper.UserMapper.toEntity(expected)));
 
             // WHEN
             UserDTO actual = underTest.login(userCredentialsDTO);

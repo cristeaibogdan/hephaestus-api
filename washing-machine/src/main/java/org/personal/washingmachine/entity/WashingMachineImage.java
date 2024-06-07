@@ -3,7 +3,6 @@ package org.personal.washingmachine.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.personal.washingmachine.entity.dtos.WashingMachineImageDTO;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,13 +27,4 @@ public class WashingMachineImage extends BaseEntity {
         this.imagePrefix = imagePrefix;
         this.image = image;
     }
-
-    public WashingMachineImageDTO toWashingMachineImageDTO() {
-        return new WashingMachineImageDTO(
-                this.imagePrefix,
-                this.image
-        );
-    }
-
-
 }

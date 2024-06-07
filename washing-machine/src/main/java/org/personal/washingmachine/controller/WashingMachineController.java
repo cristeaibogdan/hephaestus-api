@@ -19,7 +19,7 @@ class WashingMachineController {
     private final WashingMachineService washingMachineService;
 
     @PostMapping
-    Page<WashingMachineDTO> getPaginatedAndFilteredWashingMachines(@RequestBody PageRequestDTO pageRequestDTO) {
+    Page<WashingMachineSimpleDTO> getPaginatedAndFilteredWashingMachines(@RequestBody PageRequestDTO pageRequestDTO) {
         return washingMachineService.getPaginatedAndFilteredWashingMachines(pageRequestDTO);
     }
 

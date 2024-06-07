@@ -69,32 +69,4 @@ public class WashingMachine extends BaseEntity {
     @JoinColumn(name = "washing_machine_id")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<WashingMachineImage> washingMachineImages = new ArrayList<>();
-
-    public WashingMachineDTO toWashingMachineDTO() {
-        return new WashingMachineDTO(
-                this.category,
-                this.manufacturer,
-
-                this.damageType,
-                this.returnType,
-                this.identificationMode,
-
-                this.serialNumber,
-                this.model,
-                this.type,
-                this.damageLevel,
-                this.recommendation,
-
-                this.createdAt
-        );
-    }
-
-    public WashingMachineExpandedDTO toWashingMachineExpandedDTO() {
-        return new WashingMachineExpandedDTO(
-                this.washingMachineDetails.toWashingMachineDetailsDTO(),
-                this.washingMachineImages.stream()
-                        .map(washingMachineImage -> washingMachineImage.toWashingMachineImageDTO())
-                        .toList()
-        );
-    }
 }

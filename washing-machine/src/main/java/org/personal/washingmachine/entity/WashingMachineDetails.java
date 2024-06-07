@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.personal.washingmachine.entity.dtos.WashingMachineDetailsDTO;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -107,36 +106,4 @@ public class WashingMachineDetails extends BaseEntity {
 
     @Column(name = "repair_price")
     private Integer repairPrice;
-
-    public WashingMachineDetailsDTO toWashingMachineDetailsDTO() {
-        return new WashingMachineDetailsDTO(
-                this.applicablePackageDamage,
-                this.packageDamaged,
-                this.packageDirty,
-                this.packageMaterialAvailable,
-
-                this.applicableVisibleSurfacesDamage,
-                this.visibleSurfacesHasScratches,
-                this.visibleSurfacesScratchesLength,
-                this.visibleSurfacesHasDents,
-                this.visibleSurfacesDentsDepth,
-                this.visibleSurfacesHasSmallDamage,
-                this.visibleSurfacesSmallDamage,
-                this.visibleSurfacesHasBigDamage,
-                this.visibleSurfacesBigDamage,
-
-                this.applicableHiddenSurfacesDamage,
-                this.hiddenSurfacesHasScratches,
-                this.hiddenSurfacesScratchesLength,
-                this.hiddenSurfacesHasDents,
-                this.hiddenSurfacesDentsDepth,
-                this.hiddenSurfacesHasSmallDamage,
-                this.hiddenSurfacesSmallDamage,
-                this.hiddenSurfacesHasBigDamage,
-                this.hiddenSurfacesBigDamage,
-
-                this.price,
-                this.repairPrice
-        );
-    }
 }
