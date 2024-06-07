@@ -27,6 +27,7 @@ import java.util.List;
 
 import static org.personal.washingmachine.entity.QWashingMachine.washingMachine;
 import static org.personal.washingmachine.entity.dtos.Mapper.*;
+import static org.personal.washingmachine.entity.dtos.Mapper.WashingMachineDetailsMapper.*;
 
 @Service
 @Transactional
@@ -85,17 +86,19 @@ public class WashingMachineService {
                 .orElseThrow(() -> new CustomException(ErrorCode.E_1010, "No product with serial number found"));
     }
 
-    public void saveWashingMachine(WashingMachine washingMachine, List<MultipartFile> imageFiles) {
+    public void saveWashingMachine(WashingMachineDTO washingMachineDTO, List<MultipartFile> imageFiles) {
 
-        boolean existingSerialNumber = washingMachineRepository.existsBySerialNumber(washingMachine.getSerialNumber());
+        boolean existingSerialNumber = washingMachineRepository.existsBySerialNumber(washingMachineDTO.serialNumber());
         if (existingSerialNumber) {
             throw new CustomException(ErrorCode.E_1005, "Serial number is taken");
         }
 
         List<WashingMachineImage> washingMachineImages = getWashingMachineImages(imageFiles);
 
-        // 5. SET THE IMAGE LIST TO THE DAMAGED PRODUCT AND SAVE IN DB
+        // 5. CONSTRUCT THE ENTITY AND SET THE IMAGE LIST
+        WashingMachine washingMachine = WashingMachineMapper.toEntity(washingMachineDTO);
         washingMachine.setWashingMachineImages(washingMachineImages);
+
         washingMachineRepository.save(washingMachine);
     }
 

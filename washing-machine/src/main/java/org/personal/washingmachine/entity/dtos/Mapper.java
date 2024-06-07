@@ -82,35 +82,83 @@ public class Mapper {
                     entity.getRepairPrice()
             );
         }
-    }
 
-    public static class WashingMachineMapper {
+        public static WashingMachineDetails toEntity(WashingMachineDetailsDTO dto) {
+            return new WashingMachineDetails(
+                    dto.applicablePackageDamage(),
+                    dto.packageDamaged(),
+                    dto.packageDirty(),
+                    dto.packageMaterialAvailable(),
 
-        public static WashingMachineSimpleDTO toSimpleDTO(WashingMachine entity) {
-            return new WashingMachineSimpleDTO(
-                    entity.getCategory(),
-                    entity.getManufacturer(),
-                    entity.getDamageType(),
-                    entity.getReturnType(),
-                    entity.getIdentificationMode(),
-                    entity.getSerialNumber(),
-                    entity.getModel(),
-                    entity.getType(),
-                    entity.getDamageLevel(),
-                    entity.getRecommendation(),
-                    entity.getCreatedAt()
+                    dto.applicableVisibleSurfacesDamage(),
+                    dto.visibleSurfacesHasScratches(),
+                    dto.visibleSurfacesScratchesLength(),
+                    dto.visibleSurfacesHasDents(),
+                    dto.visibleSurfacesDentsDepth(),
+                    dto.visibleSurfacesHasSmallDamage(),
+                    dto.visibleSurfacesSmallDamage(),
+                    dto.visibleSurfacesHasBigDamage(),
+                    dto.visibleSurfacesBigDamage(),
+
+                    dto.applicableHiddenSurfacesDamage(),
+                    dto.hiddenSurfacesHasScratches(),
+                    dto.hiddenSurfacesScratchesLength(),
+                    dto.hiddenSurfacesHasDents(),
+                    dto.hiddenSurfacesDentsDepth(),
+                    dto.hiddenSurfacesHasSmallDamage(),
+                    dto.hiddenSurfacesSmallDamage(),
+                    dto.hiddenSurfacesHasBigDamage(),
+                    dto.hiddenSurfacesBigDamage(),
+
+                    dto.price(),
+                    dto.repairPrice()
             );
         }
 
-        public static WashingMachineExpandedDTO toExpandedDTO(WashingMachine entity) {
+        public static class WashingMachineMapper {
 
-            WashingMachineDetailsDTO washingMachineDetailsDTO = WashingMachineDetailsMapper.toDTO(entity.getWashingMachineDetails());
-            List<WashingMachineImageDTO> washingMachineImageDTOs = WashingMachineImageMapper.toDTO(entity.getWashingMachineImages());
+            public static WashingMachineSimpleDTO toSimpleDTO(WashingMachine entity) {
+                return new WashingMachineSimpleDTO(
+                        entity.getCategory(),
+                        entity.getManufacturer(),
+                        entity.getDamageType(),
+                        entity.getReturnType(),
+                        entity.getIdentificationMode(),
+                        entity.getSerialNumber(),
+                        entity.getModel(),
+                        entity.getType(),
+                        entity.getDamageLevel(),
+                        entity.getRecommendation(),
+                        entity.getCreatedAt()
+                );
+            }
 
-            return new WashingMachineExpandedDTO(
-                    washingMachineDetailsDTO,
-                    washingMachineImageDTOs
-            );
+            public static WashingMachineExpandedDTO toExpandedDTO(WashingMachine entity) {
+
+                WashingMachineDetailsDTO washingMachineDetailsDTO = WashingMachineDetailsMapper.toDTO(entity.getWashingMachineDetails());
+                List<WashingMachineImageDTO> washingMachineImageDTOs = WashingMachineImageMapper.toDTO(entity.getWashingMachineImages());
+
+                return new WashingMachineExpandedDTO(
+                        washingMachineDetailsDTO,
+                        washingMachineImageDTOs
+                );
+            }
+
+            public static WashingMachine toEntity(WashingMachineDTO dto) {
+                return new WashingMachine(
+                        dto.category(),
+                        dto.manufacturer(),
+                        dto.damageType(),
+                        dto.returnType(),
+                        dto.identificationMode(),
+                        dto.serialNumber(),
+                        dto.model(),
+                        dto.type(),
+                        dto.damageLevel(),
+                        dto.recommendation(),
+                        WashingMachineDetailsMapper.toEntity(dto.washingMachineDetailsDTO())
+                );
+            }
         }
     }
 }

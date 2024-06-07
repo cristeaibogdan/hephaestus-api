@@ -16,6 +16,8 @@ public record WashingMachineDTO(
 
         Integer damageLevel,
         String recommendation,
-        LocalDateTime createdAt
+        LocalDateTime createdAt,
+
+        WashingMachineDetailsDTO washingMachineDetailsDTO
 ) {
 }

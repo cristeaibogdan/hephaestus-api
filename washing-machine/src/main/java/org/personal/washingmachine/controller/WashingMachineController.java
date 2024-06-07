@@ -30,9 +30,9 @@ class WashingMachineController {
 
     @PostMapping(value = "/save", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     void saveWashingMachine(
-            @RequestPart WashingMachine washingMachine,
+            @RequestPart WashingMachineDTO washingMachineDTO,
             @RequestPart List<MultipartFile> imageFiles) {
-        washingMachineService.saveWashingMachine(washingMachine, imageFiles);
+        washingMachineService.saveWashingMachine(washingMachineDTO, imageFiles);
     }
 
     @PostMapping("/evaluate")
