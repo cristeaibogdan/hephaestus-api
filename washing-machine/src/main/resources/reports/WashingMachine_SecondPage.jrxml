@@ -342,7 +342,7 @@
 				</textField>
 				<frame>
 					<reportElement positionType="Float" x="0" y="120" width="555" height="70" isRemoveLineWhenBlank="true" uuid="efba423a-4992-48f8-8482-5dcf654664e7">
-						<printWhenExpression><![CDATA[$P{price} > 0 && $P{repairPrice}>0]]></printWhenExpression>
+						<printWhenExpression><![CDATA[$P{price} > 0 && $P{repairPrice} > 0]]></printWhenExpression>
 					</reportElement>
 					<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0"/>
 					<staticText>

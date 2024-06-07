@@ -89,9 +89,9 @@ public class ReportGenerator {
             JasperPrint print = JasperFillManager.fillReport(report, parameters, new JREmptyDataSource());
 
             // 5. Export report locally - TEST PURPOSE ONLY
-//            String exportPath = System.getProperty("user.dir")+"\\src\\main\\resources\\reports\\Test.pdf";
-//            JasperExportManager.exportReportToPdfFile(print,exportPath);
-//            return null;
+            // String exportPath = System.getProperty("user.dir")+"\\washing-machine\\src\\main\\resources\\reports\\Test.pdf";//
+            // JasperExportManager.exportReportToPdfFile(print,exportPath);
+            // return null;
 
             log.info("Executed in "
                     + stopWatch.getTime(TimeUnit.MINUTES) + "(minutes):"
