@@ -6,6 +6,9 @@ import org.personal.washingmachine.entity.User;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineDetails;
 import org.personal.washingmachine.entity.WashingMachineImage;
+import org.personal.washingmachine.entity.embedded.HiddenSurfaceDamage;
+import org.personal.washingmachine.entity.embedded.PackageDamage;
+import org.personal.washingmachine.entity.embedded.VisibleSurfaceDamage;
 
 import java.util.List;
 
@@ -53,30 +56,30 @@ public class Mapper {
 
         public static WashingMachineDetailsDTO toDTO(WashingMachineDetails entity) {
             return new WashingMachineDetailsDTO(
-                    entity.isApplicablePackageDamage(),
-                    entity.isPackageDamaged(),
-                    entity.isPackageDirty(),
-                    entity.isPackageMaterialAvailable(),
+                    entity.getPackageDamage().isApplicablePackageDamage(),
+                    entity.getPackageDamage().isPackageDamaged(),
+                    entity.getPackageDamage().isPackageDirty(),
+                    entity.getPackageDamage().isPackageMaterialAvailable(),
 
-                    entity.isApplicableVisibleSurfacesDamage(),
-                    entity.isVisibleSurfacesHasScratches(),
-                    entity.getVisibleSurfacesScratchesLength(),
-                    entity.isVisibleSurfacesHasDents(),
-                    entity.getVisibleSurfacesDentsDepth(),
-                    entity.isVisibleSurfacesHasSmallDamage(),
-                    entity.getVisibleSurfacesSmallDamage(),
-                    entity.isVisibleSurfacesHasBigDamage(),
-                    entity.getVisibleSurfacesBigDamage(),
+                    entity.getWashingMachineVisibleSurfaceDamage().isApplicableVisibleSurfacesDamage(),
+                    entity.getWashingMachineVisibleSurfaceDamage().isVisibleSurfacesHasScratches(),
+                    entity.getWashingMachineVisibleSurfaceDamage().getVisibleSurfacesScratchesLength(),
+                    entity.getWashingMachineVisibleSurfaceDamage().isVisibleSurfacesHasDents(),
+                    entity.getWashingMachineVisibleSurfaceDamage().getVisibleSurfacesDentsDepth(),
+                    entity.getWashingMachineVisibleSurfaceDamage().isVisibleSurfacesHasSmallDamage(),
+                    entity.getWashingMachineVisibleSurfaceDamage().getVisibleSurfacesSmallDamage(),
+                    entity.getWashingMachineVisibleSurfaceDamage().isVisibleSurfacesHasBigDamage(),
+                    entity.getWashingMachineVisibleSurfaceDamage().getVisibleSurfacesBigDamage(),
 
-                    entity.isApplicableHiddenSurfacesDamage(),
-                    entity.isHiddenSurfacesHasScratches(),
-                    entity.getHiddenSurfacesScratchesLength(),
-                    entity.isHiddenSurfacesHasDents(),
-                    entity.getHiddenSurfacesDentsDepth(),
-                    entity.isHiddenSurfacesHasSmallDamage(),
-                    entity.getHiddenSurfacesSmallDamage(),
-                    entity.isHiddenSurfacesHasBigDamage(),
-                    entity.getHiddenSurfacesBigDamage(),
+                    entity.getHiddenSurfaceDamage().isApplicableHiddenSurfacesDamage(),
+                    entity.getHiddenSurfaceDamage().isHiddenSurfacesHasScratches(),
+                    entity.getHiddenSurfaceDamage().getHiddenSurfacesScratchesLength(),
+                    entity.getHiddenSurfaceDamage().isHiddenSurfacesHasDents(),
+                    entity.getHiddenSurfaceDamage().getHiddenSurfacesDentsDepth(),
+                    entity.getHiddenSurfaceDamage().isHiddenSurfacesHasSmallDamage(),
+                    entity.getHiddenSurfaceDamage().getHiddenSurfacesSmallDamage(),
+                    entity.getHiddenSurfaceDamage().isHiddenSurfacesHasBigDamage(),
+                    entity.getHiddenSurfaceDamage().getHiddenSurfacesBigDamage(),
 
                     entity.getPrice(),
                     entity.getRepairPrice()
@@ -85,30 +88,36 @@ public class Mapper {
 
         public static WashingMachineDetails toEntity(WashingMachineDetailsDTO dto) {
             return new WashingMachineDetails(
-                    dto.applicablePackageDamage(),
-                    dto.packageDamaged(),
-                    dto.packageDirty(),
-                    dto.packageMaterialAvailable(),
+                    new PackageDamage(
+                            dto.applicablePackageDamage(),
+                            dto.packageDamaged(),
+                            dto.packageDirty(),
+                            dto.packageMaterialAvailable()
+                    ),
 
-                    dto.applicableVisibleSurfacesDamage(),
-                    dto.visibleSurfacesHasScratches(),
-                    dto.visibleSurfacesScratchesLength(),
-                    dto.visibleSurfacesHasDents(),
-                    dto.visibleSurfacesDentsDepth(),
-                    dto.visibleSurfacesHasSmallDamage(),
-                    dto.visibleSurfacesSmallDamage(),
-                    dto.visibleSurfacesHasBigDamage(),
-                    dto.visibleSurfacesBigDamage(),
+                    new VisibleSurfaceDamage(
+                            dto.applicableVisibleSurfacesDamage(),
+                            dto.visibleSurfacesHasScratches(),
+                            dto.visibleSurfacesScratchesLength(),
+                            dto.visibleSurfacesHasDents(),
+                            dto.visibleSurfacesDentsDepth(),
+                            dto.visibleSurfacesHasSmallDamage(),
+                            dto.visibleSurfacesSmallDamage(),
+                            dto.visibleSurfacesHasBigDamage(),
+                            dto.visibleSurfacesBigDamage()
+                    ),
 
-                    dto.applicableHiddenSurfacesDamage(),
-                    dto.hiddenSurfacesHasScratches(),
-                    dto.hiddenSurfacesScratchesLength(),
-                    dto.hiddenSurfacesHasDents(),
-                    dto.hiddenSurfacesDentsDepth(),
-                    dto.hiddenSurfacesHasSmallDamage(),
-                    dto.hiddenSurfacesSmallDamage(),
-                    dto.hiddenSurfacesHasBigDamage(),
-                    dto.hiddenSurfacesBigDamage(),
+                    new HiddenSurfaceDamage(
+                            dto.applicableHiddenSurfacesDamage(),
+                            dto.hiddenSurfacesHasScratches(),
+                            dto.hiddenSurfacesScratchesLength(),
+                            dto.hiddenSurfacesHasDents(),
+                            dto.hiddenSurfacesDentsDepth(),
+                            dto.hiddenSurfacesHasSmallDamage(),
+                            dto.hiddenSurfacesSmallDamage(),
+                            dto.hiddenSurfacesHasBigDamage(),
+                            dto.hiddenSurfacesBigDamage()
+                    ),
 
                     dto.price(),
                     dto.repairPrice()
