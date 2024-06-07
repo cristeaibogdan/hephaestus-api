@@ -27,7 +27,7 @@ public class WashingMachineDetails extends BaseEntity {
     private PackageDamage packageDamage;
 
     @Embedded
-    private VisibleSurfaceDamage washingMachineVisibleSurfaceDamage;
+    private VisibleSurfaceDamage visibleSurfaceDamage;
 
     @Embedded
     private HiddenSurfaceDamage hiddenSurfaceDamage;

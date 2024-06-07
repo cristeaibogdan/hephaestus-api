@@ -124,19 +124,19 @@ public class ReportGenerator {
         // *** Visible Surfaces
         // ********************************
 
-        parameters.put("applicableVisibleSurfacesDamage", washingMachineDetails.getWashingMachineVisibleSurfaceDamage().isApplicableVisibleSurfacesDamage());
+        parameters.put("applicableVisibleSurfacesDamage", washingMachineDetails.getVisibleSurfaceDamage().isApplicableVisibleSurfacesDamage());
 
-        parameters.put("visibleSurfacesHasScratches", washingMachineDetails.getWashingMachineVisibleSurfaceDamage().isVisibleSurfacesHasScratches());
-        parameters.put("visibleSurfacesScratchesLength", washingMachineDetails.getWashingMachineVisibleSurfaceDamage().getVisibleSurfacesScratchesLength());
+        parameters.put("visibleSurfacesHasScratches", washingMachineDetails.getVisibleSurfaceDamage().isVisibleSurfacesHasScratches());
+        parameters.put("visibleSurfacesScratchesLength", washingMachineDetails.getVisibleSurfaceDamage().getVisibleSurfacesScratchesLength());
 
-        parameters.put("visibleSurfacesHasDents", washingMachineDetails.getWashingMachineVisibleSurfaceDamage().isVisibleSurfacesHasDents());
-        parameters.put("visibleSurfacesDentsDepth", washingMachineDetails.getWashingMachineVisibleSurfaceDamage().getVisibleSurfacesDentsDepth());
+        parameters.put("visibleSurfacesHasDents", washingMachineDetails.getVisibleSurfaceDamage().isVisibleSurfacesHasDents());
+        parameters.put("visibleSurfacesDentsDepth", washingMachineDetails.getVisibleSurfaceDamage().getVisibleSurfacesDentsDepth());
 
-        parameters.put("visibleSurfacesHasSmallDamage", washingMachineDetails.getWashingMachineVisibleSurfaceDamage().isVisibleSurfacesHasSmallDamage());
-        parameters.put("visibleSurfacesSmallDamage", washingMachineDetails.getWashingMachineVisibleSurfaceDamage().getVisibleSurfacesSmallDamage());
+        parameters.put("visibleSurfacesHasSmallDamage", washingMachineDetails.getVisibleSurfaceDamage().isVisibleSurfacesHasSmallDamage());
+        parameters.put("visibleSurfacesSmallDamage", washingMachineDetails.getVisibleSurfaceDamage().getVisibleSurfacesSmallDamage());
 
-        parameters.put("visibleSurfacesHasBigDamage", washingMachineDetails.getWashingMachineVisibleSurfaceDamage().isVisibleSurfacesHasBigDamage());
-        parameters.put("visibleSurfacesBigDamage", washingMachineDetails.getWashingMachineVisibleSurfaceDamage().getVisibleSurfacesBigDamage());
+        parameters.put("visibleSurfacesHasBigDamage", washingMachineDetails.getVisibleSurfaceDamage().isVisibleSurfacesHasBigDamage());
+        parameters.put("visibleSurfacesBigDamage", washingMachineDetails.getVisibleSurfaceDamage().getVisibleSurfacesBigDamage());
 
         // ********************************
         // *** Hidden Surfaces
