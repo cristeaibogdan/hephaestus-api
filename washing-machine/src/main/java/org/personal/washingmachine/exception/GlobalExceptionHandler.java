@@ -17,7 +17,7 @@ public class GlobalExceptionHandler {
     private String microserviceName;
 
     @ExceptionHandler(Exception.class)
-    ErrorResponse handleException(Exception e) { // This is the last safety net!
+    ErrorResponse handleException(Exception e) {
         log.error("Unexpected: " + e);
         return new ErrorResponse(ErrorCode.E_9999);
     }
@@ -30,8 +30,7 @@ public class GlobalExceptionHandler {
             log.error("Caused by: " + e.getCause());
         }
 
-        // CODE 418 = I AM A TEAPOT is not used in programming,
-        // I can use it to distinguish between custom and general exceptions in frontend
+        // CODE 418 = I AM A TEAPOT used to distinguish between custom and general exceptions in frontend
 
         //TODO: Maybe i should remove ErrorResponse since the frontend only needs a code.
         return new ErrorResponse(e.getErrorCode());
