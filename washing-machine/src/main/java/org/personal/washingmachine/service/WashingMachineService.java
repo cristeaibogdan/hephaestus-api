@@ -26,8 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.personal.washingmachine.entity.QWashingMachine.washingMachine;
-import static org.personal.washingmachine.entity.dtos.Mapper.*;
-import static org.personal.washingmachine.entity.dtos.Mapper.WashingMachineDetailsMapper.*;
+import static org.personal.washingmachine.entity.dtos.Mapper.WashingMachineDetailsMapper.WashingMachineMapper;
 
 @Service
 @Transactional
