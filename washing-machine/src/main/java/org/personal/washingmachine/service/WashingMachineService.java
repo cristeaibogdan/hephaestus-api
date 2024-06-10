@@ -149,12 +149,12 @@ public class WashingMachineService {
         imageFiles.forEach(imageFile -> {
 
             // 1. GET IMAGE BYTES
-            byte[] image = new byte[0];
+            byte[] image;
 
             try {
                 image = imageFile.getBytes();
             } catch (IOException e) {
-                e.printStackTrace();
+                throw new CustomException(e, ErrorCode.E_9999, "Could not extract bytes from image: "+imageFile.getName());
             }
 
             // 2. BUILD IMAGEPREFIX
