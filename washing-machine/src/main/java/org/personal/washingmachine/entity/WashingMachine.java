@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static lombok.AccessLevel.NONE;
@@ -62,8 +63,7 @@ public class WashingMachine extends BaseEntity {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private WashingMachineDetails washingMachineDetails;
 
-    // TODO: Consider making the getter for this immutable.
-    // TODO: and add it to constructor as a nonNull argument.
+    // TODO: Consider adding nonNull argument in constructor argument.
     @JoinColumn(name = "washing_machine_id")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<WashingMachineImage> washingMachineImages = new ArrayList<>();
@@ -80,5 +80,14 @@ public class WashingMachine extends BaseEntity {
         this.damageLevel = damageLevel;
         this.recommendation = recommendation;
         this.washingMachineDetails = washingMachineDetails;
+    }
+
+    // TODO: Should return a copy
+    public WashingMachineDetails getWashingMachineDetails() {
+        return washingMachineDetails;
+    }
+
+    public List<WashingMachineImage> getWashingMachineImages() {
+        return Collections.unmodifiableList(washingMachineImages);
     }
 }
