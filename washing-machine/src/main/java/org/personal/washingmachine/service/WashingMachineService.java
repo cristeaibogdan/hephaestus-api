@@ -22,7 +22,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.personal.washingmachine.entity.QWashingMachine.washingMachine;
@@ -92,11 +91,11 @@ public class WashingMachineService {
             throw new CustomException(ErrorCode.E_1005, "Serial number is taken");
         }
 
-        List<WashingMachineImage> washingMachineImages = getWashingMachineImages(imageFiles);
-
-        // 5. CONSTRUCT THE ENTITY AND SET THE IMAGE LIST
         WashingMachine washingMachine = WashingMachineMapper.toEntity(washingMachineDTO);
-        washingMachine.setWashingMachineImages(washingMachineImages);
+        imageFiles.forEach(image -> {
+            WashingMachineImage washingMachineImage = getWashingMachineImage(image);
+            washingMachine.addImage(washingMachineImage);
+        });
 
         washingMachineRepository.save(washingMachine);
     }
@@ -143,33 +142,19 @@ public class WashingMachineService {
 //******************** HELPER METHODS
 //*********************************************************************************************
 
-    private List<WashingMachineImage> getWashingMachineImages(List<MultipartFile> imageFiles) {
-        List<WashingMachineImage> washingMachineImages = new ArrayList<>();
+    private WashingMachineImage getWashingMachineImage(MultipartFile imageFile) {
 
-        imageFiles.forEach(imageFile -> {
+        byte[] image;
 
-            // 1. GET IMAGE BYTES
-            byte[] image;
+        try {
+            image = imageFile.getBytes();
+        } catch (IOException e) {
+            throw new CustomException(e, ErrorCode.E_9999, "Could not extract bytes from image: " + imageFile.getName());
+        }
 
-            try {
-                image = imageFile.getBytes();
-            } catch (IOException e) {
-                throw new CustomException(e, ErrorCode.E_9999, "Could not extract bytes from image: "+imageFile.getName());
-            }
+        String imagePrefix = "data:image/" + getImageExtension(imageFile) + ";base64,";
 
-            // 2. BUILD IMAGEPREFIX
-            String imagePrefix = "data:image/" + getImageExtension(imageFile) + ";base64,";
-
-            // 3. BUILD DAMAGED PRODUCT IMAGE
-            WashingMachineImage washingMachineImage = new WashingMachineImage(
-                    imagePrefix,
-                    image);
-
-            // 4. SAVE IT IN THE LIST
-            washingMachineImages.add(washingMachineImage);
-        });
-
-        return washingMachineImages;
+        return new WashingMachineImage(imagePrefix, image);
     }
 
     private String getImageExtension(MultipartFile imageFile) {

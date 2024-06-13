@@ -64,6 +64,7 @@ public class WashingMachine extends BaseEntity {
     private WashingMachineDetails washingMachineDetails;
 
     // TODO: Consider adding nonNull argument in constructor argument.
+    @Setter(NONE)
     @JoinColumn(name = "washing_machine_id")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<WashingMachineImage> washingMachineImages = new ArrayList<>();
@@ -90,4 +91,16 @@ public class WashingMachine extends BaseEntity {
     public List<WashingMachineImage> getWashingMachineImages() {
         return Collections.unmodifiableList(washingMachineImages);
     }
+
+    public void addImage(WashingMachineImage washingMachineImage) {
+        this.washingMachineImages.add(washingMachineImage);
+    }
+
+    public void removeImage(Long washingMachineImageId) {
+        this.washingMachineImages.stream()
+                .filter(image -> image.getId().equals(washingMachineImageId))
+                .findFirst()
+                .map(image -> washingMachineImages.remove(image));
+    }
+
 }
