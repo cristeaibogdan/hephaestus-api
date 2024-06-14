@@ -39,9 +39,8 @@ public class WashingMachineService {
                 pageRequestDTO.pageSize(),
                 Sort.by(washingMachine.createdAt.getMetadata().getName()).descending());
 
-        BooleanBuilder booleanBuilder = new BooleanBuilder();
-
-        booleanBuilder.and(QueryDSLUtils.addStringLikeCondition(washingMachine.category, pageRequestDTO.category()))
+        BooleanBuilder booleanBuilder = new BooleanBuilder()
+                .and(QueryDSLUtils.addStringLikeCondition(washingMachine.category, pageRequestDTO.category()))
                 .and(QueryDSLUtils.addStringLikeCondition(washingMachine.manufacturer, pageRequestDTO.manufacturer()))
 
                 .and(QueryDSLUtils.addStringLikeCondition(washingMachine.damageType, pageRequestDTO.damageType()))
@@ -63,7 +62,6 @@ public class WashingMachineService {
             throw new CustomException(ErrorCode.E_1006, "Requested page is empty");
         }
 
-        // Transform entities to DTOs before returning
         return new PageImpl<WashingMachineSimpleDTO>(
                 responsePage.getContent().stream()
                         .map(washingMachine -> WashingMachineMapper.toSimpleDTO(washingMachine))
