@@ -28,20 +28,16 @@ import static org.personal.washingmachine.entity.QWashingMachine.washingMachine;
 import static org.personal.washingmachine.entity.dtos.Mapper.WashingMachineDetailsMapper.WashingMachineMapper;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class WashingMachineService {
-
     private final WashingMachineRepository washingMachineRepository;
     private final ReportGenerator reportGenerator;
 
     public Page<WashingMachineSimpleDTO> getPaginatedAndFilteredWashingMachines(PageRequestDTO pageRequestDTO) {
-
         PageRequest pageRequest = PageRequest.of(
                 pageRequestDTO.pageIndex(),
                 pageRequestDTO.pageSize(),
-                Sort.by(washingMachine.createdAt.getMetadata().getName()).descending()
-        );
+                Sort.by(washingMachine.createdAt.getMetadata().getName()).descending());
 
         BooleanBuilder booleanBuilder = new BooleanBuilder();
 
@@ -84,6 +80,7 @@ public class WashingMachineService {
                 .orElseThrow(() -> new CustomException(ErrorCode.E_1010, "No product with serial number found"));
     }
 
+    @Transactional
     public void saveWashingMachine(WashingMachineDTO washingMachineDTO, List<MultipartFile> imageFiles) {
 
         boolean existingSerialNumber = washingMachineRepository.existsBySerialNumber(washingMachineDTO.serialNumber());
@@ -105,6 +102,8 @@ public class WashingMachineService {
     }
 
 
+    // TODO: Instead of having a middle man method, move to DamageCalculator
+    // TODO: If you decide to make it a @Service. It currently is a static class.
     public WashingMachineEvaluationDTO generateWashingMachineDamageEvaluation(
             WashingMachineDetailsDTO washingMachineDetailsDTO) {
 

@@ -19,7 +19,6 @@ import java.util.Optional;
 import static org.personal.washingmachine.entity.dtos.Mapper.*;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class UserService {
 
@@ -58,8 +57,8 @@ public class UserService {
                 .orElseThrow(() -> new CustomException(ErrorCode.E_1001, "Code not found"));
     }
 
+    @Transactional
     public void register(UserDTO userDTO) {
-        // Guard clauses
         boolean existingEmail = userRepository.existsByEmail(userDTO.email());
         if (existingEmail) {
             throw new CustomException(ErrorCode.E_1002, "Email is taken");
@@ -70,7 +69,6 @@ public class UserService {
             throw new CustomException(ErrorCode.E_1003, "Username is taken");
         }
 
-        // Convert to entity and save
         User user = UserMapper.toEntity(userDTO);
         userRepository.save(user);
     }

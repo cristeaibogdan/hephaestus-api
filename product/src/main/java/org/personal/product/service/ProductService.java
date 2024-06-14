@@ -1,17 +1,15 @@
 package org.personal.product.service;
 
+import lombok.RequiredArgsConstructor;
+import org.personal.product.entity.dtos.ProductModelTypeDTO;
 import org.personal.product.exception.CustomException;
 import org.personal.product.exception.ErrorCode;
-import org.personal.product.entity.dtos.ProductModelTypeDTO;
 import org.personal.product.repository.ProductRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class ProductService {
 
@@ -26,7 +24,6 @@ public class ProductService {
 
         return response;
     }
-
 
     public List<ProductModelTypeDTO> getModelsAndTypes(String manufacturer) {
         List<ProductModelTypeDTO> response = productRepository.findByManufacturer(manufacturer.trim());
