@@ -1,8 +1,18 @@
 version: "3"
-services:
 
+services:
   zipkin:
     image: openzipkin/zipkin
     container_name: zipkin
     ports:
       - "9411:9411"
+
+#TODO: Add postgres docker with multiple dbs
+#  postgres:
+#    image: postgres:11
+#    environment:
+#      POSTGRES_USER: user
+#      POSTGRES_PASSWORD: pass
+#      POSTGRES_DB: db
+#    ports:
+#      - "5432:5432"
