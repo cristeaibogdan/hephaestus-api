@@ -167,7 +167,7 @@ public class ReportGenerator {
     }
 
     private JasperReport getWashingMachineReportSecondPage() throws JRException {
-        InputStream filePath = getClass().getClassLoader().getResourceAsStream("reports/WashingMachine_SecondPage.jrxml");
-        return JasperCompileManager.compileReport(filePath);
+        InputStream reportPath = getClass().getClassLoader().getResourceAsStream("reports/WashingMachine_SecondPage.jrxml");
+        return JasperCompileManager.compileReport(reportPath);
     }
 }
