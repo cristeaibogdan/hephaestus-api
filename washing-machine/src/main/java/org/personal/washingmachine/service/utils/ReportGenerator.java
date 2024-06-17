@@ -83,24 +83,24 @@ public class ReportGenerator {
             parameters.put("secondPageParameters", getWashingMachineReportSecondPageParameters(washingMachine.getWashingMachineDetails()));
 
             // 4. Generate report
-            InputStream filePath = getClass().getClassLoader().getResourceAsStream("reports/WashingMachine_FirstPage.jrxml");
+            InputStream reportPath = getClass().getClassLoader().getResourceAsStream("reports/WashingMachine_FirstPage.jrxml");
 
-            JasperReport report = JasperCompileManager.compileReport(filePath);
-            JasperPrint print = JasperFillManager.fillReport(report, parameters, new JREmptyDataSource());
+            JasperReport compiledReport = JasperCompileManager.compileReport(reportPath);
+            JasperPrint filledReport = JasperFillManager.fillReport(compiledReport, parameters, new JREmptyDataSource());
 
             // 5. Export report locally - TEST PURPOSE ONLY
             // String exportPath = System.getProperty("user.dir")+"\\washing-machine\\src\\main\\resources\\reports\\Test.pdf";//
-            // JasperExportManager.exportReportToPdfFile(print,exportPath);
+            // JasperExportManager.exportReportToPdfFile(filledReport,exportPath);
             // return null;
 
-            log.info("Executed in "
-                    + stopWatch.getTime(TimeUnit.MINUTES) + "(minutes):"
-                    + stopWatch.getTime(TimeUnit.SECONDS) + "(seconds):"
-                    + stopWatch.getTime(TimeUnit.MILLISECONDS) + "(milliseconds)");
+            log.info("Executed in {} (minutes): {} (seconds): {} (milliseconds)",
+                    stopWatch.getTime(TimeUnit.MINUTES),
+                    stopWatch.getTime(TimeUnit.SECONDS),
+                    stopWatch.getTime(TimeUnit.MILLISECONDS));
 
             // 5. Export report
             return new WashingMachineReportDTO(
-                    JasperExportManager.exportReportToPdf(print),
+                    JasperExportManager.exportReportToPdf(filledReport),
                     washingMachine.getCreatedAt().toString());
 
         } catch (JRException e) {
