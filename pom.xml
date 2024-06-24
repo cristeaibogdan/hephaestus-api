@@ -15,6 +15,7 @@
         <module>product</module>
         <module>washing-machine</module>
         <module>api-gateway</module>
+        <module>solar-panel</module>
     </modules>
 
     <properties>
