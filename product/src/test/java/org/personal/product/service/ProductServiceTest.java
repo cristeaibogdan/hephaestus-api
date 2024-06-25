@@ -1,7 +1,6 @@
 package org.personal.product.service;
 
 import org.personal.product.entity.dtos.ProductModelTypeDTO;
-import org.personal.product.exception.CustomException;
 import org.personal.product.repository.ProductRepository;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Nested;
@@ -10,6 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.personal.shared.exception.CustomException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +45,7 @@ class ProductServiceTest {
 
         @Test
         void should_ReturnList_When_DatabaseHasData() {
-            // GIVEN;
+            // GIVEN
             List<String> expected = new ArrayList<>();
             expected.add("Bosch");
             expected.add("Siemens");
