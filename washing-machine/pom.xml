@@ -86,6 +86,16 @@
 			<artifactId>jasperreports-fonts</artifactId>
 			<version>6.21.0</version>
 		</dependency>
+
+		<!-- ***************************************** -->
+		<!-- *** SHARED -->
+		<!-- ***************************************** -->
+
+		<dependency>
+			<groupId>org.personal</groupId>
+			<artifactId>shared</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>

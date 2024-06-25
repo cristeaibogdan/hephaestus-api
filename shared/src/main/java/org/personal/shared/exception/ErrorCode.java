@@ -1,4 +1,4 @@
-package org.personal.washingmachine.exception;
+package org.personal.shared.exception;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -22,8 +22,10 @@ public final class ErrorCode {
     // FEIGN ERRORS
     public static final int F_0001 = 1;
 
-    // COMMON BACKEND CONNECTION ERROR
+    // COMMON BACKEND ERRORS
     public static final int E_2000 = 2000;
+    public static final int E_2001 = 2001;
+    public static final int E_2002 = 2002;
 
     // DEFAULT ERROR
     public static final int E_9999 = 9999;

@@ -2,9 +2,9 @@ package org.personal.washingmachine.service.utils;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.personal.shared.exception.CustomException;
+import org.personal.shared.exception.ErrorCode;
 import org.personal.washingmachine.entity.dtos.WashingMachineDetailsDTO;
-import org.personal.washingmachine.exception.CustomException;
-import org.personal.washingmachine.exception.ErrorCode;
 
 @NoArgsConstructor(access = AccessLevel.NONE)
 public final class DamageCalculator {

@@ -1,4 +1,4 @@
-package org.personal.washingmachine.exception;
+package org.personal.shared.exception;
 
 import lombok.Getter;
 

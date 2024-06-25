@@ -2,9 +2,9 @@ package org.personal.product.service;
 
 import lombok.RequiredArgsConstructor;
 import org.personal.product.entity.dtos.ProductModelTypeDTO;
-import org.personal.product.exception.CustomException;
-import org.personal.product.exception.ErrorCode;
 import org.personal.product.repository.ProductRepository;
+import org.personal.shared.exception.CustomException;
+import org.personal.shared.exception.ErrorCode;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

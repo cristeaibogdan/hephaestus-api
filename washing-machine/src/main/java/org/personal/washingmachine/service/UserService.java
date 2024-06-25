@@ -1,12 +1,12 @@
 package org.personal.washingmachine.service;
 
 import lombok.RequiredArgsConstructor;
+import org.personal.shared.exception.CustomException;
+import org.personal.shared.exception.ErrorCode;
 import org.personal.washingmachine.entity.User;
 import org.personal.washingmachine.entity.dtos.OrganizationAndCountryDTO;
 import org.personal.washingmachine.entity.dtos.UserCredentialsDTO;
 import org.personal.washingmachine.entity.dtos.UserDTO;
-import org.personal.washingmachine.exception.CustomException;
-import org.personal.washingmachine.exception.ErrorCode;
 import org.personal.washingmachine.repository.UserRepository;
 import org.springframework.stereotype.Service;
 

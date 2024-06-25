@@ -16,6 +16,7 @@
         <module>washing-machine</module>
         <module>api-gateway</module>
         <module>solar-panel</module>
+        <module>shared</module>
     </modules>
 
     <properties>

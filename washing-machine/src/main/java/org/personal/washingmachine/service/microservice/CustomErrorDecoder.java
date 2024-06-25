@@ -3,7 +3,10 @@ package org.personal.washingmachine.service.microservice;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.Response;
 import feign.codec.ErrorDecoder;
-import org.personal.washingmachine.exception.*;
+import org.personal.shared.exception.CustomException;
+import org.personal.shared.exception.ErrorCode;
+import org.personal.shared.exception.ErrorResponse;
+import org.personal.shared.exception.FeignPropagatedException;
 import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
@@ -40,8 +43,8 @@ public class CustomErrorDecoder implements ErrorDecoder {
                 ErrorResponse errorResponse = objectMapper.readValue(responseBody.asInputStream(), ErrorResponse.class);
 
                 // Comment above line, and uncomment below 2 lines to see what's in the input stream
-                // String text = new String(responseBody.asInputStream().readAllBytes());
-                // System.out.println("Request body is = " + text);
+//                 String text = new String(responseBody.asInputStream().readAllBytes());
+//                 System.out.println("Request body is = " + text);
 
                 // System.out.println("Transformed result = " + errorResponse);
 
