@@ -76,7 +76,7 @@ CREATE TABLE public.washing_machine (
 
   created_at TIMESTAMP,
 
-  washing_machine_details_id BIGSERIAL REFERENCES public.washing_machine_details(id)
+  washing_machine_details_id BIGINT REFERENCES public.washing_machine_details(id)
 );
 
 CREATE TABLE public.washing_machine_image (
@@ -84,5 +84,5 @@ CREATE TABLE public.washing_machine_image (
   image_prefix VARCHAR,
   image BYTEA,
 
-  washing_machine_id BIGSERIAL REFERENCES public.washing_machine(id)
+  washing_machine_id BIGINT REFERENCES public.washing_machine(id)
 );
