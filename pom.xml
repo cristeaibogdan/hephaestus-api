@@ -66,6 +66,13 @@
     </dependencies>
 
     <build>
+        <resources> <!-- Used to load placeholder property in yml files -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -92,6 +99,32 @@
                             <arg>-parameters</arg>
                         </compilerArgs>
                     </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>com.google.cloud.tools</groupId>
+                    <artifactId>jib-maven-plugin</artifactId>
+                    <version>3.4.1</version>
+                    <configuration>
+                        <from>
+                            <image>
+                                eclipse-temurin:17@sha256:1153cafb5f012d1ddf61199bc2f74a9b177990c3ccba67ff283ab33751533d33
+                            </image>
+                        </from>
+                        <to>
+                            <tags>
+                                <tag>latest</tag>
+                            </tags>
+                        </to>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>dockerBuild</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
