@@ -10,12 +10,12 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: washing-machines
+        - id: washing-machine
           uri: http://localhost:8080
           predicates:
             - Path=/api/v1/washing-machines/**
 
-        - id: products
+        - id: product
           #TODO: Change this URI to localhost:8081
           uri: http://localhost:8080
           predicates:
