@@ -66,13 +66,6 @@
     </dependencies>
 
     <build>
-        <resources> <!-- Used to load placeholder property in yml files -->
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
-
         <pluginManagement>
             <plugins>
                 <plugin>
