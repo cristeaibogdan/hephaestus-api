@@ -7,12 +7,14 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.personal.shared.exception.CustomException;
 import org.personal.washingmachine.entity.dtos.WashingMachineDetailsDTO;
+import org.personal.washingmachine.service.DamageCalculator;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-
 class DamageCalculatorTest {
+
+    private final DamageCalculator underTest = new DamageCalculator();
 
     @Nested
     class testCalculateDamageLevelForPackage {
@@ -27,7 +29,7 @@ class DamageCalculatorTest {
             int expected = 0;
 
             // WHEN
-            int actual = DamageCalculator.calculateDamageLevelForPackage(washingMachineDetailsDTO);
+            int actual = underTest.calculateDamageLevelForPackage(washingMachineDetailsDTO);
 
             // THEN
             assertThat(actual).isEqualTo(expected);
@@ -52,7 +54,7 @@ class DamageCalculatorTest {
             int expected = 1;
 
             // WHEN
-            int actual = DamageCalculator.calculateDamageLevelForPackage(washingMachineDetailsDTO);
+            int actual = underTest.calculateDamageLevelForPackage(washingMachineDetailsDTO);
 
             // THEN
             assertThat(actual).isEqualTo(expected);
@@ -77,7 +79,7 @@ class DamageCalculatorTest {
             int expected = 2;
 
             // WHEN
-            int actual = DamageCalculator.calculateDamageLevelForPackage(washingMachineDetailsDTO);
+            int actual = underTest.calculateDamageLevelForPackage(washingMachineDetailsDTO);
 
             // THEN
             assertThat(actual).isEqualTo(expected);
@@ -97,7 +99,7 @@ class DamageCalculatorTest {
             int expected = 0;
 
             // WHEN
-            int actual = DamageCalculator.calculateDamageLevelForVisibleSurfaces(washingMachineDetailsDTO);
+            int actual = underTest.calculateDamageLevelForVisibleSurfaces(washingMachineDetailsDTO);
 
             // THEN
             assertThat(actual).isEqualTo(expected);
@@ -116,7 +118,7 @@ class DamageCalculatorTest {
             int expected = 2;
 
             // WHEN
-            int actual = DamageCalculator.calculateDamageLevelForVisibleSurfaces(washingMachineDetailsDTO);
+            int actual = underTest.calculateDamageLevelForVisibleSurfaces(washingMachineDetailsDTO);
 
             // THEN
             assertThat(actual).isEqualTo(expected);
@@ -135,7 +137,7 @@ class DamageCalculatorTest {
             int expected = 3;
 
             // WHEN
-            int actual = DamageCalculator.calculateDamageLevelForVisibleSurfaces(washingMachineDetailsDTO);
+            int actual = underTest.calculateDamageLevelForVisibleSurfaces(washingMachineDetailsDTO);
 
             // THEN
             assertThat(actual).isEqualTo(expected);
@@ -154,7 +156,7 @@ class DamageCalculatorTest {
             int expected = 2;
 
             // WHEN
-            int actual = DamageCalculator.calculateDamageLevelForVisibleSurfaces(washingMachineDetailsDTO);
+            int actual = underTest.calculateDamageLevelForVisibleSurfaces(washingMachineDetailsDTO);
 
             // THEN
             assertThat(actual).isEqualTo(expected);
@@ -176,7 +178,7 @@ class DamageCalculatorTest {
             // GIVEN
 
             // WHEN
-            String actual = DamageCalculator.getRecommendation(damageLevel);
+            String actual = underTest.getRecommendation(damageLevel);
 
             // THEN
             assertThat(actual).isEqualTo(expected);
@@ -188,7 +190,7 @@ class DamageCalculatorTest {
             // GIVEN
 
             // WHEN & THEN
-            assertThatThrownBy(() -> DamageCalculator.getRecommendation(damageLevel))
+            assertThatThrownBy(() -> underTest.getRecommendation(damageLevel))
                     .isInstanceOf(CustomException.class);
         }
     }
