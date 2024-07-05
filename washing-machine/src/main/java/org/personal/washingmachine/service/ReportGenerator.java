@@ -32,73 +32,15 @@ public class ReportGenerator {
 		try {
 			StopWatch stopWatch = StopWatch.createStarted();
 
-			// 1. Get the Washing Machine
-			WashingMachine washingMachine = washingMachineRepository
-					.findBySerialNumber(serialNumber)
-					.orElseThrow(() -> new CustomException(ErrorCode.E_1010, "No product with serial number found"));
+			WashingMachine washingMachine = getWashingMachine(serialNumber);
 
-			// 2. Extract images
-			List<WashingMachineImage> images = washingMachine.getWashingMachineImages();
+			Map<String, Object> parameters = getWashingMachineReportFirstPageParameters(washingMachine);
 
-			byte[] image01 = new byte[0];
-			byte[] image02 = new byte[0];
-			byte[] image03 = new byte[0];
-
-			switch (images.size()) {
-				case 0:
-					break;
-				case 1:
-					image01 = images.get(0).getImage();
-					break;
-				case 2:
-					image01 = images.get(0).getImage();
-					image02 = images.get(1).getImage();
-					break;
-				case 3:
-					image01 = images.get(0).getImage();
-					image02 = images.get(1).getImage();
-					image03 = images.get(2).getImage();
-					break;
-			}
-
-			// 3. Get the paths for static images
-			InputStream hephaestusLogo = getClass().getClassLoader().getResourceAsStream("reports/images/hephaestus-logo.png");
-			InputStream HARServicesLogo = getClass().getClassLoader().getResourceAsStream("reports/images/har-services-logo.png");
-
-			// 4. Create a MAP to hold all key - value pairs
-			Map<String, Object> parameters = new HashMap<>();
-			// Static Images
-			parameters.put("hephaestusLogo", hephaestusLogo);
-			parameters.put("HARServicesLogo", HARServicesLogo);
-			// Product Information
-			parameters.put("category", washingMachine.getCategory());
-			parameters.put("manufacturer", washingMachine.getManufacturer());
-			parameters.put("serialNumber", washingMachine.getSerialNumber());
-			parameters.put("model", washingMachine.getModel());
-			parameters.put("type", washingMachine.getType());
-			// Damage Type and Identification Mode
-			parameters.put("damageType", washingMachine.getDamageType());
-			parameters.put("returnType", washingMachine.getReturnType());
-			parameters.put("identificationMode", washingMachine.getIdentificationMode());
-			// Damaged Product Images
-			parameters.put("image01", new ByteArrayInputStream(image01));
-			parameters.put("image02", new ByteArrayInputStream(image02));
-			parameters.put("image03", new ByteArrayInputStream(image03));
-			// Recommendation
-			parameters.put("damageLevel", washingMachine.getDamageLevel());
-			parameters.put("recommendation", washingMachine.getRecommendation());
-			parameters.put("createdAt", washingMachine.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-			// Second page
-			parameters.put("secondPage", getWashingMachineReportSecondPage());
-			parameters.put("secondPageParameters", getWashingMachineReportSecondPageParameters(washingMachine.getWashingMachineDetails()));
-
-			// 5. Generate report
 			InputStream reportPath = getClass().getClassLoader().getResourceAsStream("reports/WashingMachine_FirstPage.jrxml");
-
 			JasperReport compiledReport = JasperCompileManager.compileReport(reportPath);
 			JasperPrint filledReport = JasperFillManager.fillReport(compiledReport, parameters, new JREmptyDataSource());
 
-			// 6. Export report locally - TEST PURPOSE ONLY
+			// Export report locally - TEST PURPOSE ONLY
 			// String exportPath = System.getProperty("user.dir")+"\\washing-machine\\src\\main\\resources\\reports\\Test.pdf";//
 			// JasperExportManager.exportReportToPdfFile(filledReport,exportPath);
 			// return null;
@@ -108,7 +50,7 @@ public class ReportGenerator {
 					stopWatch.getTime(TimeUnit.SECONDS),
 					stopWatch.getTime(TimeUnit.MILLISECONDS));
 
-			// 6. Export report
+			// Export report
 			return new WashingMachineReportDTO(
 					JasperExportManager.exportReportToPdf(filledReport),
 					washingMachine.getCreatedAt().toString());
@@ -116,6 +58,54 @@ public class ReportGenerator {
 		} catch (JRException e) {
 			throw new CustomException(e, ErrorCode.E_1011, "Exception while creating Jasper report");
 		}
+	}
+
+	private WashingMachine getWashingMachine(String serialNumber) {
+		return washingMachineRepository
+				.findBySerialNumber(serialNumber)
+				.orElseThrow(() -> new CustomException(ErrorCode.E_1010, "No product with serial number found"));
+	}
+
+	private Map<String, Object> getWashingMachineReportFirstPageParameters(WashingMachine washingMachine) throws JRException {
+
+		List<WashingMachineImage> images = washingMachine.getWashingMachineImages();
+
+		byte[] image01 = images.size() > 0
+				? images.get(0).getImage()
+				: new byte[0];
+		byte[] image02 = images.size() > 1
+				? images.get(1).getImage()
+				: new byte[0];
+		byte[] image03 = images.size() > 2
+				? images.get(2).getImage()
+				: new byte[0];
+
+		Map<String, Object> parameters = new HashMap<>();
+		// Static Images
+		parameters.put("hephaestusLogo", getClass().getClassLoader().getResourceAsStream("reports/images/hephaestus-logo.png"));
+		parameters.put("HARServicesLogo", getClass().getClassLoader().getResourceAsStream("reports/images/har-services-logo.png"));
+		// Product Information
+		parameters.put("category", washingMachine.getCategory());
+		parameters.put("manufacturer", washingMachine.getManufacturer());
+		parameters.put("serialNumber", washingMachine.getSerialNumber());
+		parameters.put("model", washingMachine.getModel());
+		parameters.put("type", washingMachine.getType());
+		// Damage Type and Identification Mode
+		parameters.put("damageType", washingMachine.getDamageType());
+		parameters.put("returnType", washingMachine.getReturnType());
+		parameters.put("identificationMode", washingMachine.getIdentificationMode());
+		// Damaged Product Images
+		parameters.put("image01", new ByteArrayInputStream(image01));
+		parameters.put("image02", new ByteArrayInputStream(image02));
+		parameters.put("image03", new ByteArrayInputStream(image03));
+		// Recommendation
+		parameters.put("damageLevel", washingMachine.getDamageLevel());
+		parameters.put("recommendation", washingMachine.getRecommendation());
+		parameters.put("createdAt", washingMachine.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+		// Second page
+		parameters.put("secondPage", getWashingMachineSecondPageReport());
+		parameters.put("secondPageParameters", getWashingMachineReportSecondPageParameters(washingMachine.getWashingMachineDetails()));
+		return parameters;
 	}
 
 	private Map<String, Object> getWashingMachineReportSecondPageParameters(WashingMachineDetails washingMachineDetails) {
@@ -176,7 +166,7 @@ public class ReportGenerator {
 		return parameters;
 	}
 
-	private JasperReport getWashingMachineReportSecondPage() throws JRException {
+	private JasperReport getWashingMachineSecondPageReport() throws JRException {
 		InputStream reportPath = getClass().getClassLoader().getResourceAsStream("reports/WashingMachine_SecondPage.jrxml");
 		return JasperCompileManager.compileReport(reportPath);
 	}
