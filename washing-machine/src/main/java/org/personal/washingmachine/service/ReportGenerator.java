@@ -29,11 +29,11 @@ public class ReportGenerator {
 	private final WashingMachineRepository washingMachineRepository;
 
 	public WashingMachineReportDTO getWashingMachineReport(String serialNumber) {
-		try {
 			StopWatch stopWatch = StopWatch.createStarted();
 
 			WashingMachine washingMachine = getWashingMachine(serialNumber);
 
+		try {
 			Map<String, Object> parameters = getWashingMachineReportFirstPageParameters(washingMachine);
 
 			InputStream reportPath = getClass().getClassLoader().getResourceAsStream("reports/WashingMachine_FirstPage.jrxml");
