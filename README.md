@@ -10,9 +10,9 @@ TODO: provide short introduction to what the project does.
 
 **Usage:**
 1. Start Docker
-2. Set profile to 'docker' and click on Reload All Maven Projects
+2. Set profile to **docker** and click on Reload All Maven Projects and Generate Sources and Update Folders For All Projects
 3. In the Maven tab select hephaestus-services and click on 'package' => 
-Docker images will be created and you check them in Docker Desktop
+Docker images will be created, you check them in Docker Desktop
 4. Type in your IDE terminal: **docker-compose up -d** => to start all containers
 5. Done. All backend services should be up and running.
 
