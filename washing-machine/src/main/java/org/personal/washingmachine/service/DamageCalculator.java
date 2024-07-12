@@ -1,150 +1,54 @@
 package org.personal.washingmachine.service;
 
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
 import org.personal.washingmachine.entity.dtos.WashingMachineDetailsDTO;
 import org.personal.washingmachine.entity.dtos.WashingMachineEvaluationDTO;
+import org.personal.washingmachine.service.calculators.HiddenSurfacesDamageCalculator;
+import org.personal.washingmachine.service.calculators.PackageDamageCalculator;
+import org.personal.washingmachine.service.calculators.PricingDamageCalculator;
+import org.personal.washingmachine.service.calculators.VisibleSurfacesDamageCalculator;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class DamageCalculator {
 
-	public WashingMachineEvaluationDTO generateWashingMachineDamageEvaluation(WashingMachineDetailsDTO washingMachineDetailsDTO) {
+	private final PackageDamageCalculator packageDamageCalculator;
+	private final VisibleSurfacesDamageCalculator visibleSurfacesDamageCalculator;
+	private final HiddenSurfacesDamageCalculator hiddenSurfacesDamageCalculator;
+	private final PricingDamageCalculator pricingDamageCalculator;
 
-		int damageLevelForPackage = calculateDamageLevelForPackage(washingMachineDetailsDTO);
-		int damageLevelForVisibleSurfaces = calculateDamageLevelForVisibleSurfaces(washingMachineDetailsDTO);
-		int damageLevelForHiddenSurfaces = calculateDamageLevelForHiddenSurfaces(washingMachineDetailsDTO);
-		int damageLevelForPricing = calculateDamageLevelForPricing(washingMachineDetailsDTO);
+//	TODO: Ask:
+//	1. The DTO is flat with 10+ params, should i pass only what's needed to each method so i can test easily?
+//	As of now I use @Builder on the DTO which allows me to create instances only with certain parameters
+//	2. If I test the underlying methods, is there any reason to test the method that uses those methods?
+//	3. How should I handle the constant I put in VisibleSurfacesDamageCalculator in my tests?
+//	Should I make it public / package private?
 
-		int damageLevel = NumberUtils.max(
-				damageLevelForPackage,
-				damageLevelForVisibleSurfaces,
-				damageLevelForHiddenSurfaces,
-				damageLevelForPricing
-		);
-
+	public WashingMachineEvaluationDTO generateWashingMachineDamageEvaluation(WashingMachineDetailsDTO dto) {
+		int damageLevel = getDamageLevel(dto);
 		String recommendation = getRecommendation(damageLevel);
-
 		return new WashingMachineEvaluationDTO(damageLevel, recommendation);
 	}
 
-	public int calculateDamageLevelForPackage(WashingMachineDetailsDTO washingMachineDetailsDTO) {
-		int damageLevelForPackage = 0;
+	int getDamageLevel(WashingMachineDetailsDTO dto) {
 
-		if (!washingMachineDetailsDTO.applicablePackageDamage()) {
-			return damageLevelForPackage;
-		}
+		int damageLevelForPackage = packageDamageCalculator.calculate(dto);
+		int damageLevelForVisibleSurfaces = visibleSurfacesDamageCalculator.calculate(dto);
+		int damageLevelForHiddenSurfaces = hiddenSurfacesDamageCalculator.calculate(dto);
+		int damageLevelForPricing = pricingDamageCalculator.calculate(dto);
 
-		damageLevelForPackage = washingMachineDetailsDTO.packageMaterialAvailable()
-				? 1
-				: 2;
-
-		return damageLevelForPackage;
+		return NumberUtils.max(
+				damageLevelForPackage,
+				damageLevelForVisibleSurfaces,
+				damageLevelForHiddenSurfaces,
+				damageLevelForPricing);
 	}
 
-	public int calculateDamageLevelForVisibleSurfaces(WashingMachineDetailsDTO washingMachineDetailsDTO) {
-		int damageLevelForVisibleSurfaces = 0;
-
-		if (!washingMachineDetailsDTO.applicableVisibleSurfacesDamage()) {
-			return damageLevelForVisibleSurfaces;
-		}
-
-		// SCRATCHES
-		if (washingMachineDetailsDTO.visibleSurfacesHasScratches()) {
-
-			if (washingMachineDetailsDTO.visibleSurfacesScratchesLength() < 5) {
-				damageLevelForVisibleSurfaces = Math.max(2, damageLevelForVisibleSurfaces);
-			} else {
-				damageLevelForVisibleSurfaces = Math.max(3, damageLevelForVisibleSurfaces);
-			}
-		}
-
-		// DENTS
-		if (washingMachineDetailsDTO.visibleSurfacesHasDents()) {
-
-			if (washingMachineDetailsDTO.visibleSurfacesDentsDepth() < 5) {
-				damageLevelForVisibleSurfaces = Math.max(2, damageLevelForVisibleSurfaces);
-			} else {
-				damageLevelForVisibleSurfaces = Math.max(3, damageLevelForVisibleSurfaces);
-			}
-		}
-
-		// SMALL DAMAGE
-		if (washingMachineDetailsDTO.visibleSurfacesHasSmallDamage()) {
-			damageLevelForVisibleSurfaces = Math.max(2, damageLevelForVisibleSurfaces);
-		}
-
-		// BIG DAMAGE
-		if (washingMachineDetailsDTO.visibleSurfacesHasBigDamage()) {
-			damageLevelForVisibleSurfaces = Math.max(3, damageLevelForVisibleSurfaces);
-		}
-
-		return damageLevelForVisibleSurfaces;
-	}
-
-	public int calculateDamageLevelForHiddenSurfaces(WashingMachineDetailsDTO washingMachineDetailsDTO) {
-		int damageLevelForHiddenSurfaces = 0;
-
-		if (!washingMachineDetailsDTO.applicableHiddenSurfacesDamage()) {
-			return damageLevelForHiddenSurfaces;
-		}
-
-		// SCRATCHES
-		if (washingMachineDetailsDTO.hiddenSurfacesHasScratches()) {
-
-			if (washingMachineDetailsDTO.hiddenSurfacesScratchesLength() < 7) {
-				damageLevelForHiddenSurfaces = Math.max(2, damageLevelForHiddenSurfaces);
-			} else {
-				damageLevelForHiddenSurfaces = Math.max(3, damageLevelForHiddenSurfaces);
-			}
-		}
-
-		// DENTS
-		if (washingMachineDetailsDTO.hiddenSurfacesHasDents()) {
-
-			if (washingMachineDetailsDTO.hiddenSurfacesDentsDepth() < 7) {
-				damageLevelForHiddenSurfaces = Math.max(2, damageLevelForHiddenSurfaces);
-			} else {
-				damageLevelForHiddenSurfaces = Math.max(3, damageLevelForHiddenSurfaces);
-			}
-		}
-
-		// SMALL DAMAGE
-		if (washingMachineDetailsDTO.hiddenSurfacesHasSmallDamage()) {
-			damageLevelForHiddenSurfaces = Math.max(2, damageLevelForHiddenSurfaces);
-		}
-
-		// BIG DAMAGE
-		if (washingMachineDetailsDTO.hiddenSurfacesHasBigDamage()) {
-			damageLevelForHiddenSurfaces = Math.max(3, damageLevelForHiddenSurfaces);
-		}
-
-		return damageLevelForHiddenSurfaces;
-	}
-
-	public int calculateDamageLevelForPricing(WashingMachineDetailsDTO washingMachineDetailsDTO) {
-		int damageLevelForPricing = 0;
-
-		if (washingMachineDetailsDTO.price() == null || washingMachineDetailsDTO.repairPrice() == null) {
-			return damageLevelForPricing;
-		}
-
-		if (washingMachineDetailsDTO.price() <= 0 && washingMachineDetailsDTO.repairPrice() <= 0) {
-			return damageLevelForPricing;
-		}
-
-		boolean repairPriceExceedsHalfTheProductPrice =
-				(washingMachineDetailsDTO.repairPrice() >= washingMachineDetailsDTO.price() * 0.5);
-
-		damageLevelForPricing = (repairPriceExceedsHalfTheProductPrice)
-				? 5
-				: 4;
-
-		return damageLevelForPricing;
-	}
-
-	public String getRecommendation(int damageLevel) {
+	String getRecommendation(int damageLevel) {
 		return switch (damageLevel) {
 			case 1 -> "REPACKAGE";
 			case 2, 3 -> "RESALE";
