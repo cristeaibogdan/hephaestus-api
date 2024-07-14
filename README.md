@@ -30,6 +30,7 @@ TODO: provide short introduction to what the project does.
 <p align="center">
    <img src="assets/maven-profile.jpg">
 </p>
+
 3. Docker images will be created in your local daemon, it will take some time
 4. Open a terminal in the root folder (`hephaestus-api`) and start all containers:
 ```bash
