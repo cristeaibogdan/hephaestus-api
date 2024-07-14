@@ -45,6 +45,10 @@ docker-compose up -d
 6. All backend services should be up and running.
 
 ## Important URLs
+- [Pgadmin](http://localhost:5050) - `localhost:5050`
+  1. Create a new database
+  2. On the Connection tab use `postgres` for Host name/address, username and password
+
 - [Zipkin server](http://localhost:9411) - `localhost:9411`
 
 ## Possible problems
