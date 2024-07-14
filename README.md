@@ -27,7 +27,9 @@ TODO: provide short introduction to what the project does.
    * a. Click  `Reload All Maven Projects` 
    * b. Click `Generate Sources and Update Folders For All Projects`
    * c. Run `package` for `hephaestus-api`
-<img src="assets/maven-profile.jpg">
+<p align="center">
+   <img src="assets/maven-profile.jpg">
+</p>
 3. Docker images will be created in your local daemon, it will take some time
 4. Open a terminal in the root folder (`hephaestus-api`) and start all containers:
 ```bash
@@ -37,7 +39,7 @@ docker-compose up -d
 
 ## Important URLs
 
-- `localhost:9411` - Zipkin server
+- [Zipkin server](http://localhost:9411) - `localhost:9411`
 
 ## Possible problems
 
