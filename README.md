@@ -17,7 +17,7 @@ TODO: provide short introduction to what the project does.
 ## Requirements
 * IDE
 * Java 17
-* Docker & Compose
+* Docker
 * Docker Compose
 
 ## Usage
