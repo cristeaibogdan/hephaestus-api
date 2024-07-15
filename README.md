@@ -46,8 +46,9 @@ docker-compose up -d
 
 ## Important URLs
 - [Pgadmin](http://localhost:5050) - `localhost:5050`
-  1. Create a new database
-  2. On the Connection tab use `postgres` for Host name/address, username and password
+  1. Use `postgres` to login
+  2. Register new server
+  3. On the Connection tab use `postgres` for Host name/address, username and password
 
 - [Zipkin server](http://localhost:9411) - `localhost:9411`
 
