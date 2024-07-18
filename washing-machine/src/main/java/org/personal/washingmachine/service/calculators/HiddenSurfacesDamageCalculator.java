@@ -24,7 +24,8 @@ public class HiddenSurfacesDamageCalculator implements ICalculator {
 				scratchesDamageLevel,
 				dentsDamageLevel,
 				smallDamageLevel,
-				bigDamageLevel);
+				bigDamageLevel
+		);
 	}
 
 	int calculateScratchesDamageLevel(WashingMachineDetailsDTO dto) {

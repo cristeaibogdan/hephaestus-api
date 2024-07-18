@@ -21,13 +21,8 @@ public class DamageCalculator {
 	private final HiddenSurfacesDamageCalculator hiddenSurfacesDamageCalculator;
 	private final PricingDamageCalculator pricingDamageCalculator;
 
-//	TODO: Ask:
-//	1. The DTO is flat with 10+ params, should i pass only what's needed to each method so i can test easily?
-//	As of now I use @Builder on the DTO which allows me to create instances only with certain parameters
-//	2. If I test the underlying methods, is there any reason to test the method that uses those methods?
-//	3. How should I handle the constant I put in VisibleSurfacesDamageCalculator in my tests?
-//	Should I make it public / package private?
-
+	// TODO ask:
+	// 1. Should I break the dto and only send the properties I to each class calculator?
 	public WashingMachineEvaluationDTO generateWashingMachineDamageEvaluation(WashingMachineDetailsDTO dto) {
 		int damageLevel = getDamageLevel(dto);
 		String recommendation = getRecommendation(damageLevel);
@@ -35,7 +30,6 @@ public class DamageCalculator {
 	}
 
 	int getDamageLevel(WashingMachineDetailsDTO dto) {
-
 		int damageLevelForPackage = packageDamageCalculator.calculate(dto);
 		int damageLevelForVisibleSurfaces = visibleSurfacesDamageCalculator.calculate(dto);
 		int damageLevelForHiddenSurfaces = hiddenSurfacesDamageCalculator.calculate(dto);
@@ -45,7 +39,8 @@ public class DamageCalculator {
 				damageLevelForPackage,
 				damageLevelForVisibleSurfaces,
 				damageLevelForHiddenSurfaces,
-				damageLevelForPricing);
+				damageLevelForPricing
+		);
 	}
 
 	String getRecommendation(int damageLevel) {

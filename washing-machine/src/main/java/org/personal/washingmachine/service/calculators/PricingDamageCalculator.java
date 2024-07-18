@@ -12,7 +12,7 @@ public class PricingDamageCalculator implements ICalculator {
 			return 0;
 		}
 
-		if (dto.price() <= 0 && dto.repairPrice() <= 0) {
+		if (dto.price() <= 0 || dto.repairPrice() <= 0) {
 			return 0;
 		}
 
@@ -21,6 +21,5 @@ public class PricingDamageCalculator implements ICalculator {
 		return repairPriceExceedsHalfTheProductPrice
 				? 5
 				: 4;
-
 	}
 }

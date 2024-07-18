@@ -16,7 +16,7 @@ public class VisibleSurfacesDamageCalculator implements ICalculator {
 		}
 
 		int scratchesDamageLevel = calculateScratchesDamageLevel(dto);
-		int dentsDamageLevel = calculateDentsDamage(dto);
+		int dentsDamageLevel = calculateDentsDamageLevel(dto);
 		int smallDamageLevel = calculateSmallDamageLevel(dto);
 		int bigDamageLevel = calculateBigDamageLevel(dto);
 
@@ -38,7 +38,7 @@ public class VisibleSurfacesDamageCalculator implements ICalculator {
 				: 3;
 	}
 
-	int calculateDentsDamage(WashingMachineDetailsDTO dto) {
+	int calculateDentsDamageLevel(WashingMachineDetailsDTO dto) {
 		if (!dto.visibleSurfacesHasDents()) {
 			return 0;
 		}

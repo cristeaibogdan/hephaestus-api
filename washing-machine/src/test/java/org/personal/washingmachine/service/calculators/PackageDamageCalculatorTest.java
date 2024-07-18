@@ -28,19 +28,11 @@ class PackageDamageCalculatorTest {
 		assertThat(actual).isEqualTo(expected);
 	}
 
-	@ParameterizedTest
-	@CsvSource({
-			"true, true",
-			"true, false",
-			"false, true",
-			"false, false",
-	})
-	void should_Return1_When_PackageMaterialAvailableIsTrue(boolean isDamaged, boolean isDirty) {
+	@Test
+	void should_Return1_When_PackageMaterialAvailableIsTrue() {
 		// GIVEN
 		WashingMachineDetailsDTO washingMachineDetailsDTO = WashingMachineDetailsDTO.builder()
 				.applicablePackageDamage(true)
-				.packageDamaged(isDamaged)
-				.packageDirty(isDirty)
 				.packageMaterialAvailable(true)
 				.build();
 
@@ -53,19 +45,11 @@ class PackageDamageCalculatorTest {
 		assertThat(actual).isEqualTo(expected);
 	}
 
-	@ParameterizedTest
-	@CsvSource({
-			"true, true",
-			"true, false",
-			"false, true",
-			"false, false",
-	})
-	void should_Return2_When_PackageMaterialAvailableIsFalse(boolean isDamaged, boolean isDirty) {
+	@Test
+	void should_Return2_When_PackageMaterialAvailableIsFalse() {
 		// GIVEN
 		WashingMachineDetailsDTO washingMachineDetailsDTO = WashingMachineDetailsDTO.builder()
 				.applicablePackageDamage(true)
-				.packageDamaged(isDamaged)
-				.packageDirty(isDirty)
 				.packageMaterialAvailable(false)
 				.build();
 
