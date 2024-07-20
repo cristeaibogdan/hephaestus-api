@@ -10,6 +10,11 @@ spring:
   cloud:
     gateway:
       routes:
+        - id: user
+          uri: http://localhost:8080
+          predicates:
+            - Path=/api/v1/users/**
+
         - id: washing-machine
           uri: http://washing-machine:8080
           predicates:
