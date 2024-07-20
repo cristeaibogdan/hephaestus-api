@@ -34,7 +34,6 @@ class GlobalExceptionHandler {
 				e.getErrorCode().name(),
 				e.getParams(),
 				request.getLocale());
-		log.info("Received Headers = "+request.getHeaderNames());
 		log.error("CustomException: " + userMessage, e);
 		return userMessage;
 	}

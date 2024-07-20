@@ -8,6 +8,11 @@ public class CustomException extends RuntimeException {
     private final ErrorCode errorCode;
     private final Object[] params;
 
+    public CustomException(ErrorCode errorCode, Object... params) {
+        this.errorCode = errorCode;
+        this.params = params;
+    }
+
     public CustomException(ErrorCode errorCode, String message, Object... params) {
         super(message);
         this.errorCode = errorCode;
@@ -20,8 +25,5 @@ public class CustomException extends RuntimeException {
         this.params = params;
     }
 
-    public CustomException(ErrorCode errorCode, Object... params) {
-        this.errorCode = errorCode;
-        this.params = params;
-    }
+
 }
