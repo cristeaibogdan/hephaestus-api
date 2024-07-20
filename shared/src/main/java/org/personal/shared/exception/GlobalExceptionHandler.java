@@ -44,12 +44,8 @@ class GlobalExceptionHandler {
 
 	@ExceptionHandler(FeignPropagatedException.class)
 	String handleFeignPropagatedException(FeignPropagatedException e, HttpServletRequest request) {
-		String userMessage = messageSource.getMessage(
-				ErrorCode.GENERAL.name(),
-				null,
-				request.getLocale());
-		log.error("Feign propagated exception: " + userMessage, e);
-		return userMessage;
+		log.error("Feign propagated exception: ", e);
+		return e.getMessage();
 	}
 
 	// TODO: This is a workaround, find an improvement

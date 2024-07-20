@@ -36,16 +36,8 @@ public class CustomErrorDecoder implements ErrorDecoder {
 //**********************************************************
         if (responseStatus == HttpStatus.valueOf(418)) {
             try {
-                ObjectMapper objectMapper = new ObjectMapper();
-
-                // 1. Use Jackson ObjectMapper to extract the custom errorResponse received from the backend
-                String errorMessage = objectMapper.readValue(responseBody.asInputStream(), String.class);
-
-                // Comment above line, and uncomment below 2 lines to see what's in the input stream
-//                 String text = new String(responseBody.asInputStream().readAllBytes());
-//                 System.out.println("Request body is = " + text);
-
-                // System.out.println("Transformed result = " + errorResponse);
+                // 1. Extract the String from the response
+                 String errorMessage = new String(responseBody.asInputStream().readAllBytes());
 
                 // 2. Throw the custom errorResponse received from the other backend
                 return new FeignPropagatedException(errorMessage);
