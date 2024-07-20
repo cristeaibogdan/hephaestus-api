@@ -19,7 +19,7 @@ public class ProductService {
         List<String> response = productRepository.getManufacturers(category.trim());
 
         if (response.isEmpty()) {
-            throw new CustomException(ErrorCode.E_2001, "No manufacturers found");
+            throw new CustomException(ErrorCode.NO_MANUFACTURERS_FOUND);
         }
 
         return response;
@@ -29,7 +29,7 @@ public class ProductService {
         List<ProductModelTypeDTO> response = productRepository.findByManufacturer(manufacturer.trim());
 
         if (response.isEmpty()) {
-            throw new CustomException(ErrorCode.E_2002, "No models or types found for the selected manufacturer");
+            throw new CustomException(ErrorCode.NO_MODELS_TYPES_FOUND_FOR_MANUFACTURER);
         }
 
         return response;

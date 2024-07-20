@@ -5,7 +5,6 @@ import feign.Response;
 import feign.codec.ErrorDecoder;
 import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
-import org.personal.shared.exception.ErrorResponse;
 import org.personal.shared.exception.FeignPropagatedException;
 import org.springframework.http.HttpStatus;
 
@@ -40,7 +39,7 @@ public class CustomErrorDecoder implements ErrorDecoder {
                 ObjectMapper objectMapper = new ObjectMapper();
 
                 // 1. Use Jackson ObjectMapper to extract the custom errorResponse received from the backend
-                ErrorResponse errorResponse = objectMapper.readValue(responseBody.asInputStream(), ErrorResponse.class);
+                String errorMessage = objectMapper.readValue(responseBody.asInputStream(), String.class);
 
                 // Comment above line, and uncomment below 2 lines to see what's in the input stream
 //                 String text = new String(responseBody.asInputStream().readAllBytes());
@@ -49,10 +48,10 @@ public class CustomErrorDecoder implements ErrorDecoder {
                 // System.out.println("Transformed result = " + errorResponse);
 
                 // 2. Throw the custom errorResponse received from the other backend
-                return new FeignPropagatedException(errorResponse.getErrorCode(), "Handled via custom decoder");
+                return new FeignPropagatedException(errorMessage);
 
             } catch (IOException e) {
-                return new CustomException(e, ErrorCode.F_0001, "Error while reading error response in feign CustomErrorDecoder");
+                return new CustomException(e, ErrorCode.GENERAL, "Error while decoding open feign response in CustomErrorDecoder");
             }
         }
 

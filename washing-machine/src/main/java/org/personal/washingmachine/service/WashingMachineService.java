@@ -58,7 +58,7 @@ public class WashingMachineService {
 		Page<WashingMachine> responsePage = washingMachineRepository.findAll(booleanBuilder, pageRequest);
 
 		if (responsePage.isEmpty()) {
-			throw new CustomException(ErrorCode.E_1006, "Requested page is empty");
+			throw new CustomException(ErrorCode.EMPTY_PAGE);
 		}
 
 		return new PageImpl<WashingMachineSimpleDTO>(
@@ -74,7 +74,7 @@ public class WashingMachineService {
 		return washingMachineRepository
 				.findBySerialNumber(serialNumber)
 				.map(washingMachine -> WashingMachineMapper.toExpandedDTO(washingMachine))
-				.orElseThrow(() -> new CustomException(ErrorCode.E_1010, "No washing machine with serial number found"));
+				.orElseThrow(() -> new CustomException(ErrorCode.SERIAL_NUMBER_NOT_FOUND, "No washing machine with serial number: " + serialNumber));
 	}
 
 	@Transactional
@@ -82,7 +82,7 @@ public class WashingMachineService {
 
 		boolean existingSerialNumber = washingMachineRepository.existsBySerialNumber(washingMachineDTO.serialNumber());
 		if (existingSerialNumber) {
-			throw new CustomException(ErrorCode.E_1005, "Serial number is taken");
+			throw new CustomException(ErrorCode.SERIAL_NUMBER_ALREADY_TAKEN);
 		}
 
 		WashingMachine washingMachine = WashingMachineMapper.toEntity(washingMachineDTO);
@@ -109,7 +109,7 @@ public class WashingMachineService {
 		try {
 			image = imageFile.getBytes();
 		} catch (IOException e) {
-			throw new CustomException(e, ErrorCode.E_9999, "Could not extract bytes from image: " + imageFile.getName());
+			throw new CustomException(e, ErrorCode.GENERAL, "Could not extract bytes from image: " + imageFile.getName());
 		}
 
 		String imagePrefix = "data:image/" + getImageExtension(imageFile) + ";base64,";
@@ -125,7 +125,7 @@ public class WashingMachineService {
 			case "jpg" -> "jpg";
 			case "jpeg" -> "jpeg";
 			case "bmp" -> "bmp";
-			default -> throw new CustomException(ErrorCode.E_1008, "Invalid image extension");
+			default -> throw new CustomException(ErrorCode.GENERAL, "Invalid image extension " + extension);
 		};
 	}
 }
