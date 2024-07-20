@@ -11,6 +11,7 @@ spring:
     gateway:
       routes:
         - id: user
+          #TODO: Implement proper security
           uri: http://localhost:8080
           predicates:
             - Path=/api/v1/users/**
