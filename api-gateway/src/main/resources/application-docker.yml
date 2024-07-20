@@ -10,16 +10,11 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: user
-          #TODO: Implement proper security
-          uri: http://localhost:8080
-          predicates:
-            - Path=/api/v1/users/**
-
+        #TODO: Add proper security
         - id: washing-machine
           uri: http://washing-machine:8080
           predicates:
-            - Path=/api/v1/washing-machines/**
+            - Path=/api/v1/washing-machines/**, /api/v1/users/**
 
         - id: product
           #TODO: Change this URI to product:8081!
