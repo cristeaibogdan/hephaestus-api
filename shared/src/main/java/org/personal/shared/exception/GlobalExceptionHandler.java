@@ -56,10 +56,9 @@ class GlobalExceptionHandler {
 				ErrorCode.GENERAL.name(),
 				null,
 				request.getLocale());
-		log.error("Feign connection error: ", e);
 
 		if (e.toString().contains("/products")) {
-
+			log.error("Feign connection error for product backend: ", e);
 		}
 
 		return userMessage;

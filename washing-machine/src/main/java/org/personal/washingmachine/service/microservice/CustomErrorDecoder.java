@@ -1,6 +1,5 @@
 package org.personal.washingmachine.service.microservice;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 import org.personal.shared.exception.CustomException;
@@ -12,10 +11,10 @@ import java.io.IOException;
 
 public class CustomErrorDecoder implements ErrorDecoder {
 
-    private final ErrorDecoder defaultErrorDecoder = new Default();
+	private final ErrorDecoder defaultErrorDecoder = new Default();
 
-    @Override
-    public Exception decode(String methodKey, Response response) {
+	@Override
+	public Exception decode(String methodKey, Response response) {
 
 //**********************************************************
 //****** DO NOT USE SOUT, LOGGER OR IDE IN DEBUG AFTER response.body()
@@ -23,29 +22,29 @@ public class CustomErrorDecoder implements ErrorDecoder {
 //****** RESULTING IN IOEXCEPTION stream closed.
 //**********************************************************
 
-        String requestUrl = response.request().url();
-        Response.Body responseBody = response.body();
-        HttpStatus responseStatus = HttpStatus.valueOf(response.status());
+		String requestUrl = response.request().url();
+		Response.Body responseBody = response.body();
+		HttpStatus responseStatus = HttpStatus.valueOf(response.status());
 
-        // System.out.println("Request URL is = " + requestUrl);
-        // System.out.println("Request body is = " + responseBody);
-        // System.out.println("Request status is = " + responseStatus);
+		// System.out.println("Request URL is = " + requestUrl);
+		// System.out.println("Request body is = " + responseBody);
+		// System.out.println("Request status is = " + responseStatus);
 
 //**********************************************************
 // HANDLE CUSTOM EXCEPTIONS THROWN BY THE CLIENT BACKEND
 //**********************************************************
-        if (responseStatus == HttpStatus.valueOf(418)) {
-            try {
-                // 1. Extract the String from the response
-                 String errorMessage = new String(responseBody.asInputStream().readAllBytes());
+		if (responseStatus == HttpStatus.valueOf(418)) {
+			try {
+				// 1. Extract the String from the response
+				String errorMessage = new String(responseBody.asInputStream().readAllBytes());
 
-                // 2. Throw the custom errorResponse received from the other backend
-                return new FeignPropagatedException(errorMessage);
+				// 2. Re-Throw the errorMessage received from the other backend
+				return new FeignPropagatedException(errorMessage);
 
-            } catch (IOException e) {
-                return new CustomException(e, ErrorCode.GENERAL, "Error while decoding open feign response in CustomErrorDecoder");
-            }
-        }
+			} catch (IOException e) {
+				return new CustomException("Error while decoding open feign response", e, ErrorCode.GENERAL);
+			}
+		}
 
         /*
         **** HANDLE UNCAUGHT EXCEPTIONS THROWN BY THE BACKEND USING THE FEIGN CLIENT 4xx ****
@@ -62,6 +61,6 @@ public class CustomErrorDecoder implements ErrorDecoder {
         Delegate the other error types to the default error decoder.
         These thrown exceptions will be handled by handleException, in the Global Exception Handler.
         */
-        return defaultErrorDecoder.decode(methodKey, response);
-    }
+		return defaultErrorDecoder.decode(methodKey, response);
+	}
 }

@@ -56,14 +56,14 @@ public class ReportGenerator {
 					washingMachine.getCreatedAt().toString());
 
 		} catch (JRException e) {
-			throw new CustomException(e, ErrorCode.REPORT_GENERATION_FAIL, "Exception while creating Jasper report");
+			throw new CustomException(e, ErrorCode.REPORT_GENERATION_FAIL);
 		}
 	}
 
 	private WashingMachine getWashingMachine(String serialNumber) {
 		return washingMachineRepository
 				.findBySerialNumber(serialNumber)
-				.orElseThrow(() -> new CustomException(ErrorCode.SERIAL_NUMBER_NOT_FOUND, "No product with serial number: " + serialNumber));
+				.orElseThrow(() -> new CustomException(ErrorCode.SERIAL_NUMBER_NOT_FOUND, serialNumber));
 	}
 
 	private Map<String, Object> getWashingMachineReportFirstPageParameters(WashingMachine washingMachine) throws JRException {

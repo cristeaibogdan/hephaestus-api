@@ -49,7 +49,7 @@ public class DamageCalculator {
 			case 2, 3 -> "RESALE";
 			case 4 -> "REPAIR";
 			case 5 -> "DISASSEMBLE";
-			default -> throw new CustomException(ErrorCode.GENERAL, "Invalid damage level: " + damageLevel);
+			default -> throw new CustomException("Invalid damage level: " + damageLevel, ErrorCode.GENERAL);
 		};
 	}
 }

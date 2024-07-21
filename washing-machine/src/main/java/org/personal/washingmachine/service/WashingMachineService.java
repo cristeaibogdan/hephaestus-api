@@ -74,7 +74,7 @@ public class WashingMachineService {
 		return washingMachineRepository
 				.findBySerialNumber(serialNumber)
 				.map(washingMachine -> WashingMachineMapper.toExpandedDTO(washingMachine))
-				.orElseThrow(() -> new CustomException(ErrorCode.SERIAL_NUMBER_NOT_FOUND, "No washing machine with serial number: " + serialNumber));
+				.orElseThrow(() -> new CustomException(ErrorCode.SERIAL_NUMBER_NOT_FOUND, serialNumber));
 	}
 
 	@Transactional
@@ -109,7 +109,7 @@ public class WashingMachineService {
 		try {
 			image = imageFile.getBytes();
 		} catch (IOException e) {
-			throw new CustomException(e, ErrorCode.GENERAL, "Could not extract bytes from image: " + imageFile.getName());
+			throw new CustomException("Could not extract bytes from image: " + imageFile.getName(), e, ErrorCode.GENERAL);
 		}
 
 		String imagePrefix = "data:image/" + getImageExtension(imageFile) + ";base64,";
@@ -125,7 +125,7 @@ public class WashingMachineService {
 			case "jpg" -> "jpg";
 			case "jpeg" -> "jpeg";
 			case "bmp" -> "bmp";
-			default -> throw new CustomException(ErrorCode.GENERAL, "Invalid image extension " + extension);
+			default -> throw new CustomException("Invalid image extension: " + extension, ErrorCode.GENERAL);
 		};
 	}
 }

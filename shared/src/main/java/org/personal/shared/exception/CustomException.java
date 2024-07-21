@@ -13,13 +13,19 @@ public class CustomException extends RuntimeException {
         this.params = params;
     }
 
-    public CustomException(ErrorCode errorCode, String message, Object... params) {
+    public CustomException(String message, ErrorCode errorCode,  Object... params) {
         super(message);
         this.errorCode = errorCode;
         this.params = params;
     }
 
-    public CustomException(Throwable cause, ErrorCode errorCode, String message, Object... params) {
+    public CustomException(Throwable cause, ErrorCode errorCode, Object... params) {
+        super(cause);
+        this.errorCode = errorCode;
+        this.params = params;
+    }
+
+    public CustomException(String message, Throwable cause, ErrorCode errorCode, Object... params) {
         super(message, cause);
         this.errorCode = errorCode;
         this.params = params;
