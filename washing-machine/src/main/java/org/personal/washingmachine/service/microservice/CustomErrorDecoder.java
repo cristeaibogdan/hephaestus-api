@@ -36,10 +36,10 @@ public class CustomErrorDecoder implements ErrorDecoder {
 		if (responseStatus == HttpStatus.valueOf(418)) {
 			try {
 				// 1. Extract the String from the response
-				String errorMessage = new String(responseBody.asInputStream().readAllBytes());
+				String userMessage = new String(responseBody.asInputStream().readAllBytes());
 
 				// 2. Re-Throw the errorMessage received from the other backend
-				return new FeignPropagatedException(errorMessage);
+				return new FeignPropagatedException(userMessage);
 
 			} catch (IOException e) {
 				return new CustomException("Error while decoding open feign response", e, ErrorCode.GENERAL);
