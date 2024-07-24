@@ -33,7 +33,7 @@ public class CustomErrorDecoder implements ErrorDecoder {
 //**********************************************************
 // HANDLE CUSTOM EXCEPTIONS THROWN BY THE CLIENT BACKEND
 //**********************************************************
-		if (responseStatus == HttpStatus.valueOf(418)) {
+		if (responseStatus == HttpStatus.I_AM_A_TEAPOT) {
 			try {
 				// 1. Extract the String from the response
 				String userMessage = new String(responseBody.asInputStream().readAllBytes());
