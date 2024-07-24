@@ -4,11 +4,7 @@ import lombok.Getter;
 
 @Getter
 public class FeignPropagatedException extends RuntimeException {
-
-    private final Integer errorCode;
-
-    public FeignPropagatedException(Integer errorCode, String errorMessage) {
-        super(errorMessage);
-        this.errorCode = errorCode;
+    public FeignPropagatedException(String userMessage) {
+        super(userMessage);
     }
 }

@@ -29,9 +29,9 @@ public class ReportGenerator {
 	private final WashingMachineRepository washingMachineRepository;
 
 	public WashingMachineReportDTO getWashingMachineReport(String serialNumber) {
-			StopWatch stopWatch = StopWatch.createStarted();
+		StopWatch stopWatch = StopWatch.createStarted();
 
-			WashingMachine washingMachine = getWashingMachine(serialNumber);
+		WashingMachine washingMachine = getWashingMachine(serialNumber);
 
 		try {
 			Map<String, Object> parameters = getWashingMachineReportFirstPageParameters(washingMachine);
@@ -56,14 +56,14 @@ public class ReportGenerator {
 					washingMachine.getCreatedAt().toString());
 
 		} catch (JRException e) {
-			throw new CustomException(e, ErrorCode.E_1011, "Exception while creating Jasper report");
+			throw new CustomException(e, ErrorCode.REPORT_GENERATION_FAIL);
 		}
 	}
 
 	private WashingMachine getWashingMachine(String serialNumber) {
 		return washingMachineRepository
 				.findBySerialNumber(serialNumber)
-				.orElseThrow(() -> new CustomException(ErrorCode.E_1010, "No product with serial number found"));
+				.orElseThrow(() -> new CustomException(ErrorCode.SERIAL_NUMBER_NOT_FOUND, serialNumber));
 	}
 
 	private Map<String, Object> getWashingMachineReportFirstPageParameters(WashingMachine washingMachine) throws JRException {

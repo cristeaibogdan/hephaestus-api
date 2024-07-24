@@ -40,6 +40,7 @@ public class UserService {
 // ************************************************************
 
     public boolean isValidRegistrationCode(String registrationCode) {
+        // TODO: learn about getOrDefault()
         Optional<OrganizationAndCountryDTO> response = initializeRegistrationCodes().entrySet().stream()
                 .filter(entry -> entry.getValue().contains(registrationCode))
                 .map(entry -> entry.getKey())
@@ -54,19 +55,19 @@ public class UserService {
                 .filter(entry -> entry.getValue().contains(registrationCode))
                 .map(entry -> entry.getKey())
                 .findFirst()
-                .orElseThrow(() -> new CustomException(ErrorCode.E_1001, "Code not found"));
+                .orElseThrow(() -> new CustomException(ErrorCode.INVALID_REGISTRATION_CODE));
     }
 
     @Transactional
     public void register(UserDTO userDTO) {
         boolean existingEmail = userRepository.existsByEmail(userDTO.email());
         if (existingEmail) {
-            throw new CustomException(ErrorCode.E_1002, "Email is taken");
+            throw new CustomException(ErrorCode.EMAIL_ALREADY_TAKEN);
         }
 
         boolean existingUsername = userRepository.existsByUsername(userDTO.username());
         if (existingUsername) {
-            throw new CustomException(ErrorCode.E_1003, "Username is taken");
+            throw new CustomException(ErrorCode.USERNAME_ALREADY_TAKEN);
         }
 
         User user = UserMapper.toEntity(userDTO);
@@ -83,6 +84,6 @@ public class UserService {
                         userCredentialsDTO.username(),
                         userCredentialsDTO.password())
                 .map(user -> UserMapper.toDTO(user))
-                .orElseThrow(() -> new CustomException(ErrorCode.E_1004, "Invalid username or password"));
+                .orElseThrow(() -> new CustomException(ErrorCode.INVALID_CREDENTIALS));
     }
 }
