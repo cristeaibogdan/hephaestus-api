@@ -12,7 +12,11 @@
 </div>
 
 ## What does this project do?
-TODO: provide short introduction to what the project does.
+`Hephaestus` is a personal project developed by **HARServices** designed to help users make informed decisions about household appliances. The application evaluates the condition and damage of the appliance and provides tailored recommendations on what actions to take.
+
+The project consists of two components:
+- Frontend built with Angular 
+- Backend developed using Java ( **you are here 📍** )
 
 ## Requirements
 * IDE
