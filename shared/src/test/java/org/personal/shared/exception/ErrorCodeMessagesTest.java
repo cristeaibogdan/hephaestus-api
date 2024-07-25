@@ -7,6 +7,10 @@ import java.util.ResourceBundle;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+/**
+ * <p> This class tests that every key in {@link org.personal.shared.exception.ErrorCode} is present in all files of type: messages_*locale*.properties
+ */
+
 class ErrorCodeMessagesTest {
 
 	@ParameterizedTest

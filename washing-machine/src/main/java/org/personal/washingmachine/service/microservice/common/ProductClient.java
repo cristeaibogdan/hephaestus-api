@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
+//TODO: Move to shared module
 @FeignClient(
         value = "PRODUCT",
         configuration = CustomErrorDecoder.class,
-//        url = "http://localhost:8081/api/v1/products"
         url = "${product.service.url}"
 )
 public interface ProductClient {

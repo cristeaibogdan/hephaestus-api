@@ -11,10 +11,20 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * <p> This class is responsible for handling and logging all Exceptions thrown in this application.
+ * <p> The {@link HttpStatus#I_AM_A_TEAPOT} is used to distinguish between custom and general exceptions in the frontend. Subject to change!
+ * <p> Usage:
+ * <p> 1. Define a key in the enum {@link org.personal.shared.exception.ErrorCode}
+ * <p> 2. Define the key and the value in all files messages_**locale**.properties
+ * <p> 3. Run ErrorCodeMessagesTest to check if all keys are present in the files messages_*locale*.properties
+ * <p> 4. Throw new {@link org.personal.shared.exception.CustomException} wherever needed
+ */
+
 @Slf4j
 @RestControllerAdvice
 @RequiredArgsConstructor
-@ResponseStatus(HttpStatus.I_AM_A_TEAPOT) // CODE 418 = I AM A TEAPOT used to distinguish between custom and general exceptions in frontend
+@ResponseStatus(HttpStatus.I_AM_A_TEAPOT)
 class GlobalExceptionHandler {
 	private final MessageSource messageSource;
 

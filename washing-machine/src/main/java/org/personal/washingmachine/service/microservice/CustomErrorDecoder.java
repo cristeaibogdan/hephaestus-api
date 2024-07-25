@@ -9,6 +9,10 @@ import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
 
+/**
+ * <p> This class is responsible for decoding {@link org.personal.shared.exception.CustomException} thrown by other microservices.
+ */
+//TODO: Move to shared module
 public class CustomErrorDecoder implements ErrorDecoder {
 
 	private final ErrorDecoder defaultErrorDecoder = new Default();
