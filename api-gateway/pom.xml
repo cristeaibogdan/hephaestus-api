@@ -63,8 +63,9 @@
             </plugin>
         </plugins>
 
-        <resources> <!-- Used to load placeholder property in yml files -->
+        <resources>
             <resource>
+                <!-- Used to load @activatedProfile@, the placeholder property in application.properties files -->
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
             </resource>
