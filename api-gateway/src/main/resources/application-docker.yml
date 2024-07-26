@@ -17,7 +17,7 @@ spring:
             - Path=/api/v1/washing-machines/**, /api/v1/users/**
 
         - id: product
-          uri: http://washing-machine:8081
+          uri: http://product:8081
           predicates:
             - Path=/api/v1/products/**
 
