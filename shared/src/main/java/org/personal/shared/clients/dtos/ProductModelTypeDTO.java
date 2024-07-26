@@ -1,4 +1,4 @@
-package org.personal.washingmachine.entity.dtos;
+package org.personal.shared.clients.dtos;
 
 public record ProductModelTypeDTO(
         String model,

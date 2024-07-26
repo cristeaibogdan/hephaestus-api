@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.personal.shared.exception.CustomException;
+import org.personal.shared.exception.ErrorCode;
 import org.personal.washingmachine.entity.dtos.OrganizationAndCountryDTO;
 import org.personal.washingmachine.entity.dtos.UserCredentialsDTO;
 import org.personal.washingmachine.entity.dtos.UserDTO;
@@ -144,7 +145,7 @@ class UserControllerTest {
         }
 
         @Test
-        void should_ThrowCustomException_When_EmailIsTaken() throws Exception {
+        void should_ThrowCustomException_When_EmailIsAlreadyTaken() throws Exception {
             // GIVEN
             UserDTO userDTO = new UserDTO(
                     "RX1001",
@@ -154,7 +155,8 @@ class UserControllerTest {
                     "bogdan",
                     "123456");
 
-            willThrow(CustomException.class).given(userServiceMock).register(userDTO);
+            willThrow(new CustomException(ErrorCode.INVALID_REGISTRATION_CODE))
+                    .given(userServiceMock).register(userDTO);
 
             // WHEN
             ResultActions resultActions = mockMvc.perform(post("/api/v1/users/register")

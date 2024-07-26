@@ -1,14 +1,13 @@
-package org.personal.washingmachine.service.microservice.common;
+package org.personal.shared.clients;
 
-import org.personal.washingmachine.entity.dtos.ProductModelTypeDTO;
-import org.personal.washingmachine.service.microservice.CustomErrorDecoder;
+import org.personal.shared.clients.config.CustomErrorDecoder;
+import org.personal.shared.clients.dtos.ProductModelTypeDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-//TODO: Move to shared module
 @FeignClient(
         value = "PRODUCT",
         configuration = CustomErrorDecoder.class,

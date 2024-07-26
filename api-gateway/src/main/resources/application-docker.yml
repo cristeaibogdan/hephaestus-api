@@ -17,8 +17,7 @@ spring:
             - Path=/api/v1/washing-machines/**, /api/v1/users/**
 
         - id: product
-          #TODO: Change this URI to product:8081!
-          uri: http://washing-machine:8080
+          uri: http://washing-machine:8081
           predicates:
             - Path=/api/v1/products/**
 

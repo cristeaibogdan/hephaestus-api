@@ -1,4 +1,4 @@
-package org.personal.washingmachine.service.microservice;
+package org.personal.shared.clients.config;
 
 import feign.Response;
 import feign.codec.ErrorDecoder;
@@ -12,7 +12,6 @@ import java.io.IOException;
 /**
  * <p> This class is responsible for decoding {@link org.personal.shared.exception.CustomException} thrown by other microservices.
  */
-//TODO: Move to shared module
 public class CustomErrorDecoder implements ErrorDecoder {
 
 	private final ErrorDecoder defaultErrorDecoder = new Default();

@@ -1,6 +1,7 @@
 package org.personal.washingmachine.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.personal.shared.clients.ProductClient;
 import org.personal.washingmachine.entity.dtos.*;
 import org.personal.washingmachine.service.DamageCalculator;
 import org.personal.washingmachine.service.ReportGenerator;
@@ -48,6 +49,17 @@ class WashingMachineController {
 	@GetMapping(value = "/{serialNumber}/report")
 	WashingMachineReportDTO getWashingMachineReport(@PathVariable String serialNumber) {
 		return reportGenerator.getWashingMachineReport(serialNumber);
+	}
+
+	// *****************************************
+	// Exception Propagation Test Endpoint
+	// *****************************************
+	//TODO: To be deleted
+	private final ProductClient productClient;
+
+	@GetMapping("/{category}/manufacturers")
+	List<String> getManufacturers(@PathVariable String category) {
+		return productClient.getManufacturers(category);
 	}
 
 //*********************************************************************************************

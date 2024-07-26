@@ -1,4 +1,4 @@
-package org.personal.washingmachine.service.microservice;
+package org.personal.shared.clients.config;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
  * <p> This class is used to attach headers to a request sent via OpenFein.
  * <p> By default OpenFeign does not propagate the requests' headers, they need to be manually added
  */
-//TODO: Move to shared module
 @Configuration
 @RequiredArgsConstructor
 public class FeignClientInterceptor implements RequestInterceptor {
