@@ -9,8 +9,8 @@ import org.personal.washingmachine.entity.dtos.UserCredentialsDTO;
 import org.personal.washingmachine.entity.dtos.UserDTO;
 import org.personal.washingmachine.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

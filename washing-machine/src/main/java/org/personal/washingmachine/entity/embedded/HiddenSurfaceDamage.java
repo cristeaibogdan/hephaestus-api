@@ -1,12 +1,11 @@
 package org.personal.washingmachine.entity.embedded;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
 
 @Getter
 @AllArgsConstructor

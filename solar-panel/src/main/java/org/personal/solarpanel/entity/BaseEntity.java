@@ -1,8 +1,7 @@
 package org.personal.solarpanel.entity;
 
+import jakarta.persistence.*;
 import lombok.Getter;
-
-import javax.persistence.*;
 
 @Getter
 @MappedSuperclass

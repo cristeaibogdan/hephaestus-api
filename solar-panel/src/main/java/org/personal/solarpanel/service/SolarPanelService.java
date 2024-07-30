@@ -4,8 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.personal.solarpanel.entity.SolarPanel;
 import org.personal.solarpanel.repository.SolarPanelRepository;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor

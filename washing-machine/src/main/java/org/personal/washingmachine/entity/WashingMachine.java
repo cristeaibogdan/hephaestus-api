@@ -1,15 +1,14 @@
 package org.personal.washingmachine.entity;
 
 import com.google.common.collect.ImmutableList;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static lombok.AccessLevel.NONE;

@@ -1,6 +1,7 @@
 package org.personal.shared.exception;
 
 import feign.RetryableException;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p> Responsible for handling and logging all Exceptions thrown in the entire application.
@@ -53,7 +53,7 @@ class GlobalExceptionHandler {
 // ************************************************************
 
 	@ExceptionHandler(FeignPropagatedException.class)
-	String handleFeignPropagatedException(FeignPropagatedException e, HttpServletRequest request) {
+	String handleFeignPropagatedException(FeignPropagatedException e) {
 		log.error("Feign propagated exception: ", e);
 		return e.getMessage();
 	}

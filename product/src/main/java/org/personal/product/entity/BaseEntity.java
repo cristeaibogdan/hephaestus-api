@@ -1,14 +1,14 @@
 package org.personal.product.entity;
 
+import jakarta.persistence.*;
 import lombok.Getter;
-
-import javax.persistence.*;
 
 @Getter
 @MappedSuperclass
 abstract class BaseEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 }

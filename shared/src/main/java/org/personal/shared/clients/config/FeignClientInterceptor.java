@@ -2,11 +2,11 @@ package org.personal.shared.clients.config;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p> This class is used to attach headers to a request sent via OpenFein.

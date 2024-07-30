@@ -4,8 +4,6 @@ server:
 spring:
   application:
     name: api-gateway
-  zipkin:
-    base-url: http://zipkin:9411
 
   cloud:
     gateway:
@@ -31,6 +29,14 @@ spring:
               - PUT
               - DELETE
             allowedHeaders: "*"
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: http://zipkin:9411/api/v2/spans
 
 logging:
   level:
