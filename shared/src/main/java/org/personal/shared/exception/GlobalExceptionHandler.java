@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * <p> This class is responsible for handling and logging all Exceptions thrown in this application.
+ * <p> Responsible for handling and logging all Exceptions thrown in the entire application.
  * <p> The {@link HttpStatus#I_AM_A_TEAPOT} is used to distinguish between custom and general exceptions in the frontend. Subject to change!
  * <p> Usage:
  * <p> 1. Define a key in the enum {@link org.personal.shared.exception.ErrorCode}

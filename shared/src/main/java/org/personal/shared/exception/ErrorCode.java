@@ -1,7 +1,7 @@
 package org.personal.shared.exception;
 
 /**
- * <p> This class is responsible for holding keys that are used in {@link org.personal.shared.exception.GlobalExceptionHandler} to retrieve translated user messages.
+ * <p> Enum responsible for holding keys that are used in {@link org.personal.shared.exception.GlobalExceptionHandler} to retrieve translated user messages.
  * <p> Keys should be descriptive and illustrate why the exception was thrown in the first place.
  */
 

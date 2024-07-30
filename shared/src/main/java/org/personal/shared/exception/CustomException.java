@@ -3,7 +3,7 @@ package org.personal.shared.exception;
 import lombok.Getter;
 
 /**
- * <p> RuntimeException used to handle business logic. Use cases:
+ * <p> Custom implementation of RuntimeException used to handle business logic. Use cases:
  * <p> a. Most common scenario
  * <pre>{@code throw new CustomException(ErrorCode.SERIAL_NUMBER_NOT_FOUND)}</pre>
  * <p> b. Scenario where you have to rethrow a checked exception
