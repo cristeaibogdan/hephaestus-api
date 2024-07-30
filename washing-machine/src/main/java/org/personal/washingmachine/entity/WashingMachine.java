@@ -1,5 +1,6 @@
 package org.personal.washingmachine.entity;
 
+import com.google.common.collect.ImmutableList;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -64,7 +65,7 @@ public class WashingMachine extends BaseEntity {
     private WashingMachineDetails washingMachineDetails;
 
     // TODO: Consider adding nonNull argument in constructor argument.
-    @Setter(NONE)
+    @Setter(NONE) @Getter(NONE)
     @JoinColumn(name = "washing_machine_id")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<WashingMachineImage> washingMachineImages = new ArrayList<>();
@@ -88,8 +89,8 @@ public class WashingMachine extends BaseEntity {
         return washingMachineDetails;
     }
 
-    public List<WashingMachineImage> getWashingMachineImages() {
-        return Collections.unmodifiableList(washingMachineImages);
+    public ImmutableList<WashingMachineImage> getWashingMachineImages() {
+        return ImmutableList.copyOf(washingMachineImages);
     }
 
     public void addImage(WashingMachineImage washingMachineImage) {
