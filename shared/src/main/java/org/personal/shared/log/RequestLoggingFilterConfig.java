@@ -1,4 +1,4 @@
-package org.personal.washingmachine.configuration;
+package org.personal.shared.log;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
