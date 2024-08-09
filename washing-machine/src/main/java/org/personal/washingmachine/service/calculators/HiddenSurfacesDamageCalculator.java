@@ -49,13 +49,13 @@ public class HiddenSurfacesDamageCalculator implements ICalculator {
 	}
 
 	int calculateSmallDamageLevel(WashingMachineDetailsDTO dto) {
-		return dto.hiddenSurfacesHasSmallDamage()
+		return dto.hiddenSurfacesHasMinorDamage()
 				? 2
 				: 0;
 	}
 
 	int calculateBigDamageLevel(WashingMachineDetailsDTO dto) {
-		return dto.hiddenSurfacesHasBigDamage()
+		return dto.hiddenSurfacesHasMajorDamage()
 				? 3
 				: 0;
 	}

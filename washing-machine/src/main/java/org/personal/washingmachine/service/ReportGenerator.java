@@ -132,11 +132,11 @@ public class ReportGenerator {
 		parameters.put("visibleSurfacesHasDents", washingMachineDetails.getVisibleSurfaceDamage().isVisibleSurfacesHasDents());
 		parameters.put("visibleSurfacesDentsDepth", washingMachineDetails.getVisibleSurfaceDamage().getVisibleSurfacesDentsDepth());
 
-		parameters.put("visibleSurfacesHasSmallDamage", washingMachineDetails.getVisibleSurfaceDamage().isVisibleSurfacesHasSmallDamage());
-		parameters.put("visibleSurfacesSmallDamage", washingMachineDetails.getVisibleSurfaceDamage().getVisibleSurfacesSmallDamage());
+		parameters.put("visibleSurfacesHasMinorDamage", washingMachineDetails.getVisibleSurfaceDamage().isVisibleSurfacesHasMinorDamage());
+		parameters.put("visibleSurfacesMinorDamage", washingMachineDetails.getVisibleSurfaceDamage().getVisibleSurfacesMinorDamage());
 
-		parameters.put("visibleSurfacesHasBigDamage", washingMachineDetails.getVisibleSurfaceDamage().isVisibleSurfacesHasBigDamage());
-		parameters.put("visibleSurfacesBigDamage", washingMachineDetails.getVisibleSurfaceDamage().getVisibleSurfacesBigDamage());
+		parameters.put("visibleSurfacesHasMajorDamage", washingMachineDetails.getVisibleSurfaceDamage().isVisibleSurfacesHasMajorDamage());
+		parameters.put("visibleSurfacesMajorDamage", washingMachineDetails.getVisibleSurfaceDamage().getVisibleSurfacesMajorDamage());
 
 		// ********************************
 		// *** Hidden Surfaces
@@ -150,11 +150,11 @@ public class ReportGenerator {
 		parameters.put("hiddenSurfacesHasDents", washingMachineDetails.getHiddenSurfaceDamage().isHiddenSurfacesHasDents());
 		parameters.put("hiddenSurfacesDentsDepth", washingMachineDetails.getHiddenSurfaceDamage().getHiddenSurfacesDentsDepth());
 
-		parameters.put("hiddenSurfacesHasSmallDamage", washingMachineDetails.getHiddenSurfaceDamage().isHiddenSurfacesHasSmallDamage());
-		parameters.put("hiddenSurfacesSmallDamage", washingMachineDetails.getHiddenSurfaceDamage().getHiddenSurfacesSmallDamage());
+		parameters.put("hiddenSurfacesHasMinorDamage", washingMachineDetails.getHiddenSurfaceDamage().isHiddenSurfacesHasMinorDamage());
+		parameters.put("hiddenSurfacesMinorDamage", washingMachineDetails.getHiddenSurfaceDamage().getHiddenSurfacesMinorDamage());
 
-		parameters.put("hiddenSurfacesHasBigDamage", washingMachineDetails.getHiddenSurfaceDamage().isHiddenSurfacesHasBigDamage());
-		parameters.put("hiddenSurfacesBigDamage", washingMachineDetails.getHiddenSurfaceDamage().getHiddenSurfacesBigDamage());
+		parameters.put("hiddenSurfacesHasMajorDamage", washingMachineDetails.getHiddenSurfaceDamage().isHiddenSurfacesHasMajorDamage());
+		parameters.put("hiddenSurfacesMajorDamage", washingMachineDetails.getHiddenSurfaceDamage().getHiddenSurfacesMajorDamage());
 
 		// ********************************
 		// *** Pricing

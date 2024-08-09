@@ -20,11 +20,11 @@ public record WashingMachineDetailsDTO(
         boolean visibleSurfacesHasDents,
         double visibleSurfacesDentsDepth,
 
-        boolean visibleSurfacesHasSmallDamage,
-        String visibleSurfacesSmallDamage,
+        boolean visibleSurfacesHasMinorDamage,
+        String visibleSurfacesMinorDamage,
 
-        boolean visibleSurfacesHasBigDamage,
-        String visibleSurfacesBigDamage,
+        boolean visibleSurfacesHasMajorDamage,
+        String visibleSurfacesMajorDamage,
 
         // HIDDEN SURFACES
         boolean applicableHiddenSurfacesDamage,
@@ -35,11 +35,11 @@ public record WashingMachineDetailsDTO(
         boolean hiddenSurfacesHasDents,
         double hiddenSurfacesDentsDepth,
 
-        boolean hiddenSurfacesHasSmallDamage,
-        String hiddenSurfacesSmallDamage,
+        boolean hiddenSurfacesHasMinorDamage,
+        String hiddenSurfacesMinorDamage,
 
-        boolean hiddenSurfacesHasBigDamage,
-        String hiddenSurfacesBigDamage,
+        boolean hiddenSurfacesHasMajorDamage,
+        String hiddenSurfacesMajorDamage,
 
         // PRICING
         Integer price,

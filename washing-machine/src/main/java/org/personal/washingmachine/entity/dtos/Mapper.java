@@ -66,20 +66,20 @@ public class Mapper {
                     entity.getVisibleSurfaceDamage().getVisibleSurfacesScratchesLength(),
                     entity.getVisibleSurfaceDamage().isVisibleSurfacesHasDents(),
                     entity.getVisibleSurfaceDamage().getVisibleSurfacesDentsDepth(),
-                    entity.getVisibleSurfaceDamage().isVisibleSurfacesHasSmallDamage(),
-                    entity.getVisibleSurfaceDamage().getVisibleSurfacesSmallDamage(),
-                    entity.getVisibleSurfaceDamage().isVisibleSurfacesHasBigDamage(),
-                    entity.getVisibleSurfaceDamage().getVisibleSurfacesBigDamage(),
+                    entity.getVisibleSurfaceDamage().isVisibleSurfacesHasMinorDamage(),
+                    entity.getVisibleSurfaceDamage().getVisibleSurfacesMinorDamage(),
+                    entity.getVisibleSurfaceDamage().isVisibleSurfacesHasMajorDamage(),
+                    entity.getVisibleSurfaceDamage().getVisibleSurfacesMajorDamage(),
 
                     entity.getHiddenSurfaceDamage().isApplicableHiddenSurfacesDamage(),
                     entity.getHiddenSurfaceDamage().isHiddenSurfacesHasScratches(),
                     entity.getHiddenSurfaceDamage().getHiddenSurfacesScratchesLength(),
                     entity.getHiddenSurfaceDamage().isHiddenSurfacesHasDents(),
                     entity.getHiddenSurfaceDamage().getHiddenSurfacesDentsDepth(),
-                    entity.getHiddenSurfaceDamage().isHiddenSurfacesHasSmallDamage(),
-                    entity.getHiddenSurfaceDamage().getHiddenSurfacesSmallDamage(),
-                    entity.getHiddenSurfaceDamage().isHiddenSurfacesHasBigDamage(),
-                    entity.getHiddenSurfaceDamage().getHiddenSurfacesBigDamage(),
+                    entity.getHiddenSurfaceDamage().isHiddenSurfacesHasMinorDamage(),
+                    entity.getHiddenSurfaceDamage().getHiddenSurfacesMinorDamage(),
+                    entity.getHiddenSurfaceDamage().isHiddenSurfacesHasMajorDamage(),
+                    entity.getHiddenSurfaceDamage().getHiddenSurfacesMajorDamage(),
 
                     entity.getPrice(),
                     entity.getRepairPrice()
@@ -101,10 +101,10 @@ public class Mapper {
                             dto.visibleSurfacesScratchesLength(),
                             dto.visibleSurfacesHasDents(),
                             dto.visibleSurfacesDentsDepth(),
-                            dto.visibleSurfacesHasSmallDamage(),
-                            dto.visibleSurfacesSmallDamage(),
-                            dto.visibleSurfacesHasBigDamage(),
-                            dto.visibleSurfacesBigDamage()
+                            dto.visibleSurfacesHasMinorDamage(),
+                            dto.visibleSurfacesMinorDamage(),
+                            dto.visibleSurfacesHasMajorDamage(),
+                            dto.visibleSurfacesMajorDamage()
                     ),
 
                     new HiddenSurfaceDamage(
@@ -113,10 +113,10 @@ public class Mapper {
                             dto.hiddenSurfacesScratchesLength(),
                             dto.hiddenSurfacesHasDents(),
                             dto.hiddenSurfacesDentsDepth(),
-                            dto.hiddenSurfacesHasSmallDamage(),
-                            dto.hiddenSurfacesSmallDamage(),
-                            dto.hiddenSurfacesHasBigDamage(),
-                            dto.hiddenSurfacesBigDamage()
+                            dto.hiddenSurfacesHasMinorDamage(),
+                            dto.hiddenSurfacesMinorDamage(),
+                            dto.hiddenSurfacesHasMajorDamage(),
+                            dto.hiddenSurfacesMajorDamage()
                     ),
 
                     dto.price(),

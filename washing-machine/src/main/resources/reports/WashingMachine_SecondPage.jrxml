@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
+<!-- Created with Jaspersoft Studio version 7.0.0.final using JasperReports Library version 6.20.6  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="WashingMachine_SecondPage" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="95d78610-7fd0-4fc9-9e1b-33a5291603d6">
 	<parameter name="applicablePackageDamage" class="java.lang.Boolean"/>
 	<parameter name="packageDamaged" class="java.lang.Boolean"/>
@@ -10,19 +10,19 @@
 	<parameter name="visibleSurfacesScratchesLength" class="java.lang.Double"/>
 	<parameter name="visibleSurfacesHasDents" class="java.lang.Boolean"/>
 	<parameter name="visibleSurfacesDentsDepth" class="java.lang.Double"/>
-	<parameter name="visibleSurfacesHasSmallDamage" class="java.lang.Boolean"/>
-	<parameter name="visibleSurfacesSmallDamage" class="java.lang.String"/>
-	<parameter name="visibleSurfacesHasBigDamage" class="java.lang.Boolean"/>
-	<parameter name="visibleSurfacesBigDamage" class="java.lang.String"/>
+	<parameter name="visibleSurfacesHasMinorDamage" class="java.lang.Boolean"/>
+	<parameter name="visibleSurfacesMinorDamage" class="java.lang.String"/>
+	<parameter name="visibleSurfacesHasMajorDamage" class="java.lang.Boolean"/>
+	<parameter name="visibleSurfacesMajorDamage" class="java.lang.String"/>
 	<parameter name="applicableHiddenSurfacesDamage" class="java.lang.Boolean"/>
 	<parameter name="hiddenSurfacesHasScratches" class="java.lang.Boolean"/>
 	<parameter name="hiddenSurfacesScratchesLength" class="java.lang.Double"/>
 	<parameter name="hiddenSurfacesHasDents" class="java.lang.Boolean"/>
 	<parameter name="hiddenSurfacesDentsDepth" class="java.lang.Double"/>
-	<parameter name="hiddenSurfacesHasSmallDamage" class="java.lang.Boolean"/>
-	<parameter name="hiddenSurfacesSmallDamage" class="java.lang.String"/>
-	<parameter name="hiddenSurfacesHasBigDamage" class="java.lang.Boolean"/>
-	<parameter name="hiddenSurfacesBigDamage" class="java.lang.String"/>
+	<parameter name="hiddenSurfacesHasMinorDamage" class="java.lang.Boolean"/>
+	<parameter name="hiddenSurfacesMinorDamage" class="java.lang.String"/>
+	<parameter name="hiddenSurfacesHasMajorDamage" class="java.lang.Boolean"/>
+	<parameter name="hiddenSurfacesMajorDamage" class="java.lang.String"/>
 	<parameter name="price" class="java.lang.Integer"/>
 	<parameter name="repairPrice" class="java.lang.Integer"/>
 	<queryString>
@@ -32,7 +32,7 @@
 		<band height="598" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<staticText>
-				<reportElement x="0" y="0" width="555" height="25" uuid="ae42f85b-fe9f-45db-90e2-251d3a608d85">
+				<reportElement x="0" y="0" width="555" height="25" uuid="3ea1dcc8-4572-4163-8657-ee2e6a0c6766">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box bottomPadding="0">
@@ -174,12 +174,12 @@
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-						<printWhenExpression><![CDATA[$P{visibleSurfacesHasSmallDamage}]]></printWhenExpression>
+						<printWhenExpression><![CDATA[$P{visibleSurfacesHasMinorDamage}]]></printWhenExpression>
 					</reportElement>
 					<textElement verticalAlignment="Top">
 						<font fontName="DejaVu Sans" size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA["\u2022 Small Damages: "+$P{visibleSurfacesSmallDamage}]]></textFieldExpression>
+					<textFieldExpression><![CDATA["\u2022 Minor Damages: "+$P{visibleSurfacesMinorDamage}]]></textFieldExpression>
 				</textField>
 				<rectangle radius="0">
 					<reportElement mode="Opaque" x="0" y="110" width="130" height="10" backcolor="#6FA889" uuid="3823108c-05be-40a0-9abc-6f477f7d8097">
@@ -196,38 +196,38 @@
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
-						<printWhenExpression><![CDATA[$P{visibleSurfacesHasSmallDamage}]]></printWhenExpression>
+						<printWhenExpression><![CDATA[$P{visibleSurfacesHasMinorDamage}]]></printWhenExpression>
 					</reportElement>
 					<textElement verticalAlignment="Top">
 						<font fontName="DejaVu Sans" size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$P{visibleSurfacesSmallDamage}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{visibleSurfacesMinorDamage}]]></textFieldExpression>
 				</textField>
 				<frame>
 					<reportElement positionType="Float" x="20" y="90" width="535" height="20" isRemoveLineWhenBlank="true" uuid="a86b78bf-10cb-4996-8da3-aa09bb5dd431">
-						<printWhenExpression><![CDATA[$P{visibleSurfacesHasBigDamage}]]></printWhenExpression>
+						<printWhenExpression><![CDATA[$P{visibleSurfacesHasMajorDamage}]]></printWhenExpression>
 					</reportElement>
 					<textField>
-						<reportElement positionType="Float" x="0" y="0" width="100" height="20" isRemoveLineWhenBlank="true" uuid="48618b71-aa45-490c-baae-96271c5b2240">
+						<reportElement positionType="Float" x="0" y="0" width="115" height="20" isRemoveLineWhenBlank="true" uuid="48618b71-aa45-490c-baae-96271c5b2240">
 							<property name="com.jaspersoft.studio.unit.x" value="px"/>
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
-							<printWhenExpression><![CDATA[$P{visibleSurfacesHasBigDamage}]]></printWhenExpression>
+							<printWhenExpression><![CDATA[$P{visibleSurfacesHasMajorDamage}]]></printWhenExpression>
 						</reportElement>
 						<textElement verticalAlignment="Top">
 							<font fontName="DejaVu Sans" size="12"/>
 						</textElement>
-						<textFieldExpression><![CDATA["\u2022 Big Damages: "]]></textFieldExpression>
+						<textFieldExpression><![CDATA["\u2022 Major Damages: "]]></textFieldExpression>
 					</textField>
 					<textField textAdjust="StretchHeight">
-						<reportElement positionType="Float" x="100" y="0" width="435" height="20" isRemoveLineWhenBlank="true" uuid="ab8871de-42da-465e-aafa-4d78f84d3794">
+						<reportElement positionType="Float" x="115" y="0" width="419" height="20" isRemoveLineWhenBlank="true" uuid="ab8871de-42da-465e-aafa-4d78f84d3794">
 							<property name="com.jaspersoft.studio.unit.x" value="px"/>
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
-							<printWhenExpression><![CDATA[$P{visibleSurfacesHasBigDamage}]]></printWhenExpression>
+							<printWhenExpression><![CDATA[$P{visibleSurfacesHasMajorDamage}]]></printWhenExpression>
 						</reportElement>
 						<textElement verticalAlignment="Top">
 							<font fontName="DejaVu Sans" size="12"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$P{visibleSurfacesBigDamage}]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$P{visibleSurfacesMajorDamage}]]></textFieldExpression>
 					</textField>
 				</frame>
 			</frame>
@@ -284,12 +284,12 @@
 					<reportElement positionType="Float" x="20" y="70" width="115" height="20" isRemoveLineWhenBlank="true" uuid="fbdab9e2-67ab-4262-a5dd-7b019d41ab8e">
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
-						<printWhenExpression><![CDATA[$P{hiddenSurfacesHasSmallDamage}]]></printWhenExpression>
+						<printWhenExpression><![CDATA[$P{hiddenSurfacesHasMinorDamage}]]></printWhenExpression>
 					</reportElement>
 					<textElement verticalAlignment="Top">
 						<font fontName="DejaVu Sans" size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA["\u2022 Small Damages: "]]></textFieldExpression>
+					<textFieldExpression><![CDATA["\u2022 Minor Damages: "]]></textFieldExpression>
 				</textField>
 				<rectangle radius="0">
 					<reportElement mode="Opaque" x="0" y="110" width="130" height="10" backcolor="#6FA889" uuid="a746244b-3442-47c5-81f6-2f10fb09f30d">
@@ -303,42 +303,42 @@
 				</rectangle>
 				<frame>
 					<reportElement positionType="Float" x="20" y="90" width="535" height="20" isRemoveLineWhenBlank="true" uuid="9abd4671-ea9b-46ad-b8e2-9b335caa35da">
-						<printWhenExpression><![CDATA[$P{hiddenSurfacesHasBigDamage}]]></printWhenExpression>
+						<printWhenExpression><![CDATA[$P{hiddenSurfacesHasMajorDamage}]]></printWhenExpression>
 					</reportElement>
 					<box bottomPadding="0"/>
 					<textField>
-						<reportElement positionType="Float" x="0" y="0" width="100" height="20" isRemoveLineWhenBlank="true" uuid="270a0dc0-5014-4d49-9ece-cff752414319">
+						<reportElement positionType="Float" x="0" y="0" width="115" height="20" isRemoveLineWhenBlank="true" uuid="270a0dc0-5014-4d49-9ece-cff752414319">
 							<property name="com.jaspersoft.studio.unit.x" value="px"/>
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
-							<printWhenExpression><![CDATA[$P{hiddenSurfacesHasBigDamage}]]></printWhenExpression>
+							<printWhenExpression><![CDATA[$P{hiddenSurfacesHasMajorDamage}]]></printWhenExpression>
 						</reportElement>
 						<textElement verticalAlignment="Top">
 							<font fontName="DejaVu Sans" size="12"/>
 						</textElement>
-						<textFieldExpression><![CDATA["\u2022 Big Damages: "]]></textFieldExpression>
+						<textFieldExpression><![CDATA["\u2022 Major Damages: "]]></textFieldExpression>
 					</textField>
 					<textField textAdjust="StretchHeight">
-						<reportElement positionType="Float" x="100" y="0" width="435" height="20" isRemoveLineWhenBlank="true" uuid="f9aa68c8-999a-4493-a04b-0ccab3e9d2e9">
+						<reportElement positionType="Float" x="115" y="0" width="419" height="20" isRemoveLineWhenBlank="true" uuid="f9aa68c8-999a-4493-a04b-0ccab3e9d2e9">
 							<property name="com.jaspersoft.studio.unit.x" value="px"/>
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
-							<printWhenExpression><![CDATA[$P{hiddenSurfacesHasBigDamage}]]></printWhenExpression>
+							<printWhenExpression><![CDATA[$P{hiddenSurfacesHasMajorDamage}]]></printWhenExpression>
 						</reportElement>
 						<textElement verticalAlignment="Top">
 							<font fontName="DejaVu Sans" size="12"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$P{hiddenSurfacesBigDamage}]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$P{hiddenSurfacesMajorDamage}]]></textFieldExpression>
 					</textField>
 				</frame>
 				<textField textAdjust="StretchHeight">
 					<reportElement positionType="Float" x="135" y="70" width="420" height="20" isRemoveLineWhenBlank="true" uuid="acc6188f-5474-4963-96f8-038c62e4020a">
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
-						<printWhenExpression><![CDATA[$P{hiddenSurfacesHasSmallDamage}]]></printWhenExpression>
+						<printWhenExpression><![CDATA[$P{hiddenSurfacesHasMinorDamage}]]></printWhenExpression>
 					</reportElement>
 					<textElement verticalAlignment="Top">
 						<font fontName="DejaVu Sans" size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$P{hiddenSurfacesSmallDamage}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{hiddenSurfacesMinorDamage}]]></textFieldExpression>
 				</textField>
 				<frame>
 					<reportElement positionType="Float" x="0" y="120" width="555" height="70" isRemoveLineWhenBlank="true" uuid="efba423a-4992-48f8-8482-5dcf654664e7">

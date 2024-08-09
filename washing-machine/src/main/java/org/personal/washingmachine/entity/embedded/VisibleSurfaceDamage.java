@@ -29,16 +29,16 @@ public class VisibleSurfaceDamage {
     private double visibleSurfacesDentsDepth;
 
 
-    @Column(name = "visible_surfaces_has_small_damage")
-    private boolean visibleSurfacesHasSmallDamage;
+    @Column(name = "visible_surfaces_has_minor_damage")
+    private boolean visibleSurfacesHasMinorDamage;
 
-    @Column(name = "visible_surfaces_small_damage")
-    private String visibleSurfacesSmallDamage;
+    @Column(name = "visible_surfaces_minor_damage")
+    private String visibleSurfacesMinorDamage;
 
 
-    @Column(name = "visible_surfaces_has_big_damage")
-    private boolean visibleSurfacesHasBigDamage;
+    @Column(name = "visible_surfaces_has_major_damage")
+    private boolean visibleSurfacesHasMajorDamage;
 
-    @Column(name = "visible_surfaces_big_damage")
-    private String visibleSurfacesBigDamage;
+    @Column(name = "visible_surfaces_major_damage")
+    private String visibleSurfacesMajorDamage;
 }

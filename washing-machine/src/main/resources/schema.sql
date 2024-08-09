@@ -34,11 +34,11 @@ CREATE TABLE public.user (
    visible_surfaces_has_dents BOOLEAN,
    visible_surfaces_dents_depth DOUBLE PRECISION,
 
-   visible_surfaces_has_small_damage BOOLEAN,
-   visible_surfaces_small_damage VARCHAR,
+   visible_surfaces_has_minor_damage BOOLEAN,
+   visible_surfaces_minor_damage VARCHAR,
 
-   visible_surfaces_has_big_damage BOOLEAN,
-   visible_surfaces_big_damage VARCHAR,
+   visible_surfaces_has_major_damage BOOLEAN,
+   visible_surfaces_major_damage VARCHAR,
 
    -- HIDDEN SURFACES
    applicable_hidden_surfaces_damage BOOLEAN,
@@ -48,11 +48,11 @@ CREATE TABLE public.user (
    hidden_surfaces_has_dents BOOLEAN,
    hidden_surfaces_dents_depth DOUBLE PRECISION,
 
-   hidden_surfaces_has_small_damage BOOLEAN,
-   hidden_surfaces_small_damage VARCHAR,
+   hidden_surfaces_has_minor_damage BOOLEAN,
+   hidden_surfaces_minor_damage VARCHAR,
 
-   hidden_surfaces_has_big_damage BOOLEAN,
-   hidden_surfaces_big_damage VARCHAR,
+   hidden_surfaces_has_major_damage BOOLEAN,
+   hidden_surfaces_major_damage VARCHAR,
 
    price INTEGER,
    repair_price INTEGER

@@ -30,16 +30,16 @@ public class HiddenSurfaceDamage {
     private double hiddenSurfacesDentsDepth;
 
 
-    @Column(name = "hidden_surfaces_has_small_damage")
-    private boolean hiddenSurfacesHasSmallDamage;
+    @Column(name = "hidden_surfaces_has_minor_damage")
+    private boolean hiddenSurfacesHasMinorDamage;
 
-    @Column(name = "hidden_surfaces_small_damage")
-    private String hiddenSurfacesSmallDamage;
+    @Column(name = "hidden_surfaces_minor_damage")
+    private String hiddenSurfacesMinorDamage;
 
 
-    @Column(name = "hidden_surfaces_has_big_damage")
-    private boolean hiddenSurfacesHasBigDamage;
+    @Column(name = "hidden_surfaces_has_major_damage")
+    private boolean hiddenSurfacesHasMajorDamage;
 
-    @Column(name = "hidden_surfaces_big_damage")
-    private String hiddenSurfacesBigDamage;
+    @Column(name = "hidden_surfaces_major_damage")
+    private String hiddenSurfacesMajorDamage;
 }
