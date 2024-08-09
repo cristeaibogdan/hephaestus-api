@@ -155,7 +155,7 @@ class VisibleSurfacesDamageCalculatorTest {
 		void should_Return2_When_VisibleSurfacesHasSmallDamageIsTrue() {
 			// GIVEN
 			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
-					.visibleSurfacesHasSmallDamage(true)
+					.visibleSurfacesHasMinorDamage(true)
 					.build();
 
 			int expected = 2;
@@ -171,7 +171,7 @@ class VisibleSurfacesDamageCalculatorTest {
 		void should_Return0_When_VisibleSurfacesHasSmallDamageIsFalse() {
 			// GIVEN
 			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
-					.visibleSurfacesHasSmallDamage(false)
+					.visibleSurfacesHasMinorDamage(false)
 					.build();
 
 			int expected = 0;
@@ -191,7 +191,7 @@ class VisibleSurfacesDamageCalculatorTest {
 		void should_Return3_When_VisibleSurfacesHasBigDamageIsTrue() {
 			// GIVEN
 			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
-					.visibleSurfacesHasBigDamage(true)
+					.visibleSurfacesHasMajorDamage(true)
 					.build();
 
 			int expected = 3;
@@ -207,7 +207,7 @@ class VisibleSurfacesDamageCalculatorTest {
 		void should_Return0_When_VisibleSurfacesHasBigDamageIsFalse() {
 			// GIVEN
 			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
-					.visibleSurfacesHasBigDamage(false)
+					.visibleSurfacesHasMajorDamage(false)
 					.build();
 
 			int expected = 0;

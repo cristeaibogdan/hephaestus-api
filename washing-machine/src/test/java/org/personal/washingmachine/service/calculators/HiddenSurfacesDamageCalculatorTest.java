@@ -154,7 +154,7 @@ class HiddenSurfacesDamageCalculatorTest {
 		void should_Return2_When_HiddenSurfacesHasSmallDamageIsTrue() {
 			// GIVEN
 			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
-					.hiddenSurfacesHasSmallDamage(true)
+					.hiddenSurfacesHasMinorDamage(true)
 					.build();
 
 			int expected = 2;
@@ -170,7 +170,7 @@ class HiddenSurfacesDamageCalculatorTest {
 		void should_Return0_When_HiddenSurfacesHasSmallDamageIsFalse() {
 			// GIVEN
 			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
-					.hiddenSurfacesHasSmallDamage(false)
+					.hiddenSurfacesHasMinorDamage(false)
 					.build();
 
 			int expected = 0;
@@ -190,7 +190,7 @@ class HiddenSurfacesDamageCalculatorTest {
 		void should_Return3_When_HiddenSurfacesHasBigDamageIsTrue() {
 			// GIVEN
 			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
-					.hiddenSurfacesHasBigDamage(true)
+					.hiddenSurfacesHasMajorDamage(true)
 					.build();
 
 			int expected = 3;
@@ -206,7 +206,7 @@ class HiddenSurfacesDamageCalculatorTest {
 		void should_Return0_When_HiddenSurfacesHasBigDamageIsFalse() {
 			// GIVEN
 			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
-					.hiddenSurfacesHasBigDamage(false)
+					.hiddenSurfacesHasMajorDamage(false)
 					.build();
 
 			int expected = 0;
