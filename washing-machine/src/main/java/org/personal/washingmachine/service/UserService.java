@@ -9,7 +9,6 @@ import org.personal.washingmachine.entity.dtos.UserCredentialsDTO;
 import org.personal.washingmachine.entity.dtos.UserDTO;
 import org.personal.washingmachine.repository.UserRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -58,7 +57,6 @@ public class UserService {
                 .orElseThrow(() -> new CustomException(ErrorCode.INVALID_REGISTRATION_CODE));
     }
 
-    @Transactional
     public void register(UserDTO userDTO) {
         boolean existingEmail = userRepository.existsByEmail(userDTO.email());
         if (existingEmail) {

@@ -17,7 +17,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -77,7 +76,6 @@ public class WashingMachineService {
 				.orElseThrow(() -> new CustomException(ErrorCode.SERIAL_NUMBER_NOT_FOUND, serialNumber));
 	}
 
-	@Transactional
 	public void saveWashingMachine(WashingMachineDTO washingMachineDTO, List<MultipartFile> imageFiles) {
 
 		boolean existingSerialNumber = washingMachineRepository.existsBySerialNumber(washingMachineDTO.serialNumber());
