@@ -3,8 +3,8 @@ package org.personal.washingmachine.controller;
 import lombok.RequiredArgsConstructor;
 import org.personal.shared.clients.ProductClient;
 import org.personal.washingmachine.entity.dtos.*;
-import org.personal.washingmachine.service.DamageCalculator;
-import org.personal.washingmachine.service.ReportGenerator;
+import org.personal.washingmachine.service.WashingMachineDamageCalculator;
+import org.personal.washingmachine.service.WashingMachineReportGenerator;
 import org.personal.washingmachine.service.WashingMachineService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
@@ -19,36 +19,33 @@ import java.util.List;
 class WashingMachineController {
 
 	private final WashingMachineService washingMachineService;
-	private final DamageCalculator damageCalculator;
-	private final ReportGenerator reportGenerator;
+	private final WashingMachineDamageCalculator washingMachineDamageCalculator;
+	private final WashingMachineReportGenerator washingMachineReportGenerator;
 
 	@PostMapping
-	Page<WashingMachineSimpleDTO> getPaginatedAndFilteredWashingMachines(@RequestBody PageRequestDTO pageRequestDTO) {
-		return washingMachineService.getPaginatedAndFilteredWashingMachines(pageRequestDTO);
+	Page<WashingMachineSimpleDTO> loadPaginatedAndFiltered(@RequestBody PageRequestDTO pageRequestDTO) {
+		return washingMachineService.loadPaginatedAndFiltered(pageRequestDTO);
 	}
 
 	@GetMapping("/{serialNumber}/expanded")
-	WashingMachineExpandedDTO getWashingMachineExpanded(@PathVariable String serialNumber) {
-		return washingMachineService.getWashingMachineExpanded(serialNumber);
+	WashingMachineExpandedDTO loadExpanded(@PathVariable String serialNumber) {
+		return washingMachineService.loadExpanded(serialNumber);
 	}
 
 	@PostMapping(value = "/save", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	void saveWashingMachine(
-					@RequestPart WashingMachineDTO washingMachineDTO,
-					@RequestPart List<MultipartFile> imageFiles) {
-		washingMachineService.saveWashingMachine(washingMachineDTO, imageFiles);
+	void save(@RequestPart WashingMachineDTO washingMachineDTO,
+			  @RequestPart List<MultipartFile> imageFiles) {
+		washingMachineService.save(washingMachineDTO, imageFiles);
 	}
 
 	@PostMapping("/evaluate")
-	WashingMachineEvaluationDTO generateWashingMachineDamageEvaluation(
-					@RequestBody WashingMachineDetailsDTO washingMachineDetailsDTO) {
-
-		return damageCalculator.generateWashingMachineDamageEvaluation(washingMachineDetailsDTO);
+	WashingMachineEvaluationDTO getDamageEvaluation(@RequestBody WashingMachineDetailsDTO washingMachineDetailsDTO) {
+		return washingMachineDamageCalculator.getDamageEvaluation(washingMachineDetailsDTO);
 	}
 
 	@GetMapping(value = "/{serialNumber}/report")
-	WashingMachineReportDTO getWashingMachineReport(@PathVariable String serialNumber) {
-		return reportGenerator.getWashingMachineReport(serialNumber);
+	WashingMachineReportDTO getReport(@PathVariable String serialNumber) {
+		return washingMachineReportGenerator.getReport(serialNumber);
 	}
 
 	// *****************************************

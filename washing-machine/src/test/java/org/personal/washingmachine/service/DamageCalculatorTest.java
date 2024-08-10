@@ -30,7 +30,7 @@ class DamageCalculatorTest {
 	private PricingDamageCalculator pricingDamageCalculator;
 
 	@InjectMocks
-	private DamageCalculator underTest;
+	private WashingMachineDamageCalculator underTest;
 
 	@Nested
 	class testGetRecommendation {

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class DamageCalculator {
+public class WashingMachineDamageCalculator {
 
 	private final PackageDamageCalculator packageDamageCalculator;
 	private final VisibleSurfacesDamageCalculator visibleSurfacesDamageCalculator;
@@ -23,7 +23,8 @@ public class DamageCalculator {
 
 	// TODO ask:
 	// 1. Should I break the dto and only send the properties I to each class calculator?
-	public WashingMachineEvaluationDTO generateWashingMachineDamageEvaluation(WashingMachineDetailsDTO dto) {
+	// 2. Should I pass only the needed parameters to each method?
+	public WashingMachineEvaluationDTO getDamageEvaluation(WashingMachineDetailsDTO dto) {
 		int damageLevel = getDamageLevel(dto);
 		String recommendation = getRecommendation(damageLevel);
 		return new WashingMachineEvaluationDTO(damageLevel, recommendation);

@@ -3,8 +3,8 @@ package org.personal.washingmachine.controller;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.personal.shared.clients.ProductClient;
-import org.personal.washingmachine.service.DamageCalculator;
-import org.personal.washingmachine.service.ReportGenerator;
+import org.personal.washingmachine.service.WashingMachineDamageCalculator;
+import org.personal.washingmachine.service.WashingMachineReportGenerator;
 import org.personal.washingmachine.service.WashingMachineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -27,10 +27,10 @@ class WashingMachineControllerTest {
     WashingMachineService washingMachineServiceMock;
 
     @MockBean
-    DamageCalculator damageCalculatorMock;
+    WashingMachineDamageCalculator washingMachineDamageCalculatorMock;
 
     @MockBean
-    ReportGenerator reportGeneratorMock;
+    WashingMachineReportGenerator washingMachineReportGeneratorMock;
 
     @MockBean //TODO: To be deleted
     private ProductClient productClientMock;

@@ -31,7 +31,7 @@ import static org.personal.washingmachine.entity.dtos.Mapper.WashingMachineDetai
 public class WashingMachineService {
 	private final WashingMachineRepository washingMachineRepository;
 
-	public Page<WashingMachineSimpleDTO> getPaginatedAndFilteredWashingMachines(PageRequestDTO pageRequestDTO) {
+	public Page<WashingMachineSimpleDTO> loadPaginatedAndFiltered(PageRequestDTO pageRequestDTO) {
 		PageRequest pageRequest = PageRequest.of(
 				pageRequestDTO.pageIndex(),
 				pageRequestDTO.pageSize(),
@@ -69,14 +69,14 @@ public class WashingMachineService {
 		);
 	}
 
-	public WashingMachineExpandedDTO getWashingMachineExpanded(String serialNumber) {
+	public WashingMachineExpandedDTO loadExpanded(String serialNumber) {
 		return washingMachineRepository
 				.findBySerialNumber(serialNumber)
 				.map(washingMachine -> WashingMachineMapper.toExpandedDTO(washingMachine))
 				.orElseThrow(() -> new CustomException(ErrorCode.SERIAL_NUMBER_NOT_FOUND, serialNumber));
 	}
 
-	public void saveWashingMachine(WashingMachineDTO washingMachineDTO, List<MultipartFile> imageFiles) {
+	public void save(WashingMachineDTO washingMachineDTO, List<MultipartFile> imageFiles) {
 
 		boolean existingSerialNumber = washingMachineRepository.existsBySerialNumber(washingMachineDTO.serialNumber());
 		if (existingSerialNumber) {

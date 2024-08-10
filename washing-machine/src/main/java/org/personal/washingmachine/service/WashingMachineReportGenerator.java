@@ -24,17 +24,17 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class ReportGenerator {
+public class WashingMachineReportGenerator {
 
 	private final WashingMachineRepository washingMachineRepository;
 
-	public WashingMachineReportDTO getWashingMachineReport(String serialNumber) {
+	public WashingMachineReportDTO getReport(String serialNumber) {
 		StopWatch stopWatch = StopWatch.createStarted();
 
 		WashingMachine washingMachine = getWashingMachine(serialNumber);
 
 		try {
-			Map<String, Object> parameters = getWashingMachineReportFirstPageParameters(washingMachine);
+			Map<String, Object> parameters = getReportFirstPageParameters(washingMachine);
 
 			InputStream reportPath = getClass().getClassLoader().getResourceAsStream("reports/WashingMachine_FirstPage.jrxml");
 			JasperReport compiledReport = JasperCompileManager.compileReport(reportPath);
@@ -66,7 +66,7 @@ public class ReportGenerator {
 				.orElseThrow(() -> new CustomException(ErrorCode.SERIAL_NUMBER_NOT_FOUND, serialNumber));
 	}
 
-	private Map<String, Object> getWashingMachineReportFirstPageParameters(WashingMachine washingMachine) throws JRException {
+	private Map<String, Object> getReportFirstPageParameters(WashingMachine washingMachine) throws JRException {
 
 		List<WashingMachineImage> images = washingMachine.getWashingMachineImages();
 
@@ -103,12 +103,12 @@ public class ReportGenerator {
 		parameters.put("recommendation", washingMachine.getRecommendation());
 		parameters.put("createdAt", washingMachine.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 		// Second page
-		parameters.put("secondPage", getWashingMachineSecondPageReport());
-		parameters.put("secondPageParameters", getWashingMachineReportSecondPageParameters(washingMachine.getWashingMachineDetails()));
+		parameters.put("secondPage", getSecondPageReport());
+		parameters.put("secondPageParameters", getReportSecondPageParameters(washingMachine.getWashingMachineDetails()));
 		return parameters;
 	}
 
-	private Map<String, Object> getWashingMachineReportSecondPageParameters(WashingMachineDetails washingMachineDetails) {
+	private Map<String, Object> getReportSecondPageParameters(WashingMachineDetails washingMachineDetails) {
 		Map<String, Object> parameters = new HashMap<>();
 
 		// ********************************
@@ -166,7 +166,7 @@ public class ReportGenerator {
 		return parameters;
 	}
 
-	private JasperReport getWashingMachineSecondPageReport() throws JRException {
+	private JasperReport getSecondPageReport() throws JRException {
 		InputStream reportPath = getClass().getClassLoader().getResourceAsStream("reports/WashingMachine_SecondPage.jrxml");
 		return JasperCompileManager.compileReport(reportPath);
 	}
