@@ -1,4 +1,4 @@
-package org.personal.washingmachine.entity.dtos;
+package org.personal.washingmachine.facade.dtos;
 
 public record OrganizationAndCountryDTO(
         String organization,

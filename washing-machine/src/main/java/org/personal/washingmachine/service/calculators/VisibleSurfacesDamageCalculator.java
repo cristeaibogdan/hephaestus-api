@@ -1,7 +1,7 @@
 package org.personal.washingmachine.service.calculators;
 
 import org.apache.commons.lang3.math.NumberUtils;
-import org.personal.washingmachine.entity.dtos.WashingMachineDetailsDTO;
+import org.personal.washingmachine.facade.dtos.WashingMachineDetailsDTO;
 import org.springframework.stereotype.Component;
 
 @Component

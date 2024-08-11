@@ -12,6 +12,5 @@ public interface WashingMachineRepository extends JpaRepository<WashingMachine, 
         QuerydslPredicateExecutor<WashingMachine> {
 
     boolean existsBySerialNumber(String serialNumber);
-
     Optional<WashingMachine> findBySerialNumber(String serialNumber);
 }

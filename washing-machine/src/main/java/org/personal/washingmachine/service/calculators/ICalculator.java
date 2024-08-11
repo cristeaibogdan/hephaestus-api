@@ -1,6 +1,6 @@
 package org.personal.washingmachine.service.calculators;
 
-import org.personal.washingmachine.entity.dtos.WashingMachineDetailsDTO;
+import org.personal.washingmachine.facade.dtos.WashingMachineDetailsDTO;
 
 interface ICalculator {
 

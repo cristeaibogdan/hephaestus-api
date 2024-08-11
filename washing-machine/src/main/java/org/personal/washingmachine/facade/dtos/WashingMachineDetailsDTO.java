@@ -1,4 +1,4 @@
-package org.personal.washingmachine.entity.dtos;
+package org.personal.washingmachine.facade.dtos;
 
 import lombok.Builder;
 

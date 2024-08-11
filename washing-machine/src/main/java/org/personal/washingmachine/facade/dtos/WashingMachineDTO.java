@@ -1,9 +1,8 @@
-package org.personal.washingmachine.entity.dtos;
+package org.personal.washingmachine.facade.dtos;
 
-public record PageRequestDTO(
-        Integer pageIndex,
-        Integer pageSize,
+import java.time.LocalDateTime;
 
+public record WashingMachineDTO(
         String category,
         String manufacturer,
 
@@ -17,7 +16,8 @@ public record PageRequestDTO(
 
         Integer damageLevel,
         String recommendation,
+        LocalDateTime createdAt,
 
-        String createdAt
+        WashingMachineDetailsDTO washingMachineDetailsDTO
 ) {
 }
