@@ -61,9 +61,9 @@ The microservice `washing-machine` may fail to recognize `QWashingMachine` gener
 
 **Solution:**
 
-   1. Run Maven `clean` and `install`
-   2. Navigate to the `washing-machine-domain` module directory.
-   3. Go to the `target` directory
+   1. Run Maven `clean` and `install` for `hephaestus-api`
+   2. Navigate to `washing-machine-domain` module directory.
+   3. Go to `target` directory
    4. Open `generated-sources` directory
    5. Right click `annotations`, select `Mark Directory as` and choose `Generated Sources Root`
 
