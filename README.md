@@ -62,9 +62,9 @@ The microservice `washing-machine` may fail to recognize `QWashingMachine` gener
 **Solution:**
 
    1. Run Maven `clean` and `install`
-   2. Navigate to the `washing-machine` module directory.
-   3. Go to the `target` directory within the `washing-machine` module
-   4. Right-click on the `generated-sources` directory
-   5. Select `Mark Directory as` and choose `Generated Sources Root`
+   2. Navigate to the `washing-machine-domain` module directory.
+   3. Go to the `target` directory
+   4. Open `generated-sources` directory
+   5. Right click `annotations`, select `Mark Directory as` and choose `Generated Sources Root`
 
 ***
