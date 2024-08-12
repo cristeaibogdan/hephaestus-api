@@ -52,7 +52,7 @@ public class UserFacade {
 	}
 
 	public void register(UserDTO userDTO) {
-		//TODO: 1. Should I check if the serial number is in use HERE? or in the service?
+		//TODO: 1. Should I check if the user exists in HERE? or in the service?
 		User user = Mapper.UserMapper.toEntity(userDTO);
 		userService.register(user);
 	}
