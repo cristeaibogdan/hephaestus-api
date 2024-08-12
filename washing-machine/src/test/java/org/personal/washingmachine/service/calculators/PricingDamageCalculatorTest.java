@@ -1,7 +1,7 @@
 package org.personal.washingmachine.service.calculators;
 
 import org.junit.jupiter.api.Test;
-import org.personal.washingmachine.facade.dtos.WashingMachineDetailsDTO;
+import org.personal.washingmachine.dto.WashingMachineDetailsDTO;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

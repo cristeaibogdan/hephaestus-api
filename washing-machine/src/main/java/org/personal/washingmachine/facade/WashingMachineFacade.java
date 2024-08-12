@@ -6,10 +6,10 @@ import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineImage;
-import org.personal.washingmachine.facade.dtos.PageRequestDTO;
-import org.personal.washingmachine.facade.dtos.WashingMachineDTO;
-import org.personal.washingmachine.facade.dtos.WashingMachineExpandedDTO;
-import org.personal.washingmachine.facade.dtos.WashingMachineSimpleDTO;
+import org.personal.washingmachine.dto.PageRequestDTO;
+import org.personal.washingmachine.dto.WashingMachineDTO;
+import org.personal.washingmachine.dto.WashingMachineExpandedDTO;
+import org.personal.washingmachine.dto.WashingMachineSimpleDTO;
 import org.personal.washingmachine.service.WashingMachineService;
 import org.personal.washingmachine.facade.utils.QueryDSLUtils;
 import org.springframework.data.domain.Page;
@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static org.personal.washingmachine.entity.QWashingMachine.washingMachine;
-import static org.personal.washingmachine.facade.dtos.Mapper.*;
+import static org.personal.washingmachine.dto.Mapper.*;
 
 @Component
 @RequiredArgsConstructor

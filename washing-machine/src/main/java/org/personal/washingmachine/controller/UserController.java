@@ -2,9 +2,9 @@ package org.personal.washingmachine.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.personal.washingmachine.facade.UserFacade;
-import org.personal.washingmachine.facade.dtos.OrganizationAndCountryDTO;
-import org.personal.washingmachine.facade.dtos.UserCredentialsDTO;
-import org.personal.washingmachine.facade.dtos.UserDTO;
+import org.personal.washingmachine.dto.OrganizationAndCountryDTO;
+import org.personal.washingmachine.dto.UserCredentialsDTO;
+import org.personal.washingmachine.dto.UserDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

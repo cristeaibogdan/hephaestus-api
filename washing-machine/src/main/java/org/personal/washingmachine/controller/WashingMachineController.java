@@ -2,8 +2,9 @@ package org.personal.washingmachine.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.personal.shared.clients.ProductClient;
+import org.personal.washingmachine.dto.*;
 import org.personal.washingmachine.facade.WashingMachineFacade;
-import org.personal.washingmachine.facade.dtos.*;
+import org.personal.washingmachine.facade.dto.*;
 import org.personal.washingmachine.service.WashingMachineDamageCalculator;
 import org.personal.washingmachine.service.WashingMachineReportGenerator;
 import org.personal.washingmachine.service.WashingMachineService;

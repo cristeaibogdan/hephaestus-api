@@ -12,10 +12,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.personal.shared.exception.CustomException;
-import org.personal.washingmachine.facade.dtos.Mapper;
-import org.personal.washingmachine.facade.dtos.OrganizationAndCountryDTO;
-import org.personal.washingmachine.facade.dtos.UserCredentialsDTO;
-import org.personal.washingmachine.facade.dtos.UserDTO;
+import org.personal.washingmachine.dto.Mapper;
+import org.personal.washingmachine.dto.OrganizationAndCountryDTO;
+import org.personal.washingmachine.dto.UserCredentialsDTO;
+import org.personal.washingmachine.dto.UserDTO;
 import org.personal.washingmachine.repository.UserRepository;
 
 import java.util.Optional;

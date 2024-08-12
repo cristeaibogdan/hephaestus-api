@@ -1,4 +1,4 @@
-package org.personal.washingmachine.facade.dtos;
+package org.personal.washingmachine.dto;
 
 public record WashingMachineImageDTO (
         String imagePrefix,

@@ -4,10 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
 import org.personal.washingmachine.entity.User;
-import org.personal.washingmachine.facade.dtos.Mapper;
-import org.personal.washingmachine.facade.dtos.OrganizationAndCountryDTO;
-import org.personal.washingmachine.facade.dtos.UserCredentialsDTO;
-import org.personal.washingmachine.facade.dtos.UserDTO;
+import org.personal.washingmachine.dto.Mapper;
+import org.personal.washingmachine.dto.OrganizationAndCountryDTO;
+import org.personal.washingmachine.dto.UserCredentialsDTO;
+import org.personal.washingmachine.dto.UserDTO;
 import org.personal.washingmachine.service.UserService;
 import org.springframework.stereotype.Component;
 
