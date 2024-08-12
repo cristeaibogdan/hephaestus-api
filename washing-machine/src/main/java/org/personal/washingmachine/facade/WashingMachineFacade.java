@@ -13,7 +13,6 @@ import org.personal.washingmachine.facade.dtos.WashingMachineSimpleDTO;
 import org.personal.washingmachine.service.WashingMachineService;
 import org.personal.washingmachine.facade.utils.QueryDSLUtils;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;

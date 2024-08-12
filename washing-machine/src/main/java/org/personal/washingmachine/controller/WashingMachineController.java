@@ -66,6 +66,7 @@ class WashingMachineController {
 //******************** ENDPOINTS FOR ASYNC VALIDATORS
 //*********************************************************************************************
 
+	//TODO: Should go straight to the service?
 	@GetMapping("/{serialNumber}/validate")
 	boolean isSerialNumberInUse(@PathVariable String serialNumber) {
 		return washingMachineService.isSerialNumberInUse(serialNumber);
