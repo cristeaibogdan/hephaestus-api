@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.personal</groupId>
+		<artifactId>hephaestus-api</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>washing-machine-app</artifactId>
+
+<!--	<properties>-->
+<!--		<querydsl.version>5.1.0</querydsl.version>-->
+<!--	</properties>-->
+
+	<dependencies>
+		<!-- ***************************************** -->
+		<!-- *** CORE -->
+		<!-- ***************************************** -->
+
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-web</artifactId>-->
+<!--		</dependency>-->
+
+		<!-- ***************************************** -->
+		<!-- *** BACKEND TO BACKEND COMM OPEN FEIGN -->
+		<!-- ***************************************** -->
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+		</dependency>
+
+		<!-- ***************************************** -->
+		<!-- *** TRACEABILITY BETWEEN MICROSERVICES -->
+		<!-- ***************************************** -->
+
+		<dependency>
+			<!-- Support for app monitoring, including metrics, health checks and so on -->
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<dependency>
+			<!-- Collect and record traces using OpenTelemetry APIs -->
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-tracing-bridge-otel</artifactId>
+		</dependency>
+
+		<dependency>
+			<!-- Export traces to Zipkin -->
+			<groupId>io.opentelemetry</groupId>
+			<artifactId>opentelemetry-exporter-zipkin</artifactId>
+		</dependency>
+
+		<!-- ***************************************** -->
+		<!-- *** DATABASE -->
+		<!-- ***************************************** -->
+
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-data-jpa</artifactId>-->
+<!--		</dependency>-->
+
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+<!--		<dependency>-->
+<!--			<groupId>com.querydsl</groupId>-->
+<!--			<artifactId>querydsl-jpa</artifactId>-->
+<!--			<version>${querydsl.version}</version>-->
+<!--			<classifier>jakarta</classifier>-->
+<!--		</dependency>-->
+
+<!--		<dependency>-->
+<!--			<groupId>com.querydsl</groupId>-->
+<!--			<artifactId>querydsl-apt</artifactId>-->
+<!--			<version>${querydsl.version}</version>-->
+<!--			<classifier>jakarta</classifier>-->
+<!--		</dependency>-->
+
+		<!-- ***************************************** -->
+		<!-- *** SHARED -->
+		<!-- ***************************************** -->
+
+		<dependency>
+			<groupId>org.personal</groupId>
+			<artifactId>shared</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.personal</groupId>
+			<artifactId>washing-machine-domain</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<activatedProfile>dev</activatedProfile>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+
+		<profile>
+			<id>docker</id>
+			<properties>
+				<activatedProfile>docker</activatedProfile>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.google.cloud.tools</groupId>
+						<artifactId>jib-maven-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+	<build>
+		<resources>
+			<resource>
+				<!-- Used to load @activatedProfile@, the placeholder property in application.properties files -->
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+</project>

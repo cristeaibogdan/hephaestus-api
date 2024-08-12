@@ -13,7 +13,8 @@
 
     <modules>
         <module>product</module>
-        <module>washing-machine</module>
+        <module>washing-machine-app</module>
+        <module>washing-machine-domain</module>
         <module>api-gateway</module>
         <module>solar-panel</module>
         <module>shared</module>
