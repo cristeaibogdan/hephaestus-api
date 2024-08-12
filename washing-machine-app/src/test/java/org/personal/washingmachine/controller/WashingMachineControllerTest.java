@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.personal.shared.clients.ProductClient;
 import org.personal.washingmachine.facade.WashingMachineDamageCalculator;
 import org.personal.washingmachine.facade.WashingMachineReportGenerator;
-import org.personal.washingmachine.domain.service.WashingMachineService;
+import org.personal.washingmachine.service.WashingMachineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;

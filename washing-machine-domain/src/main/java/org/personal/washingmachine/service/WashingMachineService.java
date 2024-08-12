@@ -1,11 +1,11 @@
-package org.personal.washingmachine.domain.service;
+package org.personal.washingmachine.service;
 
 import com.querydsl.core.BooleanBuilder;
 import lombok.RequiredArgsConstructor;
 import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
-import org.personal.washingmachine.domain.entity.WashingMachine;
-import org.personal.washingmachine.domain.repository.WashingMachineRepository;
+import org.personal.washingmachine.entity.WashingMachine;
+import org.personal.washingmachine.repository.WashingMachineRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
-package org.personal.washingmachine.domain.repository;
+package org.personal.washingmachine.repository;
 
-import org.personal.washingmachine.domain.entity.WashingMachine;
+import org.personal.washingmachine.entity.WashingMachine;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;

@@ -1,10 +1,10 @@
-package org.personal.washingmachine.domain.service;
+package org.personal.washingmachine.service;
 
 import lombok.RequiredArgsConstructor;
 import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
-import org.personal.washingmachine.domain.entity.User;
-import org.personal.washingmachine.domain.repository.UserRepository;
+import org.personal.washingmachine.entity.User;
+import org.personal.washingmachine.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 @Service

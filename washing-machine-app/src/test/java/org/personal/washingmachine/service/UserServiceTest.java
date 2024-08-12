@@ -16,8 +16,7 @@ import org.personal.washingmachine.dto.Mapper;
 import org.personal.washingmachine.dto.OrganizationAndCountryDTO;
 import org.personal.washingmachine.dto.UserCredentialsDTO;
 import org.personal.washingmachine.dto.UserDTO;
-import org.personal.washingmachine.domain.repository.UserRepository;
-import org.personal.washingmachine.domain.service.UserService;
+import org.personal.washingmachine.repository.UserRepository;
 
 import java.util.Optional;
 import java.util.stream.Stream;

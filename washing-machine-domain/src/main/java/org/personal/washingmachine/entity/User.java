@@ -1,4 +1,4 @@
-package org.personal.washingmachine.domain.entity;
+package org.personal.washingmachine.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

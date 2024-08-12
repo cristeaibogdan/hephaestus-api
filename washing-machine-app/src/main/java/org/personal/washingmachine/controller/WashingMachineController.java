@@ -6,7 +6,7 @@ import org.personal.washingmachine.dto.*;
 import org.personal.washingmachine.facade.WashingMachineFacade;
 import org.personal.washingmachine.facade.WashingMachineDamageCalculator;
 import org.personal.washingmachine.facade.WashingMachineReportGenerator;
-import org.personal.washingmachine.domain.service.WashingMachineService;
+import org.personal.washingmachine.service.WashingMachineService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

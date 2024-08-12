@@ -1,4 +1,4 @@
-package org.personal.washingmachine.domain.entity;
+package org.personal.washingmachine.entity;
 
 import com.google.common.collect.ImmutableList;
 import jakarta.persistence.*;

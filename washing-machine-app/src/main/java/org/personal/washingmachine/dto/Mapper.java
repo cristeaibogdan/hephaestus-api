@@ -2,13 +2,13 @@ package org.personal.washingmachine.dto;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.personal.washingmachine.domain.entity.User;
-import org.personal.washingmachine.domain.entity.WashingMachine;
-import org.personal.washingmachine.domain.entity.WashingMachineDetails;
-import org.personal.washingmachine.domain.entity.WashingMachineImage;
-import org.personal.washingmachine.domain.entity.embedded.HiddenSurfaceDamage;
-import org.personal.washingmachine.domain.entity.embedded.PackageDamage;
-import org.personal.washingmachine.domain.entity.embedded.VisibleSurfaceDamage;
+import org.personal.washingmachine.entity.User;
+import org.personal.washingmachine.entity.WashingMachine;
+import org.personal.washingmachine.entity.WashingMachineDetails;
+import org.personal.washingmachine.entity.WashingMachineImage;
+import org.personal.washingmachine.entity.embedded.HiddenSurfaceDamage;
+import org.personal.washingmachine.entity.embedded.PackageDamage;
+import org.personal.washingmachine.entity.embedded.VisibleSurfaceDamage;
 
 import java.util.List;
 

@@ -9,7 +9,7 @@ import org.personal.shared.exception.ErrorCode;
 import org.personal.washingmachine.dto.OrganizationAndCountryDTO;
 import org.personal.washingmachine.dto.UserCredentialsDTO;
 import org.personal.washingmachine.dto.UserDTO;
-import org.personal.washingmachine.domain.service.UserService;
+import org.personal.washingmachine.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;

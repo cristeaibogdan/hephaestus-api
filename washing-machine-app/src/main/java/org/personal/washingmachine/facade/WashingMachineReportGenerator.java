@@ -6,11 +6,11 @@ import net.sf.jasperreports.engine.*;
 import org.apache.commons.lang3.time.StopWatch;
 import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
-import org.personal.washingmachine.domain.entity.WashingMachine;
-import org.personal.washingmachine.domain.entity.WashingMachineDetails;
-import org.personal.washingmachine.domain.entity.WashingMachineImage;
+import org.personal.washingmachine.entity.WashingMachine;
+import org.personal.washingmachine.entity.WashingMachineDetails;
+import org.personal.washingmachine.entity.WashingMachineImage;
 import org.personal.washingmachine.dto.WashingMachineReportDTO;
-import org.personal.washingmachine.domain.service.WashingMachineService;
+import org.personal.washingmachine.service.WashingMachineService;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;

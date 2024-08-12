@@ -1,4 +1,4 @@
-package org.personal.washingmachine.domain.entity.embedded;
+package org.personal.washingmachine.entity.embedded;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

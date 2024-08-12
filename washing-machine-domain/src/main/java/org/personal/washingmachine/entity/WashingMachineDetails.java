@@ -1,4 +1,4 @@
-package org.personal.washingmachine.domain.entity;
+package org.personal.washingmachine.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
@@ -8,9 +8,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.personal.washingmachine.domain.entity.embedded.PackageDamage;
-import org.personal.washingmachine.domain.entity.embedded.HiddenSurfaceDamage;
-import org.personal.washingmachine.domain.entity.embedded.VisibleSurfaceDamage;
+import org.personal.washingmachine.entity.embedded.PackageDamage;
+import org.personal.washingmachine.entity.embedded.HiddenSurfaceDamage;
+import org.personal.washingmachine.entity.embedded.VisibleSurfaceDamage;
 
 
 import static lombok.AccessLevel.PROTECTED;
