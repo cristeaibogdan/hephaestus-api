@@ -33,7 +33,6 @@ public class UserFacade {
 	}
 
 	public boolean isValidRegistrationCode(String registrationCode) {
-		// TODO: learn about getOrDefault()
 		Optional<OrganizationAndCountryDTO> response = initializeRegistrationCodes().entrySet().stream()
 				.filter(entry -> entry.getValue().contains(registrationCode))
 				.map(entry -> entry.getKey())
