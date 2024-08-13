@@ -21,9 +21,6 @@ public class WashingMachineDamageCalculator {
 	private final HiddenSurfacesDamageCalculator hiddenSurfacesDamageCalculator;
 	private final PricingDamageCalculator pricingDamageCalculator;
 
-	// TODO ask:
-	// 1. Should I break the dto and only send the properties I to each class calculator?
-	// 2. Should I pass only the needed parameters to each method?
 	public WashingMachineEvaluationDTO getDamageEvaluation(WashingMachineDetailsDTO dto) {
 		int damageLevel = getDamageLevel(dto);
 		String recommendation = getRecommendation(damageLevel);
@@ -44,6 +41,7 @@ public class WashingMachineDamageCalculator {
 		);
 	}
 
+	//TODO: Use enum for 1-5, and recommendations. Get rid of the method.
 	String getRecommendation(int damageLevel) {
 		return switch (damageLevel) {
 			case 1 -> "REPACKAGE";

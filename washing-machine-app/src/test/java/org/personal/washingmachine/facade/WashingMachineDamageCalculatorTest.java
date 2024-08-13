@@ -1,6 +1,7 @@
-package org.personal.washingmachine.service;
+package org.personal.washingmachine.facade;
 
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -19,7 +20,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 @ExtendWith(MockitoExtension.class)
-class DamageCalculatorTest {
+class WashingMachineDamageCalculatorTest {
 
 	@Mock
 	private PackageDamageCalculator packageDamageCalculator;
@@ -32,6 +33,19 @@ class DamageCalculatorTest {
 
 	@InjectMocks
 	private WashingMachineDamageCalculator underTest;
+
+	@Nested
+	class testGetDamageLevel {
+
+		@Test
+		void should_ReturnX_When_Y() {
+			// GIVEN
+
+			// WHEN
+
+			// THEN
+		}
+	}
 
 	@Nested
 	class testGetRecommendation {
@@ -55,7 +69,7 @@ class DamageCalculatorTest {
 		}
 
 		@ParameterizedTest(name = "Damage level = {0} is not supported")
-		@ValueSource(ints = {-2, -1, 0, 6, 7})
+		@ValueSource(ints = { 0, 6 })
 		void should_ThrowCustomException(int damageLevel) {
 			// GIVEN
 

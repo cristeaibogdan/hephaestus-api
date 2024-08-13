@@ -1,4 +1,4 @@
-package org.personal.washingmachine.service.calculators;
+package org.personal.washingmachine.facade.calculators;
 
 import org.junit.jupiter.api.Test;
 import org.personal.washingmachine.dto.WashingMachineDetailsDTO;

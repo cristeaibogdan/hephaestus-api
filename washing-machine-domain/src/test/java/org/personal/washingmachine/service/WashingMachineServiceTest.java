@@ -5,6 +5,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.personal.washingmachine.repository.WashingMachineRepository;
+import org.personal.washingmachine.service.WashingMachineService;
 
 @ExtendWith(MockitoExtension.class)
 class WashingMachineServiceTest {

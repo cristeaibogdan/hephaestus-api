@@ -1,25 +1,26 @@
-package org.personal.washingmachine.service.calculators;
+package org.personal.washingmachine.facade.calculators;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.personal.washingmachine.dto.WashingMachineDetailsDTO;
-import org.personal.washingmachine.facade.calculators.HiddenSurfacesDamageCalculator;
+import org.personal.washingmachine.facade.calculators.VisibleSurfacesDamageCalculator;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-class HiddenSurfacesDamageCalculatorTest {
-	private final HiddenSurfacesDamageCalculator underTest = new HiddenSurfacesDamageCalculator();
+class VisibleSurfacesDamageCalculatorTest {
+
+	private final VisibleSurfacesDamageCalculator underTest = new VisibleSurfacesDamageCalculator();
 
 	@Nested
 	class testCalculate {
 
 		@Test
-		void should_Return0_When_HiddenSurfacesDamageFalse() {
+		void should_Return0_When_ApplicableVisibleSurfacesDamageFalse() {
 			// GIVEN
 			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
-					.applicableHiddenSurfacesDamage(false)
+					.applicableVisibleSurfacesDamage(false)
 					.build();
 
 			int expected = 0;
@@ -36,10 +37,10 @@ class HiddenSurfacesDamageCalculatorTest {
 	class testCalculateScratchesDamageLevel {
 
 		@Test
-		void should_Return0_When_HiddenSurfacesHasScratchesIsFalse() {
+		void should_Return0_When_VisibleSurfacesHasScratchesIsFalse() {
 			// GIVEN
 			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
-					.hiddenSurfacesHasScratches(false)
+					.visibleSurfacesHasScratches(false)
 					.build();
 
 			int expected = 0;
@@ -52,13 +53,13 @@ class HiddenSurfacesDamageCalculatorTest {
 		}
 
 		@ParameterizedTest
-		@ValueSource(doubles = {1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 6, 6.5})
-		void should_Return2_When_ScratchesAreUnder7cm(double scratchLength) {
+		@ValueSource(doubles = {0.5, 1, 4, 4.5})
+		void should_Return2_When_ScratchesAreUnder5cm(double scratchValue) {
 			// GIVEN
 			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
-					.applicableHiddenSurfacesDamage(true)
-					.hiddenSurfacesHasScratches(true)
-					.hiddenSurfacesScratchesLength(scratchLength)
+					.applicableVisibleSurfacesDamage(true)
+					.visibleSurfacesHasScratches(true)
+					.visibleSurfacesScratchesLength(scratchValue)
 					.build();
 
 			int expected = 2;
@@ -71,13 +72,13 @@ class HiddenSurfacesDamageCalculatorTest {
 		}
 
 		@ParameterizedTest
-		@ValueSource(doubles = {7, 7.5, 8, 8.5, 9, 9.5, 10})
-		void should_Return3_When_ScratchesAreEqualOrOver7cm(double scratchLength) {
+		@ValueSource(doubles = {5, 5.5, 10})
+		void should_Return3_When_ScratchesAreEqualOrOver5cm(double scratchValue) {
 			// GIVEN
 			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
-					.applicableHiddenSurfacesDamage(true)
-					.hiddenSurfacesHasScratches(true)
-					.hiddenSurfacesScratchesLength(scratchLength)
+					.applicableVisibleSurfacesDamage(true)
+					.visibleSurfacesHasScratches(true)
+					.visibleSurfacesScratchesLength(scratchValue)
 					.build();
 
 			int expected = 3;
@@ -94,10 +95,10 @@ class HiddenSurfacesDamageCalculatorTest {
 	class testCalculateDentsDamageLevel {
 
 		@Test
-		void should_Return0_When_HiddenSurfacesHasDentsIsFalse() {
+		void should_Return0_When_VisibleSurfacesHasDentsIsFalse() {
 			// GIVEN
 			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
-					.hiddenSurfacesHasScratches(false)
+					.visibleSurfacesHasDents(false)
 					.build();
 
 			int expected = 0;
@@ -110,13 +111,13 @@ class HiddenSurfacesDamageCalculatorTest {
 		}
 
 		@ParameterizedTest
-		@ValueSource(doubles = {1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 6, 6.5})
-		void should_Return2_When_DentsAreUnder7cm(double dentValue) {
+		@ValueSource(doubles = {0.5, 1, 4, 4.5})
+		void should_Return2_When_DentsAreUnder5cm(double dentDepth) {
 			// GIVEN
 			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
-					.applicableHiddenSurfacesDamage(true)
-					.hiddenSurfacesHasDents(true)
-					.hiddenSurfacesDentsDepth(dentValue)
+					.applicableVisibleSurfacesDamage(true)
+					.visibleSurfacesHasDents(true)
+					.visibleSurfacesDentsDepth(dentDepth)
 					.build();
 
 			int expected = 2;
@@ -129,13 +130,13 @@ class HiddenSurfacesDamageCalculatorTest {
 		}
 
 		@ParameterizedTest
-		@ValueSource(doubles = {7, 7.5, 8, 8.5, 9, 9.5, 10})
-		void should_Return3_When_DentsAreEqualOrOver7cm(double dentValue) {
+		@ValueSource(doubles = {5, 5.5, 10})
+		void should_Return3_When_DentsAreEqualOrOver5cm(double dentDepth) {
 			// GIVEN
 			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
-					.applicableHiddenSurfacesDamage(true)
-					.hiddenSurfacesHasDents(true)
-					.hiddenSurfacesDentsDepth(dentValue)
+					.applicableVisibleSurfacesDamage(true)
+					.visibleSurfacesHasDents(true)
+					.visibleSurfacesDentsDepth(dentDepth)
 					.build();
 
 			int expected = 3;
@@ -152,10 +153,10 @@ class HiddenSurfacesDamageCalculatorTest {
 	class testCalculateSmallDamageLevel {
 
 		@Test
-		void should_Return2_When_HiddenSurfacesHasSmallDamageIsTrue() {
+		void should_Return2_When_VisibleSurfacesHasSmallDamageIsTrue() {
 			// GIVEN
 			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
-					.hiddenSurfacesHasMinorDamage(true)
+					.visibleSurfacesHasMinorDamage(true)
 					.build();
 
 			int expected = 2;
@@ -168,10 +169,10 @@ class HiddenSurfacesDamageCalculatorTest {
 		}
 
 		@Test
-		void should_Return0_When_HiddenSurfacesHasSmallDamageIsFalse() {
+		void should_Return0_When_VisibleSurfacesHasSmallDamageIsFalse() {
 			// GIVEN
 			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
-					.hiddenSurfacesHasMinorDamage(false)
+					.visibleSurfacesHasMinorDamage(false)
 					.build();
 
 			int expected = 0;
@@ -188,10 +189,10 @@ class HiddenSurfacesDamageCalculatorTest {
 	class testCalculateBigDamageLevel {
 
 		@Test
-		void should_Return3_When_HiddenSurfacesHasBigDamageIsTrue() {
+		void should_Return3_When_VisibleSurfacesHasBigDamageIsTrue() {
 			// GIVEN
 			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
-					.hiddenSurfacesHasMajorDamage(true)
+					.visibleSurfacesHasMajorDamage(true)
 					.build();
 
 			int expected = 3;
@@ -204,10 +205,10 @@ class HiddenSurfacesDamageCalculatorTest {
 		}
 
 		@Test
-		void should_Return0_When_HiddenSurfacesHasBigDamageIsFalse() {
+		void should_Return0_When_VisibleSurfacesHasBigDamageIsFalse() {
 			// GIVEN
 			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
-					.hiddenSurfacesHasMajorDamage(false)
+					.visibleSurfacesHasMajorDamage(false)
 					.build();
 
 			int expected = 0;
