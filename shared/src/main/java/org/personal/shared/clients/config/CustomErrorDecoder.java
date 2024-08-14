@@ -13,8 +13,6 @@ import java.io.IOException;
  */
 public class CustomErrorDecoder implements ErrorDecoder {
 
-	private final ErrorDecoder defaultErrorDecoder = new Default();
-
 	@Override
 	public Exception decode(String methodKey, Response response) {
 
