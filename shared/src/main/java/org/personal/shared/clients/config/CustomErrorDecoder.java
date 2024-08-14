@@ -22,11 +22,10 @@ public class CustomErrorDecoder implements ErrorDecoder {
 //****** RESULTING IN IOEXCEPTION stream closed.
 //**********************************************************
 
-		String requestUrl = response.request().url();
 		Response.Body responseBody = response.body();
 
-		// System.out.println("Request URL is = " + requestUrl);
-		// System.out.println("Request body is = " + responseBody);
+		// System.out.println("Request URL is = " + response.request().url());
+		// System.out.println("Request body is = " + response.body());
 		// System.out.println("Request status is = " + response.status());
 
 //**********************************************************
