@@ -10,7 +10,6 @@ import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineDetails;
 import org.personal.washingmachine.entity.WashingMachineImage;
 import org.personal.washingmachine.dto.WashingMachineReportDTO;
-import org.personal.washingmachine.service.WashingMachineService;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
@@ -25,13 +24,13 @@ import java.util.concurrent.TimeUnit;
 @Service
 @RequiredArgsConstructor
 public class WashingMachineReportGenerator {
+	private final WashingMachineFacade washingMachineFacade;
 
-	private final WashingMachineService washingMachineService;
-
+	//TODO: Maybe a better place is in the domain?
 	public WashingMachineReportDTO getReport(String serialNumber) {
 		StopWatch stopWatch = StopWatch.createStarted();
 
-		WashingMachine washingMachine = washingMachineService.loadExpanded(serialNumber);
+		WashingMachine washingMachine = washingMachineFacade.load(serialNumber);
 
 		try {
 			Map<String, Object> parameters = getReportFirstPageParameters(washingMachine);

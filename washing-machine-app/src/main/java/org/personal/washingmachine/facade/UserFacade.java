@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
 import org.personal.washingmachine.entity.User;
-import org.personal.washingmachine.dto.Mapper;
 import org.personal.washingmachine.dto.OrganizationAndCountryDTO;
 import org.personal.washingmachine.dto.UserCredentialsDTO;
 import org.personal.washingmachine.dto.UserDTO;
@@ -15,6 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import static org.personal.washingmachine.dto.Mapper.*;
 
 @Component
 @RequiredArgsConstructor
@@ -52,12 +53,12 @@ public class UserFacade {
 
 	public void register(UserDTO userDTO) {
 		//TODO: 1. Should I check if the user exists in HERE? or in the service?
-		User user = Mapper.UserMapper.toEntity(userDTO);
+		User user = UserMapper.toEntity(userDTO);
 		userService.register(user);
 	}
 
 	public UserDTO login(UserCredentialsDTO userCredentialsDTO) {
 		User user = userService.login(userCredentialsDTO.username(), userCredentialsDTO.password());
-		return Mapper.UserMapper.toDTO(user);
+		return UserMapper.toDTO(user);
 	}
 }

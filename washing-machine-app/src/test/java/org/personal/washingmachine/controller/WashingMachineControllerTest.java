@@ -25,9 +25,6 @@ class WashingMachineControllerTest {
     MockMvc mockMvc;
 
     @MockBean
-    WashingMachineService washingMachineServiceMock;
-
-    @MockBean
     WashingMachineFacade washingMachineFacadeMock;
 
     @MockBean
@@ -48,7 +45,7 @@ class WashingMachineControllerTest {
             String serialNumber = "ABC-987";
             boolean expected = true;
 
-            given(washingMachineServiceMock.isSerialNumberInUse(serialNumber))
+            given(washingMachineFacadeMock.isSerialNumberInUse(serialNumber))
                     .willReturn(true);
 
             // WHEN

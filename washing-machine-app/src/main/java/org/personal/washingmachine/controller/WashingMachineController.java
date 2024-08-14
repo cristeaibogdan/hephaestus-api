@@ -6,7 +6,6 @@ import org.personal.washingmachine.dto.*;
 import org.personal.washingmachine.facade.WashingMachineFacade;
 import org.personal.washingmachine.facade.WashingMachineDamageCalculator;
 import org.personal.washingmachine.facade.WashingMachineReportGenerator;
-import org.personal.washingmachine.service.WashingMachineService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +19,6 @@ import java.util.List;
 class WashingMachineController {
 
 	private final WashingMachineFacade washingMachineFacade;
-
-	private final WashingMachineService washingMachineService;
 	private final WashingMachineDamageCalculator washingMachineDamageCalculator;
 	private final WashingMachineReportGenerator washingMachineReportGenerator;
 
@@ -66,10 +63,9 @@ class WashingMachineController {
 //******************** ENDPOINTS FOR ASYNC VALIDATORS
 //*********************************************************************************************
 
-	//TODO: Should go straight to the service?
 	@GetMapping("/{serialNumber}/validate")
 	boolean isSerialNumberInUse(@PathVariable String serialNumber) {
-		return washingMachineService.isSerialNumberInUse(serialNumber);
+		return washingMachineFacade.isSerialNumberInUse(serialNumber);
 	}
 
 }

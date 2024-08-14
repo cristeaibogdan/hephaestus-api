@@ -17,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -63,6 +64,11 @@ public class WashingMachineFacade {
 		return WashingMachineMapper.toExpandedDTO(washingMachine);
 	}
 
+	// TODO: Find a way to mix this method with the one above.
+	public WashingMachine load(String serialNumber) {
+		return washingMachineService.loadExpanded(serialNumber);
+	}
+
 	public void save(WashingMachineDTO washingMachineDTO, List<MultipartFile> imageFiles) {
 
 		//TODO: 1. Should I check if the serial number is in use HERE? or in the service?
@@ -74,6 +80,10 @@ public class WashingMachineFacade {
 		});
 
 		washingMachineService.save(washingMachine);
+	}
+
+	public boolean isSerialNumberInUse(@PathVariable String serialNumber) {
+		return washingMachineService.isSerialNumberInUse(serialNumber);
 	}
 
 //*********************************************************************************************
