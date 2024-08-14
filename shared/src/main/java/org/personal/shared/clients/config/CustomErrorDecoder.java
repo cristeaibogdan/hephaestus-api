@@ -5,7 +5,6 @@ import feign.codec.ErrorDecoder;
 import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
 import org.personal.shared.exception.FeignPropagatedException;
-import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
 
@@ -27,26 +26,23 @@ public class CustomErrorDecoder implements ErrorDecoder {
 
 		String requestUrl = response.request().url();
 		Response.Body responseBody = response.body();
-		HttpStatus responseStatus = HttpStatus.valueOf(response.status());
 
 		// System.out.println("Request URL is = " + requestUrl);
 		// System.out.println("Request body is = " + responseBody);
-		// System.out.println("Request status is = " + responseStatus);
+		// System.out.println("Request status is = " + response.status());
 
 //**********************************************************
 // HANDLE CUSTOM EXCEPTIONS THROWN BY THE CLIENT BACKEND
 //**********************************************************
-		if (responseStatus == HttpStatus.I_AM_A_TEAPOT) {
-			try {
-				// 1. Extract the String from the response
-				String userMessage = new String(responseBody.asInputStream().readAllBytes());
+		try {
+			// 1. Extract the String from the response
+			String userMessage = new String(responseBody.asInputStream().readAllBytes());
 
-				// 2. Re-Throw the errorMessage received from the other backend
-				return new FeignPropagatedException(userMessage);
+			// 2. Re-Throw the errorMessage and the status received from the other backend
+			return new FeignPropagatedException(userMessage, response.status());
 
-			} catch (IOException e) {
-				return new CustomException("Error while decoding open feign response", e, ErrorCode.GENERAL);
-			}
+		} catch (IOException e) {
+			return new CustomException("Error while decoding open feign response", e, ErrorCode.GENERAL);
 		}
 
         /*
@@ -60,10 +56,6 @@ public class CustomErrorDecoder implements ErrorDecoder {
 
         Note: OpenFeign's FeignException doesn't bind to a specific HTTP status (i.e., doesn't use Spring's @ResponseStatus annotation),
         which makes Spring default to 500 whenever faced with a FeignException.
-
-        Delegate the other error types to the default error decoder.
-        These thrown exceptions will be handled by handleException, in the Global Exception Handler.
         */
-		return defaultErrorDecoder.decode(methodKey, response);
 	}
 }

@@ -9,7 +9,11 @@ import lombok.Getter;
 
 @Getter
 public class FeignPropagatedException extends RuntimeException {
-    public FeignPropagatedException(String userMessage) {
+
+    private final int statusCode;
+
+    public FeignPropagatedException(String userMessage, int statusCode) {
         super(userMessage);
+        this.statusCode = statusCode;
     }
 }
