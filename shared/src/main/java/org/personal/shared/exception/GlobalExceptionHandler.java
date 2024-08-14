@@ -5,7 +5,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -47,6 +46,17 @@ class GlobalExceptionHandler {
 		log.error("CustomException {}: {}", e.getErrorCode(), userMessage, e);
 		return status(e.getErrorCode().statusCode).body(userMessage);
 	}
+
+//	TODO: For use when implementing validation
+//	@ResponseStatus(BAD_REQUEST)
+//	@ExceptionHandler(MethodArgumentNotValidException.class) // @Validated
+//	public List<String> onJavaxValidationException(MethodArgumentNotValidException e) {
+//		List<String> validationErrors = e.getBindingResult().getFieldErrors().stream()
+//				.map(fieldError -> fieldError.getField() + ": " + fieldError.getDefaultMessage())
+//				.toList();
+//		log.error("Invalid request: {}", validationErrors, e);
+//		return validationErrors;
+//	}
 
 // ************************************************************
 // *** OPENFEIGN EXCEPTIONS

@@ -7,6 +7,8 @@ package org.personal.shared.exception;
  */
 public enum ErrorCode {
 
+    // TODO: Consider adding HttpStatus instead of int
+
     // DEFAULT ERROR
     GENERAL,
 
