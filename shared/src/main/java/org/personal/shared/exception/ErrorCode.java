@@ -3,8 +3,8 @@ package org.personal.shared.exception;
 /**
  * <p> Enum responsible for holding keys that are used in {@link org.personal.shared.exception.GlobalExceptionHandler} to retrieve translated user messages.
  * <p> Keys should be descriptive and illustrate why the exception was thrown in the first place.
+ * <p> By default the status code is set to 500, but can be modified for each key.
  */
-
 public enum ErrorCode {
 
     // DEFAULT ERROR
@@ -20,7 +20,7 @@ public enum ErrorCode {
     SERIAL_NUMBER_ALREADY_TAKEN(400),
     EMPTY_PAGE(400),
     SERIAL_NUMBER_NOT_FOUND(400),
-    REPORT_GENERATION_FAIL(500),
+    REPORT_GENERATION_FAIL,
 
     // PRODUCT ERRORS
     NO_MANUFACTURERS_FOUND(400),
@@ -28,9 +28,6 @@ public enum ErrorCode {
 
     public final int statusCode;
 
-    /**
-     * <p> If no code is specified, the default 500 is used
-     */
     ErrorCode() {
         this(500);
     }
