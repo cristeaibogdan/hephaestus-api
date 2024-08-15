@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
+import org.springframework.context.NoSuchMessageException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -19,6 +20,7 @@ import static org.springframework.http.ResponseEntity.status;
  * <p> 2. Define the key and the value in all files messages_**locale**.properties
  * <p> 3. Run ErrorCodeMessagesTest to check if all keys are present in the files messages_*locale*.properties
  * <p> 4. Throw new {@link org.personal.shared.exception.CustomException} wherever needed
+ * <p> If the key is not found in MessageSource, a default message is sent: Internal Translation Error
  */
 
 @Slf4j
@@ -32,6 +34,7 @@ class GlobalExceptionHandler {
 		String userMessage = messageSource.getMessage(
 				ErrorCode.GENERAL.name(),
 				null,
+				"Internal Translation Error",
 				request.getLocale());
 		log.error("Unexpected {}: {}", ErrorCode.GENERAL, userMessage, e);
 		return status(500).body(userMessage);
@@ -42,6 +45,7 @@ class GlobalExceptionHandler {
 		String userMessage = messageSource.getMessage(
 				e.getErrorCode().name(),
 				e.getParams(),
+				"Internal Translation Error",
 				request.getLocale());
 		log.error("CustomException {}: {}", e.getErrorCode(), userMessage, e);
 		return status(e.getErrorCode().statusCode).body(userMessage);
@@ -75,6 +79,7 @@ class GlobalExceptionHandler {
 		String userMessage = messageSource.getMessage(
 				ErrorCode.GENERAL.name(),
 				null,
+				"Internal Translation Error",
 				request.getLocale());
 
 		if (e.toString().contains("/products")) {
