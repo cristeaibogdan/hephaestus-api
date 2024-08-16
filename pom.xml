@@ -57,7 +57,7 @@
         </dependency>
 
         <dependency>
-            <!-- @Getter, @Setter, @Data ... -->
+            <!-- @Getter, @Setter, @Data, @Slf4j ... -->
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
