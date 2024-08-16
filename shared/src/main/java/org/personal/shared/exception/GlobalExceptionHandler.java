@@ -5,7 +5,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
-import org.springframework.context.NoSuchMessageException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -37,7 +36,8 @@ class GlobalExceptionHandler {
 				"Internal Translation Error",
 				request.getLocale());
 		log.error("Unexpected {}: {}", ErrorCode.GENERAL, userMessage, e);
-		return status(500).body(userMessage);
+		return status(500)
+				.body(userMessage);
 	}
 
 	@ExceptionHandler(CustomException.class)
@@ -48,7 +48,8 @@ class GlobalExceptionHandler {
 				"Internal Translation Error",
 				request.getLocale());
 		log.error("CustomException {}: {}", e.getErrorCode(), userMessage, e);
-		return status(e.getErrorCode().statusCode).body(userMessage);
+		return status(e.getErrorCode().statusCode)
+				.body(userMessage);
 	}
 
 //	TODO: For use when implementing validation
@@ -69,7 +70,8 @@ class GlobalExceptionHandler {
 	@ExceptionHandler(FeignPropagatedException.class)
 	ResponseEntity<String> handleFeignPropagatedException(FeignPropagatedException e) {
 		log.error("Feign propagated exception: ", e);
-		return status(e.getStatusCode()).body(e.getMessage());
+		return status(e.getStatusCode())
+				.body(e.getMessage());
 	}
 
 	// TODO: This is a workaround, find an improvement.
@@ -86,6 +88,7 @@ class GlobalExceptionHandler {
 			log.error("Feign connection error for product backend: ", e);
 		}
 
-		return status(503).body(userMessage);
+		return status(503)
+				.body(userMessage);
 	}
 }
