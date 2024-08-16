@@ -17,6 +17,7 @@
         <!-- ***************************************** -->
 
         <dependency>
+            <!-- @RestControllerAdvice, @RestController, @RequestMapping ... -->
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
@@ -32,7 +33,7 @@
         </dependency>
 
         <dependency>
-            <!-- Enables tracing for open feign requests -->
+            <!-- Enables tracing for requests made with open feign -->
             <groupId>io.github.openfeign</groupId>
             <artifactId>feign-micrometer</artifactId>
         </dependency>
