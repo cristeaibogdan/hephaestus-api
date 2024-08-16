@@ -12,12 +12,12 @@
     <name>hephaestus-api</name>
 
     <modules>
-        <module>product</module>
+        <module>api-gateway</module>
+        <module>shared</module>
         <module>washing-machine-app</module>
         <module>washing-machine-domain</module>
-        <module>api-gateway</module>
+        <module>product</module>
         <module>solar-panel</module>
-        <module>shared</module>
     </modules>
 
     <properties>
@@ -49,8 +49,7 @@
         </dependencies>
     </dependencyManagement>
 
-    <dependencies>
-        <!-- Will be available in all modules -->
+    <dependencies> <!-- Will be available in all modules -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-properties-migrator</artifactId>
@@ -58,6 +57,7 @@
         </dependency>
 
         <dependency>
+            <!-- @Getter, @Setter, @Data ... -->
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
@@ -68,6 +68,7 @@
         </dependency>
 
         <dependency>
+            <!-- ImmutableList, ... -->
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>33.2.1-jre</version>
@@ -96,13 +97,14 @@
                 </plugin>
 
                 <plugin>
-                    <!-- Used to create dockerfiles without actually writing them -->
+                    <!-- Used to create dockerfiles without writing them -->
                     <groupId>com.google.cloud.tools</groupId>
                     <artifactId>jib-maven-plugin</artifactId>
                     <version>3.4.1</version>
                     <configuration>
                         <from>
                             <image>
+                                <!-- Base image to use + @sha to create the container image -->
                                 eclipse-temurin:17@sha256:121cf9125ed3cb3cfe5952225a59f5efe9985365ed021f051c043fb03260a24b
                             </image>
                         </from>
@@ -116,6 +118,7 @@
                         <execution>
                             <phase>package</phase>
                             <goals>
+                                <!-- Create images in local docker daemon -->
                                 <goal>dockerBuild</goal>
                             </goals>
                         </execution>
@@ -124,8 +127,7 @@
             </plugins>
         </pluginManagement>
 
-        <plugins>
-            <!-- Will be available in all modules -->
+        <plugins> <!-- Will be available in all modules -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -133,8 +135,7 @@
                 <configuration>
                     <source>17</source>
                     <target>17</target>
-                    <!-- Fix for Open Feign: PathVariable annotation was empty -->
-                    <compilerArgs>
+                    <compilerArgs> <!-- Fix for Open Feign: PathVariable annotation was empty -->
                         <arg>-parameters</arg>
                     </compilerArgs>
                 </configuration>
