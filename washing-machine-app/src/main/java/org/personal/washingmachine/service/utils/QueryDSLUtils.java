@@ -1,4 +1,4 @@
-package org.personal.washingmachine.facade.utils;
+package org.personal.washingmachine.service.utils;
 
 import com.querydsl.core.types.dsl.*;
 import lombok.AccessLevel;

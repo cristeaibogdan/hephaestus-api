@@ -1,17 +1,17 @@
-package org.personal.washingmachine.facade.calculators;
+package org.personal.washingmachine.service.calculators;
 
 import org.apache.commons.lang3.math.NumberUtils;
 import org.personal.washingmachine.dto.WashingMachineDetailsDTO;
 import org.springframework.stereotype.Component;
 
 @Component
-public class HiddenSurfacesDamageCalculator implements ICalculator {
+public class VisibleSurfacesDamageCalculator implements ICalculator {
 
-	private static final int HIDDEN_SURFACES_THRESHOLD = 7;
+	private static final int VISIBLE_SURFACES_THRESHOLD = 5;
 
 	@Override
 	public int calculate(WashingMachineDetailsDTO dto) {
-		if (!dto.applicableHiddenSurfacesDamage()) {
+		if (!dto.applicableVisibleSurfacesDamage()) {
 			return 0;
 		}
 
@@ -29,33 +29,33 @@ public class HiddenSurfacesDamageCalculator implements ICalculator {
 	}
 
 	int calculateScratchesDamageLevel(WashingMachineDetailsDTO dto) {
-		if (!dto.hiddenSurfacesHasScratches()) {
+		if (!dto.visibleSurfacesHasScratches()) {
 			return 0;
 		}
 
-		return dto.hiddenSurfacesScratchesLength() < HIDDEN_SURFACES_THRESHOLD
+		return (dto.visibleSurfacesScratchesLength() < VISIBLE_SURFACES_THRESHOLD)
 				? 2
 				: 3;
 	}
 
 	int calculateDentsDamageLevel(WashingMachineDetailsDTO dto) {
-		if (!dto.hiddenSurfacesHasDents()) {
+		if (!dto.visibleSurfacesHasDents()) {
 			return 0;
 		}
 
-		return dto.hiddenSurfacesDentsDepth() < HIDDEN_SURFACES_THRESHOLD
+		return (dto.visibleSurfacesDentsDepth() < VISIBLE_SURFACES_THRESHOLD)
 				? 2
 				: 3;
 	}
 
 	int calculateSmallDamageLevel(WashingMachineDetailsDTO dto) {
-		return dto.hiddenSurfacesHasMinorDamage()
+		return dto.visibleSurfacesHasMinorDamage()
 				? 2
 				: 0;
 	}
 
 	int calculateBigDamageLevel(WashingMachineDetailsDTO dto) {
-		return dto.hiddenSurfacesHasMajorDamage()
+		return (dto.visibleSurfacesHasMajorDamage())
 				? 3
 				: 0;
 	}

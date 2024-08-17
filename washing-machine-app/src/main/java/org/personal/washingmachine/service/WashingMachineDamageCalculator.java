@@ -1,4 +1,4 @@
-package org.personal.washingmachine.facade;
+package org.personal.washingmachine.service;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -6,10 +6,10 @@ import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
 import org.personal.washingmachine.dto.WashingMachineDetailsDTO;
 import org.personal.washingmachine.dto.WashingMachineEvaluationDTO;
-import org.personal.washingmachine.facade.calculators.HiddenSurfacesDamageCalculator;
-import org.personal.washingmachine.facade.calculators.PackageDamageCalculator;
-import org.personal.washingmachine.facade.calculators.PricingDamageCalculator;
-import org.personal.washingmachine.facade.calculators.VisibleSurfacesDamageCalculator;
+import org.personal.washingmachine.service.calculators.HiddenSurfacesDamageCalculator;
+import org.personal.washingmachine.service.calculators.PackageDamageCalculator;
+import org.personal.washingmachine.service.calculators.PricingDamageCalculator;
+import org.personal.washingmachine.service.calculators.VisibleSurfacesDamageCalculator;
 import org.springframework.stereotype.Service;
 
 @Service

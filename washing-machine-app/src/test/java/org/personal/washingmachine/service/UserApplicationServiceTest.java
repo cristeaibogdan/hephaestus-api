@@ -1,4 +1,4 @@
-package org.personal.washingmachine.facade;
+package org.personal.washingmachine.service;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -14,7 +14,6 @@ import org.personal.shared.exception.CustomException;
 import org.personal.washingmachine.dto.OrganizationAndCountryDTO;
 import org.personal.washingmachine.dto.UserCredentialsDTO;
 import org.personal.washingmachine.dto.UserDTO;
-import org.personal.washingmachine.service.UserService;
 
 import java.util.stream.Stream;
 
@@ -28,10 +27,10 @@ import static org.mockito.Mockito.times;
 import static org.personal.washingmachine.dto.Mapper.UserMapper;
 
 @ExtendWith(MockitoExtension.class)
-class UserFacadeTest {
+class UserApplicationServiceTest {
 
 	@InjectMocks
-	private UserFacade underTest;
+	private UserApplicationService underTest;
 
 	@Mock
 	private UserService userServiceMock;

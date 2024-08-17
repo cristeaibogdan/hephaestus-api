@@ -1,4 +1,4 @@
-package org.personal.washingmachine.facade;
+package org.personal.washingmachine.service;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -10,11 +10,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.personal.shared.exception.CustomException;
-import org.personal.washingmachine.facade.WashingMachineDamageCalculator;
-import org.personal.washingmachine.facade.calculators.HiddenSurfacesDamageCalculator;
-import org.personal.washingmachine.facade.calculators.PackageDamageCalculator;
-import org.personal.washingmachine.facade.calculators.PricingDamageCalculator;
-import org.personal.washingmachine.facade.calculators.VisibleSurfacesDamageCalculator;
+import org.personal.washingmachine.service.calculators.HiddenSurfacesDamageCalculator;
+import org.personal.washingmachine.service.calculators.PackageDamageCalculator;
+import org.personal.washingmachine.service.calculators.PricingDamageCalculator;
+import org.personal.washingmachine.service.calculators.VisibleSurfacesDamageCalculator;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;

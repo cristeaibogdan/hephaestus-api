@@ -1,8 +1,7 @@
-package org.personal.washingmachine.facade.calculators;
+package org.personal.washingmachine.service.calculators;
 
 import org.junit.jupiter.api.Test;
 import org.personal.washingmachine.dto.WashingMachineDetailsDTO;
-import org.personal.washingmachine.facade.calculators.PackageDamageCalculator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

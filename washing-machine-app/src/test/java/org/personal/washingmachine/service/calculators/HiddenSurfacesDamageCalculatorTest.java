@@ -1,11 +1,10 @@
-package org.personal.washingmachine.facade.calculators;
+package org.personal.washingmachine.service.calculators;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.personal.washingmachine.dto.WashingMachineDetailsDTO;
-import org.personal.washingmachine.facade.calculators.HiddenSurfacesDamageCalculator;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 

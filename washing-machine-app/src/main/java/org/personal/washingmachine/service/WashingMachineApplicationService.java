@@ -1,23 +1,20 @@
-package org.personal.washingmachine.facade;
+package org.personal.washingmachine.service;
 
 import com.querydsl.core.BooleanBuilder;
 import lombok.RequiredArgsConstructor;
+import org.personal.shared.clients.ProductClient;
 import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
+import org.personal.washingmachine.dto.*;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineImage;
-import org.personal.washingmachine.dto.PageRequestDTO;
-import org.personal.washingmachine.dto.WashingMachineDTO;
-import org.personal.washingmachine.dto.WashingMachineExpandedDTO;
-import org.personal.washingmachine.dto.WashingMachineSimpleDTO;
-import org.personal.washingmachine.service.WashingMachineService;
-import org.personal.washingmachine.facade.utils.QueryDSLUtils;
+import org.personal.washingmachine.service.utils.QueryDSLUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -26,11 +23,15 @@ import java.util.List;
 import static org.personal.washingmachine.entity.QWashingMachine.washingMachine;
 import static org.personal.washingmachine.dto.Mapper.*;
 
-@Component
+@Service
+@RestController
 @RequiredArgsConstructor
-public class WashingMachineFacade {
+public class WashingMachineApplicationService implements IWashingMachineApplicationService {
 	private final WashingMachineService washingMachineService;
+	private final WashingMachineDamageCalculator washingMachineDamageCalculator;
+	private final WashingMachineReportGenerator washingMachineReportGenerator;
 
+	@Override
 	public Page<WashingMachineSimpleDTO> loadPaginatedAndFiltered(PageRequestDTO pageRequestDTO) {
 		PageRequest pageRequest = PageRequest.of(
 				pageRequestDTO.pageIndex(),
@@ -59,16 +60,13 @@ public class WashingMachineFacade {
 		return responsePage.map(wm -> WashingMachineMapper.toSimpleDTO(wm));
 	}
 
+	@Override
 	public WashingMachineExpandedDTO loadExpanded(String serialNumber) {
 		WashingMachine washingMachine = washingMachineService.loadExpanded(serialNumber);
 		return WashingMachineMapper.toExpandedDTO(washingMachine);
 	}
 
-	// TODO: Find a way to mix this method with the one above.
-	public WashingMachine load(String serialNumber) {
-		return washingMachineService.loadExpanded(serialNumber);
-	}
-
+	@Override
 	public void save(WashingMachineDTO washingMachineDTO, List<MultipartFile> imageFiles) {
 
 		//TODO: 1. Should I check if the serial number is in use HERE? or in the service?
@@ -82,7 +80,30 @@ public class WashingMachineFacade {
 		washingMachineService.save(washingMachine);
 	}
 
-	public boolean isSerialNumberInUse(@PathVariable String serialNumber) {
+	@Override
+	public WashingMachineEvaluationDTO getDamageEvaluation(WashingMachineDetailsDTO washingMachineDetailsDTO) {
+		return washingMachineDamageCalculator.getDamageEvaluation(washingMachineDetailsDTO);
+	}
+
+	@Override
+	public WashingMachineReportDTO getReport(String serialNumber) {
+		WashingMachine washingMachine = washingMachineService.loadExpanded(serialNumber);
+		return washingMachineReportGenerator.getReport(washingMachine);
+	}
+
+	// *****************************************
+	// Exception Propagation Test Endpoint
+	// *****************************************
+	//TODO: To be deleted
+	private final ProductClient productClient;
+
+	@Override
+	public List<String> getManufacturers(String category) {
+		return productClient.getManufacturers(category);
+	}
+
+	@Override
+	public boolean isSerialNumberInUse(String serialNumber) {
 		return washingMachineService.isSerialNumberInUse(serialNumber);
 	}
 

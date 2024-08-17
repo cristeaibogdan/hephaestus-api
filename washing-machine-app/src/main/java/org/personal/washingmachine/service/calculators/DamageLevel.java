@@ -1,4 +1,4 @@
-package org.personal.washingmachine.facade.calculators;
+package org.personal.washingmachine.service.calculators;
 
 import lombok.Getter;
 

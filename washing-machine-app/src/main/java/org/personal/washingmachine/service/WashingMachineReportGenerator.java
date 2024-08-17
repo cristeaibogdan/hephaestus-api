@@ -1,4 +1,4 @@
-package org.personal.washingmachine.facade;
+package org.personal.washingmachine.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +10,7 @@ import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineDetails;
 import org.personal.washingmachine.entity.WashingMachineImage;
 import org.personal.washingmachine.dto.WashingMachineReportDTO;
+import org.personal.washingmachine.repository.WashingMachineRepository;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
@@ -24,13 +25,11 @@ import java.util.concurrent.TimeUnit;
 @Service
 @RequiredArgsConstructor
 public class WashingMachineReportGenerator {
-	private final WashingMachineFacade washingMachineFacade;
 
-	//TODO: Maybe a better place is in the domain?
-	public WashingMachineReportDTO getReport(String serialNumber) {
+	//TODO: Maybe a better place is in the domain? Should it get the washingMachine by itself? Or should it be handed to it?
+	//TODO: If it gets the washingMachine by itself, it has to implement orElseThrow, so it would be better if i have a method like that in the service.
+	public WashingMachineReportDTO getReport(WashingMachine washingMachine) {
 		StopWatch stopWatch = StopWatch.createStarted();
-
-		WashingMachine washingMachine = washingMachineFacade.load(serialNumber);
 
 		try {
 			Map<String, Object> parameters = getReportFirstPageParameters(washingMachine);
@@ -40,7 +39,7 @@ public class WashingMachineReportGenerator {
 			JasperPrint filledReport = JasperFillManager.fillReport(compiledReport, parameters, new JREmptyDataSource());
 
 			// Export report locally - TEST PURPOSE ONLY
-			// String exportPath = System.getProperty("user.dir")+"\\washing-machine\\src\\main\\resources\\reports\\Test.pdf";//
+			// String exportPath = System.getProperty("user.dir")+"\\washing-machine\\src\\main\\resources\\reports\\Test.pdf";
 			// JasperExportManager.exportReportToPdfFile(filledReport,exportPath);
 			// return null;
 
