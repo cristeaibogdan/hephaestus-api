@@ -8,6 +8,7 @@ import org.personal.shared.exception.ErrorCode;
 import org.personal.washingmachine.dto.*;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineImage;
+import org.personal.washingmachine.repository.WashingMachineRepository;
 import org.personal.washingmachine.service.utils.QueryDSLUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,6 +29,7 @@ import static org.personal.washingmachine.dto.Mapper.*;
 @RequiredArgsConstructor
 public class WashingMachineApplicationService implements IWashingMachineApplicationService {
 	private final WashingMachineService washingMachineService;
+	private final WashingMachineRepository washingMachineRepository;
 	private final WashingMachineDamageCalculator washingMachineDamageCalculator;
 	private final WashingMachineReportGenerator washingMachineReportGenerator;
 
@@ -104,7 +106,7 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 
 	@Override
 	public boolean isSerialNumberInUse(String serialNumber) {
-		return washingMachineService.isSerialNumberInUse(serialNumber);
+		return washingMachineRepository.existsBySerialNumber(serialNumber);
 	}
 
 //*********************************************************************************************

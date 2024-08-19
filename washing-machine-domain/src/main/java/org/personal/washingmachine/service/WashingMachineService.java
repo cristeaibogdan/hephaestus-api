@@ -41,8 +41,4 @@ public class WashingMachineService {
 
 		washingMachineRepository.save(washingMachine);
 	}
-
-	public boolean isSerialNumberInUse(String serialNumber) {
-		return washingMachineRepository.existsBySerialNumber(serialNumber);
-	}
 }
