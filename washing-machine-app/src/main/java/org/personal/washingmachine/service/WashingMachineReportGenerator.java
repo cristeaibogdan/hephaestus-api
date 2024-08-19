@@ -28,6 +28,7 @@ public class WashingMachineReportGenerator {
 
 	//TODO: Maybe a better place is in the domain? Should it get the washingMachine by itself? Or should it be handed to it?
 	//TODO: If it gets the washingMachine by itself, it has to implement orElseThrow, so it would be better if i have a method like that in the service.
+	//TODO: Change to VO and move to domain.
 	public WashingMachineReportDTO getReport(WashingMachine washingMachine) {
 		StopWatch stopWatch = StopWatch.createStarted();
 

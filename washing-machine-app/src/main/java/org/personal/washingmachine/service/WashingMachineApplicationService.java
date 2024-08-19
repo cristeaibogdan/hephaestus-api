@@ -71,8 +71,6 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 	@Override
 	public void save(WashingMachineDTO washingMachineDTO, List<MultipartFile> imageFiles) {
 
-		//TODO: 1. Should I check if the serial number is in use HERE? or in the service?
-
 		WashingMachine washingMachine = WashingMachineMapper.toEntity(washingMachineDTO);
 		imageFiles.forEach(image -> {
 			WashingMachineImage washingMachineImage = getWashingMachineImage(image);

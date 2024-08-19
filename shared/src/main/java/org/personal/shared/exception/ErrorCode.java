@@ -1,41 +1,41 @@
 package org.personal.shared.exception;
 
+import org.springframework.http.HttpStatus;
+
 /**
  * <p> Enum responsible for holding keys that are used in {@link org.personal.shared.exception.GlobalExceptionHandler} to retrieve translated user messages.
  * <p> Keys should be descriptive and illustrate why the exception was thrown in the first place.
- * <p> By default the status code is set to 500, but can be modified for each key.
+ * <p> By default the status code is set to {@link HttpStatus#INTERNAL_SERVER_ERROR INTERNAL_SERVER_ERROR}, but can be modified for each key.
  */
 public enum ErrorCode {
-
-    // TODO: Consider adding HttpStatus instead of int
 
     // DEFAULT ERROR
     GENERAL,
 
     // AUTHENTICATION ERRORS
-    INVALID_REGISTRATION_CODE(400),
-    EMAIL_ALREADY_TAKEN(400),
-    USERNAME_ALREADY_TAKEN(400),
-    INVALID_CREDENTIALS(400),
+    INVALID_REGISTRATION_CODE (HttpStatus.BAD_REQUEST),
+    EMAIL_ALREADY_TAKEN (HttpStatus.BAD_REQUEST),
+    USERNAME_ALREADY_TAKEN (HttpStatus.BAD_REQUEST),
+    INVALID_CREDENTIALS (HttpStatus.BAD_REQUEST),
 
     // WASHING-MACHINE ERRORS
-    SERIAL_NUMBER_ALREADY_TAKEN(400),
-    EMPTY_PAGE(400),
-    SERIAL_NUMBER_NOT_FOUND(400),
+    SERIAL_NUMBER_ALREADY_TAKEN (HttpStatus.BAD_REQUEST),
+    EMPTY_PAGE (HttpStatus.BAD_REQUEST),
+    SERIAL_NUMBER_NOT_FOUND (HttpStatus.BAD_REQUEST),
     REPORT_GENERATION_FAIL,
-    INVALID_DATE (400),
+    INVALID_DATE (HttpStatus.BAD_REQUEST),
 
     // PRODUCT ERRORS
-    NO_MANUFACTURERS_FOUND(400),
-    NO_MODELS_TYPES_FOUND_FOR_MANUFACTURER(400);
+    NO_MANUFACTURERS_FOUND (HttpStatus.BAD_REQUEST),
+    NO_MODELS_TYPES_FOUND_FOR_MANUFACTURER (HttpStatus.BAD_REQUEST);
 
-    public final int statusCode;
+    public final HttpStatus statusCode;
 
     ErrorCode() {
-        this(500);
+        this(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    ErrorCode(int statusCode) {
+    ErrorCode(HttpStatus statusCode) {
         this.statusCode = statusCode;
     }
 }

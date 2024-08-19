@@ -1,6 +1,6 @@
 package org.personal.product.service;
 
-import org.personal.product.entity.dtos.ProductModelTypeDTO;
+import org.personal.product.dto.ProductModelTypeDTO;
 import org.personal.product.repository.ProductRepository;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Nested;

@@ -29,19 +29,14 @@ class UserServiceTest {
 	@Mock
 	private UserRepository userRepositoryMock;
 
-	private User user;
-
-	@BeforeEach
-	void setup() {
-		this.user = new User(
-				"RX1001",
-				"ZEOS",
-				"ROMANIA",
-				"some@email.com",
-				"testUsername",
-				"testPassword"
-		);
-	}
+	private final User user = new User(
+			"RX1001",
+			"ZEOS",
+			"ROMANIA",
+			"some@email.com",
+			"testUsername",
+			"testPassword"
+	);
 
 	@Nested
 	class testRegister {

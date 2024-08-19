@@ -56,7 +56,6 @@ public class UserApplicationService implements IUserApplicationService { // TODO
 
 	@Override
 	public void register(UserDTO userDTO) {
-		//TODO: 1. Should I check if the user exists in HERE? or in the service?
 		User user = UserMapper.toEntity(userDTO);
 		userService.register(user);
 	}
