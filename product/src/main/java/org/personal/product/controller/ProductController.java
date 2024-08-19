@@ -1,7 +1,7 @@
 package org.personal.product.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.personal.product.entity.dtos.ProductModelTypeDTO;
+import org.personal.product.dto.ProductModelTypeDTO;
 import org.personal.product.service.ProductService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

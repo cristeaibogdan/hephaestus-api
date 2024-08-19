@@ -1,4 +1,4 @@
-package org.personal.product.entity.dtos;
+package org.personal.product.dto;
 
 public record ProductModelTypeDTO(
         String model,

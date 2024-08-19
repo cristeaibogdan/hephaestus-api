@@ -1,4 +1,4 @@
-package org.personal.washingmachine.facade;
+package org.personal.washingmachine.service;
 
 import lombok.RequiredArgsConstructor;
 import org.personal.shared.exception.CustomException;
@@ -7,8 +7,8 @@ import org.personal.washingmachine.entity.User;
 import org.personal.washingmachine.dto.OrganizationAndCountryDTO;
 import org.personal.washingmachine.dto.UserCredentialsDTO;
 import org.personal.washingmachine.dto.UserDTO;
-import org.personal.washingmachine.service.UserService;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,9 +17,10 @@ import java.util.Optional;
 
 import static org.personal.washingmachine.dto.Mapper.*;
 
-@Component
+@Service
+@RestController
 @RequiredArgsConstructor
-public class UserFacade {
+public class UserApplicationService implements IUserApplicationService { // TODO: Replace with proper authentication
 	private final UserService userService;
 
 	private Map<OrganizationAndCountryDTO, List<String>> initializeRegistrationCodes() {
@@ -33,6 +34,7 @@ public class UserFacade {
 		return registerCodes;
 	}
 
+	@Override
 	public boolean isValidRegistrationCode(String registrationCode) {
 		Optional<OrganizationAndCountryDTO> response = initializeRegistrationCodes().entrySet().stream()
 				.filter(entry -> entry.getValue().contains(registrationCode))
@@ -42,6 +44,7 @@ public class UserFacade {
 		return response.isPresent();
 	}
 
+	@Override
 	public OrganizationAndCountryDTO getOrganizationAndCountry(String registrationCode) {
 		return initializeRegistrationCodes().entrySet()
 				.stream()
@@ -51,12 +54,13 @@ public class UserFacade {
 				.orElseThrow(() -> new CustomException(ErrorCode.INVALID_REGISTRATION_CODE));
 	}
 
+	@Override
 	public void register(UserDTO userDTO) {
-		//TODO: 1. Should I check if the user exists in HERE? or in the service?
 		User user = UserMapper.toEntity(userDTO);
 		userService.register(user);
 	}
 
+	@Override
 	public UserDTO login(UserCredentialsDTO userCredentialsDTO) {
 		User user = userService.login(userCredentialsDTO.username(), userCredentialsDTO.password());
 		return UserMapper.toDTO(user);

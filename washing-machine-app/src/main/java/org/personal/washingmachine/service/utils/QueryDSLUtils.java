@@ -1,9 +1,11 @@
-package org.personal.washingmachine.facade.utils;
+package org.personal.washingmachine.service.utils;
 
 import com.querydsl.core.types.dsl.*;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.personal.shared.exception.CustomException;
+import org.personal.shared.exception.ErrorCode;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -33,7 +35,7 @@ public final class QueryDSLUtils {
             LocalDate localDate = LocalDate.parse(value.trim());
             return attribute.eq(localDate);
         } catch (DateTimeParseException e) {
-            throw new RuntimeException("Invalid date provided", e);
+            throw new CustomException("Invalid date provided", ErrorCode.INVALID_DATE, e);
         }
     }
 
@@ -47,7 +49,7 @@ public final class QueryDSLUtils {
             LocalDate convertedEndDate = LocalDate.parse(endDate.trim());
             return attribute.between(convertedStartDate, convertedEndDate);
         } catch (DateTimeParseException e) {
-            throw new RuntimeException("Invalid dates provided", e);
+            throw new CustomException("Invalid date provided", ErrorCode.INVALID_DATE, e);
         }
     }
 
@@ -64,7 +66,7 @@ public final class QueryDSLUtils {
                     .and(attribute.dayOfMonth().eq(localDate.getDayOfMonth()));
 
         } catch (DateTimeParseException e) {
-            throw new RuntimeException("Invalid date provided", e);
+            throw new CustomException("Invalid date provided", ErrorCode.INVALID_DATE, e);
         }
     }
 

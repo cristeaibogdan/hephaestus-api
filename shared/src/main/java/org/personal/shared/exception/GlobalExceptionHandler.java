@@ -5,10 +5,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import static org.springframework.http.HttpStatus.*;
 import static org.springframework.http.ResponseEntity.status;
 
 
@@ -36,7 +38,7 @@ class GlobalExceptionHandler {
 				"Internal Translation Error",
 				request.getLocale());
 		log.error("Unexpected {}: {}", ErrorCode.GENERAL, userMessage, e);
-		return status(500)
+		return status(INTERNAL_SERVER_ERROR)
 				.body(userMessage);
 	}
 
@@ -88,7 +90,7 @@ class GlobalExceptionHandler {
 			log.error("Feign connection error for product backend: ", e);
 		}
 
-		return status(503)
+		return status(SERVICE_UNAVAILABLE)
 				.body(userMessage);
 	}
 }
