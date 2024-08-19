@@ -10,6 +10,7 @@ import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineImage;
 import org.personal.washingmachine.repository.WashingMachineRepository;
 import org.personal.washingmachine.service.utils.QueryDSLUtils;
+import org.personal.washingmachine.vo.WashingMachineReportVO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -21,8 +22,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
+import static org.personal.washingmachine.dto.Mapper.WashingMachineMapper;
 import static org.personal.washingmachine.entity.QWashingMachine.washingMachine;
-import static org.personal.washingmachine.dto.Mapper.*;
 
 @Service
 @RestController
@@ -31,7 +32,6 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 	private final WashingMachineService washingMachineService;
 	private final WashingMachineRepository washingMachineRepository;
 	private final WashingMachineDamageCalculator washingMachineDamageCalculator;
-	private final WashingMachineReportGenerator washingMachineReportGenerator;
 
 	@Override
 	public Page<WashingMachineSimpleDTO> loadPaginatedAndFiltered(PageRequestDTO pageRequestDTO) {
@@ -86,9 +86,8 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 	}
 
 	@Override
-	public WashingMachineReportDTO getReport(String serialNumber) {
-		WashingMachine washingMachine = washingMachineService.loadExpanded(serialNumber);
-		return washingMachineReportGenerator.getReport(washingMachine);
+	public WashingMachineReportVO getReport(String serialNumber) {
+		return washingMachineService.getReport(serialNumber);
 	}
 
 	// *****************************************

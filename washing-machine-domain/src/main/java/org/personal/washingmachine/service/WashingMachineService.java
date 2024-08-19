@@ -6,6 +6,7 @@ import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.repository.WashingMachineRepository;
+import org.personal.washingmachine.vo.WashingMachineReportVO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class WashingMachineService {
 	private final WashingMachineRepository washingMachineRepository;
+	private final WashingMachineReportGenerator washingMachineReportGenerator;
 
 	public Page<WashingMachine> loadPaginatedAndFiltered(BooleanBuilder booleanBuilder, PageRequest pageRequest) {
 
@@ -40,5 +42,10 @@ public class WashingMachineService {
 		}
 
 		washingMachineRepository.save(washingMachine);
+	}
+
+	public WashingMachineReportVO getReport(String serialNumber) {
+		WashingMachine washingMachine = loadExpanded(serialNumber);
+		return washingMachineReportGenerator.getReport(washingMachine);
 	}
 }

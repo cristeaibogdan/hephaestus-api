@@ -1,6 +1,7 @@
 package org.personal.washingmachine.service;
 
 import org.personal.washingmachine.dto.*;
+import org.personal.washingmachine.vo.WashingMachineReportVO;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public interface IWashingMachineApplicationService {
 	WashingMachineEvaluationDTO getDamageEvaluation(@RequestBody WashingMachineDetailsDTO washingMachineDetailsDTO);
 
 	@GetMapping(value = "/{serialNumber}/report")
-	WashingMachineReportDTO getReport(@PathVariable String serialNumber);
+	WashingMachineReportVO getReport(@PathVariable String serialNumber);
 
 	@GetMapping("/{category}/manufacturers")
 	List<String> getManufacturers(@PathVariable String category);

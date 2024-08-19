@@ -9,8 +9,7 @@ import org.personal.shared.exception.ErrorCode;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineDetails;
 import org.personal.washingmachine.entity.WashingMachineImage;
-import org.personal.washingmachine.dto.WashingMachineReportDTO;
-import org.personal.washingmachine.repository.WashingMachineRepository;
+import org.personal.washingmachine.vo.WashingMachineReportVO;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
@@ -26,10 +25,7 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class WashingMachineReportGenerator {
 
-	//TODO: Maybe a better place is in the domain? Should it get the washingMachine by itself? Or should it be handed to it?
-	//TODO: If it gets the washingMachine by itself, it has to implement orElseThrow, so it would be better if i have a method like that in the service.
-	//TODO: Change to VO and move to domain.
-	public WashingMachineReportDTO getReport(WashingMachine washingMachine) {
+	public WashingMachineReportVO getReport(WashingMachine washingMachine) {
 		StopWatch stopWatch = StopWatch.createStarted();
 
 		try {
@@ -50,7 +46,7 @@ public class WashingMachineReportGenerator {
 					stopWatch.getTime(TimeUnit.MILLISECONDS));
 
 			// Export report
-			return new WashingMachineReportDTO(
+			return new WashingMachineReportVO(
 					JasperExportManager.exportReportToPdf(filledReport),
 					washingMachine.getCreatedAt().toString());
 
