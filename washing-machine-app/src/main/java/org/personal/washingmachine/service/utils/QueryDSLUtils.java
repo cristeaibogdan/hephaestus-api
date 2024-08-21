@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
-import org.personal.washingmachine.enums.ReturnType;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
