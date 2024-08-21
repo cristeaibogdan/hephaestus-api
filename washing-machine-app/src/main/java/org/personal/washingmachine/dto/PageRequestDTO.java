@@ -1,5 +1,7 @@
 package org.personal.washingmachine.dto;
 
+import org.personal.washingmachine.enums.ReturnType;
+
 public record PageRequestDTO(
         Integer pageIndex,
         Integer pageSize,
@@ -8,7 +10,7 @@ public record PageRequestDTO(
         String manufacturer,
 
         String damageType,
-        String returnType,
+        ReturnType returnType,
         String identificationMode,
 
         String serialNumber,

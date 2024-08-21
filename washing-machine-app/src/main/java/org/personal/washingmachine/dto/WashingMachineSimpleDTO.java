@@ -1,5 +1,7 @@
 package org.personal.washingmachine.dto;
 
+import org.personal.washingmachine.enums.ReturnType;
+
 import java.time.LocalDateTime;
 
 public record WashingMachineSimpleDTO(
@@ -7,7 +9,7 @@ public record WashingMachineSimpleDTO(
         String manufacturer,
 
         String damageType,
-        String returnType,
+        ReturnType returnType,
         String identificationMode,
 
         String serialNumber,
