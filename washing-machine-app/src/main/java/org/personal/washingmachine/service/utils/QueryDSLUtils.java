@@ -21,7 +21,7 @@ public final class QueryDSLUtils {
                 : null;
     }
 
-    public static BooleanExpression addEnumEqualCondition(EnumPath<ReturnType> attribute, ReturnType value) {
+    public static <T extends Enum<T>> BooleanExpression addEnumEqualCondition(EnumPath<T> attribute, T value) {
         return (value != null)
                 ? attribute.eq(value)
                 : null;
