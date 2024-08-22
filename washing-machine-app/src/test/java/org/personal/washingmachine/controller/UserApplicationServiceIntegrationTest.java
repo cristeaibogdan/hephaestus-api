@@ -3,38 +3,28 @@ package org.personal.washingmachine.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.personal.shared.exception.CustomException;
-import org.personal.shared.exception.ErrorCode;
 import org.personal.washingmachine.dto.OrganizationAndCountryDTO;
-import org.personal.washingmachine.dto.UserCredentialsDTO;
-import org.personal.washingmachine.dto.UserDTO;
-import org.personal.washingmachine.service.UserApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import static org.mockito.BDDMockito.*;
-import static org.mockito.Mockito.times;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-//@WebMvcTest(UserController.class)
-class UserControllerTest {
+@SpringBootTest
+@AutoConfigureMockMvc
+class UserApplicationServiceIntegrationTest {
 
-//    @MockBean
-//    UserApplicationService userApplicationServiceMock;
-//
-//    @Autowired
-//    MockMvc mockMvc;
-//
-//    @Autowired
-//    ObjectMapper objectMapper;
-//
+    @Autowired
+    MockMvc mockMvc;
+
+    @Autowired
+    ObjectMapper objectMapper;
+
 //    @Nested
 //    class testIsValidRegistrationCode {
 //
@@ -84,35 +74,28 @@ class UserControllerTest {
 //                    .andExpect(content().string(expected.toString()));
 //        }
 //    }
-//
-//    @Nested
-//    class testGetOrganizationAndCountry {
-//
-//        @Test
-//        void should_ReturnOrganizationAndCountryDTO() throws Exception {
-//            // GIVEN
-//            String registrationCode = "RX1001";
-//            OrganizationAndCountryDTO expected = new OrganizationAndCountryDTO(
-//                    "Organization",
-//                    "United Kingdom");
-//
-//            given(userApplicationServiceMock.getOrganizationAndCountry(registrationCode))
-//                    .willReturn(expected);
-//
-//            // WHEN
-//            ResultActions resultActions = mockMvc.perform(
-//                    get("/api/v1/users/{registrationCode}/organization-and-country", registrationCode));
-//
-//            // THEN
-//            then(userApplicationServiceMock)
-//                    .should(times(1))
-//                    .getOrganizationAndCountry(registrationCode);
-//
-//            resultActions
-//                    .andExpect(status().isOk())
-//                    .andExpect(content().string(objectMapper.writeValueAsString(expected)));
-//        }
-//    }
+
+    @Nested
+    class testGetOrganizationAndCountry {
+
+        @Test
+        void should_ReturnOrganizationAndCountryDTO() throws Exception {
+            // GIVEN
+            String registrationCode = "RX1001";
+            OrganizationAndCountryDTO expected = new OrganizationAndCountryDTO(
+                    "ZEOS",
+                    "SLOVENIA");
+
+            // WHEN
+            ResultActions resultActions = mockMvc.perform(
+                    get("/api/v1/users/{registrationCode}/organization-and-country", registrationCode));
+
+            // THEN
+            resultActions
+                    .andExpect(status().isOk())
+                    .andExpect(content().string(objectMapper.writeValueAsString(expected)));
+        }
+    }
 //
 //    @Nested
 //    class testRegister {

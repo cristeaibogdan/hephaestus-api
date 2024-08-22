@@ -68,15 +68,17 @@
         </dependency>
 
         <dependency>
-            <!-- ImmutableList, ... -->
+            <!-- ImmutableList ... -->
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>33.2.1-jre</version>
         </dependency>
 
         <dependency>
+            <!-- @Test, @Nested, @SpringBootTest, @AutoConfigureMockMvc ... -->
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
