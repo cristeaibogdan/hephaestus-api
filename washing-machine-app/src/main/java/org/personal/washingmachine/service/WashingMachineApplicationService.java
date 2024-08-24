@@ -29,9 +29,9 @@ import static org.personal.washingmachine.entity.QWashingMachine.washingMachine;
 @RestController
 @RequiredArgsConstructor
 public class WashingMachineApplicationService implements IWashingMachineApplicationService {
-	private final WashingMachineService washingMachineService;
-	private final WashingMachineRepository washingMachineRepository;
-	private final WashingMachineDamageCalculator washingMachineDamageCalculator;
+	private final WashingMachineService service;
+	private final WashingMachineRepository repository;
+	private final WashingMachineDamageCalculator damageCalculator;
 
 	@Override
 	public Page<WashingMachineSimpleDTO> loadPaginatedAndFiltered(PageRequestDTO pageRequestDTO) {
@@ -57,14 +57,14 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 
 				.and(QueryDSLUtils.addTimestampEqualCondition(washingMachine.createdAt, pageRequestDTO.createdAt()));
 
-		Page<WashingMachine> responsePage = washingMachineService.loadPaginatedAndFiltered(booleanBuilder, pageRequest);
+		Page<WashingMachine> responsePage = service.findAllPaginatedAndFiltered(booleanBuilder, pageRequest);
 
 		return responsePage.map(wm -> WashingMachineMapper.toSimpleDTO(wm));
 	}
 
 	@Override
 	public WashingMachineExpandedDTO loadExpanded(String serialNumber) {
-		WashingMachine washingMachine = washingMachineService.loadExpanded(serialNumber);
+		WashingMachine washingMachine = service.findBySerialNumber(serialNumber);
 		return WashingMachineMapper.toExpandedDTO(washingMachine);
 	}
 
@@ -77,17 +77,17 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 			washingMachine.addImage(washingMachineImage);
 		});
 
-		washingMachineService.save(washingMachine);
+		service.save(washingMachine);
 	}
 
 	@Override
 	public WashingMachineEvaluationDTO getDamageEvaluation(WashingMachineDetailsDTO washingMachineDetailsDTO) {
-		return washingMachineDamageCalculator.getDamageEvaluation(washingMachineDetailsDTO);
+		return damageCalculator.getDamageEvaluation(washingMachineDetailsDTO);
 	}
 
 	@Override
 	public WashingMachineReportVO getReport(String serialNumber) {
-		return washingMachineService.getReport(serialNumber);
+		return service.getReport(serialNumber);
 	}
 
 	// *****************************************
@@ -103,7 +103,7 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 
 	@Override
 	public boolean isSerialNumberInUse(String serialNumber) {
-		return washingMachineRepository.existsBySerialNumber(serialNumber);
+		return repository.existsBySerialNumber(serialNumber);
 	}
 
 //*********************************************************************************************

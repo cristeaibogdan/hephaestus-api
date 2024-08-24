@@ -11,24 +11,24 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserService {
 
-	private final UserRepository userRepository;
+	private final UserRepository repository;
 
 	public void register(User user) {
-		boolean existingEmail = userRepository.existsByEmail(user.getEmail());
+		boolean existingEmail = repository.existsByEmail(user.getEmail());
 		if (existingEmail) {
 			throw new CustomException(ErrorCode.EMAIL_ALREADY_TAKEN);
 		}
 
-		boolean existingUsername = userRepository.existsByUsername(user.getUsername());
+		boolean existingUsername = repository.existsByUsername(user.getUsername());
 		if (existingUsername) {
 			throw new CustomException(ErrorCode.USERNAME_ALREADY_TAKEN);
 		}
 
-		userRepository.save(user);
+		repository.save(user);
 	}
 
 	public User login(String username, String password) {
-		return userRepository
+		return repository
 				.findByUsernameAndPassword(username, password)
 				.orElseThrow(() -> new CustomException(ErrorCode.INVALID_CREDENTIALS));
 	}
