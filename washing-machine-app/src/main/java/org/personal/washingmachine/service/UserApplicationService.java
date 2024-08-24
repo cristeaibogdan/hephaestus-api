@@ -21,7 +21,7 @@ import static org.personal.washingmachine.dto.Mapper.*;
 @RestController
 @RequiredArgsConstructor
 public class UserApplicationService implements IUserApplicationService { // TODO: Replace with proper authentication
-	private final UserService userService;
+	private final UserService service;
 
 	private Map<OrganizationAndCountryDTO, List<String>> initializeRegistrationCodes() {
 		Map<OrganizationAndCountryDTO, List<String>> registerCodes = new HashMap<>();
@@ -57,12 +57,12 @@ public class UserApplicationService implements IUserApplicationService { // TODO
 	@Override
 	public void register(UserDTO userDTO) {
 		User user = UserMapper.toEntity(userDTO);
-		userService.register(user);
+		service.register(user);
 	}
 
 	@Override
 	public UserDTO login(UserCredentialsDTO userCredentialsDTO) {
-		User user = userService.login(userCredentialsDTO.username(), userCredentialsDTO.password());
+		User user = service.login(userCredentialsDTO.username(), userCredentialsDTO.password());
 		return UserMapper.toDTO(user);
 	}
 }

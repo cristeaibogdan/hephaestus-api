@@ -14,12 +14,12 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class WashingMachineService {
-	private final WashingMachineRepository washingMachineRepository;
-	private final WashingMachineReportGenerator washingMachineReportGenerator;
+	private final WashingMachineRepository repository;
+	private final WashingMachineReportGenerator reportGenerator;
 
-	public Page<WashingMachine> loadPaginatedAndFiltered(BooleanBuilder booleanBuilder, PageRequest pageRequest) {
+	public Page<WashingMachine> findAllPaginatedAndFiltered(BooleanBuilder booleanBuilder, PageRequest pageRequest) {
 
-		Page<WashingMachine> responsePage = washingMachineRepository.findAll(booleanBuilder, pageRequest);
+		Page<WashingMachine> responsePage = repository.findAll(booleanBuilder, pageRequest);
 
 		if (responsePage.isEmpty()) {
 			throw new CustomException(ErrorCode.EMPTY_PAGE);
@@ -28,24 +28,24 @@ public class WashingMachineService {
 		return responsePage;
 	}
 
-	public WashingMachine loadExpanded(String serialNumber) {
-		return washingMachineRepository
+	public WashingMachine findBySerialNumber(String serialNumber) {
+		return repository
 				.findBySerialNumber(serialNumber)
 				.orElseThrow(() -> new CustomException(ErrorCode.SERIAL_NUMBER_NOT_FOUND, serialNumber));
 	}
 
 	public void save(WashingMachine washingMachine) {
 
-		boolean existingSerialNumber = washingMachineRepository.existsBySerialNumber(washingMachine.getSerialNumber());
+		boolean existingSerialNumber = repository.existsBySerialNumber(washingMachine.getSerialNumber());
 		if (existingSerialNumber) {
 			throw new CustomException(ErrorCode.SERIAL_NUMBER_ALREADY_TAKEN);
 		}
 
-		washingMachineRepository.save(washingMachine);
+		repository.save(washingMachine);
 	}
 
 	public WashingMachineReportVO getReport(String serialNumber) {
-		WashingMachine washingMachine = loadExpanded(serialNumber);
-		return washingMachineReportGenerator.getReport(washingMachine);
+		WashingMachine washingMachine = findBySerialNumber(serialNumber);
+		return reportGenerator.getReport(washingMachine);
 	}
 }
