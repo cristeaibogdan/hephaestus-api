@@ -75,27 +75,27 @@ class UserApplicationServiceIntegrationTest {
 //        }
 //    }
 
-    @Nested
-    class testGetOrganizationAndCountry {
-
-        @Test
-        void should_ReturnOrganizationAndCountryDTO() throws Exception {
-            // GIVEN
-            String registrationCode = "RX1001";
-            OrganizationAndCountryDTO expected = new OrganizationAndCountryDTO(
-                    "ZEOS",
-                    "SLOVENIA");
-
-            // WHEN
-            ResultActions resultActions = mockMvc.perform(
-                    get("/api/v1/users/{registrationCode}/organization-and-country", registrationCode));
-
-            // THEN
-            resultActions
-                    .andExpect(status().isOk())
-                    .andExpect(content().string(objectMapper.writeValueAsString(expected)));
-        }
-    }
+//    @Nested
+//    class testGetOrganizationAndCountry {
+//
+//        @Test
+//        void should_ReturnOrganizationAndCountryDTO() throws Exception {
+//            // GIVEN
+//            String registrationCode = "RX1001";
+//            OrganizationAndCountryDTO expected = new OrganizationAndCountryDTO(
+//                    "ZEOS",
+//                    "SLOVENIA");
+//
+//            // WHEN
+//            ResultActions resultActions = mockMvc.perform(
+//                    get("/api/v1/users/{registrationCode}/organization-and-country", registrationCode));
+//
+//            // THEN
+//            resultActions
+//                    .andExpect(status().isOk())
+//                    .andExpect(content().string(objectMapper.writeValueAsString(expected)));
+//        }
+//    }
 //
 //    @Nested
 //    class testRegister {

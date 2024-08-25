@@ -51,7 +51,7 @@ services:
       - zipkin
 
   washing-machine:
-    image: washing-machine:latest
+    image: washing-machine-app:latest
     container_name: washing-machine
     environment:
       - SPRING_PROFILES_ACTIVE=docker
