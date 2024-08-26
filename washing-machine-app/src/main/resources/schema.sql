@@ -2,7 +2,7 @@
 -- *** AUTH
 -- ********************************************************************
 
-CREATE TABLE public.user (
+CREATE TABLE IF NOT EXISTS public.user (
   id BIGSERIAL PRIMARY KEY,
   code VARCHAR,
   organization VARCHAR,
@@ -17,7 +17,7 @@ CREATE TABLE public.user (
 -- *** DAMAGED PRODUCT
 -- ********************************************************************
 
- CREATE TABLE public.washing_machine_details (
+ CREATE TABLE IF NOT EXISTS public.washing_machine_details (
    id BIGSERIAL PRIMARY KEY,
 
    -- PACKAGE
@@ -58,7 +58,7 @@ CREATE TABLE public.user (
    repair_price INTEGER
 );
 
-CREATE TABLE public.washing_machine (
+CREATE TABLE IF NOT EXISTS public.washing_machine (
   id BIGSERIAL PRIMARY KEY,
   category VARCHAR,
   manufacturer VARCHAR,
@@ -79,7 +79,7 @@ CREATE TABLE public.washing_machine (
   washing_machine_details_id BIGINT REFERENCES public.washing_machine_details(id)
 );
 
-CREATE TABLE public.washing_machine_image (
+CREATE TABLE IF NOT EXISTS public.washing_machine_image (
   id BIGSERIAL PRIMARY KEY,
   image_prefix VARCHAR,
   image BYTEA,

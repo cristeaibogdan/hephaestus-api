@@ -1,4 +1,4 @@
-CREATE TABLE public.product(
+CREATE TABLE IF NOT EXISTS public.product(
   id BIGSERIAL PRIMARY KEY,
   category VARCHAR,
   manufacturer VARCHAR,
