@@ -1,14 +1,11 @@
 package org.personal.washingmachine.service;
 
-import com.querydsl.core.BooleanBuilder;
 import lombok.RequiredArgsConstructor;
 import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.repository.WashingMachineRepository;
 import org.personal.washingmachine.vo.WashingMachineReportVO;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,17 +13,6 @@ import org.springframework.stereotype.Service;
 public class WashingMachineService {
 	private final WashingMachineRepository repository;
 	private final WashingMachineReportGenerator reportGenerator;
-
-	public Page<WashingMachine> findAllPaginatedAndFiltered(BooleanBuilder booleanBuilder, PageRequest pageRequest) {
-
-		Page<WashingMachine> responsePage = repository.findAll(booleanBuilder, pageRequest);
-
-		if (responsePage.isEmpty()) {
-			throw new CustomException(ErrorCode.EMPTY_PAGE);
-		}
-
-		return responsePage;
-	}
 
 	public WashingMachine findBySerialNumber(String serialNumber) {
 		return repository

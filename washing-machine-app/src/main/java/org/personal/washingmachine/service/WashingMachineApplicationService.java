@@ -57,7 +57,7 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 
 				.and(QueryDSLUtils.addTimestampEqualCondition(washingMachine.createdAt, pageRequestDTO.createdAt()));
 
-		Page<WashingMachine> responsePage = service.findAllPaginatedAndFiltered(booleanBuilder, pageRequest);
+		Page<WashingMachine> responsePage = repository.findAll(booleanBuilder, pageRequest);
 
 		return responsePage.map(wm -> WashingMachineMapper.toSimpleDTO(wm));
 	}
