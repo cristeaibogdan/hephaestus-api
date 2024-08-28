@@ -45,7 +45,8 @@ public class WashingMachineDamageCalculator {
 	String getRecommendation(int damageLevel) {
 		return switch (damageLevel) {
 			case 1 -> "REPACKAGE";
-			case 2, 3 -> "RESALE";
+			case 2 -> "RESALE";
+			case 3 -> "OUTLET";
 			case 4 -> "REPAIR";
 			case 5 -> "DISASSEMBLE";
 			default -> throw new CustomException("Invalid damage level: " + damageLevel, ErrorCode.GENERAL);
