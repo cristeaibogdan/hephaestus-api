@@ -1,6 +1,7 @@
 package org.personal.washingmachine.dto;
 
 import org.personal.washingmachine.enums.DamageType;
+import org.personal.washingmachine.enums.IdentificationMode;
 import org.personal.washingmachine.enums.ReturnType;
 
 import java.time.LocalDateTime;
@@ -9,9 +10,9 @@ public record WashingMachineSimpleDTO(
         String category,
         String manufacturer,
 
-        DamageType damageType,
-        ReturnType returnType,
-        String identificationMode,
+		IdentificationMode identificationMode,
+		ReturnType returnType,
+		DamageType damageType,
 
         String serialNumber,
         String model,

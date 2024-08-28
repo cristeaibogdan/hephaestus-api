@@ -131,9 +131,9 @@ public class Mapper {
 			return new WashingMachineSimpleDTO(
 					entity.getCategory(),
 					entity.getManufacturer(),
-					entity.getDamageType(),
-					entity.getReturnType(),
 					entity.getIdentificationMode(),
+					entity.getReturnType(),
+					entity.getDamageType(),
 					entity.getSerialNumber(),
 					entity.getModel(),
 					entity.getType(),
