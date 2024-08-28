@@ -53,7 +53,7 @@ class WashingMachineDamageCalculatorTest {
 		@CsvSource({
 				"1, REPACKAGE",
 				"2, RESALE",
-				"3, RESALE",
+				"3, OUTLET",
 				"4, REPAIR",
 				"5, DISASSEMBLE"
 		})
