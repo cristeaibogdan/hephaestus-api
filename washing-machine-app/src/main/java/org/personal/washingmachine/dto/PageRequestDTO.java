@@ -1,5 +1,6 @@
 package org.personal.washingmachine.dto;
 
+import org.personal.washingmachine.enums.DamageType;
 import org.personal.washingmachine.enums.ReturnType;
 
 public record PageRequestDTO(
@@ -9,7 +10,7 @@ public record PageRequestDTO(
         String category,
         String manufacturer,
 
-        String damageType,
+        DamageType damageType,
         ReturnType returnType,
         String identificationMode,
 

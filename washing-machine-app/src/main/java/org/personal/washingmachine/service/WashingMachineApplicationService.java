@@ -44,8 +44,9 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.category, pageRequestDTO.category()))
 				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.manufacturer, pageRequestDTO.manufacturer()))
 
-				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.damageType, pageRequestDTO.damageType()))
+				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.damageType, pageRequestDTO.damageType()))
 				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.returnType, pageRequestDTO.returnType()))
+
 				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.identificationMode, pageRequestDTO.identificationMode()))
 
 				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.serialNumber, pageRequestDTO.serialNumber()))

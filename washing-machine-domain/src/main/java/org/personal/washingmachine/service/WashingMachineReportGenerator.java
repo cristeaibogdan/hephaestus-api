@@ -80,7 +80,7 @@ public class WashingMachineReportGenerator {
 		parameters.put("model", washingMachine.getModel());
 		parameters.put("type", washingMachine.getType());
 		// Damage Type and Identification Mode
-		parameters.put("damageType", washingMachine.getDamageType());
+		parameters.put("damageType", washingMachine.getDamageType().getLabel());
 		parameters.put("returnType", washingMachine.getReturnType().getLabel());
 		parameters.put("identificationMode", washingMachine.getIdentificationMode());
 		// Damaged Product Images
