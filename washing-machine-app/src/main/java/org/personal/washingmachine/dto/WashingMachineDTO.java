@@ -8,15 +8,15 @@ import java.time.LocalDateTime;
 
 public record WashingMachineDTO(
         String category,
+		IdentificationMode identificationMode,
         String manufacturer,
 
-		IdentificationMode identificationMode,
-		ReturnType returnType,
-		DamageType damageType,
-
-        String serialNumber,
         String model,
         String type,
+        String serialNumber,
+
+		ReturnType returnType,
+		DamageType damageType,
 
         Integer damageLevel,
         String recommendation,

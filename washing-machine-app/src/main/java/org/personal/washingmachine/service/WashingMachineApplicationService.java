@@ -41,16 +41,16 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 				Sort.by(washingMachine.createdAt.getMetadata().getName()).descending());
 
 		BooleanBuilder booleanBuilder = new BooleanBuilder()
-				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.category, pageRequestDTO.category()))
+				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.identificationMode, pageRequestDTO.identificationMode()))
 				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.manufacturer, pageRequestDTO.manufacturer()))
 
-				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.identificationMode, pageRequestDTO.identificationMode()))
+				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.model, pageRequestDTO.model()))
+				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.type, pageRequestDTO.type()))
+				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.serialNumber, pageRequestDTO.serialNumber()))
+
 				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.returnType, pageRequestDTO.returnType()))
 				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.damageType, pageRequestDTO.damageType()))
 
-				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.serialNumber, pageRequestDTO.serialNumber()))
-				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.model, pageRequestDTO.model()))
-				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.type, pageRequestDTO.type()))
 				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.recommendation, pageRequestDTO.recommendation()))
 
 				.and(QueryDSLUtils.addIntegerEqualCondition(washingMachine.damageLevel, pageRequestDTO.damageLevel()))

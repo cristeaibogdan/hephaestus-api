@@ -8,16 +8,15 @@ public record PageRequestDTO(
         Integer pageIndex,
         Integer pageSize,
 
-        String category,
-        String manufacturer,
-
 		IdentificationMode identificationMode,
+		String manufacturer,
+
+		String model,
+		String type,
+		String serialNumber,
+
 		ReturnType returnType,
 		DamageType damageType,
-
-        String serialNumber,
-        String model,
-        String type,
 
         Integer damageLevel,
         String recommendation,

@@ -288,7 +288,7 @@
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font fontName="DejaVu Sans" size="14" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Damage Type and Identification Mode]]></text>
+					<text><![CDATA[Identification Mode and Damage Type]]></text>
 				</staticText>
 				<rectangle radius="0">
 					<reportElement mode="Opaque" x="0" y="25" width="220" height="15" backcolor="#FAB855" uuid="c1c5a8ab-f49e-45a7-8975-8924c9072a5a">
@@ -301,7 +301,7 @@
 					</graphicElement>
 				</rectangle>
 				<textField>
-					<reportElement x="0" y="40" width="280" height="25" uuid="13e0a5ed-5574-4fd2-9c6f-651c8be152c9"/>
+					<reportElement x="0" y="90" width="280" height="25" uuid="13e0a5ed-5574-4fd2-9c6f-651c8be152c9"/>
 					<textElement verticalAlignment="Top">
 						<font fontName="DejaVu Sans" size="12"/>
 					</textElement>
@@ -315,7 +315,7 @@
 					<textFieldExpression><![CDATA["Return Type: "+$P{returnType}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="0" y="90" width="280" height="25" uuid="b3efed1e-445a-461f-908b-aa71c2e32c90">
+					<reportElement x="0" y="40" width="280" height="25" uuid="b3efed1e-445a-461f-908b-aa71c2e32c90">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement verticalAlignment="Top">
