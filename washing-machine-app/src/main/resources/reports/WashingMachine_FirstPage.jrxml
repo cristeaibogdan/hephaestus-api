@@ -34,6 +34,10 @@
 			<conditionExpression><![CDATA[$P{recommendation}.equals( "RESALE" )]]></conditionExpression>
 			<style backcolor="#C0EB75"/>
 		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$P{recommendation}.equals( "OUTLET" )]]></conditionExpression>
+			<style backcolor="#E0AAFF"/>
+		</conditionalStyle>
 	</style>
 	<parameter name="hephaestusLogo" class="java.io.InputStream" isForPrompting="false"/>
 	<parameter name="HARServicesLogo" class="java.io.InputStream" isForPrompting="false"/>
