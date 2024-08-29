@@ -1,6 +1,7 @@
 package org.personal.washingmachine.service;
 
 import org.personal.washingmachine.dto.*;
+import org.personal.washingmachine.enums.Recommendation;
 import org.personal.washingmachine.vo.WashingMachineReportVO;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
@@ -21,8 +22,8 @@ public interface IWashingMachineApplicationService {
 	void save(@RequestPart WashingMachineDTO washingMachineDTO,
 			  @RequestPart List<MultipartFile> imageFiles);
 
-	@PostMapping("/evaluate")
-	WashingMachineEvaluationDTO getDamageEvaluation(@RequestBody WashingMachineDetailsDTO washingMachineDetailsDTO);
+	@PostMapping("/recommendation")
+	Recommendation getRecommendation(@RequestBody WashingMachineDetailsDTO washingMachineDetailsDTO);
 
 	@GetMapping(value = "/{serialNumber}/report")
 	WashingMachineReportVO getReport(@PathVariable String serialNumber);

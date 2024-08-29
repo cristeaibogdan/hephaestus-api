@@ -2,7 +2,6 @@ package org.personal.washingmachine.service;
 
 import lombok.RequiredArgsConstructor;
 import org.personal.washingmachine.dto.WashingMachineDetailsDTO;
-import org.personal.washingmachine.dto.WashingMachineEvaluationDTO;
 import org.personal.washingmachine.enums.Recommendation;
 import org.personal.washingmachine.service.calculators.*;
 import org.springframework.stereotype.Service;
@@ -19,12 +18,7 @@ public class WashingMachineDamageCalculator {
 	private final HiddenSurfacesDamageCalculator hiddenSurfacesDamageCalculator;
 	private final PricingDamageCalculator pricingDamageCalculator;
 
-	public WashingMachineEvaluationDTO getDamageEvaluation(WashingMachineDetailsDTO dto) {
-		Recommendation recommendation = getRecommendation(dto);
-		return new WashingMachineEvaluationDTO(recommendation.name());
-	}
-
-	Recommendation getRecommendation(WashingMachineDetailsDTO dto) {
+	public Recommendation getRecommendation(WashingMachineDetailsDTO dto) {
 		Recommendation recommendationForPackage = packageDamageCalculator.calculate(dto);
 		Recommendation recommendationForVisibleSurfaces = visibleSurfacesDamageCalculator.calculate(dto);
 		Recommendation recommendationForHiddenSurfaces = hiddenSurfacesDamageCalculator.calculate(dto);
