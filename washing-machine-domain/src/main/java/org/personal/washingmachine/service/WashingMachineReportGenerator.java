@@ -88,7 +88,7 @@ public class WashingMachineReportGenerator {
 		parameters.put("image02", new ByteArrayInputStream(image02));
 		parameters.put("image03", new ByteArrayInputStream(image03));
 		// Recommendation
-		parameters.put("recommendation", washingMachine.getRecommendation());
+		parameters.put("recommendation", washingMachine.getRecommendation().toString());
 		parameters.put("createdAt", washingMachine.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 		// Second page
 		parameters.put("secondPage", getSecondPageReport());
