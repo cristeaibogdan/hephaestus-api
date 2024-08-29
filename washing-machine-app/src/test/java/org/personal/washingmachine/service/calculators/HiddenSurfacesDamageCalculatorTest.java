@@ -46,7 +46,7 @@ class HiddenSurfacesDamageCalculatorTest {
 			Recommendation expected = NONE;
 
 			// WHEN
-			Recommendation actual = underTest.calculateScratchesDamageLevel(dto);
+			Recommendation actual = underTest.calculateForScratches(dto);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -65,7 +65,7 @@ class HiddenSurfacesDamageCalculatorTest {
 			Recommendation expected = RESALE;
 
 			// WHEN
-			Recommendation actual = underTest.calculateScratchesDamageLevel(dto);
+			Recommendation actual = underTest.calculateForScratches(dto);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -84,7 +84,7 @@ class HiddenSurfacesDamageCalculatorTest {
 			Recommendation expected = OUTLET;
 
 			// WHEN
-			Recommendation actual = underTest.calculateScratchesDamageLevel(dto);
+			Recommendation actual = underTest.calculateForScratches(dto);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -104,7 +104,7 @@ class HiddenSurfacesDamageCalculatorTest {
 			Recommendation expected = NONE;
 
 			// WHEN
-			Recommendation actual = underTest.calculateDentsDamageLevel(dto);
+			Recommendation actual = underTest.calculateForDents(dto);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -123,7 +123,7 @@ class HiddenSurfacesDamageCalculatorTest {
 			Recommendation expected = RESALE;
 
 			// WHEN
-			Recommendation actual = underTest.calculateDentsDamageLevel(dto);
+			Recommendation actual = underTest.calculateForDents(dto);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -142,7 +142,7 @@ class HiddenSurfacesDamageCalculatorTest {
 			Recommendation expected = OUTLET;
 
 			// WHEN
-			Recommendation actual = underTest.calculateDentsDamageLevel(dto);
+			Recommendation actual = underTest.calculateForDents(dto);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -162,7 +162,7 @@ class HiddenSurfacesDamageCalculatorTest {
 			Recommendation expected = RESALE;
 
 			// WHEN
-			Recommendation actual = underTest.calculateMinorDamageLevel(dto);
+			Recommendation actual = underTest.calculateForMinorDamage(dto);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -178,7 +178,7 @@ class HiddenSurfacesDamageCalculatorTest {
 			Recommendation expected = NONE;
 
 			// WHEN
-			Recommendation actual = underTest.calculateMinorDamageLevel(dto);
+			Recommendation actual = underTest.calculateForMinorDamage(dto);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -198,7 +198,7 @@ class HiddenSurfacesDamageCalculatorTest {
 			Recommendation expected = OUTLET;
 
 			// WHEN
-			Recommendation actual = underTest.calculateMajorDamageLevel(dto);
+			Recommendation actual = underTest.calculateForMajorDamage(dto);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -214,7 +214,7 @@ class HiddenSurfacesDamageCalculatorTest {
 			Recommendation expected = NONE;
 
 			// WHEN
-			Recommendation actual = underTest.calculateMajorDamageLevel(dto);
+			Recommendation actual = underTest.calculateForMajorDamage(dto);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);

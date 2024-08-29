@@ -20,20 +20,20 @@ public class HiddenSurfacesDamageCalculator implements ICalculator {
 			return NONE;
 		}
 
-		Recommendation scratchesDamageLevel = calculateScratchesDamageLevel(dto);
-		Recommendation dentsDamageLevel = calculateDentsDamageLevel(dto);
-		Recommendation minorDamageLevel = calculateMinorDamageLevel(dto);
-		Recommendation majorDamageLevel = calculateMajorDamageLevel(dto);
+		Recommendation recommendationForScratches = calculateForScratches(dto);
+		Recommendation recommendationForDents = calculateForDents(dto);
+		Recommendation recommendationForMinorDamage = calculateForMinorDamage(dto);
+		Recommendation recommendationForMajorDamage = calculateForMajorDamage(dto);
 
 		return Collections.max(Arrays.asList(
-				scratchesDamageLevel,
-				dentsDamageLevel,
-				minorDamageLevel,
-				majorDamageLevel
+				recommendationForScratches,
+				recommendationForDents,
+				recommendationForMinorDamage,
+				recommendationForMajorDamage
 		));
 	}
 
-	Recommendation calculateScratchesDamageLevel(WashingMachineDetailsDTO dto) {
+	Recommendation calculateForScratches(WashingMachineDetailsDTO dto) {
 		if (!dto.hiddenSurfacesHasScratches()) {
 			return NONE;
 		}
@@ -43,7 +43,7 @@ public class HiddenSurfacesDamageCalculator implements ICalculator {
 				: OUTLET;
 	}
 
-	Recommendation calculateDentsDamageLevel(WashingMachineDetailsDTO dto) {
+	Recommendation calculateForDents(WashingMachineDetailsDTO dto) {
 		if (!dto.hiddenSurfacesHasDents()) {
 			return NONE;
 		}
@@ -53,13 +53,13 @@ public class HiddenSurfacesDamageCalculator implements ICalculator {
 				: OUTLET;
 	}
 
-	Recommendation calculateMinorDamageLevel(WashingMachineDetailsDTO dto) {
+	Recommendation calculateForMinorDamage(WashingMachineDetailsDTO dto) {
 		return dto.hiddenSurfacesHasMinorDamage()
 				? RESALE
 				: NONE;
 	}
 
-	Recommendation calculateMajorDamageLevel(WashingMachineDetailsDTO dto) {
+	Recommendation calculateForMajorDamage(WashingMachineDetailsDTO dto) {
 		return dto.hiddenSurfacesHasMajorDamage()
 				? OUTLET
 				: NONE;
