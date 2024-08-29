@@ -34,7 +34,7 @@ class HiddenSurfacesRecommendationCalculatorTest {
 	}
 
 	@Nested
-	class testCalculateScratchesDamageLevel {
+	class testCalculateForScratches {
 
 		@Test
 		void should_ReturnNONE_When_HiddenSurfacesHasScratchesIsFalse() {
@@ -92,7 +92,7 @@ class HiddenSurfacesRecommendationCalculatorTest {
 	}
 
 	@Nested
-	class testCalculateDentsDamageLevel {
+	class testCalculateForDents {
 
 		@Test
 		void should_ReturnNONE_When_HiddenSurfacesHasDentsIsFalse() {
@@ -150,7 +150,7 @@ class HiddenSurfacesRecommendationCalculatorTest {
 	}
 
 	@Nested
-	class testCalculateSmallDamageLevel {
+	class testCalculateForMinorDamage {
 
 		@Test
 		void should_ReturnRESALE_When_HiddenSurfacesHasMinorDamageIsTrue() {
@@ -186,7 +186,7 @@ class HiddenSurfacesRecommendationCalculatorTest {
 	}
 
 	@Nested
-	class testCalculateBigDamageLevel {
+	class testCalculateForMajorDamage {
 
 		@Test
 		void should_ReturnOUTLET_When_HiddenSurfacesHasMajorDamageIsTrue() {
