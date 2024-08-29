@@ -51,8 +51,7 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 
 				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.returnType, pageRequestDTO.returnType()))
 				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.damageType, pageRequestDTO.damageType()))
-
-				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.recommendation, pageRequestDTO.recommendation()))
+				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.recommendation, pageRequestDTO.recommendation()))
 
 				.and(QueryDSLUtils.addTimestampEqualCondition(washingMachine.createdAt, pageRequestDTO.createdAt()));
 

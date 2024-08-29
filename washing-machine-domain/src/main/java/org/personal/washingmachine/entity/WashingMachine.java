@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.personal.washingmachine.enums.DamageType;
 import org.personal.washingmachine.enums.IdentificationMode;
+import org.personal.washingmachine.enums.Recommendation;
 import org.personal.washingmachine.enums.ReturnType;
 
 import java.time.LocalDateTime;
@@ -53,8 +54,9 @@ public class WashingMachine extends BaseEntity {
     @Column(name = "type")
     private String type;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "recommendation")
-    private String recommendation;
+    private Recommendation recommendation;
 
     @Setter(NONE)
     @CreationTimestamp
@@ -72,7 +74,7 @@ public class WashingMachine extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<WashingMachineImage> washingMachineImages = new ArrayList<>();
 
-    public WashingMachine(String category, String manufacturer, DamageType damageType, ReturnType returnType, IdentificationMode identificationMode, String serialNumber, String model, String type, String recommendation, WashingMachineDetails washingMachineDetails) {
+    public WashingMachine(String category, String manufacturer, DamageType damageType, ReturnType returnType, IdentificationMode identificationMode, String serialNumber, String model, String type, Recommendation recommendation, WashingMachineDetails washingMachineDetails) {
         this.category = category;
         this.manufacturer = manufacturer;
         this.damageType = damageType;
