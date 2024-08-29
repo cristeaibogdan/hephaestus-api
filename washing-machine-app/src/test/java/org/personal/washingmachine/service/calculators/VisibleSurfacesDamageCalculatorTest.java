@@ -5,9 +5,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.personal.washingmachine.dto.WashingMachineDetailsDTO;
+import org.personal.washingmachine.enums.Recommendation;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.personal.washingmachine.service.calculators.DamageLevel.*;
+import static org.personal.washingmachine.enums.Recommendation.*;
 
 class VisibleSurfacesDamageCalculatorTest {
 
@@ -23,10 +24,10 @@ class VisibleSurfacesDamageCalculatorTest {
 					.applicableVisibleSurfacesDamage(false)
 					.build();
 
-			DamageLevel expected = NONE;
+			Recommendation expected = NONE;
 
 			// WHEN
-			DamageLevel actual = underTest.calculate(dto);
+			Recommendation actual = underTest.calculate(dto);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -43,10 +44,10 @@ class VisibleSurfacesDamageCalculatorTest {
 					.visibleSurfacesHasScratches(false)
 					.build();
 
-			DamageLevel expected = NONE;
+			Recommendation expected = NONE;
 
 			// WHEN
-			DamageLevel actual = underTest.calculateScratchesDamageLevel(dto);
+			Recommendation actual = underTest.calculateScratchesDamageLevel(dto);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -62,10 +63,10 @@ class VisibleSurfacesDamageCalculatorTest {
 					.visibleSurfacesScratchesLength(scratchValue)
 					.build();
 
-			DamageLevel expected = RESALE;
+			Recommendation expected = RESALE;
 
 			// WHEN
-			DamageLevel actual = underTest.calculateScratchesDamageLevel(dto);
+			Recommendation actual = underTest.calculateScratchesDamageLevel(dto);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -81,10 +82,10 @@ class VisibleSurfacesDamageCalculatorTest {
 					.visibleSurfacesScratchesLength(scratchValue)
 					.build();
 
-			DamageLevel expected = OUTLET;
+			Recommendation expected = OUTLET;
 
 			// WHEN
-			DamageLevel actual = underTest.calculateScratchesDamageLevel(dto);
+			Recommendation actual = underTest.calculateScratchesDamageLevel(dto);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -101,10 +102,10 @@ class VisibleSurfacesDamageCalculatorTest {
 					.visibleSurfacesHasDents(false)
 					.build();
 
-			DamageLevel expected = NONE;
+			Recommendation expected = NONE;
 
 			// WHEN
-			DamageLevel actual = underTest.calculateDentsDamageLevel(dto);
+			Recommendation actual = underTest.calculateDentsDamageLevel(dto);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -120,10 +121,10 @@ class VisibleSurfacesDamageCalculatorTest {
 					.visibleSurfacesDentsDepth(dentDepth)
 					.build();
 
-			DamageLevel expected = RESALE;
+			Recommendation expected = RESALE;
 
 			// WHEN
-			DamageLevel actual = underTest.calculateDentsDamageLevel(dto);
+			Recommendation actual = underTest.calculateDentsDamageLevel(dto);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -139,10 +140,10 @@ class VisibleSurfacesDamageCalculatorTest {
 					.visibleSurfacesDentsDepth(dentDepth)
 					.build();
 
-			DamageLevel expected = OUTLET;
+			Recommendation expected = OUTLET;
 
 			// WHEN
-			DamageLevel actual = underTest.calculateDentsDamageLevel(dto);
+			Recommendation actual = underTest.calculateDentsDamageLevel(dto);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -159,10 +160,10 @@ class VisibleSurfacesDamageCalculatorTest {
 					.visibleSurfacesHasMinorDamage(true)
 					.build();
 
-			DamageLevel expected = RESALE;
+			Recommendation expected = RESALE;
 
 			// WHEN
-			DamageLevel actual = underTest.calculateMinorDamageLevel(dto);
+			Recommendation actual = underTest.calculateMinorDamageLevel(dto);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -175,10 +176,10 @@ class VisibleSurfacesDamageCalculatorTest {
 					.visibleSurfacesHasMinorDamage(false)
 					.build();
 
-			DamageLevel expected = NONE;
+			Recommendation expected = NONE;
 
 			// WHEN
-			DamageLevel actual = underTest.calculateMinorDamageLevel(dto);
+			Recommendation actual = underTest.calculateMinorDamageLevel(dto);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -195,10 +196,10 @@ class VisibleSurfacesDamageCalculatorTest {
 					.visibleSurfacesHasMajorDamage(true)
 					.build();
 
-			DamageLevel expected = OUTLET;
+			Recommendation expected = OUTLET;
 
 			// WHEN
-			DamageLevel actual = underTest.calculateMajorDamageLevel(dto);
+			Recommendation actual = underTest.calculateMajorDamageLevel(dto);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -211,10 +212,10 @@ class VisibleSurfacesDamageCalculatorTest {
 					.visibleSurfacesHasMajorDamage(false)
 					.build();
 
-			DamageLevel expected = NONE;
+			Recommendation expected = NONE;
 
 			// WHEN
-			DamageLevel actual = underTest.calculateMajorDamageLevel(dto);
+			Recommendation actual = underTest.calculateMajorDamageLevel(dto);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);

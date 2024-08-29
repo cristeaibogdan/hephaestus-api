@@ -2,9 +2,10 @@ package org.personal.washingmachine.service.calculators;
 
 import org.junit.jupiter.api.Test;
 import org.personal.washingmachine.dto.WashingMachineDetailsDTO;
+import org.personal.washingmachine.enums.Recommendation;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.personal.washingmachine.service.calculators.DamageLevel.*;
+import static org.personal.washingmachine.enums.Recommendation.*;
 
 
 class PackageDamageCalculatorTest {
@@ -18,10 +19,10 @@ class PackageDamageCalculatorTest {
 				.applicablePackageDamage(false)
 				.build();
 
-		DamageLevel expected = NONE;
+		Recommendation expected = NONE;
 
 		// WHEN
-		DamageLevel actual = underTest.calculate(dto);
+		Recommendation actual = underTest.calculate(dto);
 
 		// THEN
 		assertThat(actual).isEqualTo(expected);
@@ -35,10 +36,10 @@ class PackageDamageCalculatorTest {
 				.packageMaterialAvailable(true)
 				.build();
 
-		DamageLevel expected = REPACKAGE;
+		Recommendation expected = REPACKAGE;
 
 		// WHEN
-		DamageLevel actual = underTest.calculate(washingMachineDetailsDTO);
+		Recommendation actual = underTest.calculate(washingMachineDetailsDTO);
 
 		// THEN
 		assertThat(actual).isEqualTo(expected);
@@ -52,10 +53,10 @@ class PackageDamageCalculatorTest {
 				.packageMaterialAvailable(false)
 				.build();
 
-		DamageLevel expected = RESALE;
+		Recommendation expected = RESALE;
 
 		// WHEN
-		DamageLevel actual = underTest.calculate(washingMachineDetailsDTO);
+		Recommendation actual = underTest.calculate(washingMachineDetailsDTO);
 
 		// THEN
 		assertThat(actual).isEqualTo(expected);

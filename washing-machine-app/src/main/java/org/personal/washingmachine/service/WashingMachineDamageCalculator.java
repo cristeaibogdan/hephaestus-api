@@ -5,6 +5,7 @@ import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
 import org.personal.washingmachine.dto.WashingMachineDetailsDTO;
 import org.personal.washingmachine.dto.WashingMachineEvaluationDTO;
+import org.personal.washingmachine.enums.Recommendation;
 import org.personal.washingmachine.service.calculators.*;
 import org.springframework.stereotype.Service;
 
@@ -27,10 +28,10 @@ public class WashingMachineDamageCalculator {
 	}
 
 	int getDamageLevel(WashingMachineDetailsDTO dto) {
-		DamageLevel damageLevelForPackage = packageDamageCalculator.calculate(dto);
-		DamageLevel damageLevelForVisibleSurfaces = visibleSurfacesDamageCalculator.calculate(dto);
-		DamageLevel damageLevelForHiddenSurfaces = hiddenSurfacesDamageCalculator.calculate(dto);
-		DamageLevel damageLevelForPricing = pricingDamageCalculator.calculate(dto);
+		Recommendation damageLevelForPackage = packageDamageCalculator.calculate(dto);
+		Recommendation damageLevelForVisibleSurfaces = visibleSurfacesDamageCalculator.calculate(dto);
+		Recommendation damageLevelForHiddenSurfaces = hiddenSurfacesDamageCalculator.calculate(dto);
+		Recommendation damageLevelForPricing = pricingDamageCalculator.calculate(dto);
 
 		return Collections.max(Arrays.asList(
 				damageLevelForPackage.ordinal(),

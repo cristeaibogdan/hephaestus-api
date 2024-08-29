@@ -2,9 +2,10 @@ package org.personal.washingmachine.service.calculators;
 
 import org.junit.jupiter.api.Test;
 import org.personal.washingmachine.dto.WashingMachineDetailsDTO;
+import org.personal.washingmachine.enums.Recommendation;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.personal.washingmachine.service.calculators.DamageLevel.*;
+import static org.personal.washingmachine.enums.Recommendation.*;
 
 class PricingDamageCalculatorTest {
 
@@ -17,10 +18,10 @@ class PricingDamageCalculatorTest {
 				.price(null)
 				.build();
 
-		DamageLevel expected = NONE;
+		Recommendation expected = NONE;
 
 		// WHEN
-		DamageLevel actual = underTest.calculate(dto);
+		Recommendation actual = underTest.calculate(dto);
 
 		// THEN
 		assertThat(actual).isEqualTo(expected);
@@ -33,10 +34,10 @@ class PricingDamageCalculatorTest {
 				.repairPrice(null)
 				.build();
 
-		DamageLevel expected = NONE;
+		Recommendation expected = NONE;
 
 		// WHEN
-		DamageLevel actual = underTest.calculate(dto);
+		Recommendation actual = underTest.calculate(dto);
 
 		// THEN
 		assertThat(actual).isEqualTo(expected);
@@ -49,10 +50,10 @@ class PricingDamageCalculatorTest {
 				.price(-1)
 				.build();
 
-		DamageLevel expected = NONE;
+		Recommendation expected = NONE;
 
 		// WHEN
-		DamageLevel actual = underTest.calculate(dto);
+		Recommendation actual = underTest.calculate(dto);
 
 		// THEN
 		assertThat(actual).isEqualTo(expected);
@@ -65,10 +66,10 @@ class PricingDamageCalculatorTest {
 				.repairPrice(-1)
 				.build();
 
-		DamageLevel expected = NONE;
+		Recommendation expected = NONE;
 
 		// WHEN
-		DamageLevel actual = underTest.calculate(dto);
+		Recommendation actual = underTest.calculate(dto);
 
 		// THEN
 		assertThat(actual).isEqualTo(expected);
@@ -82,10 +83,10 @@ class PricingDamageCalculatorTest {
 				.price(50)
 				.build();
 
-		DamageLevel expected = DISASSEMBLE;
+		Recommendation expected = DISASSEMBLE;
 
 		// WHEN
-		DamageLevel actual = underTest.calculate(dto);
+		Recommendation actual = underTest.calculate(dto);
 
 		// THEN
 		assertThat(actual).isEqualTo(expected);
@@ -99,10 +100,10 @@ class PricingDamageCalculatorTest {
 				.price(100)
 				.build();
 
-		DamageLevel expected = REPAIR;
+		Recommendation expected = REPAIR;
 
 		// WHEN
-		DamageLevel actual = underTest.calculate(dto);
+		Recommendation actual = underTest.calculate(dto);
 
 		// THEN
 		assertThat(actual).isEqualTo(expected);

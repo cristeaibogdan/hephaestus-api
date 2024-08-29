@@ -1,4 +1,4 @@
-package org.personal.washingmachine.service.calculators;
+package org.personal.washingmachine.enums;
 
 import lombok.Getter;
 
@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 
 @Getter
-public enum DamageLevel {
+public enum Recommendation {
 	NONE,
 	REPACKAGE,
 	RESALE,
