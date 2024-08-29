@@ -7,9 +7,9 @@ import org.personal.washingmachine.enums.Recommendation;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.personal.washingmachine.enums.Recommendation.*;
 
-class PricingDamageCalculatorTest {
+class PricingRecommendationCalculatorTest {
 
-	private final PricingDamageCalculator underTest = new PricingDamageCalculator();
+	private final PricingRecommendationCalculator underTest = new PricingRecommendationCalculator();
 
 	@Test
 	void should_ReturnNONE_When_PriceIsNull() {

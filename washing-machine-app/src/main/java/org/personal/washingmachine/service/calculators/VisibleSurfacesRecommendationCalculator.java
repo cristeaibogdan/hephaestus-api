@@ -10,7 +10,7 @@ import java.util.Collections;
 import static org.personal.washingmachine.enums.Recommendation.*;
 
 @Component
-public class VisibleSurfacesDamageCalculator implements ICalculator {
+public class VisibleSurfacesRecommendationCalculator implements ICalculator {
 
 	private static final int VISIBLE_SURFACES_THRESHOLD = 5;
 

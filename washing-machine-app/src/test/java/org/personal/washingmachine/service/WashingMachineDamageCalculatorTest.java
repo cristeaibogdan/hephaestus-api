@@ -3,13 +3,9 @@ package org.personal.washingmachine.service;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.personal.shared.exception.CustomException;
 import org.personal.washingmachine.service.calculators.*;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -19,13 +15,13 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 class WashingMachineDamageCalculatorTest {
 
 	@Mock
-	private PackageDamageCalculator packageDamageCalculator;
+	private PackageRecommendationCalculator packageRecommendationCalculator;
 	@Mock
-	private VisibleSurfacesDamageCalculator visibleSurfacesDamageCalculator;
+	private VisibleSurfacesRecommendationCalculator visibleSurfacesRecommendationCalculator;
 	@Mock
-	private HiddenSurfacesDamageCalculator hiddenSurfacesDamageCalculator;
+	private HiddenSurfacesRecommendationCalculator hiddenSurfacesRecommendationCalculator;
 	@Mock
-	private PricingDamageCalculator pricingDamageCalculator;
+	private PricingRecommendationCalculator pricingRecommendationCalculator;
 
 	@InjectMocks
 	private WashingMachineDamageCalculator underTest;

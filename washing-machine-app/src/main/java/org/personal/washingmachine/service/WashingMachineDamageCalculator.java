@@ -5,10 +5,10 @@ import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
 import org.personal.washingmachine.dto.WashingMachineDetailsDTO;
 import org.personal.washingmachine.enums.Recommendation;
-import org.personal.washingmachine.service.calculators.HiddenSurfacesDamageCalculator;
-import org.personal.washingmachine.service.calculators.PackageDamageCalculator;
-import org.personal.washingmachine.service.calculators.PricingDamageCalculator;
-import org.personal.washingmachine.service.calculators.VisibleSurfacesDamageCalculator;
+import org.personal.washingmachine.service.calculators.HiddenSurfacesRecommendationCalculator;
+import org.personal.washingmachine.service.calculators.PackageRecommendationCalculator;
+import org.personal.washingmachine.service.calculators.PricingRecommendationCalculator;
+import org.personal.washingmachine.service.calculators.VisibleSurfacesRecommendationCalculator;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -20,16 +20,16 @@ import static org.personal.washingmachine.enums.Recommendation.NONE;
 @RequiredArgsConstructor
 public class WashingMachineDamageCalculator {
 
-	private final PackageDamageCalculator packageDamageCalculator;
-	private final VisibleSurfacesDamageCalculator visibleSurfacesDamageCalculator;
-	private final HiddenSurfacesDamageCalculator hiddenSurfacesDamageCalculator;
-	private final PricingDamageCalculator pricingDamageCalculator;
+	private final PackageRecommendationCalculator packageRecommendationCalculator;
+	private final VisibleSurfacesRecommendationCalculator visibleSurfacesRecommendationCalculator;
+	private final HiddenSurfacesRecommendationCalculator hiddenSurfacesRecommendationCalculator;
+	private final PricingRecommendationCalculator pricingRecommendationCalculator;
 
 	public Recommendation getRecommendation(WashingMachineDetailsDTO dto) {
-		Recommendation recommendationForPackage = packageDamageCalculator.calculate(dto);
-		Recommendation recommendationForVisibleSurfaces = visibleSurfacesDamageCalculator.calculate(dto);
-		Recommendation recommendationForHiddenSurfaces = hiddenSurfacesDamageCalculator.calculate(dto);
-		Recommendation recommendationForPricing = pricingDamageCalculator.calculate(dto);
+		Recommendation recommendationForPackage = packageRecommendationCalculator.calculate(dto);
+		Recommendation recommendationForVisibleSurfaces = visibleSurfacesRecommendationCalculator.calculate(dto);
+		Recommendation recommendationForHiddenSurfaces = hiddenSurfacesRecommendationCalculator.calculate(dto);
+		Recommendation recommendationForPricing = pricingRecommendationCalculator.calculate(dto);
 
 		Recommendation result = Collections.max(Arrays.asList(
 				recommendationForPackage,

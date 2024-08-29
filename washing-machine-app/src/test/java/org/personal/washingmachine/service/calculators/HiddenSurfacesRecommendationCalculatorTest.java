@@ -10,8 +10,8 @@ import org.personal.washingmachine.enums.Recommendation;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.personal.washingmachine.enums.Recommendation.*;
 
-class HiddenSurfacesDamageCalculatorTest {
-	private final HiddenSurfacesDamageCalculator underTest = new HiddenSurfacesDamageCalculator();
+class HiddenSurfacesRecommendationCalculatorTest {
+	private final HiddenSurfacesRecommendationCalculator underTest = new HiddenSurfacesRecommendationCalculator();
 
 	@Nested
 	class testCalculate {

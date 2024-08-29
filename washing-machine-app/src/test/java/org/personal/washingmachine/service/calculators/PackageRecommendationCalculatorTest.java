@@ -8,9 +8,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.personal.washingmachine.enums.Recommendation.*;
 
 
-class PackageDamageCalculatorTest {
+class PackageRecommendationCalculatorTest {
 
-	private final PackageDamageCalculator underTest = new PackageDamageCalculator();
+	private final PackageRecommendationCalculator underTest = new PackageRecommendationCalculator();
 
 	@Test
 	void should_ReturnNONE_When_ApplicablePackageDamageIsFalse() {
