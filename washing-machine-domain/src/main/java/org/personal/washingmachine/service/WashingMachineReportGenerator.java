@@ -88,7 +88,6 @@ public class WashingMachineReportGenerator {
 		parameters.put("image02", new ByteArrayInputStream(image02));
 		parameters.put("image03", new ByteArrayInputStream(image03));
 		// Recommendation
-		parameters.put("damageLevel", washingMachine.getDamageLevel());
 		parameters.put("recommendation", washingMachine.getRecommendation());
 		parameters.put("createdAt", washingMachine.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 		// Second page

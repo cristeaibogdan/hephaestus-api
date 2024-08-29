@@ -41,7 +41,6 @@
 	</style>
 	<parameter name="hephaestusLogo" class="java.io.InputStream" isForPrompting="false"/>
 	<parameter name="HARServicesLogo" class="java.io.InputStream" isForPrompting="false"/>
-	<parameter name="damageLevel" class="java.lang.Integer"/>
 	<parameter name="createdAt" class="java.lang.String"/>
 	<parameter name="category" class="java.lang.String"/>
 	<parameter name="manufacturer" class="java.lang.String"/>
@@ -126,7 +125,7 @@
 				</graphicElement>
 			</rectangle>
 			<frame>
-				<reportElement x="0" y="45" width="555" height="141" uuid="18289557-59a5-4599-993b-72a26ef0acd4"/>
+				<reportElement x="0" y="45" width="555" height="115" uuid="18289557-59a5-4599-993b-72a26ef0acd4"/>
 				<staticText>
 					<reportElement x="0" y="0" width="555" height="25" uuid="cb9041e1-b68c-4680-9c5d-a0e2dd408299">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -151,14 +150,7 @@
 					</graphicElement>
 				</rectangle>
 				<textField>
-					<reportElement x="0" y="91" width="280" height="25" uuid="364c2d2b-7181-47fd-9ed2-f94446231bdf"/>
-					<textElement verticalAlignment="Top">
-						<font fontName="DejaVu Sans" size="12"/>
-					</textElement>
-					<textFieldExpression><![CDATA["Damage Level: "+$P{damageLevel}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="0" y="116" width="280" height="25" uuid="2574c3be-2df8-4c7f-8d1d-e8de60d000c9">
+					<reportElement x="0" y="90" width="280" height="25" uuid="2574c3be-2df8-4c7f-8d1d-e8de60d000c9">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement verticalAlignment="Top">
@@ -197,7 +189,7 @@
 				</rectangle>
 			</frame>
 			<rectangle radius="0">
-				<reportElement mode="Opaque" x="0" y="186" width="130" height="10" backcolor="#6FA889" uuid="f30a666e-6c97-42fa-8f9d-53c7f1c04182">
+				<reportElement mode="Opaque" x="0" y="160" width="130" height="10" backcolor="#6FA889" uuid="f30a666e-6c97-42fa-8f9d-53c7f1c04182">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<printWhenExpression><![CDATA[false]]></printWhenExpression>
@@ -207,7 +199,7 @@
 				</graphicElement>
 			</rectangle>
 			<frame>
-				<reportElement x="0" y="196" width="555" height="165" uuid="d7098bc1-dfc3-45fa-90de-7124b28d9e93"/>
+				<reportElement x="0" y="170" width="555" height="165" uuid="d7098bc1-dfc3-45fa-90de-7124b28d9e93"/>
 				<staticText>
 					<reportElement x="0" y="0" width="555" height="25" uuid="ae42f85b-fe9f-45db-90e2-251d3a608d85">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -270,7 +262,7 @@
 				</textField>
 			</frame>
 			<rectangle radius="0">
-				<reportElement mode="Opaque" x="0" y="361" width="130" height="10" backcolor="#6FA889" uuid="cec04cb1-88ce-44b4-9349-086047540d88">
+				<reportElement mode="Opaque" x="0" y="335" width="130" height="10" backcolor="#6FA889" uuid="cec04cb1-88ce-44b4-9349-086047540d88">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<printWhenExpression><![CDATA[false]]></printWhenExpression>
@@ -280,7 +272,7 @@
 				</graphicElement>
 			</rectangle>
 			<frame>
-				<reportElement x="0" y="371" width="555" height="115" uuid="b378e9ae-5344-47b9-8dc2-d4d4aaf55eae"/>
+				<reportElement x="0" y="345" width="555" height="115" uuid="b378e9ae-5344-47b9-8dc2-d4d4aaf55eae"/>
 				<staticText>
 					<reportElement x="0" y="0" width="555" height="25" uuid="8a6dc5ec-4195-45fc-8885-2a5812b3137b">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -328,8 +320,18 @@
 					<textFieldExpression><![CDATA["Identification Mode: "+$P{identificationMode}]]></textFieldExpression>
 				</textField>
 			</frame>
+			<rectangle radius="0">
+				<reportElement mode="Opaque" x="0" y="460" width="130" height="10" backcolor="#6FA889" uuid="155ccf28-07a8-4b59-a5ff-ad61e8b41960">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[false]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0" lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
 			<frame>
-				<reportElement x="0" y="496" width="555" height="130" uuid="a19d93eb-5c8e-4d07-ac7c-ed25f4d8c6d6"/>
+				<reportElement x="0" y="470" width="555" height="130" uuid="a19d93eb-5c8e-4d07-ac7c-ed25f4d8c6d6"/>
 				<rectangle radius="0">
 					<reportElement mode="Opaque" x="0" y="25" width="220" height="15" backcolor="#FAB855" uuid="342609ca-1a3f-4052-b61f-f4ab61b6253b">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
@@ -374,16 +376,6 @@
 					<imageExpression><![CDATA[$P{image02}]]></imageExpression>
 				</image>
 			</frame>
-			<rectangle radius="0">
-				<reportElement mode="Opaque" x="0" y="486" width="130" height="10" backcolor="#6FA889" uuid="155ccf28-07a8-4b59-a5ff-ad61e8b41960">
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<printWhenExpression><![CDATA[false]]></printWhenExpression>
-				</reportElement>
-				<graphicElement>
-					<pen lineWidth="0.0" lineStyle="Solid"/>
-				</graphicElement>
-			</rectangle>
 		</band>
 		<band height="20">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
