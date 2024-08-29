@@ -10,10 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.personal.shared.exception.CustomException;
-import org.personal.washingmachine.service.calculators.HiddenSurfacesDamageCalculator;
-import org.personal.washingmachine.service.calculators.PackageDamageCalculator;
-import org.personal.washingmachine.service.calculators.PricingDamageCalculator;
-import org.personal.washingmachine.service.calculators.VisibleSurfacesDamageCalculator;
+import org.personal.washingmachine.service.calculators.*;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
@@ -46,35 +43,35 @@ class WashingMachineDamageCalculatorTest {
 		}
 	}
 
-	@Nested
-	class testGetRecommendation {
-
-		@ParameterizedTest(name = "For damageLevel = {0} should return recommendation = {1}")
-		@CsvSource({
-				"1, REPACKAGE",
-				"2, RESALE",
-				"3, OUTLET",
-				"4, REPAIR",
-				"5, DISASSEMBLE"
-		})
-		void should_ReturnRecommendation(int damageLevel, String expected) {
-			// GIVEN
-
-			// WHEN
-			String actual = underTest.getRecommendation(damageLevel);
-
-			// THEN
-			assertThat(actual).isEqualTo(expected);
-		}
-
-		@ParameterizedTest(name = "Damage level = {0} is not supported")
-		@ValueSource(ints = { 0, 6 })
-		void should_ThrowCustomException(int damageLevel) {
-			// GIVEN
-
-			// WHEN & THEN
-			assertThatThrownBy(() -> underTest.getRecommendation(damageLevel))
-					.isInstanceOf(CustomException.class);
-		}
-	}
+//	@Nested
+//	class testGetRecommendation {
+//
+//		@ParameterizedTest(name = "For damageLevel = {0} should return recommendation = {1}")
+//		@CsvSource({
+//				"1, REPACKAGE",
+//				"2, RESALE",
+//				"3, OUTLET",
+//				"4, REPAIR",
+//				"5, DISASSEMBLE"
+//		})
+//		void should_ReturnRecommendation(int damageLevel, DamageLevel expected) {
+//			// GIVEN
+//
+//			// WHEN
+//			String actual = underTest.getRecommendation(damageLevel);
+//
+//			// THEN
+//			assertThat(actual).isEqualTo(expected);
+//		}
+//
+//		@ParameterizedTest(name = "Damage level = {0} is not supported")
+//		@ValueSource(ints = { 0, 6 })
+//		void should_ThrowCustomException(int damageLevel) {
+//			// GIVEN
+//
+//			// WHEN & THEN
+//			assertThatThrownBy(() -> underTest.getRecommendation(damageLevel))
+//					.isInstanceOf(CustomException.class);
+//		}
+//	}
 }

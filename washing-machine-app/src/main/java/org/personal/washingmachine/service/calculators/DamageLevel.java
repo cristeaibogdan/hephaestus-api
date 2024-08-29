@@ -2,21 +2,19 @@ package org.personal.washingmachine.service.calculators;
 
 import lombok.Getter;
 
+/**
+ * The order of the enum constants is important.
+ * The order determines the recommended action based on the severity of damage,
+ * with the first constant representing the least severe
+ * and the last constant representing the most severe damage.
+ */
+
 @Getter
-public enum DamageLevel implements Comparable<DamageLevel> {
-	REPACKAGE(1, "REPACKAGE"),
-	LEVEL_2(2, "RESALE"),
-	LEVEL_3(3, "RESALE"),
-	LEVEL_4(4, "REPAIR"),
-	LEVEL_5(5, "DISASSEMBLE");
-
-//	private final int level;
-	private final String recommendation;
-
-	DamageLevel(int level, String recommendation) {
-//		this.level = level;
-		this.recommendation = recommendation;
-	}
-
-	//TODO: Find a better implementation, or completly remove the need to have level in the DB
+public enum DamageLevel {
+	NONE,
+	REPACKAGE,
+	RESALE,
+	OUTLET,
+	REPAIR,
+	DISASSEMBLE
 }

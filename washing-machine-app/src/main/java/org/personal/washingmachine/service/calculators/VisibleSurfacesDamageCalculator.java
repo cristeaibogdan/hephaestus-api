@@ -1,8 +1,12 @@
 package org.personal.washingmachine.service.calculators;
 
-import org.apache.commons.lang3.math.NumberUtils;
 import org.personal.washingmachine.dto.WashingMachineDetailsDTO;
 import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
+import java.util.Collections;
+
+import static org.personal.washingmachine.service.calculators.DamageLevel.*;
 
 @Component
 public class VisibleSurfacesDamageCalculator implements ICalculator {
@@ -10,53 +14,53 @@ public class VisibleSurfacesDamageCalculator implements ICalculator {
 	private static final int VISIBLE_SURFACES_THRESHOLD = 5;
 
 	@Override
-	public int calculate(WashingMachineDetailsDTO dto) {
+	public DamageLevel calculate(WashingMachineDetailsDTO dto) {
 		if (!dto.applicableVisibleSurfacesDamage()) {
-			return 0;
+			return NONE;
 		}
 
-		int scratchesDamageLevel = calculateScratchesDamageLevel(dto);
-		int dentsDamageLevel = calculateDentsDamageLevel(dto);
-		int smallDamageLevel = calculateSmallDamageLevel(dto);
-		int bigDamageLevel = calculateBigDamageLevel(dto);
+		DamageLevel scratchesDamageLevel = calculateScratchesDamageLevel(dto);
+		DamageLevel dentsDamageLevel = calculateDentsDamageLevel(dto);
+		DamageLevel minorDamageLevel = calculateMinorDamageLevel(dto);
+		DamageLevel majorDamageLevel = calculateMajorDamageLevel(dto);
 
-		return NumberUtils.max(
+		return Collections.max(Arrays.asList(
 				scratchesDamageLevel,
 				dentsDamageLevel,
-				smallDamageLevel,
-				bigDamageLevel
-		);
+				minorDamageLevel,
+				majorDamageLevel
+		));
 	}
 
-	int calculateScratchesDamageLevel(WashingMachineDetailsDTO dto) {
+	DamageLevel calculateScratchesDamageLevel(WashingMachineDetailsDTO dto) {
 		if (!dto.visibleSurfacesHasScratches()) {
-			return 0;
+			return NONE;
 		}
 
 		return (dto.visibleSurfacesScratchesLength() < VISIBLE_SURFACES_THRESHOLD)
-				? 2
-				: 3;
+				? RESALE
+				: OUTLET;
 	}
 
-	int calculateDentsDamageLevel(WashingMachineDetailsDTO dto) {
+	DamageLevel calculateDentsDamageLevel(WashingMachineDetailsDTO dto) {
 		if (!dto.visibleSurfacesHasDents()) {
-			return 0;
+			return NONE;
 		}
 
 		return (dto.visibleSurfacesDentsDepth() < VISIBLE_SURFACES_THRESHOLD)
-				? 2
-				: 3;
+				? RESALE
+				: OUTLET;
 	}
 
-	int calculateSmallDamageLevel(WashingMachineDetailsDTO dto) {
+	DamageLevel calculateMinorDamageLevel(WashingMachineDetailsDTO dto) {
 		return dto.visibleSurfacesHasMinorDamage()
-				? 2
-				: 0;
+				? RESALE
+				: NONE;
 	}
 
-	int calculateBigDamageLevel(WashingMachineDetailsDTO dto) {
+	DamageLevel calculateMajorDamageLevel(WashingMachineDetailsDTO dto) {
 		return (dto.visibleSurfacesHasMajorDamage())
-				? 3
-				: 0;
+				? OUTLET
+				: NONE;
 	}
 }

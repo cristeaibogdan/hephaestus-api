@@ -9,6 +9,7 @@ import org.personal.washingmachine.dto.*;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineImage;
 import org.personal.washingmachine.repository.WashingMachineRepository;
+import org.personal.washingmachine.service.calculators.DamageLevel;
 import org.personal.washingmachine.service.utils.QueryDSLUtils;
 import org.personal.washingmachine.vo.WashingMachineReportVO;
 import org.springframework.data.domain.Page;

@@ -1,16 +1,15 @@
 package org.personal.washingmachine.service;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
 import org.personal.washingmachine.dto.WashingMachineDetailsDTO;
 import org.personal.washingmachine.dto.WashingMachineEvaluationDTO;
-import org.personal.washingmachine.service.calculators.HiddenSurfacesDamageCalculator;
-import org.personal.washingmachine.service.calculators.PackageDamageCalculator;
-import org.personal.washingmachine.service.calculators.PricingDamageCalculator;
-import org.personal.washingmachine.service.calculators.VisibleSurfacesDamageCalculator;
+import org.personal.washingmachine.service.calculators.*;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
+import java.util.Collections;
 
 @Service
 @RequiredArgsConstructor
@@ -28,17 +27,17 @@ public class WashingMachineDamageCalculator {
 	}
 
 	int getDamageLevel(WashingMachineDetailsDTO dto) {
-		int damageLevelForPackage = packageDamageCalculator.calculate(dto);
-		int damageLevelForVisibleSurfaces = visibleSurfacesDamageCalculator.calculate(dto);
-		int damageLevelForHiddenSurfaces = hiddenSurfacesDamageCalculator.calculate(dto);
-		int damageLevelForPricing = pricingDamageCalculator.calculate(dto);
+		DamageLevel damageLevelForPackage = packageDamageCalculator.calculate(dto);
+		DamageLevel damageLevelForVisibleSurfaces = visibleSurfacesDamageCalculator.calculate(dto);
+		DamageLevel damageLevelForHiddenSurfaces = hiddenSurfacesDamageCalculator.calculate(dto);
+		DamageLevel damageLevelForPricing = pricingDamageCalculator.calculate(dto);
 
-		return NumberUtils.max(
-				damageLevelForPackage,
-				damageLevelForVisibleSurfaces,
-				damageLevelForHiddenSurfaces,
-				damageLevelForPricing
-		);
+		return Collections.max(Arrays.asList(
+				damageLevelForPackage.ordinal(),
+				damageLevelForVisibleSurfaces.ordinal(),
+				damageLevelForHiddenSurfaces.ordinal(),
+				damageLevelForPricing.ordinal()
+		));
 	}
 
 	//TODO: Use enum for 1-5, and recommendations. Get rid of the method.

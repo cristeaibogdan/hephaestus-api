@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.personal.washingmachine.dto.WashingMachineDetailsDTO;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.personal.washingmachine.service.calculators.DamageLevel.*;
 
 class VisibleSurfacesDamageCalculatorTest {
 
@@ -16,16 +17,16 @@ class VisibleSurfacesDamageCalculatorTest {
 	class testCalculate {
 
 		@Test
-		void should_Return0_When_ApplicableVisibleSurfacesDamageFalse() {
+		void should_ReturnNONE_When_ApplicableVisibleSurfacesDamageFalse() {
 			// GIVEN
 			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
 					.applicableVisibleSurfacesDamage(false)
 					.build();
 
-			int expected = 0;
+			DamageLevel expected = NONE;
 
 			// WHEN
-			int actual = underTest.calculate(dto);
+			DamageLevel actual = underTest.calculate(dto);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -36,16 +37,16 @@ class VisibleSurfacesDamageCalculatorTest {
 	class testCalculateScratchesDamageLevel {
 
 		@Test
-		void should_Return0_When_VisibleSurfacesHasScratchesIsFalse() {
+		void should_ReturnNONE_When_VisibleSurfacesHasScratchesIsFalse() {
 			// GIVEN
 			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
 					.visibleSurfacesHasScratches(false)
 					.build();
 
-			int expected = 0;
+			DamageLevel expected = NONE;
 
 			// WHEN
-			int actual = underTest.calculateScratchesDamageLevel(dto);
+			DamageLevel actual = underTest.calculateScratchesDamageLevel(dto);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -53,7 +54,7 @@ class VisibleSurfacesDamageCalculatorTest {
 
 		@ParameterizedTest
 		@ValueSource(doubles = {0.5, 1, 4, 4.5})
-		void should_Return2_When_ScratchesAreUnder5cm(double scratchValue) {
+		void should_ReturnRESALE_When_ScratchesAreUnder5cm(double scratchValue) {
 			// GIVEN
 			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
 					.applicableVisibleSurfacesDamage(true)
@@ -61,10 +62,10 @@ class VisibleSurfacesDamageCalculatorTest {
 					.visibleSurfacesScratchesLength(scratchValue)
 					.build();
 
-			int expected = 2;
+			DamageLevel expected = RESALE;
 
 			// WHEN
-			int actual = underTest.calculateScratchesDamageLevel(dto);
+			DamageLevel actual = underTest.calculateScratchesDamageLevel(dto);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -72,7 +73,7 @@ class VisibleSurfacesDamageCalculatorTest {
 
 		@ParameterizedTest
 		@ValueSource(doubles = {5, 5.5, 10})
-		void should_Return3_When_ScratchesAreEqualOrOver5cm(double scratchValue) {
+		void should_ReturnOUTLET_When_ScratchesAreEqualOrOver5cm(double scratchValue) {
 			// GIVEN
 			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
 					.applicableVisibleSurfacesDamage(true)
@@ -80,10 +81,10 @@ class VisibleSurfacesDamageCalculatorTest {
 					.visibleSurfacesScratchesLength(scratchValue)
 					.build();
 
-			int expected = 3;
+			DamageLevel expected = OUTLET;
 
 			// WHEN
-			int actual = underTest.calculateScratchesDamageLevel(dto);
+			DamageLevel actual = underTest.calculateScratchesDamageLevel(dto);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -94,16 +95,16 @@ class VisibleSurfacesDamageCalculatorTest {
 	class testCalculateDentsDamageLevel {
 
 		@Test
-		void should_Return0_When_VisibleSurfacesHasDentsIsFalse() {
+		void should_ReturnNONE_When_VisibleSurfacesHasDentsIsFalse() {
 			// GIVEN
 			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
 					.visibleSurfacesHasDents(false)
 					.build();
 
-			int expected = 0;
+			DamageLevel expected = NONE;
 
 			// WHEN
-			int actual = underTest.calculateDentsDamageLevel(dto);
+			DamageLevel actual = underTest.calculateDentsDamageLevel(dto);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -111,7 +112,7 @@ class VisibleSurfacesDamageCalculatorTest {
 
 		@ParameterizedTest
 		@ValueSource(doubles = {0.5, 1, 4, 4.5})
-		void should_Return2_When_DentsAreUnder5cm(double dentDepth) {
+		void should_ReturnRESALE_When_DentsAreUnder5cm(double dentDepth) {
 			// GIVEN
 			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
 					.applicableVisibleSurfacesDamage(true)
@@ -119,10 +120,10 @@ class VisibleSurfacesDamageCalculatorTest {
 					.visibleSurfacesDentsDepth(dentDepth)
 					.build();
 
-			int expected = 2;
+			DamageLevel expected = RESALE;
 
 			// WHEN
-			int actual = underTest.calculateDentsDamageLevel(dto);
+			DamageLevel actual = underTest.calculateDentsDamageLevel(dto);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -130,7 +131,7 @@ class VisibleSurfacesDamageCalculatorTest {
 
 		@ParameterizedTest
 		@ValueSource(doubles = {5, 5.5, 10})
-		void should_Return3_When_DentsAreEqualOrOver5cm(double dentDepth) {
+		void should_ReturnOUTLET_When_DentsAreEqualOrOver5cm(double dentDepth) {
 			// GIVEN
 			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
 					.applicableVisibleSurfacesDamage(true)
@@ -138,10 +139,10 @@ class VisibleSurfacesDamageCalculatorTest {
 					.visibleSurfacesDentsDepth(dentDepth)
 					.build();
 
-			int expected = 3;
+			DamageLevel expected = OUTLET;
 
 			// WHEN
-			int actual = underTest.calculateDentsDamageLevel(dto);
+			DamageLevel actual = underTest.calculateDentsDamageLevel(dto);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -152,32 +153,32 @@ class VisibleSurfacesDamageCalculatorTest {
 	class testCalculateSmallDamageLevel {
 
 		@Test
-		void should_Return2_When_VisibleSurfacesHasSmallDamageIsTrue() {
+		void should_ReturnRESALE_When_VisibleSurfacesHasMinorDamageIsTrue() {
 			// GIVEN
 			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
 					.visibleSurfacesHasMinorDamage(true)
 					.build();
 
-			int expected = 2;
+			DamageLevel expected = RESALE;
 
 			// WHEN
-			int actual = underTest.calculateSmallDamageLevel(dto);
+			DamageLevel actual = underTest.calculateMinorDamageLevel(dto);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
 		}
 
 		@Test
-		void should_Return0_When_VisibleSurfacesHasSmallDamageIsFalse() {
+		void should_ReturnNONE_When_VisibleSurfacesHasMinorDamageIsFalse() {
 			// GIVEN
 			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
 					.visibleSurfacesHasMinorDamage(false)
 					.build();
 
-			int expected = 0;
+			DamageLevel expected = NONE;
 
 			// WHEN
-			int actual = underTest.calculateSmallDamageLevel(dto);
+			DamageLevel actual = underTest.calculateMinorDamageLevel(dto);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -188,32 +189,32 @@ class VisibleSurfacesDamageCalculatorTest {
 	class testCalculateBigDamageLevel {
 
 		@Test
-		void should_Return3_When_VisibleSurfacesHasBigDamageIsTrue() {
+		void should_ReturnOUTLET_When_VisibleSurfacesHasMajorDamageIsTrue() {
 			// GIVEN
 			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
 					.visibleSurfacesHasMajorDamage(true)
 					.build();
 
-			int expected = 3;
+			DamageLevel expected = OUTLET;
 
 			// WHEN
-			int actual = underTest.calculateBigDamageLevel(dto);
+			DamageLevel actual = underTest.calculateMajorDamageLevel(dto);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
 		}
 
 		@Test
-		void should_Return0_When_VisibleSurfacesHasBigDamageIsFalse() {
+		void should_ReturnNONE_When_VisibleSurfacesHasMajorDamageIsFalse() {
 			// GIVEN
 			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
 					.visibleSurfacesHasMajorDamage(false)
 					.build();
 
-			int expected = 0;
+			DamageLevel expected = NONE;
 
 			// WHEN
-			int actual = underTest.calculateBigDamageLevel(dto);
+			DamageLevel actual = underTest.calculateMajorDamageLevel(dto);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);

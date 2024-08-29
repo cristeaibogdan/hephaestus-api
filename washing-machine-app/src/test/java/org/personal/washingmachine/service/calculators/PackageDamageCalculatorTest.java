@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.personal.washingmachine.dto.WashingMachineDetailsDTO;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.personal.washingmachine.service.calculators.DamageLevel.*;
 
 
 class PackageDamageCalculatorTest {
@@ -11,50 +12,50 @@ class PackageDamageCalculatorTest {
 	private final PackageDamageCalculator underTest = new PackageDamageCalculator();
 
 	@Test
-	void should_Return0_When_ApplicablePackageDamageIsFalse() {
+	void should_ReturnNONE_When_ApplicablePackageDamageIsFalse() {
 		// GIVEN
 		WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
 				.applicablePackageDamage(false)
 				.build();
 
-		int expected = 0;
+		DamageLevel expected = NONE;
 
 		// WHEN
-		int actual = underTest.calculate(dto);
+		DamageLevel actual = underTest.calculate(dto);
 
 		// THEN
 		assertThat(actual).isEqualTo(expected);
 	}
 
 	@Test
-	void should_Return1_When_PackageMaterialAvailableIsTrue() {
+	void should_ReturnREPACKAGE_When_PackageMaterialAvailableIsTrue() {
 		// GIVEN
 		WashingMachineDetailsDTO washingMachineDetailsDTO = WashingMachineDetailsDTO.builder()
 				.applicablePackageDamage(true)
 				.packageMaterialAvailable(true)
 				.build();
 
-		int expected = 1;
+		DamageLevel expected = REPACKAGE;
 
 		// WHEN
-		int actual = underTest.calculate(washingMachineDetailsDTO);
+		DamageLevel actual = underTest.calculate(washingMachineDetailsDTO);
 
 		// THEN
 		assertThat(actual).isEqualTo(expected);
 	}
 
 	@Test
-	void should_Return2_When_PackageMaterialAvailableIsFalse() {
+	void should_ReturnRESALE_When_PackageMaterialAvailableIsFalse() {
 		// GIVEN
 		WashingMachineDetailsDTO washingMachineDetailsDTO = WashingMachineDetailsDTO.builder()
 				.applicablePackageDamage(true)
 				.packageMaterialAvailable(false)
 				.build();
 
-		int expected = 2;
+		DamageLevel expected = RESALE;
 
 		// WHEN
-		int actual = underTest.calculate(washingMachineDetailsDTO);
+		DamageLevel actual = underTest.calculate(washingMachineDetailsDTO);
 
 		// THEN
 		assertThat(actual).isEqualTo(expected);
