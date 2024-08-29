@@ -126,7 +126,7 @@ class UserApplicationServiceTest {
 			// THEN
 			then(userServiceMock)
 					.should(times(1))
-					.register(any());
+					.register(any()); //TODO: Is this still useful? Stubbed methods are auto verified by default
 		}
 	}
 

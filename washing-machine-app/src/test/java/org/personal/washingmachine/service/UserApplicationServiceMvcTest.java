@@ -191,7 +191,7 @@ class UserApplicationServiceMvcTest {
             // THEN
             then(userServiceMock)
                     .should(times(1))
-                    .login(anyString(), anyString());
+                    .login(anyString(), anyString()); //TODO: Is this still useful? Stubbed methods are auto verified by default
 
             resultActions
                     .andExpect(status().isOk());
