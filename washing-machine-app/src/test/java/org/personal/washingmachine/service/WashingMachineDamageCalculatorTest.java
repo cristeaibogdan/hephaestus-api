@@ -6,10 +6,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.personal.shared.exception.CustomException;
+import org.personal.washingmachine.dto.WashingMachineDetailsDTO;
+import org.personal.washingmachine.enums.Recommendation;
 import org.personal.washingmachine.service.calculators.*;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
 class WashingMachineDamageCalculatorTest {
@@ -27,47 +30,50 @@ class WashingMachineDamageCalculatorTest {
 	private WashingMachineDamageCalculator underTest;
 
 	@Nested
-	class testGetDamageLevel {
+	class testGetRecommendation {
 
 		@Test
-		void should_ReturnX_When_Y() {
+		void should_ThrowCustomException() {
 			// GIVEN
+			WashingMachineDetailsDTO dto = new WashingMachineDetailsDTO(
+					false,
+					false,
+					false,
+					false,
+					false,
+					false,
+					0,
+					false,
+					0,
+					false,
+					null,
+					false,
+					null,
+					false,
+					false,
+					0,
+					false,
+					0,
+					false,
+					null,
+					false,
+					null,
+					0,
+					0
+			);
 
-			// WHEN
+			given(packageRecommendationCalculator.calculate(dto))
+					.willReturn(Recommendation.NONE);
+			given(visibleSurfacesRecommendationCalculator.calculate(dto))
+					.willReturn(Recommendation.NONE);
+			given(hiddenSurfacesRecommendationCalculator.calculate(dto))
+					.willReturn(Recommendation.NONE);
+			given(pricingRecommendationCalculator.calculate(dto))
+					.willReturn(Recommendation.NONE);
 
-			// THEN
+			// WHEN & THEN
+			assertThatThrownBy(() -> underTest.getRecommendation(dto))
+					.isInstanceOf(CustomException.class);
 		}
 	}
-
-//	@Nested
-//	class testGetRecommendation {
-//
-//		@ParameterizedTest(name = "For damageLevel = {0} should return recommendation = {1}")
-//		@CsvSource({
-//				"1, REPACKAGE",
-//				"2, RESALE",
-//				"3, OUTLET",
-//				"4, REPAIR",
-//				"5, DISASSEMBLE"
-//		})
-//		void should_ReturnRecommendation(int damageLevel, DamageLevel expected) {
-//			// GIVEN
-//
-//			// WHEN
-//			String actual = underTest.getRecommendation(damageLevel);
-//
-//			// THEN
-//			assertThat(actual).isEqualTo(expected);
-//		}
-//
-//		@ParameterizedTest(name = "Damage level = {0} is not supported")
-//		@ValueSource(ints = { 0, 6 })
-//		void should_ThrowCustomException(int damageLevel) {
-//			// GIVEN
-//
-//			// WHEN & THEN
-//			assertThatThrownBy(() -> underTest.getRecommendation(damageLevel))
-//					.isInstanceOf(CustomException.class);
-//		}
-//	}
 }
