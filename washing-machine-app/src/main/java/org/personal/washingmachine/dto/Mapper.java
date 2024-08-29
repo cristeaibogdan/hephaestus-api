@@ -137,7 +137,6 @@ public class Mapper {
 					entity.getSerialNumber(),
 					entity.getReturnType(),
 					entity.getDamageType(),
-					entity.getDamageLevel(),
 					entity.getRecommendation(),
 					entity.getCreatedAt()
 			);
@@ -164,7 +163,6 @@ public class Mapper {
 					dto.serialNumber(),
 					dto.model(),
 					dto.type(),
-					dto.damageLevel(),
 					dto.recommendation(),
 					WashingMachineDetailsMapper.toEntity(dto.washingMachineDetailsDTO())
 			);

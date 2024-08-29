@@ -71,7 +71,6 @@ CREATE TABLE IF NOT EXISTS public.washing_machine (
   model VARCHAR,
   type VARCHAR,
 
-  damage_level INTEGER,
   recommendation VARCHAR,
 
   created_at TIMESTAMP,

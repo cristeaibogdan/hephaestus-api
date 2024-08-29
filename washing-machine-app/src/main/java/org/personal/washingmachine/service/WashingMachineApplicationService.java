@@ -9,7 +9,6 @@ import org.personal.washingmachine.dto.*;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineImage;
 import org.personal.washingmachine.repository.WashingMachineRepository;
-import org.personal.washingmachine.service.calculators.DamageLevel;
 import org.personal.washingmachine.service.utils.QueryDSLUtils;
 import org.personal.washingmachine.vo.WashingMachineReportVO;
 import org.springframework.data.domain.Page;
@@ -53,8 +52,6 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.damageType, pageRequestDTO.damageType()))
 
 				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.recommendation, pageRequestDTO.recommendation()))
-
-				.and(QueryDSLUtils.addIntegerEqualCondition(washingMachine.damageLevel, pageRequestDTO.damageLevel()))
 
 				.and(QueryDSLUtils.addTimestampEqualCondition(washingMachine.createdAt, pageRequestDTO.createdAt()));
 

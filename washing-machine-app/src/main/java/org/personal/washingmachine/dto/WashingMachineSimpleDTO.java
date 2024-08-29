@@ -19,7 +19,6 @@ public record WashingMachineSimpleDTO(
 		ReturnType returnType,
 		DamageType damageType,
 
-        Integer damageLevel,
         String recommendation,
         LocalDateTime createdAt
 ) {

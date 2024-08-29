@@ -23,7 +23,7 @@ public class WashingMachineDamageCalculator {
 	public WashingMachineEvaluationDTO getDamageEvaluation(WashingMachineDetailsDTO dto) {
 		int damageLevel = getDamageLevel(dto);
 		String recommendation = getRecommendation(damageLevel);
-		return new WashingMachineEvaluationDTO(damageLevel, recommendation);
+		return new WashingMachineEvaluationDTO(recommendation);
 	}
 
 	int getDamageLevel(WashingMachineDetailsDTO dto) {

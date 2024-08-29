@@ -18,7 +18,6 @@ public record PageRequestDTO(
 		ReturnType returnType,
 		DamageType damageType,
 
-        Integer damageLevel,
         String recommendation,
 
         String createdAt

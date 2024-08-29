@@ -53,9 +53,6 @@ public class WashingMachine extends BaseEntity {
     @Column(name = "type")
     private String type;
 
-    @Column(name = "damage_level")
-    private Integer damageLevel;
-
     @Column(name = "recommendation")
     private String recommendation;
 
@@ -75,7 +72,7 @@ public class WashingMachine extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<WashingMachineImage> washingMachineImages = new ArrayList<>();
 
-    public WashingMachine(String category, String manufacturer, DamageType damageType, ReturnType returnType, IdentificationMode identificationMode, String serialNumber, String model, String type, Integer damageLevel, String recommendation, WashingMachineDetails washingMachineDetails) {
+    public WashingMachine(String category, String manufacturer, DamageType damageType, ReturnType returnType, IdentificationMode identificationMode, String serialNumber, String model, String type, String recommendation, WashingMachineDetails washingMachineDetails) {
         this.category = category;
         this.manufacturer = manufacturer;
         this.damageType = damageType;
@@ -84,7 +81,6 @@ public class WashingMachine extends BaseEntity {
         this.serialNumber = serialNumber;
         this.model = model;
         this.type = type;
-        this.damageLevel = damageLevel;
         this.recommendation = recommendation;
         this.washingMachineDetails = washingMachineDetails;
     }
