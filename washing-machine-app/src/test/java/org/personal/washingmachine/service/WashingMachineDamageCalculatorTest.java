@@ -4,26 +4,29 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.personal.shared.exception.CustomException;
 import org.personal.washingmachine.dto.WashingMachineDetailsDTO;
 import org.personal.washingmachine.enums.Recommendation;
-import org.personal.washingmachine.service.calculators.*;
+import org.personal.washingmachine.service.calculators.HiddenSurfacesRecommendationCalculator;
+import org.personal.washingmachine.service.calculators.PackageRecommendationCalculator;
+import org.personal.washingmachine.service.calculators.PricingRecommendationCalculator;
+import org.personal.washingmachine.service.calculators.VisibleSurfacesRecommendationCalculator;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
 class WashingMachineDamageCalculatorTest {
 
-	@Mock
+	@Spy
 	private PackageRecommendationCalculator packageRecommendationCalculator;
-	@Mock
+	@Spy
 	private VisibleSurfacesRecommendationCalculator visibleSurfacesRecommendationCalculator;
-	@Mock
+	@Spy
 	private HiddenSurfacesRecommendationCalculator hiddenSurfacesRecommendationCalculator;
-	@Mock
+	@Spy
 	private PricingRecommendationCalculator pricingRecommendationCalculator;
 
 	@InjectMocks
@@ -33,7 +36,47 @@ class WashingMachineDamageCalculatorTest {
 	class testGetRecommendation {
 
 		@Test
-		void should_ThrowCustomException() {
+		void should_ReturnREPACKAGE_When_PackageMaterialAvailableIsTrue() {
+			// GIVEN
+			WashingMachineDetailsDTO dto = new WashingMachineDetailsDTO(
+					true,
+					true,
+					false,
+					true,
+					false,
+					false,
+					0,
+					false,
+					0,
+					false,
+					null,
+					false,
+					null,
+					false,
+					false,
+					0,
+					false,
+					0,
+					false,
+					null,
+					false,
+					null,
+					0,
+					0
+			);
+
+			Recommendation expected = Recommendation.REPACKAGE;
+
+			// WHEN
+			Recommendation actual = underTest.getRecommendation(dto);
+
+			// WHEN & THEN
+			assertThat(actual)
+					.isEqualTo(expected);
+		}
+
+		@Test
+		void should_ThrowCustomException_When_DtoHasNoApplicableDamage() {
 			// GIVEN
 			WashingMachineDetailsDTO dto = new WashingMachineDetailsDTO(
 					false,
@@ -61,15 +104,6 @@ class WashingMachineDamageCalculatorTest {
 					0,
 					0
 			);
-
-			given(packageRecommendationCalculator.calculate(dto))
-					.willReturn(Recommendation.NONE);
-			given(visibleSurfacesRecommendationCalculator.calculate(dto))
-					.willReturn(Recommendation.NONE);
-			given(hiddenSurfacesRecommendationCalculator.calculate(dto))
-					.willReturn(Recommendation.NONE);
-			given(pricingRecommendationCalculator.calculate(dto))
-					.willReturn(Recommendation.NONE);
 
 			// WHEN & THEN
 			assertThatThrownBy(() -> underTest.getRecommendation(dto))
