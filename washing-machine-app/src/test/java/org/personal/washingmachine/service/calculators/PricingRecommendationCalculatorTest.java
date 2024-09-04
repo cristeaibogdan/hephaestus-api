@@ -48,6 +48,7 @@ class PricingRecommendationCalculatorTest {
 		// GIVEN
 		WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
 				.price(-1)
+				.repairPrice(0)
 				.build();
 
 		Recommendation expected = NONE;
@@ -63,6 +64,7 @@ class PricingRecommendationCalculatorTest {
 	void should_ReturnNONE_When_RepairPriceIsNegative() {
 		// GIVEN
 		WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+				.price(0)
 				.repairPrice(-1)
 				.build();
 

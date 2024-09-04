@@ -32,6 +32,23 @@ class VisibleSurfacesRecommendationCalculatorTest {
 			// THEN
 			assertThat(actual).isEqualTo(expected);
 		}
+
+		@Test
+		void should_ReturnRESALE_When_MajorDamageTrue() {
+			// GIVEN
+			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+					.applicableVisibleSurfacesDamage(true)
+					.visibleSurfacesHasMajorDamage(true)
+					.build();
+
+			Recommendation expected = OUTLET;
+
+			// WHEN
+			Recommendation actual = underTest.calculate(dto);
+
+			// THEN
+			assertThat(actual).isEqualTo(expected);
+		}
 	}
 
 	@Nested
