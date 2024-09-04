@@ -2,10 +2,6 @@ package org.personal.washingmachine.service;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Spy;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.personal.shared.exception.CustomException;
 import org.personal.washingmachine.dto.WashingMachineDetailsDTO;
 import org.personal.washingmachine.enums.Recommendation;
@@ -16,21 +12,16 @@ import org.personal.washingmachine.service.calculators.VisibleSurfacesRecommenda
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.personal.washingmachine.enums.Recommendation.*;
 
-@ExtendWith(MockitoExtension.class)
 class WashingMachineDamageCalculatorTest {
 
-	@Spy
-	private PackageRecommendationCalculator packageRecommendationCalculator;
-	@Spy
-	private VisibleSurfacesRecommendationCalculator visibleSurfacesRecommendationCalculator;
-	@Spy
-	private HiddenSurfacesRecommendationCalculator hiddenSurfacesRecommendationCalculator;
-	@Spy
-	private PricingRecommendationCalculator pricingRecommendationCalculator;
-
-	@InjectMocks
-	private WashingMachineDamageCalculator underTest;
+	WashingMachineDamageCalculator underTest = new WashingMachineDamageCalculator(
+			new PackageRecommendationCalculator(),
+			new VisibleSurfacesRecommendationCalculator(),
+			new HiddenSurfacesRecommendationCalculator(),
+			new PricingRecommendationCalculator()
+	);
 
 	@Nested
 	class testGetRecommendation {
@@ -38,34 +29,12 @@ class WashingMachineDamageCalculatorTest {
 		@Test
 		void should_ReturnREPACKAGE_When_PackageMaterialAvailableIsTrue() {
 			// GIVEN
-			WashingMachineDetailsDTO dto = new WashingMachineDetailsDTO(
-					true,
-					true,
-					false,
-					true,
-					false,
-					false,
-					0,
-					false,
-					0,
-					false,
-					null,
-					false,
-					null,
-					false,
-					false,
-					0,
-					false,
-					0,
-					false,
-					null,
-					false,
-					null,
-					0,
-					0
-			);
+			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+					.applicablePackageDamage(true)
+					.packageMaterialAvailable(true)
+					.build();
 
-			Recommendation expected = Recommendation.REPACKAGE;
+			Recommendation expected = REPACKAGE;
 
 			// WHEN
 			Recommendation actual = underTest.getRecommendation(dto);
@@ -78,32 +47,11 @@ class WashingMachineDamageCalculatorTest {
 		@Test
 		void should_ThrowCustomException_When_DtoHasNoApplicableDamage() {
 			// GIVEN
-			WashingMachineDetailsDTO dto = new WashingMachineDetailsDTO(
-					false,
-					false,
-					false,
-					false,
-					false,
-					false,
-					0,
-					false,
-					0,
-					false,
-					null,
-					false,
-					null,
-					false,
-					false,
-					0,
-					false,
-					0,
-					false,
-					null,
-					false,
-					null,
-					0,
-					0
-			);
+			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+					.applicablePackageDamage(false)
+					.applicableHiddenSurfacesDamage(false)
+					.applicableVisibleSurfacesDamage(false)
+					.build();
 
 			// WHEN & THEN
 			assertThatThrownBy(() -> underTest.getRecommendation(dto))

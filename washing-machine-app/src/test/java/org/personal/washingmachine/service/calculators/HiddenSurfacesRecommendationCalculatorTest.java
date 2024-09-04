@@ -31,6 +31,23 @@ class HiddenSurfacesRecommendationCalculatorTest {
 			// THEN
 			assertThat(actual).isEqualTo(expected);
 		}
+
+		@Test
+		void should_ReturnRESALE_When_MinorDamageTrue() {
+			// GIVEN
+			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+					.applicableHiddenSurfacesDamage(true)
+					.hiddenSurfacesHasMinorDamage(true)
+					.build();
+
+			Recommendation expected = RESALE;
+
+			// WHEN
+			Recommendation actual = underTest.calculate(dto);
+
+			// THEN
+			assertThat(actual).isEqualTo(expected);
+		}
 	}
 
 	@Nested
