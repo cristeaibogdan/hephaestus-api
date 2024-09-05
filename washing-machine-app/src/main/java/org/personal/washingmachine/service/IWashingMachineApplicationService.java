@@ -2,7 +2,7 @@ package org.personal.washingmachine.service;
 
 import org.personal.washingmachine.dto.*;
 import org.personal.washingmachine.enums.Recommendation;
-import org.personal.washingmachine.vo.WashingMachineReportVO;
+import org.personal.washingmachine.dto.WashingMachineReportDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +26,7 @@ public interface IWashingMachineApplicationService {
 	Recommendation getRecommendation(@RequestBody WashingMachineDetailsDTO washingMachineDetailsDTO);
 
 	@GetMapping(value = "/{serialNumber}/report")
-	WashingMachineReportVO getReport(@PathVariable String serialNumber);
+	WashingMachineReportDTO getReport(@PathVariable String serialNumber);
 
 	@GetMapping("/{category}/manufacturers")
 	List<String> getManufacturers(@PathVariable String category);

@@ -11,7 +11,7 @@ import org.personal.washingmachine.entity.WashingMachineImage;
 import org.personal.washingmachine.enums.Recommendation;
 import org.personal.washingmachine.repository.WashingMachineRepository;
 import org.personal.washingmachine.service.utils.QueryDSLUtils;
-import org.personal.washingmachine.vo.WashingMachineReportVO;
+import org.personal.washingmachine.dto.WashingMachineReportDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -33,6 +33,7 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 	private final WashingMachineService service;
 	private final WashingMachineRepository repository;
 	private final WashingMachineDamageCalculator damageCalculator;
+	private final WashingMachineReportGenerator reportGenerator;
 
 	@Override
 	public Page<WashingMachineSimpleDTO> loadPaginatedAndFiltered(PageRequestDTO pageRequestDTO) {
@@ -84,8 +85,9 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 	}
 
 	@Override
-	public WashingMachineReportVO getReport(String serialNumber) {
-		return service.getReport(serialNumber);
+	public WashingMachineReportDTO getReport(String serialNumber) {
+		WashingMachine washingMachine = service.findBySerialNumber(serialNumber);
+		return reportGenerator.getReport(washingMachine);
 	}
 
 	// *****************************************

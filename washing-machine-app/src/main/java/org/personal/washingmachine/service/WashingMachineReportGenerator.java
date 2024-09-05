@@ -6,10 +6,10 @@ import net.sf.jasperreports.engine.*;
 import org.apache.commons.lang3.time.StopWatch;
 import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
+import org.personal.washingmachine.dto.WashingMachineReportDTO;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineDetails;
 import org.personal.washingmachine.entity.WashingMachineImage;
-import org.personal.washingmachine.vo.WashingMachineReportVO;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class WashingMachineReportGenerator {
 
-	public WashingMachineReportVO getReport(WashingMachine washingMachine) {
+	public WashingMachineReportDTO getReport(WashingMachine washingMachine) {
 		StopWatch stopWatch = StopWatch.createStarted();
 
 		try {
@@ -46,7 +46,7 @@ public class WashingMachineReportGenerator {
 					stopWatch.getTime(TimeUnit.MILLISECONDS));
 
 			// Export report
-			return new WashingMachineReportVO(
+			return new WashingMachineReportDTO(
 					JasperExportManager.exportReportToPdf(filledReport),
 					washingMachine.getCreatedAt().toString());
 
