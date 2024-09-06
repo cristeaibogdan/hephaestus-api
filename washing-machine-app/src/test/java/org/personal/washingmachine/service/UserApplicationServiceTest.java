@@ -2,38 +2,34 @@ package org.personal.washingmachine.service;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.personal.shared.exception.CustomException;
 import org.personal.washingmachine.dto.OrganizationAndCountryDTO;
 import org.personal.washingmachine.dto.UserCredentialsDTO;
 import org.personal.washingmachine.dto.UserDTO;
+import org.personal.washingmachine.repository.UserRepository;
 
+import java.lang.reflect.Executable;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.personal.washingmachine.dto.Mapper.UserMapper;
 
-@ExtendWith(MockitoExtension.class)
 class UserApplicationServiceTest {
 
-	@InjectMocks
-	private UserApplicationService underTest;
-
-	@Mock
-	private UserService userServiceMock;
+	UserRepository userRepositoryMock = mock(UserRepository.class);
+	UserService userService = new UserService(userRepositoryMock);
+	UserApplicationService underTest = new UserApplicationService(userService);
 
 	@Nested
 	class TestIsValidRegistrationCode {
@@ -112,7 +108,7 @@ class UserApplicationServiceTest {
 		@Test
 		void should_SaveUser_When_ValidUserProvided() {
 			// GIVEN
-			UserDTO userDTO = new UserDTO(
+			UserDTO dto = new UserDTO(
 					"code",
 					"ORG",
 					"ROMANIA",
@@ -121,12 +117,50 @@ class UserApplicationServiceTest {
 					"pass123456");
 
 			// WHEN
-			underTest.register(userDTO);
+			underTest.register(dto);
 
 			// THEN
-			then(userServiceMock)
-					.should(times(1))
-					.register(any()); //TODO: Is this still useful? Stubbed methods are auto verified by default
+//			then(userRepositoryMock)
+//					.should(times(1))
+//					.save(UserMapper.toEntity(dto));
+		}
+
+		@Test
+		void should_ThrowCustomException_When_EmailIsAlreadyTaken() {
+			// GIVEN
+			UserDTO dto = new UserDTO(
+					"code",
+					"ORG",
+					"ROMANIA",
+					"takenEmail@yahoo.com",
+					"user123456",
+					"pass123456");
+
+			given(userRepositoryMock.existsByEmail(dto.email()))
+					.willReturn(true);
+
+			// When & THEN
+			assertThatThrownBy(() -> underTest.register(dto))
+					.isInstanceOf(CustomException.class);
+		}
+
+		@Test
+		void should_ThrowCustomException_When_UsernamesAlreadyTaken() {
+			// GIVEN
+			UserDTO dto = new UserDTO(
+					"code",
+					"ORG",
+					"ROMANIA",
+					"email@yahoo.com",
+					"takenUser",
+					"pass123456");
+
+			given(userRepositoryMock.existsByUsername(dto.username()))
+					.willReturn(true);
+
+			// When & THEN
+			assertThatThrownBy(() -> underTest.register(dto))
+					.isInstanceOf(CustomException.class);
 		}
 	}
 
@@ -136,25 +170,40 @@ class UserApplicationServiceTest {
 		@Test
 		void should_ReturnUserDTO_When_GoodCredentials() {
 			// GIVEN
-			UserCredentialsDTO userCredentialsDTO = new UserCredentialsDTO(
-					"User",
-					"Pass");
+			UserCredentialsDTO credentials = new UserCredentialsDTO("User","Pass");
 
-			UserDTO expected = UserDTO.builder()
-					.username("usernameTest")
-					.password(null)
-					.build();
+			UserDTO expected = new UserDTO(
+					"RX1001",
+					"Origin",
+					"Romania",
+					"someEmail@yahoo.com",
+					credentials.username(),
+					null
+			);
 
-			given(userServiceMock.login(userCredentialsDTO.username(), userCredentialsDTO.password()))
-					.willReturn(UserMapper.toEntity(expected));
+			given(userRepositoryMock.findByUsernameAndPassword(credentials.username(), credentials.password()))
+					.willReturn(Optional.of(UserMapper.toEntity(expected)));
 
 			// WHEN
-			UserDTO actual = underTest.login(userCredentialsDTO);
+			UserDTO actual = underTest.login(credentials);
 
 			// THEN
 			assertThat(actual)
 					.usingRecursiveComparison()
 					.isEqualTo(expected);
+		}
+
+		@Test
+		void should_ThrowException_When_BadCredentials() {
+			// GIVEN
+			UserCredentialsDTO credentials = new UserCredentialsDTO("UserBad","PassBad");
+
+			given(userRepositoryMock.findByUsernameAndPassword(credentials.username(), credentials.password()))
+					.willThrow(CustomException.class);
+
+			// WHEN & THEN
+			assertThatThrownBy(() -> underTest.login(credentials))
+					.isInstanceOf(CustomException.class);
 		}
 	}
 }

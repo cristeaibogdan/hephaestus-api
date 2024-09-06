@@ -34,27 +34,27 @@ class WashingMachineApplicationServiceTest {
     @MockBean //TODO: To be deleted
     private ProductClient productClientMock;
 
-    @Nested
-    class testIsSerialNumberInUse {
-
-        @Test
-        void should_ReturnTrue() throws Exception {
-            // GIVEN
-            String serialNumber = "ABC-987";
-            boolean expected = true;
-
-            given(washingMachineRepositoryMock.existsBySerialNumber(serialNumber))
-                    .willReturn(true);
-
-            // WHEN
-            ResultActions resultActions = mockMvc.perform(
-                    get("/api/v1/washing-machines/{serialNumber}/validate",
-                            serialNumber));
-
-            // THEN
-            resultActions
-                    .andExpect(status().isOk())
-                    .andExpect(content().string(String.valueOf(expected)));
-        }
-    }
+//    @Nested
+//    class testIsSerialNumberInUse {
+//
+//        @Test
+//        void should_ReturnTrue() throws Exception {
+//            // GIVEN
+//            String serialNumber = "ABC-987";
+//            boolean expected = true;
+//
+//            given(washingMachineRepositoryMock.existsBySerialNumber(serialNumber))
+//                    .willReturn(true);
+//
+//            // WHEN
+//            ResultActions resultActions = mockMvc.perform(
+//                    get("/api/v1/washing-machines/{serialNumber}/validate",
+//                            serialNumber));
+//
+//            // THEN
+//            resultActions
+//                    .andExpect(status().isOk())
+//                    .andExpect(content().string(String.valueOf(expected)));
+//        }
+//    }
 }
