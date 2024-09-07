@@ -67,6 +67,19 @@
 			<version>6.21.0</version>
 		</dependency>
 
+		<!-- ***************************************** -->
+		<!-- *** DATABASE MIGRATION -->
+		<!-- ***************************************** -->
+
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-database-postgresql</artifactId>
+		</dependency>
 	</dependencies>
 
 	<profiles>
