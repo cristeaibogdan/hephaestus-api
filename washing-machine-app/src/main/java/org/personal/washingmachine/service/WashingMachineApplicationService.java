@@ -80,8 +80,8 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 	}
 
 	@Override
-	public Recommendation getRecommendation(WashingMachineDetailsDTO washingMachineDetailsDTO) {
-		return damageCalculator.getRecommendation(washingMachineDetailsDTO);
+	public Recommendation getRecommendation(WashingMachineDetailDTO washingMachineDetailDTO) {
+		return damageCalculator.getRecommendation(washingMachineDetailDTO);
 	}
 
 	@Override

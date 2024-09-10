@@ -8,7 +8,7 @@ import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
 import org.personal.washingmachine.dto.WashingMachineReportDTO;
 import org.personal.washingmachine.entity.WashingMachine;
-import org.personal.washingmachine.entity.WashingMachineDetails;
+import org.personal.washingmachine.entity.WashingMachineDetail;
 import org.personal.washingmachine.entity.WashingMachineImage;
 import org.springframework.stereotype.Service;
 
@@ -92,64 +92,64 @@ public class WashingMachineReportGenerator {
 		parameters.put("createdAt", washingMachine.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 		// Second page
 		parameters.put("secondPage", getSecondPageReport());
-		parameters.put("secondPageParameters", getReportSecondPageParameters(washingMachine.getWashingMachineDetails()));
+		parameters.put("secondPageParameters", getReportSecondPageParameters(washingMachine.getWashingMachineDetail()));
 		return parameters;
 	}
 
-	private Map<String, Object> getReportSecondPageParameters(WashingMachineDetails washingMachineDetails) {
+	private Map<String, Object> getReportSecondPageParameters(WashingMachineDetail washingMachineDetail) {
 		Map<String, Object> parameters = new HashMap<>();
 
 		// ********************************
 		// *** Package
 		// ********************************
 
-		parameters.put("applicablePackageDamage", washingMachineDetails.getPackageDamage().isApplicablePackageDamage());
-		parameters.put("packageDamaged", washingMachineDetails.getPackageDamage().isPackageDamaged());
-		parameters.put("packageDirty", washingMachineDetails.getPackageDamage().isPackageDirty());
-		parameters.put("packageMaterialAvailable", washingMachineDetails.getPackageDamage().isPackageMaterialAvailable());
+		parameters.put("applicablePackageDamage", washingMachineDetail.getPackageDamage().isApplicablePackageDamage());
+		parameters.put("packageDamaged", washingMachineDetail.getPackageDamage().isPackageDamaged());
+		parameters.put("packageDirty", washingMachineDetail.getPackageDamage().isPackageDirty());
+		parameters.put("packageMaterialAvailable", washingMachineDetail.getPackageDamage().isPackageMaterialAvailable());
 
 		// ********************************
 		// *** Visible Surfaces
 		// ********************************
 
-		parameters.put("applicableVisibleSurfacesDamage", washingMachineDetails.getVisibleSurfaceDamage().isApplicableVisibleSurfacesDamage());
+		parameters.put("applicableVisibleSurfacesDamage", washingMachineDetail.getVisibleSurfaceDamage().isApplicableVisibleSurfacesDamage());
 
-		parameters.put("visibleSurfacesHasScratches", washingMachineDetails.getVisibleSurfaceDamage().isVisibleSurfacesHasScratches());
-		parameters.put("visibleSurfacesScratchesLength", washingMachineDetails.getVisibleSurfaceDamage().getVisibleSurfacesScratchesLength());
+		parameters.put("visibleSurfacesHasScratches", washingMachineDetail.getVisibleSurfaceDamage().isVisibleSurfacesHasScratches());
+		parameters.put("visibleSurfacesScratchesLength", washingMachineDetail.getVisibleSurfaceDamage().getVisibleSurfacesScratchesLength());
 
-		parameters.put("visibleSurfacesHasDents", washingMachineDetails.getVisibleSurfaceDamage().isVisibleSurfacesHasDents());
-		parameters.put("visibleSurfacesDentsDepth", washingMachineDetails.getVisibleSurfaceDamage().getVisibleSurfacesDentsDepth());
+		parameters.put("visibleSurfacesHasDents", washingMachineDetail.getVisibleSurfaceDamage().isVisibleSurfacesHasDents());
+		parameters.put("visibleSurfacesDentsDepth", washingMachineDetail.getVisibleSurfaceDamage().getVisibleSurfacesDentsDepth());
 
-		parameters.put("visibleSurfacesHasMinorDamage", washingMachineDetails.getVisibleSurfaceDamage().isVisibleSurfacesHasMinorDamage());
-		parameters.put("visibleSurfacesMinorDamage", washingMachineDetails.getVisibleSurfaceDamage().getVisibleSurfacesMinorDamage());
+		parameters.put("visibleSurfacesHasMinorDamage", washingMachineDetail.getVisibleSurfaceDamage().isVisibleSurfacesHasMinorDamage());
+		parameters.put("visibleSurfacesMinorDamage", washingMachineDetail.getVisibleSurfaceDamage().getVisibleSurfacesMinorDamage());
 
-		parameters.put("visibleSurfacesHasMajorDamage", washingMachineDetails.getVisibleSurfaceDamage().isVisibleSurfacesHasMajorDamage());
-		parameters.put("visibleSurfacesMajorDamage", washingMachineDetails.getVisibleSurfaceDamage().getVisibleSurfacesMajorDamage());
+		parameters.put("visibleSurfacesHasMajorDamage", washingMachineDetail.getVisibleSurfaceDamage().isVisibleSurfacesHasMajorDamage());
+		parameters.put("visibleSurfacesMajorDamage", washingMachineDetail.getVisibleSurfaceDamage().getVisibleSurfacesMajorDamage());
 
 		// ********************************
 		// *** Hidden Surfaces
 		// ********************************
 
-		parameters.put("applicableHiddenSurfacesDamage", washingMachineDetails.getHiddenSurfaceDamage().isApplicableHiddenSurfacesDamage());
+		parameters.put("applicableHiddenSurfacesDamage", washingMachineDetail.getHiddenSurfaceDamage().isApplicableHiddenSurfacesDamage());
 
-		parameters.put("hiddenSurfacesHasScratches", washingMachineDetails.getHiddenSurfaceDamage().isHiddenSurfacesHasScratches());
-		parameters.put("hiddenSurfacesScratchesLength", washingMachineDetails.getHiddenSurfaceDamage().getHiddenSurfacesScratchesLength());
+		parameters.put("hiddenSurfacesHasScratches", washingMachineDetail.getHiddenSurfaceDamage().isHiddenSurfacesHasScratches());
+		parameters.put("hiddenSurfacesScratchesLength", washingMachineDetail.getHiddenSurfaceDamage().getHiddenSurfacesScratchesLength());
 
-		parameters.put("hiddenSurfacesHasDents", washingMachineDetails.getHiddenSurfaceDamage().isHiddenSurfacesHasDents());
-		parameters.put("hiddenSurfacesDentsDepth", washingMachineDetails.getHiddenSurfaceDamage().getHiddenSurfacesDentsDepth());
+		parameters.put("hiddenSurfacesHasDents", washingMachineDetail.getHiddenSurfaceDamage().isHiddenSurfacesHasDents());
+		parameters.put("hiddenSurfacesDentsDepth", washingMachineDetail.getHiddenSurfaceDamage().getHiddenSurfacesDentsDepth());
 
-		parameters.put("hiddenSurfacesHasMinorDamage", washingMachineDetails.getHiddenSurfaceDamage().isHiddenSurfacesHasMinorDamage());
-		parameters.put("hiddenSurfacesMinorDamage", washingMachineDetails.getHiddenSurfaceDamage().getHiddenSurfacesMinorDamage());
+		parameters.put("hiddenSurfacesHasMinorDamage", washingMachineDetail.getHiddenSurfaceDamage().isHiddenSurfacesHasMinorDamage());
+		parameters.put("hiddenSurfacesMinorDamage", washingMachineDetail.getHiddenSurfaceDamage().getHiddenSurfacesMinorDamage());
 
-		parameters.put("hiddenSurfacesHasMajorDamage", washingMachineDetails.getHiddenSurfaceDamage().isHiddenSurfacesHasMajorDamage());
-		parameters.put("hiddenSurfacesMajorDamage", washingMachineDetails.getHiddenSurfaceDamage().getHiddenSurfacesMajorDamage());
+		parameters.put("hiddenSurfacesHasMajorDamage", washingMachineDetail.getHiddenSurfaceDamage().isHiddenSurfacesHasMajorDamage());
+		parameters.put("hiddenSurfacesMajorDamage", washingMachineDetail.getHiddenSurfaceDamage().getHiddenSurfacesMajorDamage());
 
 		// ********************************
 		// *** Pricing
 		// ********************************
 
-		parameters.put("price", washingMachineDetails.getPrice());
-		parameters.put("repairPrice", washingMachineDetails.getRepairPrice());
+		parameters.put("price", washingMachineDetail.getPrice());
+		parameters.put("repairPrice", washingMachineDetail.getRepairPrice());
 
 		return parameters;
 	}

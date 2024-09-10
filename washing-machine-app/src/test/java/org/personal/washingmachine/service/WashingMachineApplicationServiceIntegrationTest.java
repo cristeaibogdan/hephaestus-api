@@ -3,10 +3,10 @@ package org.personal.washingmachine.service;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.personal.washingmachine.BaseIntegrationTest;
-import org.personal.washingmachine.dto.WashingMachineDetailsDTO;
+import org.personal.washingmachine.dto.WashingMachineDetailDTO;
 import org.personal.washingmachine.dto.WashingMachineExpandedDTO;
 import org.personal.washingmachine.entity.WashingMachine;
-import org.personal.washingmachine.entity.WashingMachineDetails;
+import org.personal.washingmachine.entity.WashingMachineDetail;
 import org.personal.washingmachine.entity.embedded.HiddenSurfaceDamage;
 import org.personal.washingmachine.entity.embedded.PackageDamage;
 import org.personal.washingmachine.entity.embedded.VisibleSurfaceDamage;
@@ -39,7 +39,7 @@ class WashingMachineApplicationServiceIntegrationTest extends BaseIntegrationTes
 		@Test
 		void should_ReturnWashingMachineExpandedDTO() {
 			// GIVEN
-			WashingMachineDetails washingMachineDetails = new WashingMachineDetails(
+			WashingMachineDetail washingMachineDetail = new WashingMachineDetail(
 					new PackageDamage(true, true, true, true),
 					new VisibleSurfaceDamage(
 							true,
@@ -77,13 +77,13 @@ class WashingMachineApplicationServiceIntegrationTest extends BaseIntegrationTes
 					"modelOne",
 					"typeOne",
 					Recommendation.RESALE,
-					washingMachineDetails
+					washingMachineDetail
 			);
 
 			repository.save(washingMachine);
 
 			WashingMachineExpandedDTO expected = new WashingMachineExpandedDTO(
-					new WashingMachineDetailsDTO(
+					new WashingMachineDetailDTO(
 							true,
 							true,
 							true,

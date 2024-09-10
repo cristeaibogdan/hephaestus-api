@@ -1,7 +1,7 @@
 package org.personal.washingmachine.service.calculators;
 
 import org.junit.jupiter.api.Test;
-import org.personal.washingmachine.dto.WashingMachineDetailsDTO;
+import org.personal.washingmachine.dto.WashingMachineDetailDTO;
 import org.personal.washingmachine.enums.Recommendation;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -15,7 +15,7 @@ class PackageRecommendationCalculatorTest {
 	@Test
 	void should_ReturnNONE_When_ApplicablePackageDamageIsFalse() {
 		// GIVEN
-		WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+		WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
 				.applicablePackageDamage(false)
 				.build();
 
@@ -31,7 +31,7 @@ class PackageRecommendationCalculatorTest {
 	@Test
 	void should_ReturnREPACKAGE_When_PackageMaterialAvailableIsTrue() {
 		// GIVEN
-		WashingMachineDetailsDTO washingMachineDetailsDTO = WashingMachineDetailsDTO.builder()
+		WashingMachineDetailDTO washingMachineDetailDTO = WashingMachineDetailDTO.builder()
 				.applicablePackageDamage(true)
 				.packageMaterialAvailable(true)
 				.build();
@@ -39,7 +39,7 @@ class PackageRecommendationCalculatorTest {
 		Recommendation expected = REPACKAGE;
 
 		// WHEN
-		Recommendation actual = underTest.calculate(washingMachineDetailsDTO);
+		Recommendation actual = underTest.calculate(washingMachineDetailDTO);
 
 		// THEN
 		assertThat(actual).isEqualTo(expected);
@@ -48,7 +48,7 @@ class PackageRecommendationCalculatorTest {
 	@Test
 	void should_ReturnRESALE_When_PackageMaterialAvailableIsFalse() {
 		// GIVEN
-		WashingMachineDetailsDTO washingMachineDetailsDTO = WashingMachineDetailsDTO.builder()
+		WashingMachineDetailDTO washingMachineDetailDTO = WashingMachineDetailDTO.builder()
 				.applicablePackageDamage(true)
 				.packageMaterialAvailable(false)
 				.build();
@@ -56,7 +56,7 @@ class PackageRecommendationCalculatorTest {
 		Recommendation expected = RESALE;
 
 		// WHEN
-		Recommendation actual = underTest.calculate(washingMachineDetailsDTO);
+		Recommendation actual = underTest.calculate(washingMachineDetailDTO);
 
 		// THEN
 		assertThat(actual).isEqualTo(expected);

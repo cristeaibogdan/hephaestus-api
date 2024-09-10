@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS public.user (
 -- *** DAMAGED PRODUCT
 -- ********************************************************************
 
- CREATE TABLE IF NOT EXISTS public.washing_machine_details (
+ CREATE TABLE IF NOT EXISTS public.washing_machine_detail (
    id BIGSERIAL PRIMARY KEY,
 
    -- PACKAGE
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS public.washing_machine (
 
   created_at TIMESTAMP,
 
-  washing_machine_details_id BIGINT REFERENCES public.washing_machine_details(id)
+  washing_machine_detail_id BIGINT REFERENCES public.washing_machine_detail(id)
 );
 
 CREATE TABLE IF NOT EXISTS public.washing_machine_image (

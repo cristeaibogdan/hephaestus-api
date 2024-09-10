@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.personal.washingmachine.dto.WashingMachineDetailsDTO;
+import org.personal.washingmachine.dto.WashingMachineDetailDTO;
 import org.personal.washingmachine.enums.Recommendation;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -19,7 +19,7 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnNONE_When_HiddenSurfacesDamageFalse() {
 			// GIVEN
-			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
 					.applicableHiddenSurfacesDamage(false)
 					.build();
 
@@ -35,7 +35,7 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnRESALE_When_MinorDamageTrue() {
 			// GIVEN
-			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
 					.applicableHiddenSurfacesDamage(true)
 					.hiddenSurfacesHasMinorDamage(true)
 					.build();
@@ -56,7 +56,7 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnNONE_When_HiddenSurfacesHasScratchesIsFalse() {
 			// GIVEN
-			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
 					.hiddenSurfacesHasScratches(false)
 					.build();
 
@@ -73,7 +73,7 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		@ValueSource(doubles = {0.5, 1, 6, 6.5})
 		void should_ReturnRESALE_When_ScratchesAreUnder7cm(double scratchLength) {
 			// GIVEN
-			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
 					.applicableHiddenSurfacesDamage(true)
 					.hiddenSurfacesHasScratches(true)
 					.hiddenSurfacesScratchesLength(scratchLength)
@@ -92,7 +92,7 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		@ValueSource(doubles = {7, 7.5, 10})
 		void should_ReturnOUTLET_When_ScratchesAreEqualOrOver7cm(double scratchLength) {
 			// GIVEN
-			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
 					.applicableHiddenSurfacesDamage(true)
 					.hiddenSurfacesHasScratches(true)
 					.hiddenSurfacesScratchesLength(scratchLength)
@@ -114,7 +114,7 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnNONE_When_HiddenSurfacesHasDentsIsFalse() {
 			// GIVEN
-			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
 					.hiddenSurfacesHasScratches(false)
 					.build();
 
@@ -131,7 +131,7 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		@ValueSource(doubles = {0.5, 1, 6, 6.5})
 		void should_ReturnRESALE_When_DentsAreUnder7cm(double dentValue) {
 			// GIVEN
-			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
 					.applicableHiddenSurfacesDamage(true)
 					.hiddenSurfacesHasDents(true)
 					.hiddenSurfacesDentsDepth(dentValue)
@@ -150,7 +150,7 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		@ValueSource(doubles = {7, 7.5, 10})
 		void should_ReturnOUTLET_When_DentsAreEqualOrOver7cm(double dentValue) {
 			// GIVEN
-			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
 					.applicableHiddenSurfacesDamage(true)
 					.hiddenSurfacesHasDents(true)
 					.hiddenSurfacesDentsDepth(dentValue)
@@ -172,7 +172,7 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnRESALE_When_HiddenSurfacesHasMinorDamageIsTrue() {
 			// GIVEN
-			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
 					.hiddenSurfacesHasMinorDamage(true)
 					.build();
 
@@ -188,7 +188,7 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnNONE_When_HiddenSurfacesHasMinorDamageIsFalse() {
 			// GIVEN
-			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
 					.hiddenSurfacesHasMinorDamage(false)
 					.build();
 
@@ -208,7 +208,7 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnOUTLET_When_HiddenSurfacesHasMajorDamageIsTrue() {
 			// GIVEN
-			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
 					.hiddenSurfacesHasMajorDamage(true)
 					.build();
 
@@ -224,7 +224,7 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnNONE_When_HiddenSurfacesHasMajorDamageIsFalse() {
 			// GIVEN
-			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
 					.hiddenSurfacesHasMajorDamage(false)
 					.build();
 

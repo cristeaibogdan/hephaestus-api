@@ -22,6 +22,6 @@ public record WashingMachineDTO(
         Recommendation recommendation,
         LocalDateTime createdAt,
 
-        WashingMachineDetailsDTO washingMachineDetailsDTO
+        WashingMachineDetailDTO washingMachineDetailDTO
 ) {
 }

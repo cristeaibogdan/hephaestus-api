@@ -3,7 +3,7 @@ package org.personal.washingmachine.service;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.personal.shared.exception.CustomException;
-import org.personal.washingmachine.dto.WashingMachineDetailsDTO;
+import org.personal.washingmachine.dto.WashingMachineDetailDTO;
 import org.personal.washingmachine.enums.Recommendation;
 import org.personal.washingmachine.service.calculators.HiddenSurfacesRecommendationCalculator;
 import org.personal.washingmachine.service.calculators.PackageRecommendationCalculator;
@@ -29,7 +29,7 @@ class WashingMachineDamageCalculatorTest {
 		@Test
 		void should_ReturnREPACKAGE_When_PackageMaterialAvailableIsTrue() {
 			// GIVEN
-			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
 					.applicablePackageDamage(true)
 					.packageMaterialAvailable(true)
 					.build();
@@ -47,7 +47,7 @@ class WashingMachineDamageCalculatorTest {
 		@Test
 		void should_ThrowCustomException_When_DtoHasNoApplicableDamage() {
 			// GIVEN
-			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
 					.applicablePackageDamage(false)
 					.applicableHiddenSurfacesDamage(false)
 					.applicableVisibleSurfacesDamage(false)

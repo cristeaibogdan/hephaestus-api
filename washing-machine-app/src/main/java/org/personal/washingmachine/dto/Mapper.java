@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.personal.washingmachine.entity.User;
 import org.personal.washingmachine.entity.WashingMachine;
-import org.personal.washingmachine.entity.WashingMachineDetails;
+import org.personal.washingmachine.entity.WashingMachineDetail;
 import org.personal.washingmachine.entity.WashingMachineImage;
 import org.personal.washingmachine.entity.embedded.HiddenSurfaceDamage;
 import org.personal.washingmachine.entity.embedded.PackageDamage;
@@ -54,8 +54,8 @@ public class Mapper {
 
 	public static class WashingMachineDetailsMapper {
 
-		public static WashingMachineDetailsDTO toDTO(WashingMachineDetails entity) {
-			return new WashingMachineDetailsDTO(
+		public static WashingMachineDetailDTO toDTO(WashingMachineDetail entity) {
+			return new WashingMachineDetailDTO(
 					entity.getPackageDamage().isApplicablePackageDamage(),
 					entity.getPackageDamage().isPackageDamaged(),
 					entity.getPackageDamage().isPackageDirty(),
@@ -86,8 +86,8 @@ public class Mapper {
 			);
 		}
 
-		public static WashingMachineDetails toEntity(WashingMachineDetailsDTO dto) {
-			return new WashingMachineDetails(
+		public static WashingMachineDetail toEntity(WashingMachineDetailDTO dto) {
+			return new WashingMachineDetail(
 					new PackageDamage(
 							dto.applicablePackageDamage(),
 							dto.packageDamaged(),
@@ -144,11 +144,11 @@ public class Mapper {
 
 		public static WashingMachineExpandedDTO toExpandedDTO(WashingMachine entity) {
 
-			WashingMachineDetailsDTO washingMachineDetailsDTO = WashingMachineDetailsMapper.toDTO(entity.getWashingMachineDetails());
+			WashingMachineDetailDTO washingMachineDetailDTO = WashingMachineDetailsMapper.toDTO(entity.getWashingMachineDetail());
 			List<WashingMachineImageDTO> washingMachineImageDTOs = WashingMachineImageMapper.toDTO(entity.getWashingMachineImages());
 
 			return new WashingMachineExpandedDTO(
-					washingMachineDetailsDTO,
+					washingMachineDetailDTO,
 					washingMachineImageDTOs
 			);
 		}
@@ -164,7 +164,7 @@ public class Mapper {
 					dto.model(),
 					dto.type(),
 					dto.recommendation(),
-					WashingMachineDetailsMapper.toEntity(dto.washingMachineDetailsDTO())
+					WashingMachineDetailsMapper.toEntity(dto.washingMachineDetailDTO())
 			);
 		}
 	}

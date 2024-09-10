@@ -20,8 +20,8 @@ import static lombok.AccessLevel.PROTECTED;
 @NoArgsConstructor(access = PROTECTED)
 @AllArgsConstructor
 @Entity
-@Table(schema = "public", name = "washing_machine_details")
-public class WashingMachineDetails extends BaseEntity {
+@Table(schema = "public", name = "washing_machine_detail")
+public class WashingMachineDetail extends BaseEntity {
 
     @Embedded
     private PackageDamage packageDamage;

@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.personal.washingmachine.dto.WashingMachineDetailsDTO;
+import org.personal.washingmachine.dto.WashingMachineDetailDTO;
 import org.personal.washingmachine.enums.Recommendation;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -20,7 +20,7 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnNONE_When_ApplicableVisibleSurfacesDamageFalse() {
 			// GIVEN
-			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
 					.applicableVisibleSurfacesDamage(false)
 					.build();
 
@@ -36,7 +36,7 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnRESALE_When_MajorDamageTrue() {
 			// GIVEN
-			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
 					.applicableVisibleSurfacesDamage(true)
 					.visibleSurfacesHasMajorDamage(true)
 					.build();
@@ -57,7 +57,7 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnNONE_When_VisibleSurfacesHasScratchesIsFalse() {
 			// GIVEN
-			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
 					.visibleSurfacesHasScratches(false)
 					.build();
 
@@ -74,7 +74,7 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		@ValueSource(doubles = {0.5, 1, 4, 4.5})
 		void should_ReturnRESALE_When_ScratchesAreUnder5cm(double scratchValue) {
 			// GIVEN
-			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
 					.applicableVisibleSurfacesDamage(true)
 					.visibleSurfacesHasScratches(true)
 					.visibleSurfacesScratchesLength(scratchValue)
@@ -93,7 +93,7 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		@ValueSource(doubles = {5, 5.5, 10})
 		void should_ReturnOUTLET_When_ScratchesAreEqualOrOver5cm(double scratchValue) {
 			// GIVEN
-			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
 					.applicableVisibleSurfacesDamage(true)
 					.visibleSurfacesHasScratches(true)
 					.visibleSurfacesScratchesLength(scratchValue)
@@ -115,7 +115,7 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnNONE_When_VisibleSurfacesHasDentsIsFalse() {
 			// GIVEN
-			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
 					.visibleSurfacesHasDents(false)
 					.build();
 
@@ -132,7 +132,7 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		@ValueSource(doubles = {0.5, 1, 4, 4.5})
 		void should_ReturnRESALE_When_DentsAreUnder5cm(double dentDepth) {
 			// GIVEN
-			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
 					.applicableVisibleSurfacesDamage(true)
 					.visibleSurfacesHasDents(true)
 					.visibleSurfacesDentsDepth(dentDepth)
@@ -151,7 +151,7 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		@ValueSource(doubles = {5, 5.5, 10})
 		void should_ReturnOUTLET_When_DentsAreEqualOrOver5cm(double dentDepth) {
 			// GIVEN
-			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
 					.applicableVisibleSurfacesDamage(true)
 					.visibleSurfacesHasDents(true)
 					.visibleSurfacesDentsDepth(dentDepth)
@@ -173,7 +173,7 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnRESALE_When_VisibleSurfacesHasMinorDamageIsTrue() {
 			// GIVEN
-			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
 					.visibleSurfacesHasMinorDamage(true)
 					.build();
 
@@ -189,7 +189,7 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnNONE_When_VisibleSurfacesHasMinorDamageIsFalse() {
 			// GIVEN
-			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
 					.visibleSurfacesHasMinorDamage(false)
 					.build();
 
@@ -209,7 +209,7 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnOUTLET_When_VisibleSurfacesHasMajorDamageIsTrue() {
 			// GIVEN
-			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
 					.visibleSurfacesHasMajorDamage(true)
 					.build();
 
@@ -225,7 +225,7 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnNONE_When_VisibleSurfacesHasMajorDamageIsFalse() {
 			// GIVEN
-			WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
 					.visibleSurfacesHasMajorDamage(false)
 					.build();
 

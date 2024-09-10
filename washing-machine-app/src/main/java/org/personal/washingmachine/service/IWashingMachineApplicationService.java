@@ -23,7 +23,7 @@ public interface IWashingMachineApplicationService {
 			  @RequestPart List<MultipartFile> imageFiles);
 
 	@PostMapping("/recommendation")
-	Recommendation getRecommendation(@RequestBody WashingMachineDetailsDTO washingMachineDetailsDTO);
+	Recommendation getRecommendation(@RequestBody WashingMachineDetailDTO washingMachineDetailDTO);
 
 	@GetMapping(value = "/{serialNumber}/report")
 	WashingMachineReportDTO getReport(@PathVariable String serialNumber);

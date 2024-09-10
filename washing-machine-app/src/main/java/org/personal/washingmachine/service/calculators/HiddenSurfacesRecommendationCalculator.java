@@ -1,6 +1,6 @@
 package org.personal.washingmachine.service.calculators;
 
-import org.personal.washingmachine.dto.WashingMachineDetailsDTO;
+import org.personal.washingmachine.dto.WashingMachineDetailDTO;
 import org.personal.washingmachine.enums.Recommendation;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +15,7 @@ public class HiddenSurfacesRecommendationCalculator implements ICalculator {
 	private static final int HIDDEN_SURFACES_THRESHOLD = 7;
 
 	@Override
-	public Recommendation calculate(WashingMachineDetailsDTO dto) {
+	public Recommendation calculate(WashingMachineDetailDTO dto) {
 		if (!dto.applicableHiddenSurfacesDamage()) {
 			return NONE;
 		}
@@ -33,7 +33,7 @@ public class HiddenSurfacesRecommendationCalculator implements ICalculator {
 		));
 	}
 
-	Recommendation calculateForScratches(WashingMachineDetailsDTO dto) {
+	Recommendation calculateForScratches(WashingMachineDetailDTO dto) {
 		if (!dto.hiddenSurfacesHasScratches()) {
 			return NONE;
 		}
@@ -43,7 +43,7 @@ public class HiddenSurfacesRecommendationCalculator implements ICalculator {
 				: OUTLET;
 	}
 
-	Recommendation calculateForDents(WashingMachineDetailsDTO dto) {
+	Recommendation calculateForDents(WashingMachineDetailDTO dto) {
 		if (!dto.hiddenSurfacesHasDents()) {
 			return NONE;
 		}
@@ -53,13 +53,13 @@ public class HiddenSurfacesRecommendationCalculator implements ICalculator {
 				: OUTLET;
 	}
 
-	Recommendation calculateForMinorDamage(WashingMachineDetailsDTO dto) {
+	Recommendation calculateForMinorDamage(WashingMachineDetailDTO dto) {
 		return dto.hiddenSurfacesHasMinorDamage()
 				? RESALE
 				: NONE;
 	}
 
-	Recommendation calculateForMajorDamage(WashingMachineDetailsDTO dto) {
+	Recommendation calculateForMajorDamage(WashingMachineDetailDTO dto) {
 		return dto.hiddenSurfacesHasMajorDamage()
 				? OUTLET
 				: NONE;

@@ -1,7 +1,7 @@
 package org.personal.washingmachine.service.calculators;
 
 import org.junit.jupiter.api.Test;
-import org.personal.washingmachine.dto.WashingMachineDetailsDTO;
+import org.personal.washingmachine.dto.WashingMachineDetailDTO;
 import org.personal.washingmachine.enums.Recommendation;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -14,7 +14,7 @@ class PricingRecommendationCalculatorTest {
 	@Test
 	void should_ReturnNONE_When_PriceIsNull() {
 		// GIVEN
-		WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+		WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
 				.price(null)
 				.build();
 
@@ -30,7 +30,7 @@ class PricingRecommendationCalculatorTest {
 	@Test
 	void should_ReturnNONE_When_RepairPriceIsNull() {
 		// GIVEN
-		WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+		WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
 				.repairPrice(null)
 				.build();
 
@@ -46,7 +46,7 @@ class PricingRecommendationCalculatorTest {
 	@Test
 	void should_ReturnNONE_When_PriceIsNegative() {
 		// GIVEN
-		WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+		WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
 				.price(-1)
 				.repairPrice(0)
 				.build();
@@ -63,7 +63,7 @@ class PricingRecommendationCalculatorTest {
 	@Test
 	void should_ReturnNONE_When_RepairPriceIsNegative() {
 		// GIVEN
-		WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+		WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
 				.price(0)
 				.repairPrice(-1)
 				.build();
@@ -80,7 +80,7 @@ class PricingRecommendationCalculatorTest {
 	@Test
 	void should_ReturnDISASSEMBLE_When_RepairPriceExceedsHalfOfPrice() {
 		// GIVEN
-		WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+		WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
 				.repairPrice(100)
 				.price(50)
 				.build();
@@ -97,7 +97,7 @@ class PricingRecommendationCalculatorTest {
 	@Test
 	void should_ReturnREPAIR_When_RepairPriceIsBelowHalfOfPrice() {
 		// GIVEN
-		WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+		WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
 				.repairPrice(40)
 				.price(100)
 				.build();

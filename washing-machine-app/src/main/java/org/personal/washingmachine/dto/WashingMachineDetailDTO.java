@@ -3,7 +3,7 @@ package org.personal.washingmachine.dto;
 import lombok.Builder;
 
 @Builder
-public record WashingMachineDetailsDTO(
+public record WashingMachineDetailDTO(
         // PACKAGE
         boolean applicablePackageDamage,
 

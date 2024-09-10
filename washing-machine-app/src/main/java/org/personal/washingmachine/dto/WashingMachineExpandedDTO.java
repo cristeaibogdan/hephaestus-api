@@ -3,6 +3,6 @@ package org.personal.washingmachine.dto;
 import java.util.List;
 
 public record WashingMachineExpandedDTO(
-        WashingMachineDetailsDTO washingMachineDetails,
+        WashingMachineDetailDTO washingMachineDetails,
         List<WashingMachineImageDTO> washingMachineImages
 ) {}

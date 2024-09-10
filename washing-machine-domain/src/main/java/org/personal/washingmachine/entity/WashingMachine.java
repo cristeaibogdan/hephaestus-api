@@ -64,9 +64,9 @@ public class WashingMachine extends BaseEntity {
     private LocalDateTime createdAt;
 
 
-    @JoinColumn(name = "washing_machine_details_id")
+    @JoinColumn(name = "washing_machine_detail_id")
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private WashingMachineDetails washingMachineDetails;
+    private WashingMachineDetail washingMachineDetail;
 
     // TODO: Consider adding nonNull argument in constructor argument.
     @Setter(NONE) @Getter(NONE)
@@ -74,7 +74,7 @@ public class WashingMachine extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<WashingMachineImage> washingMachineImages = new ArrayList<>();
 
-    public WashingMachine(String category, String manufacturer, DamageType damageType, ReturnType returnType, IdentificationMode identificationMode, String serialNumber, String model, String type, Recommendation recommendation, WashingMachineDetails washingMachineDetails) {
+    public WashingMachine(String category, String manufacturer, DamageType damageType, ReturnType returnType, IdentificationMode identificationMode, String serialNumber, String model, String type, Recommendation recommendation, WashingMachineDetail washingMachineDetail) {
         this.category = category;
         this.manufacturer = manufacturer;
         this.damageType = damageType;
@@ -84,12 +84,12 @@ public class WashingMachine extends BaseEntity {
         this.model = model;
         this.type = type;
         this.recommendation = recommendation;
-        this.washingMachineDetails = washingMachineDetails;
+        this.washingMachineDetail = washingMachineDetail;
     }
 
     // TODO: Should return a copy
-    public WashingMachineDetails getWashingMachineDetails() {
-        return washingMachineDetails;
+    public WashingMachineDetail getWashingMachineDetail() {
+        return washingMachineDetail;
     }
 
     public ImmutableList<WashingMachineImage> getWashingMachineImages() {

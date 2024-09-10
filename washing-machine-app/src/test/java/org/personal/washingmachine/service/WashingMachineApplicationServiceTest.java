@@ -5,15 +5,14 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.mockito.ArgumentMatchers;
 import org.personal.shared.clients.ProductClient;
 import org.personal.washingmachine.WashingMachineTestData;
 import org.personal.washingmachine.dto.PageRequestDTO;
-import org.personal.washingmachine.dto.WashingMachineDetailsDTO;
+import org.personal.washingmachine.dto.WashingMachineDetailDTO;
 import org.personal.washingmachine.dto.WashingMachineReportDTO;
 import org.personal.washingmachine.dto.WashingMachineSimpleDTO;
 import org.personal.washingmachine.entity.WashingMachine;
-import org.personal.washingmachine.entity.WashingMachineDetails;
+import org.personal.washingmachine.entity.WashingMachineDetail;
 import org.personal.washingmachine.entity.embedded.HiddenSurfaceDamage;
 import org.personal.washingmachine.entity.embedded.PackageDamage;
 import org.personal.washingmachine.entity.embedded.VisibleSurfaceDamage;
@@ -22,22 +21,14 @@ import org.personal.washingmachine.enums.IdentificationMode;
 import org.personal.washingmachine.enums.Recommendation;
 import org.personal.washingmachine.enums.ReturnType;
 import org.personal.washingmachine.repository.WashingMachineRepository;
-import org.personal.washingmachine.service.WashingMachineApplicationService;
 import org.personal.washingmachine.service.calculators.HiddenSurfacesRecommendationCalculator;
 import org.personal.washingmachine.service.calculators.PackageRecommendationCalculator;
 import org.personal.washingmachine.service.calculators.PricingRecommendationCalculator;
 import org.personal.washingmachine.service.calculators.VisibleSurfacesRecommendationCalculator;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,11 +36,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
-import static org.personal.washingmachine.entity.QWashingMachine.washingMachine;
 import static org.personal.washingmachine.enums.Recommendation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class WashingMachineApplicationServiceTest {
     WashingMachineRepository washingMachineRepositoryMock = mock(WashingMachineRepository.class);
@@ -117,7 +105,7 @@ class WashingMachineApplicationServiceTest {
         @Test
         void should_ReturnRESALE_When_PackageDirtyTrue() {
             // GIVEN
-            WashingMachineDetailsDTO dto = WashingMachineDetailsDTO.builder()
+            WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
                     .applicablePackageDamage(true)
                     .packageDirty(true)
                     .build();
@@ -140,7 +128,7 @@ class WashingMachineApplicationServiceTest {
             // GIVEN
             String serialNumber = "ABC-987";
 
-            WashingMachineDetails washingMachineDetails = new WashingMachineDetails(
+            WashingMachineDetail washingMachineDetail = new WashingMachineDetail(
                     new PackageDamage(true, true, true, true),
                     new VisibleSurfaceDamage(
                             true,
@@ -178,7 +166,7 @@ class WashingMachineApplicationServiceTest {
                     "modelOne",
                     "typeOne",
                     Recommendation.RESALE,
-                    washingMachineDetails
+                    washingMachineDetail
             );
 
             // washingMachine.addImage(); TODO: How to create images?
