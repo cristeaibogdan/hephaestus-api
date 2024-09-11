@@ -4,6 +4,10 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.personal.shared.exception.CustomException;
 import org.personal.washingmachine.dto.WashingMachineDetailDTO;
+import org.personal.washingmachine.entity.WashingMachineDetail;
+import org.personal.washingmachine.entity.embedded.HiddenSurfaceDamage;
+import org.personal.washingmachine.entity.embedded.PackageDamage;
+import org.personal.washingmachine.entity.embedded.VisibleSurfaceDamage;
 import org.personal.washingmachine.enums.Recommendation;
 import org.personal.washingmachine.service.calculators.HiddenSurfacesRecommendationCalculator;
 import org.personal.washingmachine.service.calculators.PackageRecommendationCalculator;
@@ -29,15 +33,36 @@ class WashingMachineDamageCalculatorTest {
 		@Test
 		void should_ReturnREPACKAGE_When_PackageMaterialAvailableIsTrue() {
 			// GIVEN
-			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
-					.applicablePackageDamage(true)
-					.packageMaterialAvailable(true)
-					.build();
+			WashingMachineDetail washingMachineDetail = new WashingMachineDetail(
+				new PackageDamage(false, false, true),
+					new VisibleSurfaceDamage(
+							false,
+							0,
+							false,
+							0,
+							false,
+							"",
+							false,
+							""
+					),
+					new HiddenSurfaceDamage(
+							false,
+							0,
+							false,
+							0,
+							false,
+							"",
+							false,
+							""
+					),
+				0,
+				0
+			);
 
 			Recommendation expected = REPACKAGE;
 
 			// WHEN
-			Recommendation actual = underTest.getRecommendation(dto);
+			Recommendation actual = underTest.getRecommendation(washingMachineDetail);
 
 			// WHEN & THEN
 			assertThat(actual)
@@ -47,14 +72,34 @@ class WashingMachineDamageCalculatorTest {
 		@Test
 		void should_ThrowCustomException_When_DtoHasNoApplicableDamage() {
 			// GIVEN
-			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
-					.applicablePackageDamage(false)
-					.applicableHiddenSurfacesDamage(false)
-					.applicableVisibleSurfacesDamage(false)
-					.build();
+			WashingMachineDetail washingMachineDetail = new WashingMachineDetail(
+					new PackageDamage(false, false, false),
+					new VisibleSurfaceDamage(
+							false,
+							0,
+							false,
+							0,
+							false,
+							"",
+							false,
+							""
+					),
+					new HiddenSurfaceDamage(
+							false,
+							0,
+							false,
+							0,
+							false,
+							"",
+							false,
+							""
+					),
+					0,
+					0
+			);
 
 			// WHEN & THEN
-			assertThatThrownBy(() -> underTest.getRecommendation(dto))
+			assertThatThrownBy(() -> underTest.getRecommendation(washingMachineDetail))
 					.isInstanceOf(CustomException.class);
 		}
 	}

@@ -1,6 +1,6 @@
 package org.personal.washingmachine.service.calculators;
 
-import org.personal.washingmachine.dto.WashingMachineDetailDTO;
+import org.personal.washingmachine.entity.embedded.VisibleSurfaceDamage;
 import org.personal.washingmachine.enums.Recommendation;
 import org.springframework.stereotype.Component;
 
@@ -10,20 +10,19 @@ import java.util.Collections;
 import static org.personal.washingmachine.enums.Recommendation.*;
 
 @Component
-public class VisibleSurfacesRecommendationCalculator implements ICalculator {
+public class VisibleSurfacesRecommendationCalculator {
 
 	private static final int VISIBLE_SURFACES_THRESHOLD = 5;
 
-	@Override
-	public Recommendation calculate(WashingMachineDetailDTO dto) {
-		if (!dto.applicableVisibleSurfacesDamage()) {
+	public Recommendation calculate(VisibleSurfaceDamage detail) {
+		if (!detail.isApplicable()) {
 			return NONE;
 		}
 
-		Recommendation recommendationForScratches = calculateForScratches(dto);
-		Recommendation recommendationForDents = calculateForDents(dto);
-		Recommendation recommendationForMinorDamage = calculateForMinorDamage(dto);
-		Recommendation recommendationForMajorDamage = calculateForMajorDamage(dto);
+		Recommendation recommendationForScratches = calculateForScratches(detail);
+		Recommendation recommendationForDents = calculateForDents(detail);
+		Recommendation recommendationForMinorDamage = calculateForMinorDamage(detail);
+		Recommendation recommendationForMajorDamage = calculateForMajorDamage(detail);
 
 		return Collections.max(Arrays.asList(
 				recommendationForScratches,
@@ -33,34 +32,34 @@ public class VisibleSurfacesRecommendationCalculator implements ICalculator {
 		));
 	}
 
-	Recommendation calculateForScratches(WashingMachineDetailDTO dto) {
-		if (!dto.visibleSurfacesHasScratches()) {
+	Recommendation calculateForScratches(VisibleSurfaceDamage detail) {
+		if (!detail.isVisibleSurfacesHasScratches()) {
 			return NONE;
 		}
 
-		return (dto.visibleSurfacesScratchesLength() < VISIBLE_SURFACES_THRESHOLD)
+		return (detail.getVisibleSurfacesScratchesLength() < VISIBLE_SURFACES_THRESHOLD)
 				? RESALE
 				: OUTLET;
 	}
 
-	Recommendation calculateForDents(WashingMachineDetailDTO dto) {
-		if (!dto.visibleSurfacesHasDents()) {
+	Recommendation calculateForDents(VisibleSurfaceDamage detail) {
+		if (!detail.isVisibleSurfacesHasDents()) {
 			return NONE;
 		}
 
-		return (dto.visibleSurfacesDentsDepth() < VISIBLE_SURFACES_THRESHOLD)
+		return (detail.getVisibleSurfacesDentsDepth() < VISIBLE_SURFACES_THRESHOLD)
 				? RESALE
 				: OUTLET;
 	}
 
-	Recommendation calculateForMinorDamage(WashingMachineDetailDTO dto) {
-		return dto.visibleSurfacesHasMinorDamage()
+	Recommendation calculateForMinorDamage(VisibleSurfaceDamage detail) {
+		return detail.isVisibleSurfacesHasMinorDamage()
 				? RESALE
 				: NONE;
 	}
 
-	Recommendation calculateForMajorDamage(WashingMachineDetailDTO dto) {
-		return (dto.visibleSurfacesHasMajorDamage())
+	Recommendation calculateForMajorDamage(VisibleSurfaceDamage detail) {
+		return (detail.isVisibleSurfacesHasMajorDamage())
 				? OUTLET
 				: NONE;
 	}

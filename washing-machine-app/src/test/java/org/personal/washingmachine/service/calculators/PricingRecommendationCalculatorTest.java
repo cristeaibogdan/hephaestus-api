@@ -1,7 +1,6 @@
 package org.personal.washingmachine.service.calculators;
 
 import org.junit.jupiter.api.Test;
-import org.personal.washingmachine.dto.WashingMachineDetailDTO;
 import org.personal.washingmachine.enums.Recommendation;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -12,83 +11,45 @@ class PricingRecommendationCalculatorTest {
 	private final PricingRecommendationCalculator underTest = new PricingRecommendationCalculator();
 
 	@Test
-	void should_ReturnNONE_When_PriceIsNull() {
+	void should_ReturnNONE_When_OneOfThePricesIsNull() {
 		// GIVEN
-		WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
-				.price(null)
-				.build();
+		Integer price = null;
+		Integer repairPrice = null;
 
 		Recommendation expected = NONE;
 
 		// WHEN
-		Recommendation actual = underTest.calculate(dto);
+		Recommendation actual = underTest.calculate(price, repairPrice);
 
 		// THEN
 		assertThat(actual).isEqualTo(expected);
 	}
 
 	@Test
-	void should_ReturnNONE_When_RepairPriceIsNull() {
+	void should_ReturnNONE_When_OneOfThePricesIsNegative() {
 		// GIVEN
-		WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
-				.repairPrice(null)
-				.build();
+		Integer price = -1;
+		Integer repairPrice = -1;
 
 		Recommendation expected = NONE;
 
 		// WHEN
-		Recommendation actual = underTest.calculate(dto);
+		Recommendation actual = underTest.calculate(price, repairPrice);
 
 		// THEN
 		assertThat(actual).isEqualTo(expected);
 	}
 
 	@Test
-	void should_ReturnNONE_When_PriceIsNegative() {
+	void should_ReturnDISASSEMBLE_When_RepairPriceIsEqualOrExceedsHalfOfPrice() {
 		// GIVEN
-		WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
-				.price(-1)
-				.repairPrice(0)
-				.build();
-
-		Recommendation expected = NONE;
-
-		// WHEN
-		Recommendation actual = underTest.calculate(dto);
-
-		// THEN
-		assertThat(actual).isEqualTo(expected);
-	}
-
-	@Test
-	void should_ReturnNONE_When_RepairPriceIsNegative() {
-		// GIVEN
-		WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
-				.price(0)
-				.repairPrice(-1)
-				.build();
-
-		Recommendation expected = NONE;
-
-		// WHEN
-		Recommendation actual = underTest.calculate(dto);
-
-		// THEN
-		assertThat(actual).isEqualTo(expected);
-	}
-
-	@Test
-	void should_ReturnDISASSEMBLE_When_RepairPriceExceedsHalfOfPrice() {
-		// GIVEN
-		WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
-				.repairPrice(100)
-				.price(50)
-				.build();
+		Integer price = 50;
+		Integer repairPrice = 100;
 
 		Recommendation expected = DISASSEMBLE;
 
 		// WHEN
-		Recommendation actual = underTest.calculate(dto);
+		Recommendation actual = underTest.calculate(price, repairPrice);
 
 		// THEN
 		assertThat(actual).isEqualTo(expected);
@@ -97,15 +58,13 @@ class PricingRecommendationCalculatorTest {
 	@Test
 	void should_ReturnREPAIR_When_RepairPriceIsBelowHalfOfPrice() {
 		// GIVEN
-		WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
-				.repairPrice(40)
-				.price(100)
-				.build();
+		Integer price = 100;
+		Integer repairPrice = 40;
 
 		Recommendation expected = REPAIR;
 
 		// WHEN
-		Recommendation actual = underTest.calculate(dto);
+		Recommendation actual = underTest.calculate(price, repairPrice);
 
 		// THEN
 		assertThat(actual).isEqualTo(expected);

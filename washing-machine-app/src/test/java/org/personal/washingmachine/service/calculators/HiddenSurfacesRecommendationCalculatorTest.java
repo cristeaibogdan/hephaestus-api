@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.personal.washingmachine.dto.WashingMachineDetailDTO;
+import org.personal.washingmachine.entity.embedded.HiddenSurfaceDamage;
 import org.personal.washingmachine.enums.Recommendation;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -17,16 +18,23 @@ class HiddenSurfacesRecommendationCalculatorTest {
 	class testCalculate {
 
 		@Test
-		void should_ReturnNONE_When_HiddenSurfacesDamageFalse() {
+		void should_ReturnNONE_When_AllValuesAreFalse() {
 			// GIVEN
-			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
-					.applicableHiddenSurfacesDamage(false)
-					.build();
+			HiddenSurfaceDamage hiddenSurfaceDamage = new HiddenSurfaceDamage(
+					false,
+					0,
+					false,
+					0,
+					false,
+					"",
+					false,
+					""
+			);
 
 			Recommendation expected = NONE;
 
 			// WHEN
-			Recommendation actual = underTest.calculate(dto);
+			Recommendation actual = underTest.calculate(hiddenSurfaceDamage);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -35,15 +43,21 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnRESALE_When_MinorDamageTrue() {
 			// GIVEN
-			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
-					.applicableHiddenSurfacesDamage(true)
-					.hiddenSurfacesHasMinorDamage(true)
-					.build();
+			HiddenSurfaceDamage hiddenSurfaceDamage = new HiddenSurfaceDamage(
+					false,
+					0,
+					false,
+					0,
+					true,
+					"testing property",
+					false,
+					""
+			);
 
 			Recommendation expected = RESALE;
 
 			// WHEN
-			Recommendation actual = underTest.calculate(dto);
+			Recommendation actual = underTest.calculate(hiddenSurfaceDamage);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -56,14 +70,21 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnNONE_When_HiddenSurfacesHasScratchesIsFalse() {
 			// GIVEN
-			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
-					.hiddenSurfacesHasScratches(false)
-					.build();
+			HiddenSurfaceDamage hiddenSurfaceDamage = new HiddenSurfaceDamage(
+					false,
+					0,
+					false,
+					0,
+					false,
+					"",
+					false,
+					""
+			);
 
 			Recommendation expected = NONE;
 
 			// WHEN
-			Recommendation actual = underTest.calculateForScratches(dto);
+			Recommendation actual = underTest.calculateForScratches(hiddenSurfaceDamage);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -73,16 +94,21 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		@ValueSource(doubles = {0.5, 1, 6, 6.5})
 		void should_ReturnRESALE_When_ScratchesAreUnder7cm(double scratchLength) {
 			// GIVEN
-			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
-					.applicableHiddenSurfacesDamage(true)
-					.hiddenSurfacesHasScratches(true)
-					.hiddenSurfacesScratchesLength(scratchLength)
-					.build();
+			HiddenSurfaceDamage hiddenSurfaceDamage = new HiddenSurfaceDamage(
+					true,
+					scratchLength,
+					false,
+					0,
+					false,
+					"",
+					false,
+					""
+			);
 
 			Recommendation expected = RESALE;
 
 			// WHEN
-			Recommendation actual = underTest.calculateForScratches(dto);
+			Recommendation actual = underTest.calculateForScratches(hiddenSurfaceDamage);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -92,16 +118,21 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		@ValueSource(doubles = {7, 7.5, 10})
 		void should_ReturnOUTLET_When_ScratchesAreEqualOrOver7cm(double scratchLength) {
 			// GIVEN
-			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
-					.applicableHiddenSurfacesDamage(true)
-					.hiddenSurfacesHasScratches(true)
-					.hiddenSurfacesScratchesLength(scratchLength)
-					.build();
+			HiddenSurfaceDamage hiddenSurfaceDamage = new HiddenSurfaceDamage(
+					true,
+					scratchLength,
+					false,
+					0,
+					false,
+					"",
+					false,
+					""
+			);
 
 			Recommendation expected = OUTLET;
 
 			// WHEN
-			Recommendation actual = underTest.calculateForScratches(dto);
+			Recommendation actual = underTest.calculateForScratches(hiddenSurfaceDamage);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -114,14 +145,21 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnNONE_When_HiddenSurfacesHasDentsIsFalse() {
 			// GIVEN
-			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
-					.hiddenSurfacesHasScratches(false)
-					.build();
+			HiddenSurfaceDamage hiddenSurfaceDamage = new HiddenSurfaceDamage(
+					false,
+					0,
+					false,
+					0,
+					false,
+					"",
+					false,
+					""
+			);
 
 			Recommendation expected = NONE;
 
 			// WHEN
-			Recommendation actual = underTest.calculateForDents(dto);
+			Recommendation actual = underTest.calculateForDents(hiddenSurfaceDamage);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -131,16 +169,21 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		@ValueSource(doubles = {0.5, 1, 6, 6.5})
 		void should_ReturnRESALE_When_DentsAreUnder7cm(double dentValue) {
 			// GIVEN
-			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
-					.applicableHiddenSurfacesDamage(true)
-					.hiddenSurfacesHasDents(true)
-					.hiddenSurfacesDentsDepth(dentValue)
-					.build();
+			HiddenSurfaceDamage hiddenSurfaceDamage = new HiddenSurfaceDamage(
+					false,
+					0,
+					true,
+					dentValue,
+					false,
+					"",
+					false,
+					""
+			);
 
 			Recommendation expected = RESALE;
 
 			// WHEN
-			Recommendation actual = underTest.calculateForDents(dto);
+			Recommendation actual = underTest.calculateForDents(hiddenSurfaceDamage);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -150,16 +193,21 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		@ValueSource(doubles = {7, 7.5, 10})
 		void should_ReturnOUTLET_When_DentsAreEqualOrOver7cm(double dentValue) {
 			// GIVEN
-			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
-					.applicableHiddenSurfacesDamage(true)
-					.hiddenSurfacesHasDents(true)
-					.hiddenSurfacesDentsDepth(dentValue)
-					.build();
+			HiddenSurfaceDamage hiddenSurfaceDamage = new HiddenSurfaceDamage(
+					false,
+					0,
+					true,
+					dentValue,
+					false,
+					"",
+					false,
+					""
+			);
 
 			Recommendation expected = OUTLET;
 
 			// WHEN
-			Recommendation actual = underTest.calculateForDents(dto);
+			Recommendation actual = underTest.calculateForDents(hiddenSurfaceDamage);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -172,14 +220,21 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnRESALE_When_HiddenSurfacesHasMinorDamageIsTrue() {
 			// GIVEN
-			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
-					.hiddenSurfacesHasMinorDamage(true)
-					.build();
+			HiddenSurfaceDamage hiddenSurfaceDamage = new HiddenSurfaceDamage(
+					false,
+					0,
+					false,
+					0,
+					true,
+					"I'm the tested property",
+					false,
+					""
+			);
 
 			Recommendation expected = RESALE;
 
 			// WHEN
-			Recommendation actual = underTest.calculateForMinorDamage(dto);
+			Recommendation actual = underTest.calculateForMinorDamage(hiddenSurfaceDamage);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -188,14 +243,21 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnNONE_When_HiddenSurfacesHasMinorDamageIsFalse() {
 			// GIVEN
-			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
-					.hiddenSurfacesHasMinorDamage(false)
-					.build();
+			HiddenSurfaceDamage hiddenSurfaceDamage = new HiddenSurfaceDamage(
+					false,
+					0,
+					false,
+					0,
+					false,
+					"",
+					false,
+					""
+			);
 
 			Recommendation expected = NONE;
 
 			// WHEN
-			Recommendation actual = underTest.calculateForMinorDamage(dto);
+			Recommendation actual = underTest.calculateForMinorDamage(hiddenSurfaceDamage);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -208,14 +270,21 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnOUTLET_When_HiddenSurfacesHasMajorDamageIsTrue() {
 			// GIVEN
-			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
-					.hiddenSurfacesHasMajorDamage(true)
-					.build();
+			HiddenSurfaceDamage hiddenSurfaceDamage = new HiddenSurfaceDamage(
+					false,
+					0,
+					false,
+					0,
+					false,
+					"",
+					true,
+					"I'm the tested property"
+			);
 
 			Recommendation expected = OUTLET;
 
 			// WHEN
-			Recommendation actual = underTest.calculateForMajorDamage(dto);
+			Recommendation actual = underTest.calculateForMajorDamage(hiddenSurfaceDamage);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -224,14 +293,21 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnNONE_When_HiddenSurfacesHasMajorDamageIsFalse() {
 			// GIVEN
-			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
-					.hiddenSurfacesHasMajorDamage(false)
-					.build();
+			HiddenSurfaceDamage hiddenSurfaceDamage = new HiddenSurfaceDamage(
+					false,
+					0,
+					false,
+					0,
+					false,
+					"",
+					false,
+					""
+			);
 
 			Recommendation expected = NONE;
 
 			// WHEN
-			Recommendation actual = underTest.calculateForMajorDamage(dto);
+			Recommendation actual = underTest.calculateForMajorDamage(hiddenSurfaceDamage);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);

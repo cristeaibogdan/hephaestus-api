@@ -7,19 +7,18 @@ import org.springframework.stereotype.Component;
 import static org.personal.washingmachine.enums.Recommendation.*;
 
 @Component
-public class PricingRecommendationCalculator implements ICalculator {
+public class PricingRecommendationCalculator {
 
-	@Override
-	public Recommendation calculate(WashingMachineDetailDTO dto) {
-		if (dto.price() == null || dto.repairPrice() == null) {
+	public Recommendation calculate(Integer price, Integer repairPrice) {
+		if (price == null || repairPrice == null) { // TODO: can be replaced with DTO validation
 			return NONE;
 		}
 
-		if (dto.price() <= 0 || dto.repairPrice() <= 0) {
+		if (price <= 0 || repairPrice <= 0) { // TODO: negative numbers can be validated in DTO
 			return NONE;
 		}
 
-		boolean repairPriceExceedsHalfTheProductPrice = (dto.repairPrice() >= dto.price() * 0.5);
+		boolean repairPriceExceedsHalfTheProductPrice = (repairPrice >= price * 0.5);
 
 		return repairPriceExceedsHalfTheProductPrice
 				? DISASSEMBLE

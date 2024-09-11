@@ -3,7 +3,7 @@ package org.personal.washingmachine.service;
 import lombok.RequiredArgsConstructor;
 import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
-import org.personal.washingmachine.dto.WashingMachineDetailDTO;
+import org.personal.washingmachine.entity.WashingMachineDetail;
 import org.personal.washingmachine.enums.Recommendation;
 import org.personal.washingmachine.service.calculators.HiddenSurfacesRecommendationCalculator;
 import org.personal.washingmachine.service.calculators.PackageRecommendationCalculator;
@@ -19,17 +19,16 @@ import static org.personal.washingmachine.enums.Recommendation.NONE;
 @Service
 @RequiredArgsConstructor
 public class WashingMachineDamageCalculator {
-
 	private final PackageRecommendationCalculator packageRecommendationCalculator;
 	private final VisibleSurfacesRecommendationCalculator visibleSurfacesRecommendationCalculator;
 	private final HiddenSurfacesRecommendationCalculator hiddenSurfacesRecommendationCalculator;
 	private final PricingRecommendationCalculator pricingRecommendationCalculator;
 
-	public Recommendation getRecommendation(WashingMachineDetailDTO dto) {
-		Recommendation recommendationForPackage = packageRecommendationCalculator.calculate(dto);
-		Recommendation recommendationForVisibleSurfaces = visibleSurfacesRecommendationCalculator.calculate(dto);
-		Recommendation recommendationForHiddenSurfaces = hiddenSurfacesRecommendationCalculator.calculate(dto);
-		Recommendation recommendationForPricing = pricingRecommendationCalculator.calculate(dto);
+	public Recommendation getRecommendation(WashingMachineDetail detail) {
+		Recommendation recommendationForPackage = packageRecommendationCalculator.calculate(detail.getPackageDamage());
+		Recommendation recommendationForVisibleSurfaces = visibleSurfacesRecommendationCalculator.calculate(detail.getVisibleSurfaceDamage());
+		Recommendation recommendationForHiddenSurfaces = hiddenSurfacesRecommendationCalculator.calculate(detail.getHiddenSurfaceDamage());
+		Recommendation recommendationForPricing = pricingRecommendationCalculator.calculate(detail.getPrice(), detail.getRepairPrice());
 
 		Recommendation result = Collections.max(Arrays.asList(
 				recommendationForPackage,
