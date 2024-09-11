@@ -43,7 +43,6 @@ class WashingMachineApplicationServiceIntegrationTest extends BaseIntegrationTes
 					new PackageDamage(true, true, true),
 					new VisibleSurfaceDamage(
 							true,
-							true,
 							5.5,
 							false,
 							0,
