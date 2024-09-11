@@ -56,7 +56,7 @@ public class Mapper {
 
 		public static WashingMachineDetailDTO toDTO(WashingMachineDetail entity) {
 			return new WashingMachineDetailDTO(
-					entity.getPackageDamage().isApplicablePackageDamage(),
+					entity.getPackageDamage().isApplicable(),
 					entity.getPackageDamage().isPackageDamaged(),
 					entity.getPackageDamage().isPackageDirty(),
 					entity.getPackageDamage().isPackageMaterialAvailable(),
@@ -89,7 +89,6 @@ public class Mapper {
 		public static WashingMachineDetail toEntity(WashingMachineDetailDTO dto) {
 			return new WashingMachineDetail(
 					new PackageDamage(
-							dto.applicablePackageDamage(),
 							dto.packageDamaged(),
 							dto.packageDirty(),
 							dto.packageMaterialAvailable()

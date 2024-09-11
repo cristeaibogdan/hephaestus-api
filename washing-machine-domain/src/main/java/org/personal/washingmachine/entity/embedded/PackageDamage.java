@@ -12,8 +12,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Embeddable
 public class PackageDamage {
-    @Column(name = "applicable_package_damage")
-    private boolean applicablePackageDamage;
 
     @Column(name = "package_damaged")
     private boolean packageDamaged;
@@ -23,4 +21,10 @@ public class PackageDamage {
 
     @Column(name = "package_material_available")
     private boolean packageMaterialAvailable;
+
+    public boolean isApplicable() {
+        return packageDamaged ||
+                packageDirty ||
+                packageMaterialAvailable;
+    }
 }

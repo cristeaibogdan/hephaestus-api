@@ -103,7 +103,7 @@ public class WashingMachineReportGenerator {
 		// *** Package
 		// ********************************
 
-		parameters.put("applicablePackageDamage", washingMachineDetail.getPackageDamage().isApplicablePackageDamage());
+		parameters.put("applicablePackageDamage", washingMachineDetail.getPackageDamage().isApplicable());
 		parameters.put("packageDamaged", washingMachineDetail.getPackageDamage().isPackageDamaged());
 		parameters.put("packageDirty", washingMachineDetail.getPackageDamage().isPackageDirty());
 		parameters.put("packageMaterialAvailable", washingMachineDetail.getPackageDamage().isPackageMaterialAvailable());

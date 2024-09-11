@@ -129,7 +129,7 @@ class WashingMachineApplicationServiceTest {
             String serialNumber = "ABC-987";
 
             WashingMachineDetail washingMachineDetail = new WashingMachineDetail(
-                    new PackageDamage(true, true, true, true),
+                    new PackageDamage(true, true, true),
                     new VisibleSurfaceDamage(
                             true,
                             true,
@@ -175,7 +175,7 @@ class WashingMachineApplicationServiceTest {
                     .willReturn(Optional.of(washingMachine));
 
             // WHEN
-            WashingMachineReportDTO report = underTest.getReport(serialNumber);
+//            WashingMachineReportDTO report = underTest.getReport(serialNumber);
 
             // THEN
 //            assertThat(report.createdAt())

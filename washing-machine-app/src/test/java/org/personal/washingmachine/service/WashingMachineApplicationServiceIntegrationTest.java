@@ -40,7 +40,7 @@ class WashingMachineApplicationServiceIntegrationTest extends BaseIntegrationTes
 		void should_ReturnWashingMachineExpandedDTO() {
 			// GIVEN
 			WashingMachineDetail washingMachineDetail = new WashingMachineDetail(
-					new PackageDamage(true, true, true, true),
+					new PackageDamage(true, true, true),
 					new VisibleSurfaceDamage(
 							true,
 							true,
