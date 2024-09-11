@@ -71,7 +71,7 @@ public class Mapper {
 					entity.getVisibleSurfaceDamage().isVisibleSurfacesHasMajorDamage(),
 					entity.getVisibleSurfaceDamage().getVisibleSurfacesMajorDamage(),
 
-					entity.getHiddenSurfaceDamage().isApplicableHiddenSurfacesDamage(),
+					entity.getHiddenSurfaceDamage().isApplicable(),
 					entity.getHiddenSurfaceDamage().isHiddenSurfacesHasScratches(),
 					entity.getHiddenSurfaceDamage().getHiddenSurfacesScratchesLength(),
 					entity.getHiddenSurfaceDamage().isHiddenSurfacesHasDents(),
@@ -106,7 +106,6 @@ public class Mapper {
 					),
 
 					new HiddenSurfaceDamage(
-							dto.applicableHiddenSurfacesDamage(),
 							dto.hiddenSurfacesHasScratches(),
 							dto.hiddenSurfacesScratchesLength(),
 							dto.hiddenSurfacesHasDents(),
