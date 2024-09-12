@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.personal.washingmachine.dto.WashingMachineDetailDTO;
 import org.personal.washingmachine.entity.embedded.VisibleSurfaceDamage;
 import org.personal.washingmachine.enums.Recommendation;
 

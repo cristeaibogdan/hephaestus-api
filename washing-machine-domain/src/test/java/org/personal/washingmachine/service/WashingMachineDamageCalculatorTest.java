@@ -3,7 +3,6 @@ package org.personal.washingmachine.service;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.personal.shared.exception.CustomException;
-import org.personal.washingmachine.dto.WashingMachineDetailDTO;
 import org.personal.washingmachine.entity.WashingMachineDetail;
 import org.personal.washingmachine.entity.embedded.HiddenSurfaceDamage;
 import org.personal.washingmachine.entity.embedded.PackageDamage;

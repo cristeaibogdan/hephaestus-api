@@ -1,7 +1,6 @@
 package org.personal.washingmachine.service.calculators;
 
 import org.junit.jupiter.api.Test;
-import org.personal.washingmachine.dto.WashingMachineDetailDTO;
 import org.personal.washingmachine.entity.embedded.PackageDamage;
 import org.personal.washingmachine.enums.Recommendation;
 

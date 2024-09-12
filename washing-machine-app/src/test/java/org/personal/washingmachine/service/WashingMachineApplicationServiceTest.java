@@ -9,7 +9,6 @@ import org.personal.shared.clients.ProductClient;
 import org.personal.washingmachine.WashingMachineTestData;
 import org.personal.washingmachine.dto.PageRequestDTO;
 import org.personal.washingmachine.dto.WashingMachineDetailDTO;
-import org.personal.washingmachine.dto.WashingMachineReportDTO;
 import org.personal.washingmachine.dto.WashingMachineSimpleDTO;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineDetail;
