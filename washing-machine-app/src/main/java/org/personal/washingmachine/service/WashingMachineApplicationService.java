@@ -7,6 +7,7 @@ import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
 import org.personal.washingmachine.dto.*;
 import org.personal.washingmachine.entity.WashingMachine;
+import org.personal.washingmachine.entity.WashingMachineDetail;
 import org.personal.washingmachine.entity.WashingMachineImage;
 import org.personal.washingmachine.enums.Recommendation;
 import org.personal.washingmachine.repository.WashingMachineRepository;
@@ -81,7 +82,8 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 
 	@Override
 	public Recommendation getRecommendation(WashingMachineDetailDTO washingMachineDetailDTO) {
-		return damageCalculator.getRecommendation(washingMachineDetailDTO);
+		WashingMachineDetail detail = Mapper.WashingMachineDetailMapper.toEntity(washingMachineDetailDTO);
+		return damageCalculator.getRecommendation(detail);
 	}
 
 	@Override

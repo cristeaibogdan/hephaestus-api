@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.personal.washingmachine.dto.WashingMachineDetailDTO;
+import org.personal.washingmachine.entity.embedded.VisibleSurfaceDamage;
 import org.personal.washingmachine.enums.Recommendation;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -18,16 +18,23 @@ class VisibleSurfacesRecommendationCalculatorTest {
 	class testCalculate {
 
 		@Test
-		void should_ReturnNONE_When_ApplicableVisibleSurfacesDamageFalse() {
+		void should_ReturnNONE_When_AllValuesAreFalse() {
 			// GIVEN
-			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
-					.applicableVisibleSurfacesDamage(false)
-					.build();
+			VisibleSurfaceDamage visibleSurfaceDamage = new VisibleSurfaceDamage(
+					false,
+					0,
+					false,
+					0,
+					false,
+					"",
+					false,
+					""
+			);
 
 			Recommendation expected = NONE;
 
 			// WHEN
-			Recommendation actual = underTest.calculate(dto);
+			Recommendation actual = underTest.calculate(visibleSurfaceDamage);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -36,15 +43,21 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnRESALE_When_MajorDamageTrue() {
 			// GIVEN
-			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
-					.applicableVisibleSurfacesDamage(true)
-					.visibleSurfacesHasMajorDamage(true)
-					.build();
+			VisibleSurfaceDamage visibleSurfaceDamage = new VisibleSurfaceDamage(
+					false,
+					0,
+					false,
+					0,
+					false,
+					"",
+					true,
+					"I'm the tested property"
+			);
 
 			Recommendation expected = OUTLET;
 
 			// WHEN
-			Recommendation actual = underTest.calculate(dto);
+			Recommendation actual = underTest.calculate(visibleSurfaceDamage);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -57,14 +70,21 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnNONE_When_VisibleSurfacesHasScratchesIsFalse() {
 			// GIVEN
-			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
-					.visibleSurfacesHasScratches(false)
-					.build();
+			VisibleSurfaceDamage visibleSurfaceDamage = new VisibleSurfaceDamage(
+					false,
+					0,
+					false,
+					0,
+					false,
+					"",
+					false,
+					""
+			);
 
 			Recommendation expected = NONE;
 
 			// WHEN
-			Recommendation actual = underTest.calculateForScratches(dto);
+			Recommendation actual = underTest.calculateForScratches(visibleSurfaceDamage);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -74,16 +94,21 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		@ValueSource(doubles = {0.5, 1, 4, 4.5})
 		void should_ReturnRESALE_When_ScratchesAreUnder5cm(double scratchValue) {
 			// GIVEN
-			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
-					.applicableVisibleSurfacesDamage(true)
-					.visibleSurfacesHasScratches(true)
-					.visibleSurfacesScratchesLength(scratchValue)
-					.build();
+			VisibleSurfaceDamage visibleSurfaceDamage = new VisibleSurfaceDamage(
+					true,
+					scratchValue,
+					false,
+					0,
+					false,
+					"",
+					false,
+					""
+			);
 
 			Recommendation expected = RESALE;
 
 			// WHEN
-			Recommendation actual = underTest.calculateForScratches(dto);
+			Recommendation actual = underTest.calculateForScratches(visibleSurfaceDamage);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -93,16 +118,21 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		@ValueSource(doubles = {5, 5.5, 10})
 		void should_ReturnOUTLET_When_ScratchesAreEqualOrOver5cm(double scratchValue) {
 			// GIVEN
-			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
-					.applicableVisibleSurfacesDamage(true)
-					.visibleSurfacesHasScratches(true)
-					.visibleSurfacesScratchesLength(scratchValue)
-					.build();
+			VisibleSurfaceDamage visibleSurfaceDamage = new VisibleSurfaceDamage(
+					true,
+					scratchValue,
+					false,
+					0,
+					false,
+					"",
+					false,
+					""
+			);
 
 			Recommendation expected = OUTLET;
 
 			// WHEN
-			Recommendation actual = underTest.calculateForScratches(dto);
+			Recommendation actual = underTest.calculateForScratches(visibleSurfaceDamage);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -115,14 +145,21 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnNONE_When_VisibleSurfacesHasDentsIsFalse() {
 			// GIVEN
-			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
-					.visibleSurfacesHasDents(false)
-					.build();
+			VisibleSurfaceDamage visibleSurfaceDamage = new VisibleSurfaceDamage(
+					false,
+					0,
+					false,
+					0,
+					false,
+					"",
+					false,
+					""
+			);
 
 			Recommendation expected = NONE;
 
 			// WHEN
-			Recommendation actual = underTest.calculateForDents(dto);
+			Recommendation actual = underTest.calculateForDents(visibleSurfaceDamage);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -132,16 +169,21 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		@ValueSource(doubles = {0.5, 1, 4, 4.5})
 		void should_ReturnRESALE_When_DentsAreUnder5cm(double dentDepth) {
 			// GIVEN
-			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
-					.applicableVisibleSurfacesDamage(true)
-					.visibleSurfacesHasDents(true)
-					.visibleSurfacesDentsDepth(dentDepth)
-					.build();
+			VisibleSurfaceDamage visibleSurfaceDamage = new VisibleSurfaceDamage(
+					false,
+					0,
+					true,
+					dentDepth,
+					false,
+					"",
+					false,
+					""
+			);
 
 			Recommendation expected = RESALE;
 
 			// WHEN
-			Recommendation actual = underTest.calculateForDents(dto);
+			Recommendation actual = underTest.calculateForDents(visibleSurfaceDamage);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -151,16 +193,21 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		@ValueSource(doubles = {5, 5.5, 10})
 		void should_ReturnOUTLET_When_DentsAreEqualOrOver5cm(double dentDepth) {
 			// GIVEN
-			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
-					.applicableVisibleSurfacesDamage(true)
-					.visibleSurfacesHasDents(true)
-					.visibleSurfacesDentsDepth(dentDepth)
-					.build();
+			VisibleSurfaceDamage visibleSurfaceDamage = new VisibleSurfaceDamage(
+					false,
+					0,
+					true,
+					dentDepth,
+					false,
+					"",
+					false,
+					""
+			);
 
 			Recommendation expected = OUTLET;
 
 			// WHEN
-			Recommendation actual = underTest.calculateForDents(dto);
+			Recommendation actual = underTest.calculateForDents(visibleSurfaceDamage);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -173,14 +220,21 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnRESALE_When_VisibleSurfacesHasMinorDamageIsTrue() {
 			// GIVEN
-			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
-					.visibleSurfacesHasMinorDamage(true)
-					.build();
+			VisibleSurfaceDamage visibleSurfaceDamage = new VisibleSurfaceDamage(
+					false,
+					0,
+					false,
+					0,
+					true,
+					"I'm the tested property",
+					false,
+					""
+			);
 
 			Recommendation expected = RESALE;
 
 			// WHEN
-			Recommendation actual = underTest.calculateForMinorDamage(dto);
+			Recommendation actual = underTest.calculateForMinorDamage(visibleSurfaceDamage);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -189,14 +243,21 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnNONE_When_VisibleSurfacesHasMinorDamageIsFalse() {
 			// GIVEN
-			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
-					.visibleSurfacesHasMinorDamage(false)
-					.build();
+			VisibleSurfaceDamage visibleSurfaceDamage = new VisibleSurfaceDamage(
+					false,
+					0,
+					false,
+					0,
+					false,
+					"",
+					false,
+					""
+			);
 
 			Recommendation expected = NONE;
 
 			// WHEN
-			Recommendation actual = underTest.calculateForMinorDamage(dto);
+			Recommendation actual = underTest.calculateForMinorDamage(visibleSurfaceDamage);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -209,14 +270,21 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnOUTLET_When_VisibleSurfacesHasMajorDamageIsTrue() {
 			// GIVEN
-			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
-					.visibleSurfacesHasMajorDamage(true)
-					.build();
+			VisibleSurfaceDamage visibleSurfaceDamage = new VisibleSurfaceDamage(
+					false,
+					0,
+					false,
+					0,
+					false,
+					"",
+					true,
+					"I'm the tested property"
+			);
 
 			Recommendation expected = OUTLET;
 
 			// WHEN
-			Recommendation actual = underTest.calculateForMajorDamage(dto);
+			Recommendation actual = underTest.calculateForMajorDamage(visibleSurfaceDamage);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);
@@ -225,14 +293,21 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnNONE_When_VisibleSurfacesHasMajorDamageIsFalse() {
 			// GIVEN
-			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
-					.visibleSurfacesHasMajorDamage(false)
-					.build();
+			VisibleSurfaceDamage visibleSurfaceDamage = new VisibleSurfaceDamage(
+					false,
+					0,
+					false,
+					0,
+					false,
+					"",
+					false,
+					""
+			);
 
 			Recommendation expected = NONE;
 
 			// WHEN
-			Recommendation actual = underTest.calculateForMajorDamage(dto);
+			Recommendation actual = underTest.calculateForMajorDamage(visibleSurfaceDamage);
 
 			// THEN
 			assertThat(actual).isEqualTo(expected);

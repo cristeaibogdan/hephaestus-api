@@ -12,8 +12,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Embeddable
 public class VisibleSurfaceDamage {
-    @Column(name = "applicable_visible_surfaces_damage")
-    private boolean applicableVisibleSurfacesDamage;
 
     @Column(name = "visible_surfaces_has_scratches")
     private boolean visibleSurfacesHasScratches;
@@ -41,4 +39,11 @@ public class VisibleSurfaceDamage {
 
     @Column(name = "visible_surfaces_major_damage")
     private String visibleSurfacesMajorDamage;
+
+    public boolean isApplicable() {
+        return visibleSurfacesHasScratches ||
+                visibleSurfacesHasDents ||
+                visibleSurfacesHasMinorDamage ||
+                visibleSurfacesHasMajorDamage;
+    }
 }

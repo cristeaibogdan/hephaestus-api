@@ -1,7 +1,7 @@
 package org.personal.washingmachine.service.calculators;
 
 import org.junit.jupiter.api.Test;
-import org.personal.washingmachine.dto.WashingMachineDetailDTO;
+import org.personal.washingmachine.entity.embedded.PackageDamage;
 import org.personal.washingmachine.enums.Recommendation;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -13,16 +13,17 @@ class PackageRecommendationCalculatorTest {
 	private final PackageRecommendationCalculator underTest = new PackageRecommendationCalculator();
 
 	@Test
-	void should_ReturnNONE_When_ApplicablePackageDamageIsFalse() {
+	void should_ReturnNONE_When_AllValuesAreFalse() {
 		// GIVEN
-		WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
-				.applicablePackageDamage(false)
-				.build();
+		PackageDamage packageDamage = new PackageDamage(
+				false,
+				false,
+				false);
 
 		Recommendation expected = NONE;
 
 		// WHEN
-		Recommendation actual = underTest.calculate(dto);
+		Recommendation actual = underTest.calculate(packageDamage);
 
 		// THEN
 		assertThat(actual).isEqualTo(expected);
@@ -31,15 +32,15 @@ class PackageRecommendationCalculatorTest {
 	@Test
 	void should_ReturnREPACKAGE_When_PackageMaterialAvailableIsTrue() {
 		// GIVEN
-		WashingMachineDetailDTO washingMachineDetailDTO = WashingMachineDetailDTO.builder()
-				.applicablePackageDamage(true)
-				.packageMaterialAvailable(true)
-				.build();
+		PackageDamage packageDamage = new PackageDamage(
+				false,
+				false,
+				true);
 
 		Recommendation expected = REPACKAGE;
 
 		// WHEN
-		Recommendation actual = underTest.calculate(washingMachineDetailDTO);
+		Recommendation actual = underTest.calculate(packageDamage);
 
 		// THEN
 		assertThat(actual).isEqualTo(expected);
@@ -48,15 +49,15 @@ class PackageRecommendationCalculatorTest {
 	@Test
 	void should_ReturnRESALE_When_PackageMaterialAvailableIsFalse() {
 		// GIVEN
-		WashingMachineDetailDTO washingMachineDetailDTO = WashingMachineDetailDTO.builder()
-				.applicablePackageDamage(true)
-				.packageMaterialAvailable(false)
-				.build();
+		PackageDamage packageDamage = new PackageDamage(
+				true,
+				false,
+				false);
 
 		Recommendation expected = RESALE;
 
 		// WHEN
-		Recommendation actual = underTest.calculate(washingMachineDetailDTO);
+		Recommendation actual = underTest.calculate(packageDamage);
 
 		// THEN
 		assertThat(actual).isEqualTo(expected);

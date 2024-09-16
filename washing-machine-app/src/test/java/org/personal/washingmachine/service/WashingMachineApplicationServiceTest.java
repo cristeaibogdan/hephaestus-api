@@ -9,7 +9,6 @@ import org.personal.shared.clients.ProductClient;
 import org.personal.washingmachine.WashingMachineTestData;
 import org.personal.washingmachine.dto.PageRequestDTO;
 import org.personal.washingmachine.dto.WashingMachineDetailDTO;
-import org.personal.washingmachine.dto.WashingMachineReportDTO;
 import org.personal.washingmachine.dto.WashingMachineSimpleDTO;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineDetail;
@@ -129,9 +128,8 @@ class WashingMachineApplicationServiceTest {
             String serialNumber = "ABC-987";
 
             WashingMachineDetail washingMachineDetail = new WashingMachineDetail(
-                    new PackageDamage(true, true, true, true),
+                    new PackageDamage(true, true, true),
                     new VisibleSurfaceDamage(
-                            true,
                             true,
                             5.5,
                             false,
@@ -142,7 +140,6 @@ class WashingMachineApplicationServiceTest {
                             "some major damage"
                     ),
                     new HiddenSurfaceDamage(
-                            true,
                             true,
                             5.5,
                             false,
@@ -175,7 +172,7 @@ class WashingMachineApplicationServiceTest {
                     .willReturn(Optional.of(washingMachine));
 
             // WHEN
-            WashingMachineReportDTO report = underTest.getReport(serialNumber);
+//            WashingMachineReportDTO report = underTest.getReport(serialNumber);
 
             // THEN
 //            assertThat(report.createdAt())

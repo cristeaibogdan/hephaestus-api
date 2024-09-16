@@ -56,12 +56,12 @@ public class Mapper {
 
 		public static WashingMachineDetailDTO toDTO(WashingMachineDetail entity) {
 			return new WashingMachineDetailDTO(
-					entity.getPackageDamage().isApplicablePackageDamage(),
+					entity.getPackageDamage().isApplicable(),
 					entity.getPackageDamage().isPackageDamaged(),
 					entity.getPackageDamage().isPackageDirty(),
 					entity.getPackageDamage().isPackageMaterialAvailable(),
 
-					entity.getVisibleSurfaceDamage().isApplicableVisibleSurfacesDamage(),
+					entity.getVisibleSurfaceDamage().isApplicable(),
 					entity.getVisibleSurfaceDamage().isVisibleSurfacesHasScratches(),
 					entity.getVisibleSurfaceDamage().getVisibleSurfacesScratchesLength(),
 					entity.getVisibleSurfaceDamage().isVisibleSurfacesHasDents(),
@@ -71,7 +71,7 @@ public class Mapper {
 					entity.getVisibleSurfaceDamage().isVisibleSurfacesHasMajorDamage(),
 					entity.getVisibleSurfaceDamage().getVisibleSurfacesMajorDamage(),
 
-					entity.getHiddenSurfaceDamage().isApplicableHiddenSurfacesDamage(),
+					entity.getHiddenSurfaceDamage().isApplicable(),
 					entity.getHiddenSurfaceDamage().isHiddenSurfacesHasScratches(),
 					entity.getHiddenSurfaceDamage().getHiddenSurfacesScratchesLength(),
 					entity.getHiddenSurfaceDamage().isHiddenSurfacesHasDents(),
@@ -89,14 +89,12 @@ public class Mapper {
 		public static WashingMachineDetail toEntity(WashingMachineDetailDTO dto) {
 			return new WashingMachineDetail(
 					new PackageDamage(
-							dto.applicablePackageDamage(),
 							dto.packageDamaged(),
 							dto.packageDirty(),
 							dto.packageMaterialAvailable()
 					),
 
 					new VisibleSurfaceDamage(
-							dto.applicableVisibleSurfacesDamage(),
 							dto.visibleSurfacesHasScratches(),
 							dto.visibleSurfacesScratchesLength(),
 							dto.visibleSurfacesHasDents(),
@@ -108,7 +106,6 @@ public class Mapper {
 					),
 
 					new HiddenSurfaceDamage(
-							dto.applicableHiddenSurfacesDamage(),
 							dto.hiddenSurfacesHasScratches(),
 							dto.hiddenSurfacesScratchesLength(),
 							dto.hiddenSurfacesHasDents(),
