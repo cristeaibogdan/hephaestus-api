@@ -1,5 +1,6 @@
 package org.personal.washingmachine.service.calculators;
 
+import com.google.common.annotations.VisibleForTesting;
 import org.personal.washingmachine.entity.embedded.HiddenSurfaceDamage;
 import org.personal.washingmachine.enums.Recommendation;
 import org.springframework.stereotype.Component;
@@ -32,6 +33,7 @@ public class HiddenSurfacesRecommendationCalculator {
 		));
 	}
 
+	@VisibleForTesting
 	Recommendation calculateForScratches(HiddenSurfaceDamage detail) {
 		if (!detail.isHiddenSurfacesHasScratches()) {
 			return NONE;
@@ -42,6 +44,7 @@ public class HiddenSurfacesRecommendationCalculator {
 				: OUTLET;
 	}
 
+	@VisibleForTesting
 	Recommendation calculateForDents(HiddenSurfaceDamage detail) {
 		if (!detail.isHiddenSurfacesHasDents()) {
 			return NONE;
@@ -52,12 +55,14 @@ public class HiddenSurfacesRecommendationCalculator {
 				: OUTLET;
 	}
 
+	@VisibleForTesting
 	Recommendation calculateForMinorDamage(HiddenSurfaceDamage detail) {
 		return detail.isHiddenSurfacesHasMinorDamage()
 				? RESALE
 				: NONE;
 	}
 
+	@VisibleForTesting
 	Recommendation calculateForMajorDamage(HiddenSurfaceDamage detail) {
 		return detail.isHiddenSurfacesHasMajorDamage()
 				? OUTLET
