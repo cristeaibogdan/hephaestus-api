@@ -9,6 +9,7 @@ import org.personal.washingmachine.dto.OrganizationAndCountryDTO;
 import org.personal.washingmachine.dto.UserCredentialsDTO;
 import org.personal.washingmachine.dto.UserDTO;
 import org.personal.washingmachine.entity.User;
+import org.personal.washingmachine.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -29,6 +30,9 @@ class UserApplicationServiceMvcTest {
 
     @MockBean
     UserService userServiceMock;
+
+    @MockBean
+    UserMapper userMapper;
 
     @Autowired
     MockMvc mockMvc;
