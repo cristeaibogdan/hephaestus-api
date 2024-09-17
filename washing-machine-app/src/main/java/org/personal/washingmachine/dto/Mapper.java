@@ -4,7 +4,6 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineDetail;
-import org.personal.washingmachine.entity.WashingMachineImage;
 import org.personal.washingmachine.entity.embedded.HiddenSurfaceDamage;
 import org.personal.washingmachine.entity.embedded.PackageDamage;
 import org.personal.washingmachine.entity.embedded.VisibleSurfaceDamage;
@@ -13,18 +12,6 @@ import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.NONE)
 public class Mapper {
-
-	public static class WashingMachineImageMapper {
-
-		public static List<WashingMachineImageDTO> toDTO(List<WashingMachineImage> entities) {
-			return entities.stream()
-					.map(entity -> new WashingMachineImageDTO(
-							entity.getImagePrefix(),
-							entity.getImage()))
-					.toList();
-		}
-
-	}
 
 	public static class WashingMachineDetailMapper {
 
@@ -116,7 +103,9 @@ public class Mapper {
 		public static WashingMachineExpandedDTO toExpandedDTO(WashingMachine entity) {
 
 			WashingMachineDetailDTO washingMachineDetailDTO = WashingMachineDetailMapper.toDTO(entity.getWashingMachineDetail());
-			List<WashingMachineImageDTO> washingMachineImageDTOs = WashingMachineImageMapper.toDTO(entity.getWashingMachineImages());
+			List<WashingMachineImageDTO> washingMachineImageDTOs = entity.getWashingMachineImages().stream()
+					.map(image -> new WashingMachineImageDTO(image))
+					.toList();
 
 			return new WashingMachineExpandedDTO(
 					washingMachineDetailDTO,
