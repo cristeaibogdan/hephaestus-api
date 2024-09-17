@@ -82,7 +82,7 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 
 	@Override
 	public Recommendation getRecommendation(WashingMachineDetailDTO washingMachineDetailDTO) {
-		WashingMachineDetail detail = Mapper.WashingMachineDetailMapper.toEntity(washingMachineDetailDTO);
+		WashingMachineDetail detail = washingMachineDetailDTO.toEntity();
 		return damageCalculator.getRecommendation(detail);
 	}
 
