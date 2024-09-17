@@ -1,5 +1,6 @@
 package org.personal.washingmachine.dto;
 
+import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.enums.DamageType;
 import org.personal.washingmachine.enums.IdentificationMode;
 import org.personal.washingmachine.enums.Recommendation;
@@ -23,4 +24,18 @@ public record WashingMachineSimpleDTO(
         Recommendation recommendation,
         LocalDateTime createdAt
 ) {
+	public WashingMachineSimpleDTO(WashingMachine entity) {
+		this (
+				entity.getCategory(),
+				entity.getManufacturer(),
+				entity.getIdentificationMode(),
+				entity.getModel(),
+				entity.getType(),
+				entity.getSerialNumber(),
+				entity.getReturnType(),
+				entity.getDamageType(),
+				entity.getRecommendation(),
+				entity.getCreatedAt()
+		);
+	}
 }

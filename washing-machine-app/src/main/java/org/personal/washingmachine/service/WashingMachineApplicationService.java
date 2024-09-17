@@ -24,7 +24,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
-import static org.personal.washingmachine.dto.Mapper.WashingMachineMapper;
 import static org.personal.washingmachine.entity.QWashingMachine.washingMachine;
 
 @Service
@@ -59,19 +58,19 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 
 		Page<WashingMachine> responsePage = repository.findAll(booleanBuilder, pageRequest);
 
-		return responsePage.map(wm -> WashingMachineMapper.toSimpleDTO(wm));
+		return responsePage.map(wm ->new WashingMachineSimpleDTO(wm));
 	}
 
 	@Override
 	public WashingMachineExpandedDTO loadExpanded(String serialNumber) {
 		WashingMachine washingMachine = service.findBySerialNumber(serialNumber);
-		return WashingMachineMapper.toExpandedDTO(washingMachine);
+		return new WashingMachineExpandedDTO(washingMachine);
 	}
 
 	@Override
 	public void save(WashingMachineDTO washingMachineDTO, List<MultipartFile> imageFiles) {
 
-		WashingMachine washingMachine = WashingMachineMapper.toEntity(washingMachineDTO);
+		WashingMachine washingMachine = washingMachineDTO.toEntity();
 		imageFiles.forEach(image -> {
 			WashingMachineImage washingMachineImage = getWashingMachineImage(image);
 			washingMachine.addImage(washingMachineImage);
