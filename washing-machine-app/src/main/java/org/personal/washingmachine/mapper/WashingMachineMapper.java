@@ -50,7 +50,7 @@ public class WashingMachineMapper {
 				dto.model(),
 				dto.type(),
 				dto.recommendation(),
-				new WashingMachineDetailMapper().toEntity(dto.washingMachineDetailDTO())
+				washingMachineDetailMapper.toEntity(dto.washingMachineDetailDTO())
 		);
 	}
 }
