@@ -3,6 +3,7 @@ package org.personal.washingmachine.service;
 import lombok.RequiredArgsConstructor;
 import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
+import org.personal.washingmachine.dto.UserMapper;
 import org.personal.washingmachine.entity.User;
 import org.personal.washingmachine.dto.OrganizationAndCountryDTO;
 import org.personal.washingmachine.dto.UserCredentialsDTO;
@@ -15,13 +16,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static org.personal.washingmachine.dto.Mapper.*;
-
 @Service
 @RestController
 @RequiredArgsConstructor
 public class UserApplicationService implements IUserApplicationService { // TODO: Replace with proper authentication
 	private final UserService service;
+	private final UserMapper userMapper;
 
 	private Map<OrganizationAndCountryDTO, List<String>> initializeRegistrationCodes() {
 		Map<OrganizationAndCountryDTO, List<String>> registerCodes = new HashMap<>();
@@ -56,13 +56,13 @@ public class UserApplicationService implements IUserApplicationService { // TODO
 
 	@Override
 	public void register(UserDTO userDTO) {
-		User user = UserMapper.toEntity(userDTO);
+		User user = userMapper.toEntity(userDTO);
 		service.register(user);
 	}
 
 	@Override
 	public UserDTO login(UserCredentialsDTO userCredentialsDTO) {
 		User user = service.login(userCredentialsDTO.username(), userCredentialsDTO.password());
-		return UserMapper.toDTO(user);
+		return userMapper.toDTO(user);
 	}
 }

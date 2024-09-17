@@ -15,31 +15,6 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.NONE)
 public class Mapper {
 
-	public static class UserMapper {
-
-		public static UserDTO toDTO(User entity) {
-			return new UserDTO(
-					entity.getCode(),
-					entity.getOrganization(),
-					entity.getCountry(),
-					entity.getEmail(),
-					entity.getUsername(),
-					null
-			);
-		}
-
-		public static User toEntity(UserDTO dto) {
-			return new User(
-					dto.code(),
-					dto.organization(),
-					dto.country(),
-					dto.email(),
-					dto.username(),
-					dto.password()
-			);
-		}
-	}
-
 	public static class WashingMachineImageMapper {
 
 		public static List<WashingMachineImageDTO> toDTO(List<WashingMachineImage> entities) {
