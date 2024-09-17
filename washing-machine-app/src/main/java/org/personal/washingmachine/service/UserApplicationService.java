@@ -3,7 +3,7 @@ package org.personal.washingmachine.service;
 import lombok.RequiredArgsConstructor;
 import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
-import org.personal.washingmachine.dto.UserMapper;
+import org.personal.washingmachine.mapper.UserMapper;
 import org.personal.washingmachine.entity.User;
 import org.personal.washingmachine.dto.OrganizationAndCountryDTO;
 import org.personal.washingmachine.dto.UserCredentialsDTO;

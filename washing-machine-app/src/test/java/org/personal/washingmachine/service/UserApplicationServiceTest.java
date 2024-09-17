@@ -21,7 +21,7 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-import org.personal.washingmachine.dto.UserMapper;
+import org.personal.washingmachine.mapper.UserMapper;
 
 class UserApplicationServiceTest {
 
