@@ -11,6 +11,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WashingMachineMapper {
 	private final WashingMachineImageMapper washingMachineImageMapper;
+	private final WashingMachineDetailMapper washingMachineDetailMapper;
 
 	public WashingMachineSimpleDTO toSimpleDTO(WashingMachine entity) {
 		return new WashingMachineSimpleDTO(
@@ -29,7 +30,7 @@ public class WashingMachineMapper {
 
 	public WashingMachineExpandedDTO toExpandedDTO(WashingMachine entity) {
 
-		WashingMachineDetailDTO washingMachineDetailDTO = Mapper.WashingMachineDetailMapper.toDTO(entity.getWashingMachineDetail());
+		WashingMachineDetailDTO washingMachineDetailDTO = washingMachineDetailMapper.toDTO(entity.getWashingMachineDetail());
 		List<WashingMachineImageDTO> washingMachineImageDTOs = washingMachineImageMapper.toDTO(entity.getWashingMachineImages());
 
 		return new WashingMachineExpandedDTO(
@@ -49,7 +50,7 @@ public class WashingMachineMapper {
 				dto.model(),
 				dto.type(),
 				dto.recommendation(),
-				Mapper.WashingMachineDetailMapper.toEntity(dto.washingMachineDetailDTO())
+				new WashingMachineDetailMapper().toEntity(dto.washingMachineDetailDTO())
 		);
 	}
 }

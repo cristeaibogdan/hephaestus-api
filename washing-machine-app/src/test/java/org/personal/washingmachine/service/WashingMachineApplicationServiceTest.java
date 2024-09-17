@@ -9,6 +9,7 @@ import org.personal.shared.clients.ProductClient;
 import org.personal.washingmachine.WashingMachineTestData;
 import org.personal.washingmachine.dto.PageRequestDTO;
 import org.personal.washingmachine.dto.WashingMachineDetailDTO;
+import org.personal.washingmachine.mapper.WashingMachineDetailMapper;
 import org.personal.washingmachine.mapper.WashingMachineImageMapper;
 import org.personal.washingmachine.mapper.WashingMachineMapper;
 import org.personal.washingmachine.dto.WashingMachineSimpleDTO;
@@ -53,7 +54,8 @@ class WashingMachineApplicationServiceTest {
     WashingMachineReportGenerator washingMachineReportGenerator = new WashingMachineReportGenerator();
 
     WashingMachineImageMapper washingMachineImageMapper = new WashingMachineImageMapper();
-    WashingMachineMapper washingMachineMapper = new WashingMachineMapper(washingMachineImageMapper);
+    WashingMachineDetailMapper washingMachineDetailMapper = new WashingMachineDetailMapper();
+    WashingMachineMapper washingMachineMapper = new WashingMachineMapper(washingMachineImageMapper, washingMachineDetailMapper);
 
     ProductClient productClient; //TODO: To be deleted
 
@@ -63,6 +65,7 @@ class WashingMachineApplicationServiceTest {
             washingMachineDamageCalculator,
             washingMachineReportGenerator,
             washingMachineMapper,
+            washingMachineDetailMapper,
             productClient
     );
 

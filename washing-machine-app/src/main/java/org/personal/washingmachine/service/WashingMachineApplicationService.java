@@ -10,6 +10,7 @@ import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineDetail;
 import org.personal.washingmachine.entity.WashingMachineImage;
 import org.personal.washingmachine.enums.Recommendation;
+import org.personal.washingmachine.mapper.WashingMachineDetailMapper;
 import org.personal.washingmachine.mapper.WashingMachineMapper;
 import org.personal.washingmachine.repository.WashingMachineRepository;
 import org.personal.washingmachine.service.utils.QueryDSLUtils;
@@ -36,6 +37,7 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 	private final WashingMachineReportGenerator reportGenerator;
 
 	private final WashingMachineMapper washingMachineMapper;
+	private final WashingMachineDetailMapper washingMachineDetailMapper;
 
 	@Override
 	public Page<WashingMachineSimpleDTO> loadPaginatedAndFiltered(PageRequestDTO pageRequestDTO) {
@@ -83,7 +85,7 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 
 	@Override
 	public Recommendation getRecommendation(WashingMachineDetailDTO washingMachineDetailDTO) {
-		WashingMachineDetail detail = Mapper.WashingMachineDetailMapper.toEntity(washingMachineDetailDTO);
+		WashingMachineDetail detail = washingMachineDetailMapper.toEntity(washingMachineDetailDTO);
 		return damageCalculator.getRecommendation(detail);
 	}
 
