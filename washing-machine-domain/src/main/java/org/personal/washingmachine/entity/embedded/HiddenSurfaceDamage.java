@@ -13,37 +13,108 @@ import lombok.NoArgsConstructor;
 @Embeddable
 public class HiddenSurfaceDamage {
 
-    @Column(name = "hidden_surfaces_has_scratches")
-    private boolean hiddenSurfacesHasScratches;
+	@Column(name = "hidden_surfaces_has_scratches")
+	private boolean hiddenSurfacesHasScratches;
 
-    @Column(name = "hidden_surfaces_scratches_length")
-    private double hiddenSurfacesScratchesLength;
-
-
-    @Column(name = "hidden_surfaces_has_dents")
-    private boolean hiddenSurfacesHasDents;
-
-    @Column(name = "hidden_surfaces_dents_depth")
-    private double hiddenSurfacesDentsDepth;
+	@Column(name = "hidden_surfaces_scratches_length")
+	private double hiddenSurfacesScratchesLength;
 
 
-    @Column(name = "hidden_surfaces_has_minor_damage")
-    private boolean hiddenSurfacesHasMinorDamage;
+	@Column(name = "hidden_surfaces_has_dents")
+	private boolean hiddenSurfacesHasDents;
 
-    @Column(name = "hidden_surfaces_minor_damage")
-    private String hiddenSurfacesMinorDamage;
+	@Column(name = "hidden_surfaces_dents_depth")
+	private double hiddenSurfacesDentsDepth;
 
 
-    @Column(name = "hidden_surfaces_has_major_damage")
-    private boolean hiddenSurfacesHasMajorDamage;
+	@Column(name = "hidden_surfaces_has_minor_damage")
+	private boolean hiddenSurfacesHasMinorDamage;
 
-    @Column(name = "hidden_surfaces_major_damage")
-    private String hiddenSurfacesMajorDamage;
+	@Column(name = "hidden_surfaces_minor_damage")
+	private String hiddenSurfacesMinorDamage;
 
-    public boolean isApplicable() {
-        return hiddenSurfacesHasScratches ||
-                hiddenSurfacesHasDents ||
-                hiddenSurfacesHasMinorDamage ||
-                hiddenSurfacesHasMajorDamage;
-    }
+
+	@Column(name = "hidden_surfaces_has_major_damage")
+	private boolean hiddenSurfacesHasMajorDamage;
+
+	@Column(name = "hidden_surfaces_major_damage")
+	private String hiddenSurfacesMajorDamage;
+
+	public boolean isApplicable() {
+		return hiddenSurfacesHasScratches ||
+				hiddenSurfacesHasDents ||
+				hiddenSurfacesHasMinorDamage ||
+				hiddenSurfacesHasMajorDamage;
+	}
+
+	public static HiddenSurfaceDamageBuilder builder() { //TODO: Replace with lombok @Builder
+		return new HiddenSurfaceDamageBuilder();
+	}
+
+	public static class HiddenSurfaceDamageBuilder {
+		private boolean hiddenSurfacesHasScratches;
+		private double hiddenSurfacesScratchesLength;
+
+		private boolean hiddenSurfacesHasDents;
+		private double hiddenSurfacesDentsDepth;
+
+		private boolean hiddenSurfacesHasMinorDamage;
+		private String hiddenSurfacesMinorDamage;
+
+		private boolean hiddenSurfacesHasMajorDamage;
+		private String hiddenSurfacesMajorDamage;
+
+		public HiddenSurfaceDamage build() {
+			return new HiddenSurfaceDamage(
+					this.hiddenSurfacesHasScratches,
+					this.hiddenSurfacesScratchesLength,
+					this.hiddenSurfacesHasDents,
+					this.hiddenSurfacesDentsDepth,
+					this.hiddenSurfacesHasMinorDamage,
+					this.hiddenSurfacesMinorDamage,
+					this.hiddenSurfacesHasMajorDamage,
+					this.hiddenSurfacesMajorDamage
+			);
+		}
+
+		public HiddenSurfaceDamageBuilder hiddenSurfacesHasScratches(boolean hiddenSurfacesHasScratches) {
+			this.hiddenSurfacesHasScratches = hiddenSurfacesHasScratches;
+			return this;
+		}
+
+        public HiddenSurfaceDamageBuilder hiddenSurfacesScratchesLength (double hiddenSurfacesScratchesLength) {
+            this.hiddenSurfacesScratchesLength = hiddenSurfacesScratchesLength;
+            return this;
+        }
+
+        public HiddenSurfaceDamageBuilder hiddenSurfacesHasDents (boolean hiddenSurfacesHasDents) {
+            this.hiddenSurfacesHasDents = hiddenSurfacesHasDents;
+            return this;
+        }
+
+        public HiddenSurfaceDamageBuilder hiddenSurfacesDentsDepth (double hiddenSurfacesDentsDepth) {
+            this.hiddenSurfacesDentsDepth = hiddenSurfacesDentsDepth;
+            return this;
+        }
+
+        public HiddenSurfaceDamageBuilder hiddenSurfacesHasMinorDamage (boolean hiddenSurfacesHasMinorDamage) {
+            this.hiddenSurfacesHasMinorDamage = hiddenSurfacesHasMinorDamage;
+            return this;
+        }
+
+        public HiddenSurfaceDamageBuilder hiddenSurfacesMinorDamage (String hiddenSurfacesMinorDamage) {
+            this.hiddenSurfacesMinorDamage = hiddenSurfacesMinorDamage;
+            return this;
+        }
+
+        public HiddenSurfaceDamageBuilder hiddenSurfacesHasMajorDamage (boolean hiddenSurfacesHasMajorDamage) {
+            this.hiddenSurfacesHasMajorDamage = hiddenSurfacesHasMajorDamage;
+            return this;
+        }
+
+        public HiddenSurfaceDamageBuilder hiddenSurfacesMajorDamage (String hiddenSurfacesMajorDamage) {
+            this.hiddenSurfacesMajorDamage = hiddenSurfacesMajorDamage;
+            return this;
+        }
+	}
 }

@@ -19,16 +19,16 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnNONE_When_AllValuesAreFalse() {
 			// GIVEN
-			HiddenSurfaceDamage hiddenSurfaceDamage = new HiddenSurfaceDamage(
-					false,
-					0,
-					false,
-					0,
-					false,
-					"",
-					false,
-					""
-			);
+			HiddenSurfaceDamage hiddenSurfaceDamage = HiddenSurfaceDamage.builder()
+					.hiddenSurfacesHasScratches(false)
+					.hiddenSurfacesScratchesLength(0)
+					.hiddenSurfacesHasDents(false)
+					.hiddenSurfacesDentsDepth(0)
+					.hiddenSurfacesHasMinorDamage(false)
+					.hiddenSurfacesMinorDamage("")
+					.hiddenSurfacesHasMajorDamage(false)
+					.hiddenSurfacesMajorDamage("")
+					.build();
 
 			Recommendation expected = NONE;
 
@@ -42,16 +42,10 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnRESALE_When_MinorDamageTrue() {
 			// GIVEN
-			HiddenSurfaceDamage hiddenSurfaceDamage = new HiddenSurfaceDamage(
-					false,
-					0,
-					false,
-					0,
-					true,
-					"testing property",
-					false,
-					""
-			);
+			HiddenSurfaceDamage hiddenSurfaceDamage = HiddenSurfaceDamage.builder()
+					.hiddenSurfacesHasMinorDamage(true)
+					.hiddenSurfacesMinorDamage("testing property")
+					.build();
 
 			Recommendation expected = RESALE;
 
@@ -69,16 +63,9 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnNONE_When_HiddenSurfacesHasScratchesIsFalse() {
 			// GIVEN
-			HiddenSurfaceDamage hiddenSurfaceDamage = new HiddenSurfaceDamage(
-					false,
-					0,
-					false,
-					0,
-					false,
-					"",
-					false,
-					""
-			);
+			HiddenSurfaceDamage hiddenSurfaceDamage = HiddenSurfaceDamage.builder()
+					.hiddenSurfacesHasScratches(false)
+					.build();
 
 			Recommendation expected = NONE;
 
@@ -93,16 +80,10 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		@ValueSource(doubles = {0.5, 1, 6, 6.5})
 		void should_ReturnRESALE_When_ScratchesAreUnder7cm(double scratchLength) {
 			// GIVEN
-			HiddenSurfaceDamage hiddenSurfaceDamage = new HiddenSurfaceDamage(
-					true,
-					scratchLength,
-					false,
-					0,
-					false,
-					"",
-					false,
-					""
-			);
+			HiddenSurfaceDamage hiddenSurfaceDamage = HiddenSurfaceDamage.builder()
+					.hiddenSurfacesHasScratches(true)
+					.hiddenSurfacesScratchesLength(scratchLength)
+					.build();
 
 			Recommendation expected = RESALE;
 
@@ -117,16 +98,10 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		@ValueSource(doubles = {7, 7.5, 10})
 		void should_ReturnOUTLET_When_ScratchesAreEqualOrOver7cm(double scratchLength) {
 			// GIVEN
-			HiddenSurfaceDamage hiddenSurfaceDamage = new HiddenSurfaceDamage(
-					true,
-					scratchLength,
-					false,
-					0,
-					false,
-					"",
-					false,
-					""
-			);
+			HiddenSurfaceDamage hiddenSurfaceDamage = HiddenSurfaceDamage.builder()
+					.hiddenSurfacesHasScratches(true)
+					.hiddenSurfacesScratchesLength(scratchLength)
+					.build();
 
 			Recommendation expected = OUTLET;
 
@@ -144,16 +119,9 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnNONE_When_HiddenSurfacesHasDentsIsFalse() {
 			// GIVEN
-			HiddenSurfaceDamage hiddenSurfaceDamage = new HiddenSurfaceDamage(
-					false,
-					0,
-					false,
-					0,
-					false,
-					"",
-					false,
-					""
-			);
+			HiddenSurfaceDamage hiddenSurfaceDamage = HiddenSurfaceDamage.builder()
+					.hiddenSurfacesHasDents(false)
+					.build();
 
 			Recommendation expected = NONE;
 
@@ -166,18 +134,12 @@ class HiddenSurfacesRecommendationCalculatorTest {
 
 		@ParameterizedTest
 		@ValueSource(doubles = {0.5, 1, 6, 6.5})
-		void should_ReturnRESALE_When_DentsAreUnder7cm(double dentValue) {
+		void should_ReturnRESALE_When_DentsAreUnder7cm(double dentDepth) {
 			// GIVEN
-			HiddenSurfaceDamage hiddenSurfaceDamage = new HiddenSurfaceDamage(
-					false,
-					0,
-					true,
-					dentValue,
-					false,
-					"",
-					false,
-					""
-			);
+			HiddenSurfaceDamage hiddenSurfaceDamage = HiddenSurfaceDamage.builder()
+					.hiddenSurfacesHasDents(true)
+					.hiddenSurfacesDentsDepth(dentDepth)
+					.build();
 
 			Recommendation expected = RESALE;
 
@@ -190,18 +152,12 @@ class HiddenSurfacesRecommendationCalculatorTest {
 
 		@ParameterizedTest
 		@ValueSource(doubles = {7, 7.5, 10})
-		void should_ReturnOUTLET_When_DentsAreEqualOrOver7cm(double dentValue) {
+		void should_ReturnOUTLET_When_DentsAreEqualOrOver7cm(double dentDepth) {
 			// GIVEN
-			HiddenSurfaceDamage hiddenSurfaceDamage = new HiddenSurfaceDamage(
-					false,
-					0,
-					true,
-					dentValue,
-					false,
-					"",
-					false,
-					""
-			);
+			HiddenSurfaceDamage hiddenSurfaceDamage = HiddenSurfaceDamage.builder()
+					.hiddenSurfacesHasDents(true)
+					.hiddenSurfacesDentsDepth(dentDepth)
+					.build();
 
 			Recommendation expected = OUTLET;
 
@@ -219,16 +175,10 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnRESALE_When_HiddenSurfacesHasMinorDamageIsTrue() {
 			// GIVEN
-			HiddenSurfaceDamage hiddenSurfaceDamage = new HiddenSurfaceDamage(
-					false,
-					0,
-					false,
-					0,
-					true,
-					"I'm the tested property",
-					false,
-					""
-			);
+			HiddenSurfaceDamage hiddenSurfaceDamage = HiddenSurfaceDamage.builder()
+					.hiddenSurfacesHasMinorDamage(true)
+					.hiddenSurfacesMinorDamage("I'm the tested property")
+					.build();
 
 			Recommendation expected = RESALE;
 
@@ -242,16 +192,9 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnNONE_When_HiddenSurfacesHasMinorDamageIsFalse() {
 			// GIVEN
-			HiddenSurfaceDamage hiddenSurfaceDamage = new HiddenSurfaceDamage(
-					false,
-					0,
-					false,
-					0,
-					false,
-					"",
-					false,
-					""
-			);
+			HiddenSurfaceDamage hiddenSurfaceDamage = HiddenSurfaceDamage.builder()
+					.hiddenSurfacesHasMinorDamage(false)
+					.build();
 
 			Recommendation expected = NONE;
 
@@ -269,16 +212,10 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnOUTLET_When_HiddenSurfacesHasMajorDamageIsTrue() {
 			// GIVEN
-			HiddenSurfaceDamage hiddenSurfaceDamage = new HiddenSurfaceDamage(
-					false,
-					0,
-					false,
-					0,
-					false,
-					"",
-					true,
-					"I'm the tested property"
-			);
+			HiddenSurfaceDamage hiddenSurfaceDamage = HiddenSurfaceDamage.builder()
+					.hiddenSurfacesHasMajorDamage(true)
+					.hiddenSurfacesMajorDamage("I'm the tested property")
+					.build();
 
 			Recommendation expected = OUTLET;
 
@@ -292,16 +229,9 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnNONE_When_HiddenSurfacesHasMajorDamageIsFalse() {
 			// GIVEN
-			HiddenSurfaceDamage hiddenSurfaceDamage = new HiddenSurfaceDamage(
-					false,
-					0,
-					false,
-					0,
-					false,
-					"",
-					false,
-					""
-			);
+			HiddenSurfaceDamage hiddenSurfaceDamage = HiddenSurfaceDamage.builder()
+					.hiddenSurfacesHasMajorDamage(false)
+					.build();
 
 			Recommendation expected = NONE;
 

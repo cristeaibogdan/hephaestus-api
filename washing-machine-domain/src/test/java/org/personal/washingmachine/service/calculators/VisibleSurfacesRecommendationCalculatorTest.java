@@ -20,16 +20,16 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnNONE_When_AllValuesAreFalse() {
 			// GIVEN
-			VisibleSurfaceDamage visibleSurfaceDamage = new VisibleSurfaceDamage(
-					false,
-					0,
-					false,
-					0,
-					false,
-					"",
-					false,
-					""
-			);
+			VisibleSurfaceDamage visibleSurfaceDamage = VisibleSurfaceDamage.builder()
+					.visibleSurfacesHasScratches(false)
+					.visibleSurfacesScratchesLength(0)
+					.visibleSurfacesHasDents(false)
+					.visibleSurfacesDentsDepth(0)
+					.visibleSurfacesHasMinorDamage(false)
+					.visibleSurfacesMinorDamage("")
+					.visibleSurfacesHasMajorDamage(false)
+					.visibleSurfacesMajorDamage("")
+					.build();
 
 			Recommendation expected = NONE;
 
@@ -43,16 +43,10 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnRESALE_When_MajorDamageTrue() {
 			// GIVEN
-			VisibleSurfaceDamage visibleSurfaceDamage = new VisibleSurfaceDamage(
-					false,
-					0,
-					false,
-					0,
-					false,
-					"",
-					true,
-					"I'm the tested property"
-			);
+			VisibleSurfaceDamage visibleSurfaceDamage = VisibleSurfaceDamage.builder()
+					.visibleSurfacesHasMajorDamage(true)
+					.visibleSurfacesMajorDamage("I'm the tested property")
+					.build();
 
 			Recommendation expected = OUTLET;
 
@@ -70,16 +64,9 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnNONE_When_VisibleSurfacesHasScratchesIsFalse() {
 			// GIVEN
-			VisibleSurfaceDamage visibleSurfaceDamage = new VisibleSurfaceDamage(
-					false,
-					0,
-					false,
-					0,
-					false,
-					"",
-					false,
-					""
-			);
+			VisibleSurfaceDamage visibleSurfaceDamage = VisibleSurfaceDamage.builder()
+					.visibleSurfacesHasScratches(false)
+					.build();
 
 			Recommendation expected = NONE;
 
@@ -94,16 +81,10 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		@ValueSource(doubles = {0.5, 1, 4, 4.5})
 		void should_ReturnRESALE_When_ScratchesAreUnder5cm(double scratchValue) {
 			// GIVEN
-			VisibleSurfaceDamage visibleSurfaceDamage = new VisibleSurfaceDamage(
-					true,
-					scratchValue,
-					false,
-					0,
-					false,
-					"",
-					false,
-					""
-			);
+			VisibleSurfaceDamage visibleSurfaceDamage = VisibleSurfaceDamage.builder()
+					.visibleSurfacesHasScratches(true)
+					.visibleSurfacesScratchesLength(scratchValue)
+					.build();
 
 			Recommendation expected = RESALE;
 
@@ -118,16 +99,10 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		@ValueSource(doubles = {5, 5.5, 10})
 		void should_ReturnOUTLET_When_ScratchesAreEqualOrOver5cm(double scratchValue) {
 			// GIVEN
-			VisibleSurfaceDamage visibleSurfaceDamage = new VisibleSurfaceDamage(
-					true,
-					scratchValue,
-					false,
-					0,
-					false,
-					"",
-					false,
-					""
-			);
+			VisibleSurfaceDamage visibleSurfaceDamage =VisibleSurfaceDamage.builder()
+					.visibleSurfacesHasScratches(true)
+					.visibleSurfacesScratchesLength(scratchValue)
+					.build();
 
 			Recommendation expected = OUTLET;
 
@@ -145,16 +120,9 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnNONE_When_VisibleSurfacesHasDentsIsFalse() {
 			// GIVEN
-			VisibleSurfaceDamage visibleSurfaceDamage = new VisibleSurfaceDamage(
-					false,
-					0,
-					false,
-					0,
-					false,
-					"",
-					false,
-					""
-			);
+			VisibleSurfaceDamage visibleSurfaceDamage = VisibleSurfaceDamage.builder()
+					.visibleSurfacesHasDents(false)
+					.build();
 
 			Recommendation expected = NONE;
 
@@ -169,16 +137,10 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		@ValueSource(doubles = {0.5, 1, 4, 4.5})
 		void should_ReturnRESALE_When_DentsAreUnder5cm(double dentDepth) {
 			// GIVEN
-			VisibleSurfaceDamage visibleSurfaceDamage = new VisibleSurfaceDamage(
-					false,
-					0,
-					true,
-					dentDepth,
-					false,
-					"",
-					false,
-					""
-			);
+			VisibleSurfaceDamage visibleSurfaceDamage = VisibleSurfaceDamage.builder()
+					.visibleSurfacesHasDents(true)
+					.visibleSurfacesDentsDepth(dentDepth)
+					.build();
 
 			Recommendation expected = RESALE;
 
@@ -193,16 +155,10 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		@ValueSource(doubles = {5, 5.5, 10})
 		void should_ReturnOUTLET_When_DentsAreEqualOrOver5cm(double dentDepth) {
 			// GIVEN
-			VisibleSurfaceDamage visibleSurfaceDamage = new VisibleSurfaceDamage(
-					false,
-					0,
-					true,
-					dentDepth,
-					false,
-					"",
-					false,
-					""
-			);
+			VisibleSurfaceDamage visibleSurfaceDamage = VisibleSurfaceDamage.builder()
+					.visibleSurfacesHasDents(true)
+					.visibleSurfacesDentsDepth(dentDepth)
+					.build();
 
 			Recommendation expected = OUTLET;
 
@@ -220,16 +176,10 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnRESALE_When_VisibleSurfacesHasMinorDamageIsTrue() {
 			// GIVEN
-			VisibleSurfaceDamage visibleSurfaceDamage = new VisibleSurfaceDamage(
-					false,
-					0,
-					false,
-					0,
-					true,
-					"I'm the tested property",
-					false,
-					""
-			);
+			VisibleSurfaceDamage visibleSurfaceDamage = VisibleSurfaceDamage.builder()
+					.visibleSurfacesHasMinorDamage(true)
+					.visibleSurfacesMinorDamage("I'm the tested property")
+					.build();
 
 			Recommendation expected = RESALE;
 
@@ -243,16 +193,9 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnNONE_When_VisibleSurfacesHasMinorDamageIsFalse() {
 			// GIVEN
-			VisibleSurfaceDamage visibleSurfaceDamage = new VisibleSurfaceDamage(
-					false,
-					0,
-					false,
-					0,
-					false,
-					"",
-					false,
-					""
-			);
+			VisibleSurfaceDamage visibleSurfaceDamage = VisibleSurfaceDamage.builder()
+					.visibleSurfacesHasMinorDamage(false)
+					.build();
 
 			Recommendation expected = NONE;
 
@@ -270,16 +213,10 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnOUTLET_When_VisibleSurfacesHasMajorDamageIsTrue() {
 			// GIVEN
-			VisibleSurfaceDamage visibleSurfaceDamage = new VisibleSurfaceDamage(
-					false,
-					0,
-					false,
-					0,
-					false,
-					"",
-					true,
-					"I'm the tested property"
-			);
+			VisibleSurfaceDamage visibleSurfaceDamage = VisibleSurfaceDamage.builder()
+					.visibleSurfacesHasMajorDamage(true)
+					.visibleSurfacesMajorDamage("I'm the tested property")
+					.build();
 
 			Recommendation expected = OUTLET;
 
@@ -293,16 +230,9 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		@Test
 		void should_ReturnNONE_When_VisibleSurfacesHasMajorDamageIsFalse() {
 			// GIVEN
-			VisibleSurfaceDamage visibleSurfaceDamage = new VisibleSurfaceDamage(
-					false,
-					0,
-					false,
-					0,
-					false,
-					"",
-					false,
-					""
-			);
+			VisibleSurfaceDamage visibleSurfaceDamage = VisibleSurfaceDamage.builder()
+					.visibleSurfacesHasMajorDamage(false)
+					.build();
 
 			Recommendation expected = NONE;
 

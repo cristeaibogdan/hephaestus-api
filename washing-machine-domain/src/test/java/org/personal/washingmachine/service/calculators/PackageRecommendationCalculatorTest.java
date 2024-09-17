@@ -15,10 +15,11 @@ class PackageRecommendationCalculatorTest {
 	@Test
 	void should_ReturnNONE_When_AllValuesAreFalse() {
 		// GIVEN
-		PackageDamage packageDamage = new PackageDamage(
-				false,
-				false,
-				false);
+		PackageDamage packageDamage = PackageDamage.builder()
+				.packageDamaged(false)
+				.packageDirty(false)
+				.packageMaterialAvailable(false)
+				.build();
 
 		Recommendation expected = NONE;
 
@@ -32,10 +33,9 @@ class PackageRecommendationCalculatorTest {
 	@Test
 	void should_ReturnREPACKAGE_When_PackageMaterialAvailableIsTrue() {
 		// GIVEN
-		PackageDamage packageDamage = new PackageDamage(
-				false,
-				false,
-				true);
+		PackageDamage packageDamage = PackageDamage.builder()
+				.packageMaterialAvailable(true)
+				.build();
 
 		Recommendation expected = REPACKAGE;
 
@@ -49,10 +49,10 @@ class PackageRecommendationCalculatorTest {
 	@Test
 	void should_ReturnRESALE_When_PackageMaterialAvailableIsFalse() {
 		// GIVEN
-		PackageDamage packageDamage = new PackageDamage(
-				true,
-				false,
-				false);
+		PackageDamage packageDamage = PackageDamage.builder()
+				.packageDamaged(true)
+				.packageMaterialAvailable(false)
+				.build();
 
 		Recommendation expected = RESALE;
 
