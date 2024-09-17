@@ -12,7 +12,6 @@ import org.personal.washingmachine.dto.UserCredentialsDTO;
 import org.personal.washingmachine.dto.UserDTO;
 import org.personal.washingmachine.repository.UserRepository;
 
-import java.lang.reflect.Executable;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -20,10 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.personal.washingmachine.dto.Mapper.UserMapper;
 
 class UserApplicationServiceTest {
 
@@ -182,7 +178,7 @@ class UserApplicationServiceTest {
 			);
 
 			given(userRepositoryMock.findByUsernameAndPassword(credentials.username(), credentials.password()))
-					.willReturn(Optional.of(UserMapper.toEntity(expected)));
+					.willReturn(Optional.of(expected.toEntity()));
 
 			// WHEN
 			UserDTO actual = underTest.login(credentials);

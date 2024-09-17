@@ -15,8 +15,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static org.personal.washingmachine.dto.Mapper.*;
-
 @Service
 @RestController
 @RequiredArgsConstructor
@@ -56,13 +54,13 @@ public class UserApplicationService implements IUserApplicationService { // TODO
 
 	@Override
 	public void register(UserDTO userDTO) {
-		User user = UserMapper.toEntity(userDTO);
+		User user = userDTO.toEntity();
 		service.register(user);
 	}
 
 	@Override
 	public UserDTO login(UserCredentialsDTO userCredentialsDTO) {
 		User user = service.login(userCredentialsDTO.username(), userCredentialsDTO.password());
-		return UserMapper.toDTO(user);
+		return new UserDTO(user);
 	}
 }

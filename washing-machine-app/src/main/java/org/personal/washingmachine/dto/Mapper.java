@@ -2,7 +2,6 @@ package org.personal.washingmachine.dto;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.personal.washingmachine.entity.User;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineDetail;
 import org.personal.washingmachine.entity.WashingMachineImage;
@@ -14,31 +13,6 @@ import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.NONE)
 public class Mapper {
-
-	public static class UserMapper {
-
-		public static UserDTO toDTO(User entity) {
-			return new UserDTO(
-					entity.getCode(),
-					entity.getOrganization(),
-					entity.getCountry(),
-					entity.getEmail(),
-					entity.getUsername(),
-					null
-			);
-		}
-
-		public static User toEntity(UserDTO dto) {
-			return new User(
-					dto.code(),
-					dto.organization(),
-					dto.country(),
-					dto.email(),
-					dto.username(),
-					dto.password()
-			);
-		}
-	}
 
 	public static class WashingMachineImageMapper {
 
