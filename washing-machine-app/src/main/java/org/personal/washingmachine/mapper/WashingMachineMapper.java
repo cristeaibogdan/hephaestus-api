@@ -1,5 +1,6 @@
 package org.personal.washingmachine.mapper;
 
+import lombok.RequiredArgsConstructor;
 import org.personal.washingmachine.dto.*;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.springframework.stereotype.Component;
@@ -7,7 +8,9 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class WashingMachineMapper {
+	private final WashingMachineImageMapper washingMachineImageMapper;
 
 	public WashingMachineSimpleDTO toSimpleDTO(WashingMachine entity) {
 		return new WashingMachineSimpleDTO(
@@ -27,7 +30,7 @@ public class WashingMachineMapper {
 	public WashingMachineExpandedDTO toExpandedDTO(WashingMachine entity) {
 
 		WashingMachineDetailDTO washingMachineDetailDTO = Mapper.WashingMachineDetailMapper.toDTO(entity.getWashingMachineDetail());
-		List<WashingMachineImageDTO> washingMachineImageDTOs = Mapper.WashingMachineImageMapper.toDTO(entity.getWashingMachineImages());
+		List<WashingMachineImageDTO> washingMachineImageDTOs = washingMachineImageMapper.toDTO(entity.getWashingMachineImages());
 
 		return new WashingMachineExpandedDTO(
 				washingMachineDetailDTO,
