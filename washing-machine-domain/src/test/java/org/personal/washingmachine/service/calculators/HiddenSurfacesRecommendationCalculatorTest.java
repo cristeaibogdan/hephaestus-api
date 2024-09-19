@@ -22,7 +22,6 @@ class HiddenSurfacesRecommendationCalculatorTest {
 			HiddenSurfaceDamage hiddenSurfaceDamage = HiddenSurfaceDamage.builder()
 					.hiddenSurfacesScratchesLength(0)
 					.hiddenSurfacesDentsDepth(0)
-					.hiddenSurfacesHasMinorDamage(false)
 					.hiddenSurfacesMinorDamage("")
 					.hiddenSurfacesHasMajorDamage(false)
 					.hiddenSurfacesMajorDamage("")
@@ -38,10 +37,9 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		}
 
 		@Test
-		void should_ReturnRESALE_When_MinorDamageTrue() {
+		void should_ReturnRESALE_When_MinorDamageIsSpecified() {
 			// GIVEN
 			HiddenSurfaceDamage hiddenSurfaceDamage = HiddenSurfaceDamage.builder()
-					.hiddenSurfacesHasMinorDamage(true)
 					.hiddenSurfacesMinorDamage("testing property")
 					.build();
 
@@ -167,10 +165,9 @@ class HiddenSurfacesRecommendationCalculatorTest {
 	class testCalculateForMinorDamage {
 
 		@Test
-		void should_ReturnRESALE_When_HiddenSurfacesHasMinorDamageIsTrue() {
+		void should_ReturnRESALE_When_HiddenSurfacesHasMinorDamageSpecified() {
 			// GIVEN
 			HiddenSurfaceDamage hiddenSurfaceDamage = HiddenSurfaceDamage.builder()
-					.hiddenSurfacesHasMinorDamage(true)
 					.hiddenSurfacesMinorDamage("I'm the tested property")
 					.build();
 
@@ -184,10 +181,10 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		}
 
 		@Test
-		void should_ReturnNONE_When_HiddenSurfacesHasMinorDamageIsFalse() {
+		void should_ReturnNONE_When_HiddenSurfacesHasMinorDamageUnspecified() {
 			// GIVEN
 			HiddenSurfaceDamage hiddenSurfaceDamage = HiddenSurfaceDamage.builder()
-					.hiddenSurfacesHasMinorDamage(false)
+					.hiddenSurfacesMinorDamage("")
 					.build();
 
 			Recommendation expected = NONE;

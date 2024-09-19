@@ -57,7 +57,7 @@ public class HiddenSurfacesRecommendationCalculator {
 
 	@VisibleForTesting
 	Recommendation calculateForMinorDamage(HiddenSurfaceDamage detail) {
-		return detail.isHiddenSurfacesHasMinorDamage()
+		return detail.hasMinorDamage()
 				? RESALE
 				: NONE;
 	}

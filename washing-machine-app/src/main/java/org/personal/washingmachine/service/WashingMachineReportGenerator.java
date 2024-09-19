@@ -138,7 +138,7 @@ public class WashingMachineReportGenerator {
 		parameters.put("hiddenSurfacesHasDents", washingMachineDetail.getHiddenSurfaceDamage().hasDents());
 		parameters.put("hiddenSurfacesDentsDepth", washingMachineDetail.getHiddenSurfaceDamage().getHiddenSurfacesDentsDepth());
 
-		parameters.put("hiddenSurfacesHasMinorDamage", washingMachineDetail.getHiddenSurfaceDamage().isHiddenSurfacesHasMinorDamage());
+		parameters.put("hiddenSurfacesHasMinorDamage", washingMachineDetail.getHiddenSurfaceDamage().hasMinorDamage());
 		parameters.put("hiddenSurfacesMinorDamage", washingMachineDetail.getHiddenSurfaceDamage().getHiddenSurfacesMinorDamage());
 
 		parameters.put("hiddenSurfacesHasMajorDamage", washingMachineDetail.getHiddenSurfaceDamage().isHiddenSurfacesHasMajorDamage());

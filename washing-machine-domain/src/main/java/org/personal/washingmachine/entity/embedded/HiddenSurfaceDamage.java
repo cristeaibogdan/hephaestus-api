@@ -6,6 +6,9 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
+
+import static org.apache.commons.lang3.StringUtils.*;
 
 @Getter
 @AllArgsConstructor
@@ -18,10 +21,6 @@ public class HiddenSurfaceDamage {
 
 	@Column(name = "hidden_surfaces_dents_depth")
 	private double hiddenSurfacesDentsDepth;
-
-
-	@Column(name = "hidden_surfaces_has_minor_damage")
-	private boolean hiddenSurfacesHasMinorDamage;
 
 	@Column(name = "hidden_surfaces_minor_damage")
 	private String hiddenSurfacesMinorDamage;
@@ -36,7 +35,7 @@ public class HiddenSurfaceDamage {
 	public boolean isApplicable() {
 		return hasScratches() ||
 				hasDents() ||
-				hiddenSurfacesHasMinorDamage ||
+				hasMinorDamage() ||
 				hiddenSurfacesHasMajorDamage;
 	}
 
@@ -48,6 +47,10 @@ public class HiddenSurfaceDamage {
 		return hiddenSurfacesDentsDepth > 0;
 	}
 
+	public boolean hasMinorDamage() { // TODO: @NotNull can be set into DTO validation
+		return isNotBlank(hiddenSurfacesMinorDamage);
+	}
+
 	public static HiddenSurfaceDamageBuilder builder() { //TODO: Replace with lombok @Builder
 		return new HiddenSurfaceDamageBuilder();
 	}
@@ -56,7 +59,6 @@ public class HiddenSurfaceDamage {
 		private double hiddenSurfacesScratchesLength;
 		private double hiddenSurfacesDentsDepth;
 
-		private boolean hiddenSurfacesHasMinorDamage;
 		private String hiddenSurfacesMinorDamage;
 
 		private boolean hiddenSurfacesHasMajorDamage;
@@ -66,7 +68,6 @@ public class HiddenSurfaceDamage {
 			return new HiddenSurfaceDamage(
 					this.hiddenSurfacesScratchesLength,
 					this.hiddenSurfacesDentsDepth,
-					this.hiddenSurfacesHasMinorDamage,
 					this.hiddenSurfacesMinorDamage,
 					this.hiddenSurfacesHasMajorDamage,
 					this.hiddenSurfacesMajorDamage
@@ -80,11 +81,6 @@ public class HiddenSurfaceDamage {
 
         public HiddenSurfaceDamageBuilder hiddenSurfacesDentsDepth (double hiddenSurfacesDentsDepth) {
             this.hiddenSurfacesDentsDepth = hiddenSurfacesDentsDepth;
-            return this;
-        }
-
-        public HiddenSurfaceDamageBuilder hiddenSurfacesHasMinorDamage (boolean hiddenSurfacesHasMinorDamage) {
-            this.hiddenSurfacesHasMinorDamage = hiddenSurfacesHasMinorDamage;
             return this;
         }
 

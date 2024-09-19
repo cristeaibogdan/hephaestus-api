@@ -142,7 +142,6 @@ class WashingMachineApplicationServiceTest {
                     new HiddenSurfaceDamage(
                             5.5,
                             0,
-                            true,
                             "some minor damage",
                             true,
                             "some major damage"
