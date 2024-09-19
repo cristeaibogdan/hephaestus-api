@@ -25,10 +25,6 @@ public class HiddenSurfaceDamage {
 	@Column(name = "hidden_surfaces_minor_damage")
 	private String hiddenSurfacesMinorDamage;
 
-
-	@Column(name = "hidden_surfaces_has_major_damage")
-	private boolean hiddenSurfacesHasMajorDamage;
-
 	@Column(name = "hidden_surfaces_major_damage")
 	private String hiddenSurfacesMajorDamage;
 
@@ -36,7 +32,7 @@ public class HiddenSurfaceDamage {
 		return hasScratches() ||
 				hasDents() ||
 				hasMinorDamage() ||
-				hiddenSurfacesHasMajorDamage;
+				hasMajorDamage();
 	}
 
 	public boolean hasScratches() { // TODO: Min(0) and Max(10) can be set into DTO validation
@@ -51,6 +47,10 @@ public class HiddenSurfaceDamage {
 		return isNotBlank(hiddenSurfacesMinorDamage);
 	}
 
+	public boolean hasMajorDamage() { // TODO: @NotNull can be set into DTO validation
+		return isNotBlank(hiddenSurfacesMajorDamage);
+	}
+
 	public static HiddenSurfaceDamageBuilder builder() { //TODO: Replace with lombok @Builder
 		return new HiddenSurfaceDamageBuilder();
 	}
@@ -60,8 +60,6 @@ public class HiddenSurfaceDamage {
 		private double hiddenSurfacesDentsDepth;
 
 		private String hiddenSurfacesMinorDamage;
-
-		private boolean hiddenSurfacesHasMajorDamage;
 		private String hiddenSurfacesMajorDamage;
 
 		public HiddenSurfaceDamage build() {
@@ -69,7 +67,6 @@ public class HiddenSurfaceDamage {
 					this.hiddenSurfacesScratchesLength,
 					this.hiddenSurfacesDentsDepth,
 					this.hiddenSurfacesMinorDamage,
-					this.hiddenSurfacesHasMajorDamage,
 					this.hiddenSurfacesMajorDamage
 			);
 		}
@@ -86,11 +83,6 @@ public class HiddenSurfaceDamage {
 
         public HiddenSurfaceDamageBuilder hiddenSurfacesMinorDamage (String hiddenSurfacesMinorDamage) {
             this.hiddenSurfacesMinorDamage = hiddenSurfacesMinorDamage;
-            return this;
-        }
-
-        public HiddenSurfaceDamageBuilder hiddenSurfacesHasMajorDamage (boolean hiddenSurfacesHasMajorDamage) {
-            this.hiddenSurfacesHasMajorDamage = hiddenSurfacesHasMajorDamage;
             return this;
         }
 

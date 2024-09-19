@@ -48,7 +48,6 @@ class WashingMachineDamageCalculatorTest {
 							0,
 							0,
 							"",
-							false,
 							""
 					),
 				0,
@@ -84,7 +83,6 @@ class WashingMachineDamageCalculatorTest {
 							0,
 							0,
 							"",
-							false,
 							""
 					),
 					0,

@@ -17,13 +17,12 @@ class HiddenSurfacesRecommendationCalculatorTest {
 	class testCalculate {
 
 		@Test
-		void should_ReturnNONE_When_AllValuesAreFalse() {
+		void should_ReturnNONE_When_ValuesAreDefault() {
 			// GIVEN
 			HiddenSurfaceDamage hiddenSurfaceDamage = HiddenSurfaceDamage.builder()
 					.hiddenSurfacesScratchesLength(0)
 					.hiddenSurfacesDentsDepth(0)
 					.hiddenSurfacesMinorDamage("")
-					.hiddenSurfacesHasMajorDamage(false)
 					.hiddenSurfacesMajorDamage("")
 					.build();
 
@@ -201,10 +200,9 @@ class HiddenSurfacesRecommendationCalculatorTest {
 	class testCalculateForMajorDamage {
 
 		@Test
-		void should_ReturnOUTLET_When_HiddenSurfacesHasMajorDamageIsTrue() {
+		void should_ReturnOUTLET_When_HiddenSurfacesHasMajorDamageSpecified() {
 			// GIVEN
 			HiddenSurfaceDamage hiddenSurfaceDamage = HiddenSurfaceDamage.builder()
-					.hiddenSurfacesHasMajorDamage(true)
 					.hiddenSurfacesMajorDamage("I'm the tested property")
 					.build();
 
@@ -218,10 +216,10 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		}
 
 		@Test
-		void should_ReturnNONE_When_HiddenSurfacesHasMajorDamageIsFalse() {
+		void should_ReturnNONE_When_HiddenSurfacesHasMajorDamageUnspecified() {
 			// GIVEN
 			HiddenSurfaceDamage hiddenSurfaceDamage = HiddenSurfaceDamage.builder()
-					.hiddenSurfacesHasMajorDamage(false)
+					.hiddenSurfacesMajorDamage("")
 					.build();
 
 			Recommendation expected = NONE;

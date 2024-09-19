@@ -55,7 +55,6 @@ class WashingMachineApplicationServiceIntegrationTest extends BaseIntegrationTes
 							5.5,
 							0,
 							"some minor damage",
-							true,
 							"some major damage"
 					),
 					0,

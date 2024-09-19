@@ -64,7 +64,7 @@ public class HiddenSurfacesRecommendationCalculator {
 
 	@VisibleForTesting
 	Recommendation calculateForMajorDamage(HiddenSurfaceDamage detail) {
-		return detail.isHiddenSurfacesHasMajorDamage()
+		return detail.hasMajorDamage()
 				? OUTLET
 				: NONE;
 	}
