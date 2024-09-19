@@ -38,7 +38,6 @@ class WashingMachineDamageCalculatorTest {
 							0,
 							0,
 							"",
-							false,
 							""
 					),
 					new HiddenSurfaceDamage(
@@ -70,7 +69,6 @@ class WashingMachineDamageCalculatorTest {
 							0,
 							0,
 							"",
-							false,
 							""
 					),
 					new HiddenSurfaceDamage(

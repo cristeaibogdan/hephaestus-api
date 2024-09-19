@@ -24,10 +24,6 @@ public class VisibleSurfaceDamage {
     @Column(name = "visible_surfaces_minor_damage")
     private String visibleSurfacesMinorDamage;
 
-
-    @Column(name = "visible_surfaces_has_major_damage")
-    private boolean visibleSurfacesHasMajorDamage;
-
     @Column(name = "visible_surfaces_major_damage")
     private String visibleSurfacesMajorDamage;
 
@@ -35,7 +31,7 @@ public class VisibleSurfaceDamage {
         return hasScratches() ||
                 hasDents() ||
                 hasMinorDamage() ||
-                visibleSurfacesHasMajorDamage;
+                hasMajorDamage();
     }
 
     public boolean hasScratches() { // TODO: Min(0) and Max(10) can be set into DTO validation
@@ -50,6 +46,10 @@ public class VisibleSurfaceDamage {
         return isNotBlank(visibleSurfacesMinorDamage);
     }
 
+    public boolean hasMajorDamage() { // TODO: @NotNull can be set into DTO validation
+        return isNotBlank(visibleSurfacesMajorDamage);
+    }
+
     public static VisibleSurfaceDamageBuilder builder() { //TODO: Replace with lombok @Builder
         return new VisibleSurfaceDamageBuilder();
     }
@@ -59,8 +59,6 @@ public class VisibleSurfaceDamage {
         private double visibleSurfacesDentsDepth;
 
         private String visibleSurfacesMinorDamage;
-
-        private boolean visibleSurfacesHasMajorDamage;
         private String visibleSurfacesMajorDamage;
 
         public VisibleSurfaceDamage build() {
@@ -68,7 +66,6 @@ public class VisibleSurfaceDamage {
                     this.visibleSurfacesScratchesLength,
                     this.visibleSurfacesDentsDepth,
                     this.visibleSurfacesMinorDamage,
-                    this.visibleSurfacesHasMajorDamage,
                     this.visibleSurfacesMajorDamage
             );
         }
@@ -85,11 +82,6 @@ public class VisibleSurfaceDamage {
 
         public VisibleSurfaceDamageBuilder visibleSurfacesMinorDamage (String visibleSurfacesMinorDamage) {
             this.visibleSurfacesMinorDamage = visibleSurfacesMinorDamage;
-            return this;
-        }
-
-        public VisibleSurfaceDamageBuilder visibleSurfacesHasMajorDamage (boolean visibleSurfacesHasMajorDamage) {
-            this.visibleSurfacesHasMajorDamage = visibleSurfacesHasMajorDamage;
             return this;
         }
 

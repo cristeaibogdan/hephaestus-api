@@ -64,7 +64,7 @@ public class VisibleSurfacesRecommendationCalculator {
 
 	@VisibleForTesting
 	Recommendation calculateForMajorDamage(VisibleSurfaceDamage detail) {
-		return (detail.isVisibleSurfacesHasMajorDamage())
+		return detail.hasMajorDamage()
 				? OUTLET
 				: NONE;
 	}

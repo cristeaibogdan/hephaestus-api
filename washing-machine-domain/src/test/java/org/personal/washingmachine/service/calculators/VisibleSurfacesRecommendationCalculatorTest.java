@@ -24,7 +24,6 @@ class VisibleSurfacesRecommendationCalculatorTest {
 					.visibleSurfacesScratchesLength(0)
 					.visibleSurfacesDentsDepth(0)
 					.visibleSurfacesMinorDamage("")
-					.visibleSurfacesHasMajorDamage(false)
 					.visibleSurfacesMajorDamage("")
 					.build();
 
@@ -38,10 +37,9 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		}
 
 		@Test
-		void should_ReturnRESALE_When_MajorDamageTrue() {
+		void should_ReturnRESALE_When_MajorDamageIsSpecified() {
 			// GIVEN
 			VisibleSurfaceDamage visibleSurfaceDamage = VisibleSurfaceDamage.builder()
-					.visibleSurfacesHasMajorDamage(true)
 					.visibleSurfacesMajorDamage("I'm the tested property")
 					.build();
 
@@ -203,10 +201,9 @@ class VisibleSurfacesRecommendationCalculatorTest {
 	class testCalculateForMajorDamage {
 
 		@Test
-		void should_ReturnOUTLET_When_VisibleSurfacesHasMajorDamageIsTrue() {
+		void should_ReturnOUTLET_When_VisibleSurfacesHasMajorDamageIsSpecified() {
 			// GIVEN
 			VisibleSurfaceDamage visibleSurfaceDamage = VisibleSurfaceDamage.builder()
-					.visibleSurfacesHasMajorDamage(true)
 					.visibleSurfacesMajorDamage("I'm the tested property")
 					.build();
 
@@ -220,10 +217,10 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		}
 
 		@Test
-		void should_ReturnNONE_When_VisibleSurfacesHasMajorDamageIsFalse() {
+		void should_ReturnNONE_When_VisibleSurfacesMajorDamageIsUnspecified() {
 			// GIVEN
 			VisibleSurfaceDamage visibleSurfaceDamage = VisibleSurfaceDamage.builder()
-					.visibleSurfacesHasMajorDamage(false)
+					.visibleSurfacesMajorDamage("")
 					.build();
 
 			Recommendation expected = NONE;
