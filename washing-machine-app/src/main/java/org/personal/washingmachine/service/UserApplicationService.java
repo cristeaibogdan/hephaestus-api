@@ -22,21 +22,11 @@ import static org.personal.washingmachine.dto.Mapper.*;
 @RequiredArgsConstructor
 public class UserApplicationService implements IUserApplicationService { // TODO: Replace with proper authentication
 	private final UserService service;
-
-	private Map<OrganizationAndCountryDTO, List<String>> initializeRegistrationCodes() {
-		Map<OrganizationAndCountryDTO, List<String>> registerCodes = new HashMap<>();
-		registerCodes.put(new OrganizationAndCountryDTO("ZEOS", "SLOVENIA"), List.of("RX1000", "RX1001", "RX1002", "RX1003"));
-		registerCodes.put(new OrganizationAndCountryDTO("GORENJE", "SLOVENIA"), List.of("RX2000", "RX2001", "RX2002", "RX2003"));
-		registerCodes.put(new OrganizationAndCountryDTO("BOSCH", "GERMANY"), List.of("RX3000", "RX3001", "RX3002", "RX3003"));
-		registerCodes.put(new OrganizationAndCountryDTO("SMEG", "ITALY"), List.of("RX4000", "RX4001", "RX4002", "RX4003"));
-		registerCodes.put(new OrganizationAndCountryDTO("ORIGIN", "ROMANIA"), List.of("RX5000", "RX5001", "RX5002", "RX5003"));
-
-		return registerCodes;
-	}
+	private final Map<OrganizationAndCountryDTO, List<String>> registerCodes;
 
 	@Override
 	public boolean isValidRegistrationCode(String registrationCode) {
-		Optional<OrganizationAndCountryDTO> response = initializeRegistrationCodes().entrySet().stream()
+		Optional<OrganizationAndCountryDTO> response = registerCodes.entrySet().stream()
 				.filter(entry -> entry.getValue().contains(registrationCode))
 				.map(entry -> entry.getKey())
 				.findFirst();
@@ -46,7 +36,7 @@ public class UserApplicationService implements IUserApplicationService { // TODO
 
 	@Override
 	public OrganizationAndCountryDTO getOrganizationAndCountry(String registrationCode) {
-		return initializeRegistrationCodes().entrySet()
+		return registerCodes.entrySet()
 				.stream()
 				.filter(entry -> entry.getValue().contains(registrationCode))
 				.map(entry -> entry.getKey())
