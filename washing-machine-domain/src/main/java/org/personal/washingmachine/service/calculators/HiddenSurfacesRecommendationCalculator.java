@@ -35,7 +35,7 @@ public class HiddenSurfacesRecommendationCalculator {
 
 	@VisibleForTesting
 	Recommendation calculateForScratches(HiddenSurfaceDamage detail) {
-		if (!detail.isHiddenSurfacesHasScratches()) {
+		if (!detail.hasScratches()) {
 			return NONE;
 		}
 

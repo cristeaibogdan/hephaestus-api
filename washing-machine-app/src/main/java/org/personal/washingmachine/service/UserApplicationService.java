@@ -10,7 +10,6 @@ import org.personal.washingmachine.dto.UserDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;

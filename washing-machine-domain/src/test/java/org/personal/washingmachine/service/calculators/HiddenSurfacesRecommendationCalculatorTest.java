@@ -20,7 +20,6 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		void should_ReturnNONE_When_AllValuesAreFalse() {
 			// GIVEN
 			HiddenSurfaceDamage hiddenSurfaceDamage = HiddenSurfaceDamage.builder()
-					.hiddenSurfacesHasScratches(false)
 					.hiddenSurfacesScratchesLength(0)
 					.hiddenSurfacesHasDents(false)
 					.hiddenSurfacesDentsDepth(0)
@@ -61,10 +60,10 @@ class HiddenSurfacesRecommendationCalculatorTest {
 	class testCalculateForScratches {
 
 		@Test
-		void should_ReturnNONE_When_HiddenSurfacesHasScratchesIsFalse() {
+		void should_ReturnNONE_When_ScratchesLengthIsZero() {
 			// GIVEN
 			HiddenSurfaceDamage hiddenSurfaceDamage = HiddenSurfaceDamage.builder()
-					.hiddenSurfacesHasScratches(false)
+					.hiddenSurfacesScratchesLength(0)
 					.build();
 
 			Recommendation expected = NONE;
@@ -78,10 +77,9 @@ class HiddenSurfacesRecommendationCalculatorTest {
 
 		@ParameterizedTest
 		@ValueSource(doubles = {0.5, 1, 6, 6.5})
-		void should_ReturnRESALE_When_ScratchesAreUnder7cm(double scratchLength) {
+		void should_ReturnRESALE_When_ScratchesLengthAreUnder7cm(double scratchLength) {
 			// GIVEN
 			HiddenSurfaceDamage hiddenSurfaceDamage = HiddenSurfaceDamage.builder()
-					.hiddenSurfacesHasScratches(true)
 					.hiddenSurfacesScratchesLength(scratchLength)
 					.build();
 
@@ -96,10 +94,9 @@ class HiddenSurfacesRecommendationCalculatorTest {
 
 		@ParameterizedTest
 		@ValueSource(doubles = {7, 7.5, 10})
-		void should_ReturnOUTLET_When_ScratchesAreEqualOrOver7cm(double scratchLength) {
+		void should_ReturnOUTLET_When_ScratchesLengthAreEqualOrOver7cm(double scratchLength) {
 			// GIVEN
 			HiddenSurfaceDamage hiddenSurfaceDamage = HiddenSurfaceDamage.builder()
-					.hiddenSurfacesHasScratches(true)
 					.hiddenSurfacesScratchesLength(scratchLength)
 					.build();
 
