@@ -44,7 +44,6 @@ class WashingMachineApplicationServiceIntegrationTest extends BaseIntegrationTes
 					new VisibleSurfaceDamage(
 							5.5,
 							0,
-							true,
 							"some minor damage",
 							true,
 							"some major damage"

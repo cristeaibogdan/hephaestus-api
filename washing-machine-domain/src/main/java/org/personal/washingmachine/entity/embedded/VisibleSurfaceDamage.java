@@ -21,10 +21,6 @@ public class VisibleSurfaceDamage {
     @Column(name = "visible_surfaces_dents_depth")
     private double visibleSurfacesDentsDepth;
 
-
-    @Column(name = "visible_surfaces_has_minor_damage")
-    private boolean visibleSurfacesHasMinorDamage;
-
     @Column(name = "visible_surfaces_minor_damage")
     private String visibleSurfacesMinorDamage;
 
@@ -38,7 +34,7 @@ public class VisibleSurfaceDamage {
     public boolean isApplicable() {
         return hasScratches() ||
                 hasDents() ||
-                visibleSurfacesHasMinorDamage ||
+                hasMinorDamage() ||
                 visibleSurfacesHasMajorDamage;
     }
 
@@ -50,6 +46,10 @@ public class VisibleSurfaceDamage {
         return visibleSurfacesDentsDepth > 0;
     }
 
+    public boolean hasMinorDamage() { // TODO: @NotNull can be set into DTO validation
+        return isNotBlank(visibleSurfacesMinorDamage);
+    }
+
     public static VisibleSurfaceDamageBuilder builder() { //TODO: Replace with lombok @Builder
         return new VisibleSurfaceDamageBuilder();
     }
@@ -58,7 +58,6 @@ public class VisibleSurfaceDamage {
         private double visibleSurfacesScratchesLength;
         private double visibleSurfacesDentsDepth;
 
-        private boolean visibleSurfacesHasMinorDamage;
         private String visibleSurfacesMinorDamage;
 
         private boolean visibleSurfacesHasMajorDamage;
@@ -68,7 +67,6 @@ public class VisibleSurfaceDamage {
             return new VisibleSurfaceDamage(
                     this.visibleSurfacesScratchesLength,
                     this.visibleSurfacesDentsDepth,
-                    this.visibleSurfacesHasMinorDamage,
                     this.visibleSurfacesMinorDamage,
                     this.visibleSurfacesHasMajorDamage,
                     this.visibleSurfacesMajorDamage
@@ -82,11 +80,6 @@ public class VisibleSurfaceDamage {
 
         public VisibleSurfaceDamageBuilder visibleSurfacesDentsDepth (double visibleSurfacesDentsDepth) {
             this.visibleSurfacesDentsDepth = visibleSurfacesDentsDepth;
-            return this;
-        }
-
-        public VisibleSurfaceDamageBuilder visibleSurfacesHasMinorDamage (boolean visibleSurfacesHasMinorDamage) {
-            this.visibleSurfacesHasMinorDamage = visibleSurfacesHasMinorDamage;
             return this;
         }
 

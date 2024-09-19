@@ -23,7 +23,6 @@ class VisibleSurfacesRecommendationCalculatorTest {
 			VisibleSurfaceDamage visibleSurfaceDamage = VisibleSurfaceDamage.builder()
 					.visibleSurfacesScratchesLength(0)
 					.visibleSurfacesDentsDepth(0)
-					.visibleSurfacesHasMinorDamage(false)
 					.visibleSurfacesMinorDamage("")
 					.visibleSurfacesHasMajorDamage(false)
 					.visibleSurfacesMajorDamage("")
@@ -168,10 +167,9 @@ class VisibleSurfacesRecommendationCalculatorTest {
 	class testCalculateForMinorDamage {
 
 		@Test
-		void should_ReturnRESALE_When_VisibleSurfacesHasMinorDamageIsTrue() {
+		void should_ReturnRESALE_When_VisibleSurfacesHasMinorDamageSpecified() {
 			// GIVEN
 			VisibleSurfaceDamage visibleSurfaceDamage = VisibleSurfaceDamage.builder()
-					.visibleSurfacesHasMinorDamage(true)
 					.visibleSurfacesMinorDamage("I'm the tested property")
 					.build();
 
@@ -185,10 +183,10 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		}
 
 		@Test
-		void should_ReturnNONE_When_VisibleSurfacesHasMinorDamageIsFalse() {
+		void should_ReturnNONE_When_VisibleSurfacesHasMinorDamageUnspecified() {
 			// GIVEN
 			VisibleSurfaceDamage visibleSurfaceDamage = VisibleSurfaceDamage.builder()
-					.visibleSurfacesHasMinorDamage(false)
+					.visibleSurfacesMinorDamage("")
 					.build();
 
 			Recommendation expected = NONE;
