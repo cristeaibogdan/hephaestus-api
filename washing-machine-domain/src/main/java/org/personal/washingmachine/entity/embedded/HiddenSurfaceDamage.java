@@ -16,10 +16,6 @@ public class HiddenSurfaceDamage {
 	@Column(name = "hidden_surfaces_scratches_length")
 	private double hiddenSurfacesScratchesLength;
 
-
-	@Column(name = "hidden_surfaces_has_dents")
-	private boolean hiddenSurfacesHasDents;
-
 	@Column(name = "hidden_surfaces_dents_depth")
 	private double hiddenSurfacesDentsDepth;
 
@@ -39,7 +35,7 @@ public class HiddenSurfaceDamage {
 
 	public boolean isApplicable() {
 		return hasScratches() ||
-				hiddenSurfacesHasDents ||
+				hasDents() ||
 				hiddenSurfacesHasMinorDamage ||
 				hiddenSurfacesHasMajorDamage;
 	}
@@ -48,14 +44,16 @@ public class HiddenSurfaceDamage {
 		return hiddenSurfacesScratchesLength > 0;
 	}
 
+	public boolean hasDents() { // TODO: Min(0) and Max(10) can be set into DTO validation
+		return hiddenSurfacesDentsDepth > 0;
+	}
+
 	public static HiddenSurfaceDamageBuilder builder() { //TODO: Replace with lombok @Builder
 		return new HiddenSurfaceDamageBuilder();
 	}
 
 	public static class HiddenSurfaceDamageBuilder {
 		private double hiddenSurfacesScratchesLength;
-
-		private boolean hiddenSurfacesHasDents;
 		private double hiddenSurfacesDentsDepth;
 
 		private boolean hiddenSurfacesHasMinorDamage;
@@ -67,7 +65,6 @@ public class HiddenSurfaceDamage {
 		public HiddenSurfaceDamage build() {
 			return new HiddenSurfaceDamage(
 					this.hiddenSurfacesScratchesLength,
-					this.hiddenSurfacesHasDents,
 					this.hiddenSurfacesDentsDepth,
 					this.hiddenSurfacesHasMinorDamage,
 					this.hiddenSurfacesMinorDamage,
@@ -78,11 +75,6 @@ public class HiddenSurfaceDamage {
 
         public HiddenSurfaceDamageBuilder hiddenSurfacesScratchesLength (double hiddenSurfacesScratchesLength) {
             this.hiddenSurfacesScratchesLength = hiddenSurfacesScratchesLength;
-            return this;
-        }
-
-        public HiddenSurfaceDamageBuilder hiddenSurfacesHasDents (boolean hiddenSurfacesHasDents) {
-            this.hiddenSurfacesHasDents = hiddenSurfacesHasDents;
             return this;
         }
 

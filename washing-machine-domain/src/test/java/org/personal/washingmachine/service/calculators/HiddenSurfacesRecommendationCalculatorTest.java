@@ -21,7 +21,6 @@ class HiddenSurfacesRecommendationCalculatorTest {
 			// GIVEN
 			HiddenSurfaceDamage hiddenSurfaceDamage = HiddenSurfaceDamage.builder()
 					.hiddenSurfacesScratchesLength(0)
-					.hiddenSurfacesHasDents(false)
 					.hiddenSurfacesDentsDepth(0)
 					.hiddenSurfacesHasMinorDamage(false)
 					.hiddenSurfacesMinorDamage("")
@@ -114,10 +113,10 @@ class HiddenSurfacesRecommendationCalculatorTest {
 	class testCalculateForDents {
 
 		@Test
-		void should_ReturnNONE_When_HiddenSurfacesHasDentsIsFalse() {
+		void should_ReturnNONE_When_HiddenSurfacesDentsIsZero() {
 			// GIVEN
 			HiddenSurfaceDamage hiddenSurfaceDamage = HiddenSurfaceDamage.builder()
-					.hiddenSurfacesHasDents(false)
+					.hiddenSurfacesDentsDepth(0)
 					.build();
 
 			Recommendation expected = NONE;
@@ -134,7 +133,6 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		void should_ReturnRESALE_When_DentsAreUnder7cm(double dentDepth) {
 			// GIVEN
 			HiddenSurfaceDamage hiddenSurfaceDamage = HiddenSurfaceDamage.builder()
-					.hiddenSurfacesHasDents(true)
 					.hiddenSurfacesDentsDepth(dentDepth)
 					.build();
 
@@ -152,7 +150,6 @@ class HiddenSurfacesRecommendationCalculatorTest {
 		void should_ReturnOUTLET_When_DentsAreEqualOrOver7cm(double dentDepth) {
 			// GIVEN
 			HiddenSurfaceDamage hiddenSurfaceDamage = HiddenSurfaceDamage.builder()
-					.hiddenSurfacesHasDents(true)
 					.hiddenSurfacesDentsDepth(dentDepth)
 					.build();
 

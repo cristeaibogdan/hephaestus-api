@@ -46,7 +46,7 @@ public class HiddenSurfacesRecommendationCalculator {
 
 	@VisibleForTesting
 	Recommendation calculateForDents(HiddenSurfaceDamage detail) {
-		if (!detail.isHiddenSurfacesHasDents()) {
+		if (!detail.hasDents()) {
 			return NONE;
 		}
 
