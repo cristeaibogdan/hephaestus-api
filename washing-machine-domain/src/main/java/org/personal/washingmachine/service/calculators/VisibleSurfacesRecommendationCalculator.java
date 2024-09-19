@@ -35,7 +35,7 @@ public class VisibleSurfacesRecommendationCalculator {
 
 	@VisibleForTesting
 	Recommendation calculateForScratches(VisibleSurfaceDamage detail) {
-		if (!detail.isVisibleSurfacesHasScratches()) {
+		if (!detail.hasScratches()) {
 			return NONE;
 		}
 

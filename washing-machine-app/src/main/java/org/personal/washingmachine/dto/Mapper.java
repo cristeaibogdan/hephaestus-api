@@ -62,7 +62,7 @@ public class Mapper {
 					entity.getPackageDamage().isPackageMaterialAvailable(),
 
 					entity.getVisibleSurfaceDamage().isApplicable(),
-					entity.getVisibleSurfaceDamage().isVisibleSurfacesHasScratches(),
+					entity.getVisibleSurfaceDamage().hasScratches(),
 					entity.getVisibleSurfaceDamage().getVisibleSurfacesScratchesLength(),
 					entity.getVisibleSurfaceDamage().isVisibleSurfacesHasDents(),
 					entity.getVisibleSurfaceDamage().getVisibleSurfacesDentsDepth(),
@@ -95,7 +95,6 @@ public class Mapper {
 					),
 
 					new VisibleSurfaceDamage(
-							dto.visibleSurfacesHasScratches(),
 							dto.visibleSurfacesScratchesLength(),
 							dto.visibleSurfacesHasDents(),
 							dto.visibleSurfacesDentsDepth(),

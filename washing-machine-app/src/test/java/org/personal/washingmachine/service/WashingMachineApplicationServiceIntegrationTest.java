@@ -42,7 +42,6 @@ class WashingMachineApplicationServiceIntegrationTest extends BaseIntegrationTes
 			WashingMachineDetail washingMachineDetail = new WashingMachineDetail(
 					new PackageDamage(true, true, true),
 					new VisibleSurfaceDamage(
-							true,
 							5.5,
 							false,
 							0,

@@ -114,7 +114,7 @@ public class WashingMachineReportGenerator {
 
 		parameters.put("applicableVisibleSurfacesDamage", washingMachineDetail.getVisibleSurfaceDamage().isApplicable());
 
-		parameters.put("visibleSurfacesHasScratches", washingMachineDetail.getVisibleSurfaceDamage().isVisibleSurfacesHasScratches());
+		parameters.put("visibleSurfacesHasScratches", washingMachineDetail.getVisibleSurfaceDamage().hasScratches());
 		parameters.put("visibleSurfacesScratchesLength", washingMachineDetail.getVisibleSurfaceDamage().getVisibleSurfacesScratchesLength());
 
 		parameters.put("visibleSurfacesHasDents", washingMachineDetail.getVisibleSurfaceDamage().isVisibleSurfacesHasDents());

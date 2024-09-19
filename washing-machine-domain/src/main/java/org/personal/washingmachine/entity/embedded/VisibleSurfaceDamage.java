@@ -7,14 +7,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Embeddable
 public class VisibleSurfaceDamage {
-
-    @Column(name = "visible_surfaces_has_scratches")
-    private boolean visibleSurfacesHasScratches;
 
     @Column(name = "visible_surfaces_scratches_length")
     private double visibleSurfacesScratchesLength;
@@ -41,10 +40,14 @@ public class VisibleSurfaceDamage {
     private String visibleSurfacesMajorDamage;
 
     public boolean isApplicable() {
-        return visibleSurfacesHasScratches ||
+        return hasScratches() ||
                 visibleSurfacesHasDents ||
                 visibleSurfacesHasMinorDamage ||
                 visibleSurfacesHasMajorDamage;
+    }
+
+    public boolean hasScratches() { // TODO: Min(0) and Max(10) can be set into DTO validation
+        return visibleSurfacesScratchesLength > 0;
     }
 
     public static VisibleSurfaceDamageBuilder builder() { //TODO: Replace with lombok @Builder
@@ -52,7 +55,6 @@ public class VisibleSurfaceDamage {
     }
 
     public static class VisibleSurfaceDamageBuilder {
-        private boolean visibleSurfacesHasScratches;
         private double visibleSurfacesScratchesLength;
 
         private boolean visibleSurfacesHasDents;
@@ -66,7 +68,6 @@ public class VisibleSurfaceDamage {
 
         public VisibleSurfaceDamage build() {
             return new VisibleSurfaceDamage(
-                    this.visibleSurfacesHasScratches,
                     this.visibleSurfacesScratchesLength,
                     this.visibleSurfacesHasDents,
                     this.visibleSurfacesDentsDepth,
@@ -75,11 +76,6 @@ public class VisibleSurfaceDamage {
                     this.visibleSurfacesHasMajorDamage,
                     this.visibleSurfacesMajorDamage
             );
-        }
-
-        public VisibleSurfaceDamageBuilder visibleSurfacesHasScratches(boolean visibleSurfacesHasScratches) {
-            this.visibleSurfacesHasScratches = visibleSurfacesHasScratches;
-            return this;
         }
 
         public VisibleSurfaceDamageBuilder visibleSurfacesScratchesLength(double visibleSurfacesScratchesLength) {

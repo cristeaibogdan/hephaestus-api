@@ -18,10 +18,9 @@ class VisibleSurfacesRecommendationCalculatorTest {
 	class testCalculate {
 
 		@Test
-		void should_ReturnNONE_When_AllValuesAreFalse() {
+		void should_ReturnNONE_When_ValuesAreDefault() {
 			// GIVEN
 			VisibleSurfaceDamage visibleSurfaceDamage = VisibleSurfaceDamage.builder()
-					.visibleSurfacesHasScratches(false)
 					.visibleSurfacesScratchesLength(0)
 					.visibleSurfacesHasDents(false)
 					.visibleSurfacesDentsDepth(0)
@@ -62,10 +61,10 @@ class VisibleSurfacesRecommendationCalculatorTest {
 	class testCalculateForScratches {
 
 		@Test
-		void should_ReturnNONE_When_VisibleSurfacesHasScratchesIsFalse() {
+		void should_ReturnNONE_When_VisibleSurfacesScratchesLengthIsZero() {
 			// GIVEN
 			VisibleSurfaceDamage visibleSurfaceDamage = VisibleSurfaceDamage.builder()
-					.visibleSurfacesHasScratches(false)
+					.visibleSurfacesScratchesLength(0)
 					.build();
 
 			Recommendation expected = NONE;
@@ -82,7 +81,6 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		void should_ReturnRESALE_When_ScratchesAreUnder5cm(double scratchValue) {
 			// GIVEN
 			VisibleSurfaceDamage visibleSurfaceDamage = VisibleSurfaceDamage.builder()
-					.visibleSurfacesHasScratches(true)
 					.visibleSurfacesScratchesLength(scratchValue)
 					.build();
 
@@ -100,7 +98,6 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		void should_ReturnOUTLET_When_ScratchesAreEqualOrOver5cm(double scratchValue) {
 			// GIVEN
 			VisibleSurfaceDamage visibleSurfaceDamage =VisibleSurfaceDamage.builder()
-					.visibleSurfacesHasScratches(true)
 					.visibleSurfacesScratchesLength(scratchValue)
 					.build();
 
