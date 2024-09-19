@@ -46,7 +46,7 @@ public class VisibleSurfacesRecommendationCalculator {
 
 	@VisibleForTesting
 	Recommendation calculateForDents(VisibleSurfaceDamage detail) {
-		if (!detail.isVisibleSurfacesHasDents()) {
+		if (!detail.hasDents()) {
 			return NONE;
 		}
 

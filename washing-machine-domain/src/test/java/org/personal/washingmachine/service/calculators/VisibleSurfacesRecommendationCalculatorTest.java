@@ -22,7 +22,6 @@ class VisibleSurfacesRecommendationCalculatorTest {
 			// GIVEN
 			VisibleSurfaceDamage visibleSurfaceDamage = VisibleSurfaceDamage.builder()
 					.visibleSurfacesScratchesLength(0)
-					.visibleSurfacesHasDents(false)
 					.visibleSurfacesDentsDepth(0)
 					.visibleSurfacesHasMinorDamage(false)
 					.visibleSurfacesMinorDamage("")
@@ -115,10 +114,10 @@ class VisibleSurfacesRecommendationCalculatorTest {
 	class testCalculateForDents {
 
 		@Test
-		void should_ReturnNONE_When_VisibleSurfacesHasDentsIsFalse() {
+		void should_ReturnNONE_When_VisibleSurfacesDentsIsZero() {
 			// GIVEN
 			VisibleSurfaceDamage visibleSurfaceDamage = VisibleSurfaceDamage.builder()
-					.visibleSurfacesHasDents(false)
+					.visibleSurfacesDentsDepth(0)
 					.build();
 
 			Recommendation expected = NONE;
@@ -135,7 +134,6 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		void should_ReturnRESALE_When_DentsAreUnder5cm(double dentDepth) {
 			// GIVEN
 			VisibleSurfaceDamage visibleSurfaceDamage = VisibleSurfaceDamage.builder()
-					.visibleSurfacesHasDents(true)
 					.visibleSurfacesDentsDepth(dentDepth)
 					.build();
 
@@ -153,7 +151,6 @@ class VisibleSurfacesRecommendationCalculatorTest {
 		void should_ReturnOUTLET_When_DentsAreEqualOrOver5cm(double dentDepth) {
 			// GIVEN
 			VisibleSurfaceDamage visibleSurfaceDamage = VisibleSurfaceDamage.builder()
-					.visibleSurfacesHasDents(true)
 					.visibleSurfacesDentsDepth(dentDepth)
 					.build();
 

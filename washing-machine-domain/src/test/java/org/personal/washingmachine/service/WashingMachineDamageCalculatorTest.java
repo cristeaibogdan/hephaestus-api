@@ -36,7 +36,6 @@ class WashingMachineDamageCalculatorTest {
 				new PackageDamage(false, false, true),
 					new VisibleSurfaceDamage(
 							0,
-							false,
 							0,
 							false,
 							"",
@@ -70,7 +69,6 @@ class WashingMachineDamageCalculatorTest {
 					new PackageDamage(false, false, false),
 					new VisibleSurfaceDamage(
 							0,
-							false,
 							0,
 							false,
 							"",
