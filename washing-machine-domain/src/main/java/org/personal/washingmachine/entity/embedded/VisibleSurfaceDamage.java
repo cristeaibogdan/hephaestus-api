@@ -34,19 +34,19 @@ public class VisibleSurfaceDamage {
                 hasMajorDamage();
     }
 
-    public boolean hasScratches() { // TODO: Min(0) and Max(10) can be set into DTO validation
+    public boolean hasScratches() {
         return visibleSurfacesScratchesLength > 0;
     }
 
-    public boolean hasDents() { // TODO: Min(0) and Max(10) can be set into DTO validation
+    public boolean hasDents() {
         return visibleSurfacesDentsDepth > 0;
     }
 
-    public boolean hasMinorDamage() { // TODO: @NotNull can be set into DTO validation
+    public boolean hasMinorDamage() {
         return isNotBlank(visibleSurfacesMinorDamage);
     }
 
-    public boolean hasMajorDamage() { // TODO: @NotNull can be set into DTO validation
+    public boolean hasMajorDamage() {
         return isNotBlank(visibleSurfacesMajorDamage);
     }
 
