@@ -50,7 +50,6 @@
 			<artifactId>opentelemetry-exporter-zipkin</artifactId>
 		</dependency>
 
-
 		<!-- ***************************************** -->
 		<!-- *** REPORTS -->
 		<!-- ***************************************** -->
@@ -65,6 +64,17 @@
 			<groupId>net.sf.jasperreports</groupId>
 			<artifactId>jasperreports-fonts</artifactId>
 			<version>6.21.0</version>
+		</dependency>
+
+		<!-- ***************************************** -->
+		<!-- *** VALIDATION -->
+		<!-- ***************************************** -->
+
+		<dependency>
+			<!-- @NotNull, @Min, @Max ... -->
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+			<version>3.3.3</version>
 		</dependency>
 
 		<!-- ***************************************** -->

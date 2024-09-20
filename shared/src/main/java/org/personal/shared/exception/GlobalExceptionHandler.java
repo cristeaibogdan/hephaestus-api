@@ -7,8 +7,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.List;
+import java.util.Objects;
 
 import static org.springframework.http.HttpStatus.*;
 import static org.springframework.http.ResponseEntity.status;
@@ -54,16 +58,20 @@ class GlobalExceptionHandler {
 				.body(userMessage);
 	}
 
-//	TODO: For use when implementing validation
-//	@ResponseStatus(BAD_REQUEST)
-//	@ExceptionHandler(MethodArgumentNotValidException.class) // @Validated
-//	public List<String> onJavaxValidationException(MethodArgumentNotValidException e) {
-//		List<String> validationErrors = e.getBindingResult().getFieldErrors().stream()
-//				.map(fieldError -> fieldError.getField() + ": " + fieldError.getDefaultMessage())
-//				.toList();
-//		log.error("Invalid request: {}", validationErrors, e);
-//		return validationErrors;
-//	}
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	ResponseEntity<List<String>> handleValidationException(MethodArgumentNotValidException e, HttpServletRequest request) {
+		List<String> validationErrors = e.getBindingResult().getFieldErrors().stream()
+				.map(fieldError -> fieldError.getField() + ": " +
+						messageSource.getMessage(
+								Objects.requireNonNull(fieldError.getDefaultMessage()),
+								null,
+								"Internal Translation Error",
+								request.getLocale())
+				).toList();
+		log.error("Invalid request: {}", validationErrors, e);
+		return status(BAD_REQUEST)
+				.body(validationErrors);
+	}
 
 // ************************************************************
 // *** OPENFEIGN EXCEPTIONS

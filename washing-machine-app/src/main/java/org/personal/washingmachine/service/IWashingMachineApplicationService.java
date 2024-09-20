@@ -1,5 +1,6 @@
 package org.personal.washingmachine.service;
 
+import jakarta.validation.Valid;
 import org.personal.washingmachine.dto.*;
 import org.personal.washingmachine.enums.Recommendation;
 import org.personal.washingmachine.dto.WashingMachineReportDTO;
@@ -23,7 +24,7 @@ public interface IWashingMachineApplicationService {
 			  @RequestPart List<MultipartFile> imageFiles);
 
 	@PostMapping("/recommendation")
-	Recommendation getRecommendation(@RequestBody WashingMachineDetailDTO washingMachineDetailDTO);
+	Recommendation getRecommendation(@Valid @RequestBody WashingMachineDetailDTO washingMachineDetailDTO);
 
 	@GetMapping(value = "/{serialNumber}/report")
 	WashingMachineReportDTO getReport(@PathVariable String serialNumber);
