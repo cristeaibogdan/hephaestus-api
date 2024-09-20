@@ -26,12 +26,14 @@ public record WashingMachineDetailDTO(
         double visibleSurfacesDentsDepth,
 
         boolean visibleSurfacesHasMinorDamage,
+		@Size(max = 200, message = "MAXIMUM_CHARACTERS_200")
 		@NotNull(message = "VALUE_NOT_NULL")
         String visibleSurfacesMinorDamage,
 
-        boolean visibleSurfacesHasMajorDamage,
+		boolean visibleSurfacesHasMajorDamage,
+		@Size(max = 200, message = "MAXIMUM_CHARACTERS_200")
 		@NotNull(message = "VALUE_NOT_NULL")
-        String visibleSurfacesMajorDamage,
+		String visibleSurfacesMajorDamage,
 
         // HIDDEN SURFACES
         boolean applicableHiddenSurfacesDamage,
@@ -47,10 +49,12 @@ public record WashingMachineDetailDTO(
         double hiddenSurfacesDentsDepth,
 
         boolean hiddenSurfacesHasMinorDamage,
+		@Size(max = 200, message = "MAXIMUM_CHARACTERS_200")
 		@NotNull(message = "VALUE_NOT_NULL")
         String hiddenSurfacesMinorDamage,
 
         boolean hiddenSurfacesHasMajorDamage,
+		@Size(max = 200, message = "MAXIMUM_CHARACTERS_200")
 		@NotNull(message = "VALUE_NOT_NULL")
         String hiddenSurfacesMajorDamage,
 
