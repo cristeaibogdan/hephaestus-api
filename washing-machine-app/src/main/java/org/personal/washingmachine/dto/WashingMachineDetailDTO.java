@@ -16,46 +16,46 @@ public record WashingMachineDetailDTO(
         boolean applicableVisibleSurfacesDamage,
 
         boolean visibleSurfacesHasScratches,
-		@DecimalMin(value = "0", message = "MINIMUM_VALUE_0")
-		@DecimalMax(value = "10", message = "MAXIMUM_VALUE_10")
+		@DecimalMin(value = "0", message = "{MINIMUM_VALUE}")
+		@DecimalMax(value = "10", message = "{MAXIMUM_VALUE}")
         double visibleSurfacesScratchesLength,
 
         boolean visibleSurfacesHasDents,
-		@DecimalMin(value = "0", message = "MINIMUM_VALUE_0")
-		@DecimalMax(value = "10", message = "MAXIMUM_VALUE_10")
+		@DecimalMin(value = "0", message = "{MINIMUM_VALUE}")
+		@DecimalMax(value = "10", message = "{MAXIMUM_VALUE}")
         double visibleSurfacesDentsDepth,
 
         boolean visibleSurfacesHasMinorDamage,
-		@Size(max = 200, message = "MAXIMUM_CHARACTERS_200")
-		@NotNull(message = "VALUE_NOT_NULL")
+		@Size(max = 200, message = "{MAXIMUM_CHARACTERS}")
+		@NotNull(message = "{VALUE_NOT_NULL}")
         String visibleSurfacesMinorDamage,
 
 		boolean visibleSurfacesHasMajorDamage,
-		@Size(max = 200, message = "MAXIMUM_CHARACTERS_200")
-		@NotNull(message = "VALUE_NOT_NULL")
+		@Size(max = 200, message = "{MAXIMUM_CHARACTERS}")
+		@NotNull(message = "{VALUE_NOT_NULL}")
 		String visibleSurfacesMajorDamage,
 
         // HIDDEN SURFACES
         boolean applicableHiddenSurfacesDamage,
 
         boolean hiddenSurfacesHasScratches,
-		@DecimalMin(value = "0", message = "MINIMUM_VALUE_0")
-		@DecimalMax(value = "10", message = "MAXIMUM_VALUE_10")
+		@DecimalMin(value = "0", message = "{MINIMUM_VALUE}")
+		@DecimalMax(value = "10", message = "{MAXIMUM_VALUE}")
         double hiddenSurfacesScratchesLength,
 
         boolean hiddenSurfacesHasDents,
-		@DecimalMin(value = "0", message = "MINIMUM_VALUE_0")
-		@DecimalMax(value = "10", message = "MAXIMUM_VALUE_10")
+		@DecimalMin(value = "0", message = "{MINIMUM_VALUE}")
+		@DecimalMax(value = "10", message = "{MAXIMUM_VALUE}")
         double hiddenSurfacesDentsDepth,
 
         boolean hiddenSurfacesHasMinorDamage,
-		@Size(max = 200, message = "MAXIMUM_CHARACTERS_200")
-		@NotNull(message = "VALUE_NOT_NULL")
+		@Size(max = 200, message = "{MAXIMUM_CHARACTERS}")
+		@NotNull(message = "{VALUE_NOT_NULL}")
         String hiddenSurfacesMinorDamage,
 
         boolean hiddenSurfacesHasMajorDamage,
-		@Size(max = 200, message = "MAXIMUM_CHARACTERS_200")
-		@NotNull(message = "VALUE_NOT_NULL")
+		@Size(max = 200, message = "{MAXIMUM_CHARACTERS}")
+		@NotNull(message = "{VALUE_NOT_NULL}")
         String hiddenSurfacesMajorDamage,
 
         // PRICING
