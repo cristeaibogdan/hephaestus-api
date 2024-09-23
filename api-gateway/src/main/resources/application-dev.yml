@@ -14,10 +14,24 @@ spring:
           predicates:
             - Path=/api/v1/washing-machines/**, /api/v1/users/**
 
+        - id: washing-machine-api-docs
+          uri: http://localhost:8080
+          predicates:
+            - Path=/v3/api-docs/washing-machine
+          filters:
+            - RewritePath=/v3/api-docs/washing-machine, /v3/api-docs  # Forward to actual OpenAPI docs path
+
         - id: product
           uri: http://localhost:8081
           predicates:
             - Path=/api/v1/products/**
+
+        - id: product-api-docs
+          uri: http://localhost:8081
+          predicates:
+            - Path=/v3/api-docs/product
+          filters:
+            - RewritePath=/v3/api-docs/product, /v3/api-docs  # Redirect to the correct OpenAPI path
 
       globalcors:
         corsConfigurations:
@@ -41,3 +55,12 @@ management:
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG
+
+springdoc:
+  swagger-ui:
+    urls:
+      - name: washing-machine
+        url: /v3/api-docs/washing-machine
+
+      - name: product
+        url: /v3/api-docs/product
