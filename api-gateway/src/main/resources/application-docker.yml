@@ -12,12 +12,16 @@ spring:
         - id: washing-machine
           uri: http://washing-machine:8080
           predicates:
-            - Path=/api/v1/washing-machines/**, /api/v1/users/**
+            - Path=/api/v1/washing-machines/**, /api/v1/users/**, /v3/api-docs/washing-machine
+          filters:
+            - RewritePath=/v3/api-docs/washing-machine, /v3/api-docs  # Forward to actual OpenAPI docs path
 
         - id: product
           uri: http://product:8081
           predicates:
-            - Path=/api/v1/products/**
+            - Path=/api/v1/products/**, /v3/api-docs/product
+          filters:
+            - RewritePath=/v3/api-docs/product, /v3/api-docs  # Redirect to the correct OpenAPI path
 
       globalcors:
         corsConfigurations:
