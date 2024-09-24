@@ -45,3 +45,12 @@ management:
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG
+
+springdoc:
+  swagger-ui:
+    urls:
+      - name: washing-machine
+        url: /v3/api-docs/washing-machine
+
+      - name: product
+        url: /v3/api-docs/product
