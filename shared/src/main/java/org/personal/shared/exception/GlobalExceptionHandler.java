@@ -58,7 +58,7 @@ class GlobalExceptionHandler {
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	ResponseEntity<List<String>> handleValidationException(MethodArgumentNotValidException e, HttpServletRequest request) {
+	ResponseEntity<List<String>> handleValidationException(MethodArgumentNotValidException e) {
 		List<String> validationErrors = e.getBindingResult().getFieldErrors().stream()
 				.map(fieldError -> fieldError.getField() + ": " + fieldError.getDefaultMessage())
 				.toList();
@@ -67,7 +67,7 @@ class GlobalExceptionHandler {
 				.body(validationErrors);
 	}
 
-	@ExceptionHandler(NoResourceFoundException.class)
+	@ExceptionHandler(NoResourceFoundException.class)  // In case module is accessed outside of gateway (shouldn't be possible)
 	ResponseEntity<String> handleNoResourceFoundException(Exception e, HttpServletRequest request) {
 		String userMessage = messageSource.getMessage(
 				ErrorCode.NOT_FOUND.name(),
