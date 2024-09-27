@@ -11,10 +11,10 @@ class PricingRecommendationCalculatorTest {
 	private final PricingRecommendationCalculator underTest = new PricingRecommendationCalculator();
 
 	@Test
-	void should_ReturnNONE_When_OneOfThePricesIsNegative() {
+	void should_ReturnNONE_When_OneOfThePricesIsZero() {
 		// GIVEN
-		int price = -1;
-		int repairPrice = -1;
+		int price = 0;
+		int repairPrice = 0;
 
 		Recommendation expected = NONE;
 
