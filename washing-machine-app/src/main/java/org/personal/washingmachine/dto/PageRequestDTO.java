@@ -1,5 +1,6 @@
 package org.personal.washingmachine.dto;
 
+import jakarta.validation.constraints.Min;
 import lombok.Builder;
 import org.personal.washingmachine.enums.DamageType;
 import org.personal.washingmachine.enums.IdentificationMode;
@@ -8,8 +9,10 @@ import org.personal.washingmachine.enums.ReturnType;
 
 @Builder
 public record PageRequestDTO(
-        Integer pageIndex,
-        Integer pageSize,
+		@Min(value = 0, message = "{NUMERIC_MINIMUM_VALUE}")
+		int pageIndex,
+		@Min(value = 1, message = "{NUMERIC_MINIMUM_VALUE}")
+		int pageSize,
 
 		IdentificationMode identificationMode,
 		String manufacturer,
@@ -24,5 +27,4 @@ public record PageRequestDTO(
         Recommendation recommendation,
 
         String createdAt
-) {
-}
+) {}
