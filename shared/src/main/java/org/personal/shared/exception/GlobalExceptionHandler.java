@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.List;
 
@@ -57,13 +58,25 @@ class GlobalExceptionHandler {
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	ResponseEntity<List<String>> handleValidationException(MethodArgumentNotValidException e, HttpServletRequest request) {
+	ResponseEntity<List<String>> handleValidationException(MethodArgumentNotValidException e) {
 		List<String> validationErrors = e.getBindingResult().getFieldErrors().stream()
 				.map(fieldError -> fieldError.getField() + ": " + fieldError.getDefaultMessage())
 				.toList();
 		log.error("Invalid request: {}", validationErrors, e);
 		return status(BAD_REQUEST)
 				.body(validationErrors);
+	}
+
+	@ExceptionHandler(NoResourceFoundException.class)  // In case module is accessed outside of gateway (shouldn't be possible)
+	ResponseEntity<String> handleNoResourceFoundException(Exception e, HttpServletRequest request) {
+		String userMessage = messageSource.getMessage(
+				ErrorCode.NOT_FOUND.name(),
+				null,
+				"Internal Translation Error",
+				request.getLocale());
+		log.error("Unexpected {}: {}", ErrorCode.NOT_FOUND, userMessage, e);
+		return status(NOT_FOUND)
+				.body(userMessage);
 	}
 
 // ************************************************************
