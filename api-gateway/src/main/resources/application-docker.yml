@@ -21,7 +21,7 @@ spring:
           predicates:
             - Path=/api/v1/products/**, /v3/api-docs/product
           filters:
-            - RewritePath=/v3/api-docs/product, /v3/api-docs  # Redirect to the correct OpenAPI path
+            - RewritePath=/v3/api-docs/product, /v3/api-docs  # Forward to actual OpenAPI docs path
 
       globalcors:
         corsConfigurations:
