@@ -5,17 +5,17 @@ import lombok.Builder;
 
 @Builder
 public record WashingMachineDetailDTO(
-        // PACKAGE
-        boolean applicablePackageDamage,
+		// PACKAGE
+		boolean applicablePackageDamage,
 
-        boolean packageDamaged,
-        boolean packageDirty,
-        boolean packageMaterialAvailable,
+		boolean packageDamaged,
+		boolean packageDirty,
+		boolean packageMaterialAvailable,
 
-        // VISIBLE SURFACES
-        boolean applicableVisibleSurfacesDamage,
+		// VISIBLE SURFACES
+		boolean applicableVisibleSurfacesDamage,
 
-        boolean visibleSurfacesHasScratches,
+		boolean visibleSurfacesHasScratches,
 		@DecimalMin(value = "0", message = "{MINIMUM_VALUE}")
 		@DecimalMax(value = "10", message = "{MAXIMUM_VALUE}")
         double visibleSurfacesScratchesLength,
@@ -58,7 +58,7 @@ public record WashingMachineDetailDTO(
 		@NotNull(message = "{VALUE_NOT_NULL}")
         String hiddenSurfacesMajorDamage,
 
-        // PRICING
-        Integer price,
-        Integer repairPrice
+		// PRICING
+		int price,
+		int repairPrice
 ) {}

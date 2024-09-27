@@ -33,8 +33,8 @@ public class WashingMachineDetail extends BaseEntity {
     private HiddenSurfaceDamage hiddenSurfaceDamage;
 
     @Column(name = "price")
-    private Integer price;
+    private int price;
 
     @Column(name = "repair_price")
-    private Integer repairPrice;
+    private int repairPrice;
 }

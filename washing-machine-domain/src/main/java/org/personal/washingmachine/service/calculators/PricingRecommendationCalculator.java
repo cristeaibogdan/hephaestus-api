@@ -8,10 +8,7 @@ import static org.personal.washingmachine.enums.Recommendation.*;
 @Component
 public class PricingRecommendationCalculator {
 
-	public Recommendation calculate(Integer price, Integer repairPrice) {
-		if (price == null || repairPrice == null) { // TODO: can be replaced with DTO validation
-			return NONE;
-		}
+	public Recommendation calculate(int price, int repairPrice) {
 
 		if (price <= 0 || repairPrice <= 0) { // TODO: negative numbers can be validated in DTO
 			return NONE;
