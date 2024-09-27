@@ -10,7 +10,7 @@ public class PricingRecommendationCalculator {
 
 	public Recommendation calculate(int price, int repairPrice) {
 
-		if (price <= 0 || repairPrice <= 0) { // TODO: negative numbers can be validated in DTO
+		if (price == 0 || repairPrice == 0) {
 			return NONE;
 		}
 

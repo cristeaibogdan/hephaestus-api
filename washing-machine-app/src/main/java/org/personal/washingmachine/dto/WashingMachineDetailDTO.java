@@ -59,6 +59,8 @@ public record WashingMachineDetailDTO(
         String hiddenSurfacesMajorDamage,
 
 		// PRICING
+		@PositiveOrZero(message = "{VALUE_MUST_BE_POSITIVE}")
 		int price,
+		@PositiveOrZero(message = "{VALUE_MUST_BE_POSITIVE}")
 		int repairPrice
 ) {}
