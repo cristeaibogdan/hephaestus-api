@@ -28,6 +28,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -72,19 +73,17 @@ class WashingMachineApplicationServiceTest {
                     .manufacturer("Bosch")
                     .build();
 
-            WashingMachine one = WashingMachineTestData.getWashingMachineWithoutDetailsAndImages();
-            one.setManufacturer("Bosch");
+            List<WashingMachine> washingMachines = new ArrayList<>();
+            washingMachines.add(WashingMachineTestData.getWashingMachineWithoutDetailAndImages("Bosch"));
+            washingMachines.add(WashingMachineTestData.getWashingMachineWithoutDetailAndImages("Bosch"));
 
-            WashingMachine two = WashingMachineTestData.getWashingMachineWithoutDetailsAndImages();
-            two.setManufacturer("Bosch");
-
-            Page<WashingMachine> expected = new PageImpl<>(
-                    List.of(one, two),
+            Page<WashingMachine> expectedPage = new PageImpl<>(
+                    washingMachines,
                     PageRequest.of(dto.pageIndex(), dto.pageSize()),
-                    2);
+                    washingMachines.size());
 
             given(washingMachineRepositoryMock.findAll(any(Predicate.class),any(PageRequest.class)))
-                    .willReturn(expected);
+                    .willReturn(expectedPage);
 
             // WHEN
             Page<WashingMachineSimpleDTO> actual = underTest.loadPaginatedAndFiltered(dto);
@@ -92,8 +91,7 @@ class WashingMachineApplicationServiceTest {
             // THEN
             assertThat(actual.getNumber()).isEqualTo(0);
             assertThat(actual.getSize()).isEqualTo(2);
-            assertThat(expected)
-                    .containsExactly(one, two)
+            assertThat(expectedPage)
                     .extracting(wm -> wm.getManufacturer())
                     .containsExactly("Bosch", "Bosch");
         }

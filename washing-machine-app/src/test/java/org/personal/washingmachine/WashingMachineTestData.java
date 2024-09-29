@@ -7,10 +7,11 @@ import org.personal.washingmachine.enums.Recommendation;
 import org.personal.washingmachine.enums.ReturnType;
 
 public class WashingMachineTestData {
-	public static WashingMachine getWashingMachineWithoutDetailsAndImages() {
+
+	public static WashingMachine getWashingMachineWithoutDetailAndImages(String manufacturer) {
 		return new WashingMachine(
 				"Washing Machine",
-				"Whirlpool",
+				manufacturer,
 				DamageType.IN_USE,
 				ReturnType.SERVICE,
 				IdentificationMode.DATA_MATRIX,
