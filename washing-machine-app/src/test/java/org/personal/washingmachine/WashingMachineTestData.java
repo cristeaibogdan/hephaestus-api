@@ -7,7 +7,7 @@ import org.personal.washingmachine.enums.Recommendation;
 import org.personal.washingmachine.enums.ReturnType;
 
 public class WashingMachineTestData {
-	public static WashingMachine getWashingMachineWithoutDetailsAndWithoutImages() {
+	public static WashingMachine getWashingMachineWithoutDetailsAndImages() {
 		return new WashingMachine(
 				"Washing Machine",
 				"Whirlpool",

@@ -64,7 +64,7 @@ class WashingMachineApplicationServiceTest {
     class testLoadPaginatedAndFiltered {
 
         @Test
-        void should_ReturnTwoDTOs_When_FilteredByManufacturer() {
+        void should_ReturnPageWithTwoDTOs_When_FilteredByManufacturer() {
             // GIVEN
             PageRequestDTO dto = PageRequestDTO.builder()
                     .pageIndex(0)
@@ -72,10 +72,10 @@ class WashingMachineApplicationServiceTest {
                     .manufacturer("Bosch")
                     .build();
 
-            WashingMachine one = WashingMachineTestData.getWashingMachineWithoutDetailsAndWithoutImages();
+            WashingMachine one = WashingMachineTestData.getWashingMachineWithoutDetailsAndImages();
             one.setManufacturer("Bosch");
 
-            WashingMachine two = WashingMachineTestData.getWashingMachineWithoutDetailsAndWithoutImages();
+            WashingMachine two = WashingMachineTestData.getWashingMachineWithoutDetailsAndImages();
             two.setManufacturer("Bosch");
 
             Page<WashingMachine> expected = new PageImpl<>(
@@ -92,9 +92,10 @@ class WashingMachineApplicationServiceTest {
             // THEN
             assertThat(actual.getNumber()).isEqualTo(0);
             assertThat(actual.getSize()).isEqualTo(2);
-//            assertThat(actual.getContent()).isEqualTo(List.of(
-//                    one, two
-//            ));
+            assertThat(expected)
+                    .containsExactly(one, two)
+                    .extracting(wm -> wm.getManufacturer())
+                    .containsExactly("Bosch", "Bosch");
         }
     }
 
