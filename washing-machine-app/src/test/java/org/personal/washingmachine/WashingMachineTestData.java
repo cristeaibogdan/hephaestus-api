@@ -8,6 +8,21 @@ import org.personal.washingmachine.enums.ReturnType;
 
 public class WashingMachineTestData {
 
+	public static WashingMachine getWashingMachineWithoutDetailAndImages() {
+		return new WashingMachine(
+				"Washing Machine",
+				"Gorenje",
+				DamageType.IN_USE,
+				ReturnType.SERVICE,
+				IdentificationMode.DATA_MATRIX,
+				"test",
+				"modelOne",
+				"typeOne",
+				Recommendation.RESALE,
+				null
+		);
+	}
+
 	public static WashingMachine getWashingMachineWithoutDetailAndImages(String manufacturer) {
 		return new WashingMachine(
 				"Washing Machine",
@@ -15,6 +30,21 @@ public class WashingMachineTestData {
 				DamageType.IN_USE,
 				ReturnType.SERVICE,
 				IdentificationMode.DATA_MATRIX,
+				"test",
+				"modelOne",
+				"typeOne",
+				Recommendation.RESALE,
+				null
+		);
+	}
+
+	public static WashingMachine getWashingMachineWithoutDetailAndImages(IdentificationMode identificationMode) {
+		return new WashingMachine(
+				"Washing Machine",
+				"Whirlpool",
+				DamageType.IN_USE,
+				ReturnType.SERVICE,
+				identificationMode,
 				"test",
 				"modelOne",
 				"typeOne",
