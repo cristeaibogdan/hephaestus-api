@@ -5,6 +5,11 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.personal.shared.clients.ProductClient;
 import org.personal.washingmachine.dto.PageRequestDTO;
+import org.personal.washingmachine.dto.WashingMachineDetailDTO;
+import org.personal.washingmachine.enums.DamageType;
+import org.personal.washingmachine.enums.IdentificationMode;
+import org.personal.washingmachine.enums.Recommendation;
+import org.personal.washingmachine.enums.ReturnType;
 import org.personal.washingmachine.repository.WashingMachineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -72,6 +77,48 @@ public class WashingMachineApplicationServiceMvcValidationTest {
 			resultActions
 					.andExpect(status().is4xxClientError())
 					.andExpect(content().string(containsString("pageSize")));
+		}
+	}
+
+	@Nested
+	class testGetRecommendation {
+
+		@Test
+		void should_ThrowValidationException_When_VisibleScratchesLengthIsNegative() throws Exception {
+			// GIVEN
+			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
+					.visibleSurfacesScratchesLength(-1)
+					.build();
+
+			// WHEN
+			ResultActions resultActions = mockMvc.perform(
+					post("/api/v1/washing-machines/recommendation")
+							.content(jackson.writeValueAsString(dto))
+							.contentType(MediaType.APPLICATION_JSON));
+
+			// THEN
+			resultActions
+					.andExpect(status().is4xxClientError())
+					.andExpect(content().string(containsString("visibleSurfacesScratchesLength: Minimum value")));
+		}
+
+		@Test
+		void should_ThrowValidationException_When_VisibleScratchesLengthIsOver10() throws Exception {
+			// GIVEN
+			WashingMachineDetailDTO dto = WashingMachineDetailDTO.builder()
+					.visibleSurfacesScratchesLength(12)
+					.build();
+
+			// WHEN
+			ResultActions resultActions = mockMvc.perform(
+					post("/api/v1/washing-machines/recommendation")
+							.content(jackson.writeValueAsString(dto))
+							.contentType(MediaType.APPLICATION_JSON));
+
+			// THEN
+			resultActions
+					.andExpect(status().is4xxClientError())
+					.andExpect(content().string(containsString("visibleSurfacesScratchesLength: Maximum value")));
 		}
 	}
 }
