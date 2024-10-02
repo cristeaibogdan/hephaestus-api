@@ -62,7 +62,7 @@ class GlobalExceptionHandler {
 		List<String> validationErrors = e.getBindingResult().getFieldErrors().stream()
 				.map(fieldError -> fieldError.getField() + ": " + fieldError.getDefaultMessage())
 				.toList();
-		log.error("Invalid request: {}", validationErrors, e);
+		log.error("Validation failed. Returning: {}", validationErrors, e);
 		return status(BAD_REQUEST)
 				.body(validationErrors);
 	}

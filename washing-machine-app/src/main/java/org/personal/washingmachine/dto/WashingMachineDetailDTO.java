@@ -3,7 +3,7 @@ package org.personal.washingmachine.dto;
 import jakarta.validation.constraints.*;
 import lombok.Builder;
 
-@Builder
+@Builder(toBuilder = true)
 public record WashingMachineDetailDTO(
 		// PACKAGE
 		boolean applicablePackageDamage,
