@@ -36,10 +36,24 @@ public class WashingMachineApplicationServiceMvcValidationTest {
 	@Nested
 	class testLoadPaginatedAndFiltered {
 
+		private final PageRequestDTO defaultPageRequest = new PageRequestDTO(
+				0,
+				2,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null
+		);
+
 		@Test
 		void should_ThrowValidationException_When_PageIndexIsNegative() throws Exception {
 			// GIVEN
-			PageRequestDTO dto = PageRequestDTO.builder()
+			PageRequestDTO dto = defaultPageRequest.toBuilder()
 					.pageIndex(-1)
 					.build();
 
@@ -58,8 +72,8 @@ public class WashingMachineApplicationServiceMvcValidationTest {
 		@Test
 		void should_ThrowValidationException_When_PageSizeIsLessThanOne() throws Exception {
 			// GIVEN
-			PageRequestDTO dto = PageRequestDTO.builder()
-					.pageSize(-1)
+			PageRequestDTO dto = defaultPageRequest.toBuilder()
+					.pageSize(0)
 					.build();
 
 			// WHEN
@@ -78,7 +92,7 @@ public class WashingMachineApplicationServiceMvcValidationTest {
 	@Nested
 	class testGetRecommendation {
 
-		WashingMachineDetailDTO defaultDetail = new WashingMachineDetailDTO(
+		private final WashingMachineDetailDTO defaultDetail = new WashingMachineDetailDTO(
 				false,
 				false,
 				false,
