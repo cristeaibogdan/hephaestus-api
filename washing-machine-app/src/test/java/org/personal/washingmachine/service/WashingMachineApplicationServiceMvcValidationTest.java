@@ -105,13 +105,7 @@ public class WashingMachineApplicationServiceMvcValidationTest {
 				0
 		);
 
-		@Test
-		void should_ThrowValidationException_When_VisibleScratchesLengthIsNegative() throws Exception {
-			// GIVEN
-			WashingMachineDetailDTO dto = defaultDetail.toBuilder()
-					.visibleSurfacesScratchesLength(-10)
-					.build();
-
+		private void validationFails(WashingMachineDetailDTO dto, String propertyName) throws Exception {
 			// WHEN
 			ResultActions resultActions = mockMvc.perform(
 					post("/api/v1/washing-machines/recommendation")
@@ -121,64 +115,29 @@ public class WashingMachineApplicationServiceMvcValidationTest {
 			// THEN
 			resultActions
 					.andExpect(status().is4xxClientError())
-					.andExpect(content().string(containsString("visibleSurfacesScratchesLength")));
+					.andExpect(content().string(containsString(propertyName)));
 		}
 
-		@Test
-		void should_ThrowValidationException_When_VisibleScratchesLengthIsOver10() throws Exception {
+		@ParameterizedTest(name = "Validation fails for value = {0}")
+		@ValueSource(ints = {-1, 11})
+		void should_ThrowValidationException_When_VisibleScratchesLengthIsInvalid(int value) throws Exception {
 			// GIVEN
 			WashingMachineDetailDTO dto = defaultDetail.toBuilder()
-					.visibleSurfacesScratchesLength(12)
+					.visibleSurfacesScratchesLength(value)
 					.build();
 
-			// WHEN
-			ResultActions resultActions = mockMvc.perform(
-					post("/api/v1/washing-machines/recommendation")
-							.content(jackson.writeValueAsString(dto))
-							.contentType(MediaType.APPLICATION_JSON));
-
-			// THEN
-			resultActions
-					.andExpect(status().is4xxClientError())
-					.andExpect(content().string(containsString("visibleSurfacesScratchesLength")));
+			validationFails(dto, "visibleSurfacesScratchesLength");
 		}
 
-		@Test
-		void should_ThrowValidationException_When_VisibleDentsDepthIsNegative() throws Exception {
+		@ParameterizedTest(name = "Validation fails for value = {0}")
+		@ValueSource(ints = {-1, 11})
+		void should_ThrowValidationException_When_VisibleDentsDepthIsInvalid(int value) throws Exception {
 			// GIVEN
 			WashingMachineDetailDTO dto = defaultDetail.toBuilder()
-					.visibleSurfacesDentsDepth(-10)
+					.visibleSurfacesDentsDepth(value)
 					.build();
 
-			// WHEN
-			ResultActions resultActions = mockMvc.perform(
-					post("/api/v1/washing-machines/recommendation")
-							.content(jackson.writeValueAsString(dto))
-							.contentType(MediaType.APPLICATION_JSON));
-
-			// THEN
-			resultActions
-					.andExpect(status().is4xxClientError())
-					.andExpect(content().string(containsString("visibleSurfacesDentsDepth")));
-		}
-
-		@Test
-		void should_ThrowValidationException_When_VisibleDentsDepthIsOver10() throws Exception {
-			// GIVEN
-			WashingMachineDetailDTO dto = defaultDetail.toBuilder()
-					.visibleSurfacesDentsDepth(12)
-					.build();
-
-			// WHEN
-			ResultActions resultActions = mockMvc.perform(
-					post("/api/v1/washing-machines/recommendation")
-							.content(jackson.writeValueAsString(dto))
-							.contentType(MediaType.APPLICATION_JSON));
-
-			// THEN
-			resultActions
-					.andExpect(status().is4xxClientError())
-					.andExpect(content().string(containsString("visibleSurfacesDentsDepth")));
+			validationFails(dto, "visibleSurfacesDentsDepth");
 		}
 
 		@Test
@@ -188,16 +147,7 @@ public class WashingMachineApplicationServiceMvcValidationTest {
 					.visibleSurfacesMinorDamage(null)
 					.build();
 
-			// WHEN
-			ResultActions resultActions = mockMvc.perform(
-					post("/api/v1/washing-machines/recommendation")
-							.content(jackson.writeValueAsString(dto))
-							.contentType(MediaType.APPLICATION_JSON));
-
-			// THEN
-			resultActions
-					.andExpect(status().is4xxClientError())
-					.andExpect(content().string(containsString("visibleSurfacesMinorDamage")));
+			validationFails(dto, "visibleSurfacesMinorDamage");
 		}
 
 		@Test
@@ -207,16 +157,7 @@ public class WashingMachineApplicationServiceMvcValidationTest {
 					.visibleSurfacesMinorDamage("A".repeat(201))
 					.build();
 
-			// WHEN
-			ResultActions resultActions = mockMvc.perform(
-					post("/api/v1/washing-machines/recommendation")
-							.content(jackson.writeValueAsString(dto))
-							.contentType(MediaType.APPLICATION_JSON));
-
-			// THEN
-			resultActions
-					.andExpect(status().is4xxClientError())
-					.andExpect(content().string(containsString("visibleSurfacesMinorDamage")));
+			validationFails(dto, "visibleSurfacesMinorDamage");
 		}
 
 		@Test
@@ -226,16 +167,7 @@ public class WashingMachineApplicationServiceMvcValidationTest {
 					.visibleSurfacesMajorDamage(null)
 					.build();
 
-			// WHEN
-			ResultActions resultActions = mockMvc.perform(
-					post("/api/v1/washing-machines/recommendation")
-							.content(jackson.writeValueAsString(dto))
-							.contentType(MediaType.APPLICATION_JSON));
-
-			// THEN
-			resultActions
-					.andExpect(status().is4xxClientError())
-					.andExpect(content().string(containsString("visibleSurfacesMajorDamage")));
+			validationFails(dto, "visibleSurfacesMajorDamage");
 		}
 
 		@Test
@@ -245,92 +177,29 @@ public class WashingMachineApplicationServiceMvcValidationTest {
 					.visibleSurfacesMajorDamage("A".repeat(201))
 					.build();
 
-			// WHEN
-			ResultActions resultActions = mockMvc.perform(
-					post("/api/v1/washing-machines/recommendation")
-							.content(jackson.writeValueAsString(dto))
-							.contentType(MediaType.APPLICATION_JSON));
-
-			// THEN
-			resultActions
-					.andExpect(status().is4xxClientError())
-					.andExpect(content().string(containsString("visibleSurfacesMajorDamage")));
+			validationFails(dto, "visibleSurfacesMajorDamage");
 		}
 
-		@Test
-		void should_ThrowValidationException_When_HiddenScratchesLengthIsNegative() throws Exception {
+		@ParameterizedTest(name = "Validation fails for value = {0}")
+		@ValueSource(ints = {-1, 11})
+		void should_ThrowValidationException_When_HiddenScratchesLengthIsInvalid(int value) throws Exception {
 			// GIVEN
 			WashingMachineDetailDTO dto = defaultDetail.toBuilder()
-					.hiddenSurfacesScratchesLength(-10)
+					.hiddenSurfacesScratchesLength(value)
 					.build();
 
-			// WHEN
-			ResultActions resultActions = mockMvc.perform(
-					post("/api/v1/washing-machines/recommendation")
-							.content(jackson.writeValueAsString(dto))
-							.contentType(MediaType.APPLICATION_JSON));
-
-			// THEN
-			resultActions
-					.andExpect(status().is4xxClientError())
-					.andExpect(content().string(containsString("hiddenSurfacesScratchesLength")));
+			validationFails(dto, "hiddenSurfacesScratchesLength");
 		}
 
-		@Test
-		void should_ThrowValidationException_When_HiddenScratchesLengthIsOver10() throws Exception {
+		@ParameterizedTest(name = "Validation fails for value = {0}")
+		@ValueSource(ints = {-1, 11})
+		void should_ThrowValidationException_When_HiddenDentsDepthIsInvalid(int value) throws Exception {
 			// GIVEN
 			WashingMachineDetailDTO dto = defaultDetail.toBuilder()
-					.hiddenSurfacesScratchesLength(12)
+					.hiddenSurfacesDentsDepth(value)
 					.build();
 
-			// WHEN
-			ResultActions resultActions = mockMvc.perform(
-					post("/api/v1/washing-machines/recommendation")
-							.content(jackson.writeValueAsString(dto))
-							.contentType(MediaType.APPLICATION_JSON));
-
-			// THEN
-			resultActions
-					.andExpect(status().is4xxClientError())
-					.andExpect(content().string(containsString("hiddenSurfacesScratchesLength")));
-		}
-
-		@Test
-		void should_ThrowValidationException_When_HiddenDentsDepthIsNegative() throws Exception {
-			// GIVEN
-			WashingMachineDetailDTO dto = defaultDetail.toBuilder()
-					.hiddenSurfacesDentsDepth(-10)
-					.build();
-
-			// WHEN
-			ResultActions resultActions = mockMvc.perform(
-					post("/api/v1/washing-machines/recommendation")
-							.content(jackson.writeValueAsString(dto))
-							.contentType(MediaType.APPLICATION_JSON));
-
-			// THEN
-			resultActions
-					.andExpect(status().is4xxClientError())
-					.andExpect(content().string(containsString("hiddenSurfacesDentsDepth")));
-		}
-
-		@Test
-		void should_ThrowValidationException_When_HiddenDentsDepthIsOver10() throws Exception {
-			// GIVEN
-			WashingMachineDetailDTO dto = defaultDetail.toBuilder()
-					.hiddenSurfacesDentsDepth(12)
-					.build();
-
-			// WHEN
-			ResultActions resultActions = mockMvc.perform(
-					post("/api/v1/washing-machines/recommendation")
-							.content(jackson.writeValueAsString(dto))
-							.contentType(MediaType.APPLICATION_JSON));
-
-			// THEN
-			resultActions
-					.andExpect(status().is4xxClientError())
-					.andExpect(content().string(containsString("hiddenSurfacesDentsDepth")));
+			validationFails(dto, "hiddenSurfacesDentsDepth");
 		}
 
 		@Test
@@ -340,16 +209,7 @@ public class WashingMachineApplicationServiceMvcValidationTest {
 					.hiddenSurfacesMinorDamage(null)
 					.build();
 
-			// WHEN
-			ResultActions resultActions = mockMvc.perform(
-					post("/api/v1/washing-machines/recommendation")
-							.content(jackson.writeValueAsString(dto))
-							.contentType(MediaType.APPLICATION_JSON));
-
-			// THEN
-			resultActions
-					.andExpect(status().is4xxClientError())
-					.andExpect(content().string(containsString("hiddenSurfacesMinorDamage")));
+			validationFails(dto, "hiddenSurfacesMinorDamage");
 		}
 
 		@Test
@@ -359,16 +219,7 @@ public class WashingMachineApplicationServiceMvcValidationTest {
 					.hiddenSurfacesMinorDamage("A".repeat(201))
 					.build();
 
-			// WHEN
-			ResultActions resultActions = mockMvc.perform(
-					post("/api/v1/washing-machines/recommendation")
-							.content(jackson.writeValueAsString(dto))
-							.contentType(MediaType.APPLICATION_JSON));
-
-			// THEN
-			resultActions
-					.andExpect(status().is4xxClientError())
-					.andExpect(content().string(containsString("hiddenSurfacesMinorDamage")));
+			validationFails(dto, "hiddenSurfacesMinorDamage");
 		}
 
 		@Test
@@ -378,16 +229,7 @@ public class WashingMachineApplicationServiceMvcValidationTest {
 					.hiddenSurfacesMajorDamage(null)
 					.build();
 
-			// WHEN
-			ResultActions resultActions = mockMvc.perform(
-					post("/api/v1/washing-machines/recommendation")
-							.content(jackson.writeValueAsString(dto))
-							.contentType(MediaType.APPLICATION_JSON));
-
-			// THEN
-			resultActions
-					.andExpect(status().is4xxClientError())
-					.andExpect(content().string(containsString("hiddenSurfacesMajorDamage")));
+			validationFails(dto, "hiddenSurfacesMajorDamage");
 		}
 
 		@Test
@@ -397,16 +239,7 @@ public class WashingMachineApplicationServiceMvcValidationTest {
 					.hiddenSurfacesMajorDamage("A".repeat(201))
 					.build();
 
-			// WHEN
-			ResultActions resultActions = mockMvc.perform(
-					post("/api/v1/washing-machines/recommendation")
-							.content(jackson.writeValueAsString(dto))
-							.contentType(MediaType.APPLICATION_JSON));
-
-			// THEN
-			resultActions
-					.andExpect(status().is4xxClientError())
-					.andExpect(content().string(containsString("hiddenSurfacesMajorDamage")));
+			validationFails(dto, "hiddenSurfacesMajorDamage");
 		}
 
 		@Test
@@ -416,16 +249,7 @@ public class WashingMachineApplicationServiceMvcValidationTest {
 					.price(-1)
 					.build();
 
-			// WHEN
-			ResultActions resultActions = mockMvc.perform(
-					post("/api/v1/washing-machines/recommendation")
-							.content(jackson.writeValueAsString(dto))
-							.contentType(MediaType.APPLICATION_JSON));
-
-			// THEN
-			resultActions
-					.andExpect(status().is4xxClientError())
-					.andExpect(content().string(containsString("price")));
+			validationFails(dto, "price");
 		}
 
 		@Test
@@ -435,18 +259,8 @@ public class WashingMachineApplicationServiceMvcValidationTest {
 					.repairPrice(-1)
 					.build();
 
-			// WHEN
-			ResultActions resultActions = mockMvc.perform(
-					post("/api/v1/washing-machines/recommendation")
-							.content(jackson.writeValueAsString(dto))
-							.contentType(MediaType.APPLICATION_JSON));
-
-			// THEN
-			resultActions
-					.andExpect(status().is4xxClientError())
-					.andExpect(content().string(containsString("repairPrice")));
+			validationFails(dto, "repairPrice");
 		}
-
 
 	}
 }
