@@ -16,10 +16,10 @@ class ErrorCodeMessagesTest {
 	@ParameterizedTest
 	@ValueSource(strings = {
 			"messages",
-			"messages_ES",
-			"messages_IT",
-			"messages_RO",
-			"messages_SL"
+			"messages_es",
+			"messages_it",
+			"messages_ro",
+			"messages_sl"
 	})
 	public void should_Pass_When_AllEnumKeysArePresentInMessagesFiles(String bundleName) {
 		// GIVEN
