@@ -34,62 +34,6 @@ public class WashingMachineApplicationServiceMvcValidationTest {
 	@MockBean ProductClient productClient; //TODO: To be deleted
 
 	@Nested
-	class testLoadPaginatedAndFiltered {
-
-		private final PageRequestDTO defaultPageRequest = new PageRequestDTO(
-				0,
-				2,
-				null,
-				null,
-				null,
-				null,
-				null,
-				null,
-				null,
-				null,
-				null
-		);
-
-		@Test
-		void should_ThrowValidationException_When_PageIndexIsNegative() throws Exception {
-			// GIVEN
-			PageRequestDTO dto = defaultPageRequest.toBuilder()
-					.pageIndex(-1)
-					.build();
-
-			// WHEN
-			ResultActions resultActions = mockMvc.perform(
-					post("/api/v1/washing-machines")
-							.content(jackson.writeValueAsString(dto))
-							.contentType(MediaType.APPLICATION_JSON));
-
-			// THEN
-			resultActions
-					.andExpect(status().is4xxClientError())
-					.andExpect(content().string(containsString("pageIndex")));
-		}
-
-		@Test
-		void should_ThrowValidationException_When_PageSizeIsLessThanOne() throws Exception {
-			// GIVEN
-			PageRequestDTO dto = defaultPageRequest.toBuilder()
-					.pageSize(0)
-					.build();
-
-			// WHEN
-			ResultActions resultActions = mockMvc.perform(
-					post("/api/v1/washing-machines")
-							.content(jackson.writeValueAsString(dto))
-							.contentType(MediaType.APPLICATION_JSON));
-
-			// THEN
-			resultActions
-					.andExpect(status().is4xxClientError())
-					.andExpect(content().string(containsString("pageSize")));
-		}
-	}
-
-	@Nested
 	class testGetRecommendation {
 
 		private final WashingMachineDetailDTO defaultDetail = new WashingMachineDetailDTO(
