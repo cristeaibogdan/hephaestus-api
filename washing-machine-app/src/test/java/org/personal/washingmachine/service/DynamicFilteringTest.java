@@ -1,6 +1,5 @@
 package org.personal.washingmachine.service;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -18,12 +17,13 @@ import org.personal.washingmachine.enums.ReturnType;
 import org.personal.washingmachine.repository.WashingMachineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.*;
+
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class DynamicFilteringTest extends BaseIntegrationTest {
@@ -90,10 +90,10 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 		Page<WashingMachineSimpleDTO> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
 
 		// THEN
-		assertThat(actual.getContent().size())
-				.isNotZero();
+		assertThat(actual.getContent())
+				.isNotEmpty();
 
-		Assertions.assertThat(actual.getContent())
+		assertThat(actual.getContent())
 				.extracting(wm -> wm.manufacturer())
 				.contains(manufacturer);
 	}
@@ -110,10 +110,10 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 		Page<WashingMachineSimpleDTO> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
 
 		// THEN
-		assertThat(actual.getContent().size())
-				.isNotZero();
+		assertThat(actual.getContent())
+				.isNotEmpty();
 
-		Assertions.assertThat(actual.getContent())
+		assertThat(actual.getContent())
 				.extracting(wm -> wm.damageType())
 				.containsOnly(damageType);
 	}
@@ -130,10 +130,10 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 		Page<WashingMachineSimpleDTO> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
 
 		// THEN
-		assertThat(actual.getContent().size())
-				.isNotZero();
+		assertThat(actual.getContent())
+				.isNotEmpty();
 
-		Assertions.assertThat(actual.getContent())
+		assertThat(actual.getContent())
 				.extracting(wm -> wm.returnType())
 				.containsOnly(returnType);
 	}
@@ -150,10 +150,10 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 		Page<WashingMachineSimpleDTO> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
 
 		// THEN
-		assertThat(actual.getContent().size())
-				.isNotZero();
+		assertThat(actual.getContent())
+				.isNotEmpty();
 
-		Assertions.assertThat(actual.getContent())
+		assertThat(actual.getContent())
 				.extracting(wm -> wm.identificationMode())
 				.containsOnly(identificationMode);
 	}
@@ -170,10 +170,10 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 		Page<WashingMachineSimpleDTO> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
 
 		// THEN
-		assertThat(actual.getContent().size())
-				.isNotZero();
+		assertThat(actual.getContent())
+				.isNotEmpty();
 
-		Assertions.assertThat(actual.getContent())
+		assertThat(actual.getContent())
 				.extracting(wm -> wm.serialNumber())
 				.contains(serialNumber);
 	}
@@ -190,10 +190,10 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 		Page<WashingMachineSimpleDTO> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
 
 		// THEN
-		assertThat(actual.getContent().size())
-				.isNotZero();
+		assertThat(actual.getContent())
+				.isNotEmpty();
 
-		Assertions.assertThat(actual.getContent())
+		assertThat(actual.getContent())
 				.extracting(wm -> wm.model())
 				.contains(model);
 	}
@@ -210,10 +210,10 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 		Page<WashingMachineSimpleDTO> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
 
 		// THEN
-		assertThat(actual.getContent().size())
-				.isNotZero();
+		assertThat(actual.getContent())
+				.isNotEmpty();
 
-		Assertions.assertThat(actual.getContent())
+		assertThat(actual.getContent())
 				.extracting(wm -> wm.type())
 				.contains(type);
 	}
@@ -230,16 +230,16 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 		Page<WashingMachineSimpleDTO> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
 
 		// THEN
-		assertThat(actual.getContent().size())
-				.isNotZero();
+		assertThat(actual.getContent())
+				.isNotEmpty();
 
-		Assertions.assertThat(actual.getContent())
+		assertThat(actual.getContent())
 				.extracting(wm -> wm.recommendation())
 				.containsOnly(recommendation);
 	}
 
 	@Test
-	void should_ReturnListWithDates() {
+	void should_ReturnListWithDescendingDates() {
 		// GIVEN
 		PageRequestDTO dto = defaultPageRequest.toBuilder()
 				.build();
@@ -248,12 +248,13 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 		Page<WashingMachineSimpleDTO> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
 
 		// THEN
-		assertThat(actual.getContent().size())
-				.isNotZero();
+		assertThat(actual.getContent())
+				.isNotEmpty();
 
-		Assertions.assertThat(actual.getContent())
+		assertThat(actual.getContent())
 				.extracting(wm -> wm.createdAt())
-				.doesNotContainNull();
+				.doesNotContainNull()
+				.isSortedAccordingTo(Comparator.reverseOrder()); // Check descending order
 	}
 
 	@Test
@@ -268,14 +269,14 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 		Page<WashingMachineSimpleDTO> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
 
 		// THEN
-		assertThat(actual.getContent().size())
-				.isNotZero();
+		assertThat(actual.getContent())
+				.isNotEmpty();
 
-		Assertions.assertThat(actual.getContent())
+		assertThat(actual.getContent())
 				.extracting(wm -> wm.manufacturer())
 				.contains(dto.manufacturer());
 
-		Assertions.assertThat(actual.getContent())
+		assertThat(actual.getContent())
 				.extracting(wm -> wm.returnType())
 				.containsOnly(dto.returnType());
 	}
@@ -293,18 +294,18 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 		Page<WashingMachineSimpleDTO> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
 
 		// THEN
-		assertThat(actual.getContent().size())
-				.isNotZero();
+		assertThat(actual.getContent())
+				.isNotEmpty();
 
-		Assertions.assertThat(actual.getContent())
+		assertThat(actual.getContent())
 				.extracting(wm -> wm.identificationMode())
 				.containsOnly(dto.identificationMode());
 
-		Assertions.assertThat(actual.getContent())
+		assertThat(actual.getContent())
 				.extracting(wm -> wm.model())
 				.contains(dto.model());
 
-		Assertions.assertThat(actual.getContent())
+		assertThat(actual.getContent())
 				.extracting(wm -> wm.type())
 				.contains(dto.type());
 	}
