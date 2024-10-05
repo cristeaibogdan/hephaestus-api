@@ -7,7 +7,7 @@ import org.personal.washingmachine.enums.ReturnType;
 
 import java.time.LocalDateTime;
 
-public record WashingMachineSimpleDTO(
+public record GetWashingMachineSimpleResponseDTO(
         String category,
 
         String manufacturer,
@@ -22,5 +22,4 @@ public record WashingMachineSimpleDTO(
 
         Recommendation recommendation,
         LocalDateTime createdAt
-) {
-}
+) { }

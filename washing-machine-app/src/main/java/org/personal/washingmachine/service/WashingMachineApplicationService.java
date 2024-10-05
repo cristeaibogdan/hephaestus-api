@@ -37,7 +37,7 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 	private final WashingMachineReportGenerator reportGenerator;
 
 	@Override
-	public Page<WashingMachineSimpleDTO> loadPaginatedAndFiltered(PageRequestDTO pageRequestDTO) {
+	public Page<GetWashingMachineSimpleResponseDTO> loadPaginatedAndFiltered(PageRequestDTO pageRequestDTO) {
 		PageRequest pageRequest = PageRequest.of(
 				pageRequestDTO.pageIndex(),
 				pageRequestDTO.pageSize(),
@@ -63,7 +63,7 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 	}
 
 	@Override
-	public WashingMachineExpandedDTO loadExpanded(String serialNumber) {
+	public GetWashingMachineExpandedResponseDTO loadExpanded(String serialNumber) {
 		WashingMachine washingMachine = service.findBySerialNumber(serialNumber);
 		return WashingMachineMapper.toExpandedDTO(washingMachine);
 	}
