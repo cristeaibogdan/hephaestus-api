@@ -1,6 +1,6 @@
 services:
   postgres:
-    container_name: postgres
+    container_name: hephaestus-postgres
     image: postgres:16-alpine
     environment:
       POSTGRES_USER: postgres
@@ -16,7 +16,7 @@ services:
     restart: unless-stopped
 
   pgadmin:
-    container_name: pgadmin
+    container_name: hephaestus-pgadmin
     image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@personal.com
@@ -32,7 +32,7 @@ services:
 
   zipkin:
     image: openzipkin/zipkin
-    container_name: zipkin
+    container_name: hephaestus-zipkin
     ports:
       - "9411:9411"
     networks:
@@ -40,7 +40,7 @@ services:
 
   api-gateway:
     image: api-gateway:latest
-    container_name: api-gateway
+    container_name: hephaestus-api-gateway
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     ports:
@@ -52,7 +52,7 @@ services:
 
   washing-machine:
     image: washing-machine-app:latest
-    container_name: washing-machine
+    container_name: hephaestus-washing-machine
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     ports:
@@ -66,7 +66,7 @@ services:
 
   product:
     image: product:latest
-    container_name: product
+    container_name: hephaestus-product
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     ports:
@@ -81,7 +81,7 @@ services:
 #  TODO: setup solar panel
 #  solar-panel:
 #    image: solar-panel:latest
-#    container_name: solar-panel
+#    container_name: hephaestus-solar-panel
 #    environment:
 #      - SPRING_PROFILES_ACTIVE=docker
 #    ports:
