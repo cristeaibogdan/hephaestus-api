@@ -8,7 +8,7 @@ import org.personal.washingmachine.enums.Recommendation;
 import org.personal.washingmachine.enums.ReturnType;
 
 @Builder(toBuilder = true)
-public record PageRequestDTO(
+public record SearchWashingMachineRequestDTO(
 		@Min(value = 0, message = "{NUMERIC_MINIMUM_VALUE}")
 		int pageIndex,
 		@Min(value = 1, message = "{NUMERIC_MINIMUM_VALUE}")

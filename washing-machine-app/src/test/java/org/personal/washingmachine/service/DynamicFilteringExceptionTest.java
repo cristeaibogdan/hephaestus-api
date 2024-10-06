@@ -4,9 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.personal.shared.clients.ProductClient;
-import org.personal.washingmachine.dto.PageRequestDTO;
+import org.personal.washingmachine.dto.SearchWashingMachineRequestDTO;
 import org.personal.washingmachine.repository.WashingMachineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -34,7 +33,7 @@ class DynamicFilteringExceptionTest {
 	@MockBean WashingMachineReportGenerator reportGenerator;
 	@MockBean ProductClient productClient; //TODO: To be deleted
 
-	private final PageRequestDTO defaultPageRequest = new PageRequestDTO(
+	private final SearchWashingMachineRequestDTO defaultPageRequest = new SearchWashingMachineRequestDTO(
 			0,
 			2,
 			null,
@@ -51,7 +50,7 @@ class DynamicFilteringExceptionTest {
 	@Test
 	void should_ThrowValidationException_When_PageIndexIsNegative() throws Exception {
 		// GIVEN
-		PageRequestDTO dto = defaultPageRequest.toBuilder()
+		SearchWashingMachineRequestDTO dto = defaultPageRequest.toBuilder()
 				.pageIndex(-1)
 				.build();
 
@@ -70,7 +69,7 @@ class DynamicFilteringExceptionTest {
 	@Test
 	void should_ThrowValidationException_When_PageSizeIsLessThanOne() throws Exception {
 		// GIVEN
-		PageRequestDTO dto = defaultPageRequest.toBuilder()
+		SearchWashingMachineRequestDTO dto = defaultPageRequest.toBuilder()
 				.pageSize(0)
 				.build();
 
@@ -96,7 +95,7 @@ class DynamicFilteringExceptionTest {
 	@MethodSource("localeProvider")
 	void should_ThrowCustomException_When_InvalidDate(String locale) throws Exception {
 		// GIVEN
-		PageRequestDTO dto = defaultPageRequest.toBuilder()
+		SearchWashingMachineRequestDTO dto = defaultPageRequest.toBuilder()
 				.createdAt("invalid date")
 				.build();
 

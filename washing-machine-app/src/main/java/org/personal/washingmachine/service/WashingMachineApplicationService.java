@@ -40,25 +40,25 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 	private final WashingMachineReportGenerator reportGenerator;
 
 	@Override
-	public Page<GetWashingMachineSimpleResponseDTO> loadPaginatedAndFiltered(PageRequestDTO pageRequestDTO) {
+	public Page<GetWashingMachineSimpleResponseDTO> loadPaginatedAndFiltered(SearchWashingMachineRequestDTO searchWashingMachineRequestDTO) {
 		PageRequest pageRequest = PageRequest.of(
-				pageRequestDTO.pageIndex(),
-				pageRequestDTO.pageSize(),
+				searchWashingMachineRequestDTO.pageIndex(),
+				searchWashingMachineRequestDTO.pageSize(),
 				Sort.by(washingMachine.createdAt.getMetadata().getName()).descending());
 
 		BooleanBuilder booleanBuilder = new BooleanBuilder()
-				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.identificationMode, pageRequestDTO.identificationMode()))
-				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.manufacturer, pageRequestDTO.manufacturer()))
+				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.identificationMode, searchWashingMachineRequestDTO.identificationMode()))
+				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.manufacturer, searchWashingMachineRequestDTO.manufacturer()))
 
-				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.model, pageRequestDTO.model()))
-				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.type, pageRequestDTO.type()))
-				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.serialNumber, pageRequestDTO.serialNumber()))
+				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.model, searchWashingMachineRequestDTO.model()))
+				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.type, searchWashingMachineRequestDTO.type()))
+				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.serialNumber, searchWashingMachineRequestDTO.serialNumber()))
 
-				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.returnType, pageRequestDTO.returnType()))
-				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.damageType, pageRequestDTO.damageType()))
-				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.recommendation, pageRequestDTO.recommendation()))
+				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.returnType, searchWashingMachineRequestDTO.returnType()))
+				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.damageType, searchWashingMachineRequestDTO.damageType()))
+				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.recommendation, searchWashingMachineRequestDTO.recommendation()))
 
-				.and(QueryDSLUtils.addTimestampEqualCondition(washingMachine.createdAt, parseToLocalDate(pageRequestDTO.createdAt())));
+				.and(QueryDSLUtils.addTimestampEqualCondition(washingMachine.createdAt, parseToLocalDate(searchWashingMachineRequestDTO.createdAt())));
 
 		Page<WashingMachine> responsePage = repository.findAll(booleanBuilder, pageRequest);
 

@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/api/v1/washing-machines")
 public interface IWashingMachineApplicationService {
 	@PostMapping
-	Page<GetWashingMachineSimpleResponseDTO> loadPaginatedAndFiltered(@Valid @RequestBody PageRequestDTO pageRequestDTO);
+	Page<GetWashingMachineSimpleResponseDTO> loadPaginatedAndFiltered(@Valid @RequestBody SearchWashingMachineRequestDTO searchWashingMachineRequestDTO);
 
 	@GetMapping("/{serialNumber}/expanded")
 	GetWashingMachineExpandedResponseDTO loadExpanded(@PathVariable String serialNumber);

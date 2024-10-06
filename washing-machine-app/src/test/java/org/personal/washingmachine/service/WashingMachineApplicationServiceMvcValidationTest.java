@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.personal.shared.clients.ProductClient;
-import org.personal.washingmachine.dto.PageRequestDTO;
 import org.personal.washingmachine.dto.WashingMachineDetailDTO;
 import org.personal.washingmachine.repository.WashingMachineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
