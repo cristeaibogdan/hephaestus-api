@@ -2,6 +2,7 @@ package org.personal.washingmachine.service;
 
 import com.querydsl.core.BooleanBuilder;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.personal.shared.clients.ProductClient;
 import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
@@ -17,12 +18,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.Optional;
 
 import static org.personal.washingmachine.dto.Mapper.WashingMachineMapper;
 import static org.personal.washingmachine.entity.QWashingMachine.washingMachine;
@@ -55,11 +58,21 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.damageType, pageRequestDTO.damageType()))
 				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.recommendation, pageRequestDTO.recommendation()))
 
-				.and(QueryDSLUtils.addTimestampEqualCondition(washingMachine.createdAt, pageRequestDTO.createdAt()));
+				.and(QueryDSLUtils.addTimestampEqualCondition(washingMachine.createdAt, parseToLocalDate(pageRequestDTO.createdAt())));
 
 		Page<WashingMachine> responsePage = repository.findAll(booleanBuilder, pageRequest);
 
 		return responsePage.map(wm -> WashingMachineMapper.toSimpleDTO(wm));
+	}
+
+	private Optional<LocalDate> parseToLocalDate(String dateString) {
+		try {
+			return Optional.ofNullable(dateString)
+					.filter(s -> StringUtils.isNotBlank(s))
+					.map(s -> LocalDate.parse(s.trim()));
+		} catch (DateTimeParseException e) {
+			throw new CustomException("Invalid date provided", ErrorCode.INVALID_DATE, e);
+		}
 	}
 
 	@Override
@@ -128,7 +141,7 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 	}
 
 	private String getImageExtension(MultipartFile imageFile) {
-		String extension = StringUtils.getFilenameExtension(imageFile.getOriginalFilename());
+		String extension = org.springframework.util.StringUtils.getFilenameExtension(imageFile.getOriginalFilename());
 
 		return switch (extension.toLowerCase()) {
 			case "png" -> "png";

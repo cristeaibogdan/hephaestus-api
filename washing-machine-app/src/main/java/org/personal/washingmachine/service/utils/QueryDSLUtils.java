@@ -4,12 +4,10 @@ import com.querydsl.core.types.dsl.*;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.personal.shared.exception.CustomException;
-import org.personal.shared.exception.ErrorCode;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeParseException;
+import java.util.Optional;
 
 @NoArgsConstructor(access = AccessLevel.NONE)
 public final class QueryDSLUtils {
@@ -32,43 +30,24 @@ public final class QueryDSLUtils {
 				: null;
 	}
 
-	public static BooleanExpression addDateEqualCondition(DatePath<LocalDate> attribute, String value) {
-		if (StringUtils.isBlank(value)) {
-			return null;
-		}
-
-		LocalDate localDate = parseToLocalDate(value);
-		return attribute.eq(localDate);
+	public static BooleanExpression addDateEqualCondition(DatePath<LocalDate> attribute, Optional<LocalDate> value) {
+		return value.map(v -> attribute.eq(v))
+				.orElse(null);
 	}
 
-	public static BooleanExpression addDateBetweenCondition(DatePath<LocalDate> attribute, String startDate, String endDate) {
-		if (StringUtils.isBlank(startDate) && StringUtils.isBlank(endDate)) {
-			return null;
+	public static BooleanExpression addDateBetweenCondition(DatePath<LocalDate> attribute, Optional<LocalDate> startDate, Optional<LocalDate> endDate) {
+		if (startDate.isPresent() && endDate.isPresent()) {
+			return attribute.between(startDate.get(), endDate.get());
 		}
-
-		LocalDate convertedStartDate = parseToLocalDate(startDate);
-		LocalDate convertedEndDate = parseToLocalDate(endDate);
-
-		return attribute.between(convertedStartDate, convertedEndDate);
+		return null;
 	}
 
-	public static BooleanExpression addTimestampEqualCondition(DateTimePath<LocalDateTime> attribute, String value) {
-		if (StringUtils.isBlank(value)) {
-			return null;
-		}
-
-		LocalDate localDate = parseToLocalDate(value);
-
-		return attribute.year().eq(localDate.getYear())
-				.and(attribute.month().eq(localDate.getMonthValue()))
-				.and(attribute.dayOfMonth().eq(localDate.getDayOfMonth()));
-	}
-
-	private static LocalDate parseToLocalDate(String dateString) {
-		try {
-			return LocalDate.parse(dateString.trim());
-		} catch (DateTimeParseException e) {
-			throw new CustomException("Invalid date provided", ErrorCode.INVALID_DATE, e);
-		}
+	public static BooleanExpression addTimestampEqualCondition(DateTimePath<LocalDateTime> attribute, Optional<LocalDate> value) {
+		return value.map(
+						v -> attribute.year().eq(v.getYear())
+								.and(attribute.month().eq(v.getMonthValue()))
+								.and(attribute.dayOfMonth().eq(v.getDayOfMonth()))
+				)
+				.orElse(null);
 	}
 }
