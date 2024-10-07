@@ -142,7 +142,7 @@ public class Mapper {
 			);
 		}
 
-		public static WashingMachine toEntity(WashingMachineDTO dto) {
+		public static WashingMachine toEntity(CreateWashingMachineRequestDTO dto) {
 			return new WashingMachine(
 					dto.category(),
 					dto.manufacturer(),

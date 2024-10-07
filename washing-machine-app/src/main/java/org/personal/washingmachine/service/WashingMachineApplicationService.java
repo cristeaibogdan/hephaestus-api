@@ -82,9 +82,9 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 	}
 
 	@Override
-	public void save(WashingMachineDTO washingMachineDTO, List<MultipartFile> imageFiles) {
+	public void save(CreateWashingMachineRequestDTO createWashingMachineRequestDTO, List<MultipartFile> imageFiles) {
 
-		WashingMachine washingMachine = WashingMachineMapper.toEntity(washingMachineDTO);
+		WashingMachine washingMachine = WashingMachineMapper.toEntity(createWashingMachineRequestDTO);
 		imageFiles.forEach(image -> {
 			WashingMachineImage washingMachineImage = getWashingMachineImage(image);
 			washingMachine.addImage(washingMachineImage);

@@ -20,7 +20,7 @@ public interface IWashingMachineApplicationService {
 	GetWashingMachineExpandedResponseDTO loadExpanded(@PathVariable String serialNumber);
 
 	@PostMapping(value = "/save", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	void save(@RequestPart WashingMachineDTO washingMachineDTO,
+	void save(@RequestPart CreateWashingMachineRequestDTO createWashingMachineRequestDTO,
 			  @RequestPart List<MultipartFile> imageFiles);
 
 	@PostMapping("/recommendation")
