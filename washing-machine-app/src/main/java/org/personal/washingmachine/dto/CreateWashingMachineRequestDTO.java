@@ -20,7 +20,6 @@ public record CreateWashingMachineRequestDTO(
 		DamageType damageType,
 
         Recommendation recommendation,
-        LocalDateTime createdAt,
 
         WashingMachineDetailDTO washingMachineDetailDTO
 ) { }
