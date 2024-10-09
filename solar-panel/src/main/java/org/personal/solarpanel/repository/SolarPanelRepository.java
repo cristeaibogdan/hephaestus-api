@@ -1,10 +1,9 @@
 package org.personal.solarpanel.repository;
 
-import org.personal.solarpanel.entity.SolarPanel;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.personal.solarpanel.dto.SolarPanelDTO;
 
-@Repository
-public interface SolarPanelRepository extends JpaRepository<SolarPanel, Long> {
-    boolean existsBySerialNumber(String serialNumber);
+public interface SolarPanelRepository {
+	void save(String solarPanel, String red, int i);
+
+	SolarPanelDTO findById(Long id);
 }
