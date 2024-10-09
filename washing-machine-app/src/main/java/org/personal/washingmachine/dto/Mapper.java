@@ -116,8 +116,8 @@ public class Mapper {
 
 	public static class WashingMachineMapper {
 
-		public static WashingMachineSimpleDTO toSimpleDTO(WashingMachine entity) {
-			return new WashingMachineSimpleDTO(
+		public static GetWashingMachineSimpleResponseDTO toSimpleDTO(WashingMachine entity) {
+			return new GetWashingMachineSimpleResponseDTO(
 					entity.getCategory(),
 					entity.getManufacturer(),
 					entity.getIdentificationMode(),
@@ -131,18 +131,18 @@ public class Mapper {
 			);
 		}
 
-		public static WashingMachineExpandedDTO toExpandedDTO(WashingMachine entity) {
+		public static GetWashingMachineExpandedResponseDTO toExpandedDTO(WashingMachine entity) {
 
 			WashingMachineDetailDTO washingMachineDetailDTO = WashingMachineDetailMapper.toDTO(entity.getWashingMachineDetail());
 			List<WashingMachineImageDTO> washingMachineImageDTOs = WashingMachineImageMapper.toDTO(entity.getWashingMachineImages());
 
-			return new WashingMachineExpandedDTO(
+			return new GetWashingMachineExpandedResponseDTO(
 					washingMachineDetailDTO,
 					washingMachineImageDTOs
 			);
 		}
 
-		public static WashingMachine toEntity(WashingMachineDTO dto) {
+		public static WashingMachine toEntity(CreateWashingMachineRequestDTO dto) {
 			return new WashingMachine(
 					dto.category(),
 					dto.manufacturer(),

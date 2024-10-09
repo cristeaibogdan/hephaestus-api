@@ -7,8 +7,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.personal.washingmachine.BaseIntegrationTest;
-import org.personal.washingmachine.dto.PageRequestDTO;
-import org.personal.washingmachine.dto.WashingMachineSimpleDTO;
+import org.personal.washingmachine.dto.SearchWashingMachineRequestDTO;
+import org.personal.washingmachine.dto.GetWashingMachineSimpleResponseDTO;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.enums.DamageType;
 import org.personal.washingmachine.enums.IdentificationMode;
@@ -48,7 +48,7 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 		washingMachineRepository.saveAll(washingMachines);
 	}
 
-	private final PageRequestDTO defaultPageRequest = new PageRequestDTO(
+	private final SearchWashingMachineRequestDTO searchWashingMachineRequestDTO = new SearchWashingMachineRequestDTO(
 			0,
 			10,
 			null,
@@ -65,13 +65,13 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 	@Test
 	void should_ReturnThreeWashingMachines() {
 		// GIVEN
-		PageRequestDTO dto = defaultPageRequest.toBuilder()
+		SearchWashingMachineRequestDTO dto = searchWashingMachineRequestDTO.toBuilder()
 				.pageIndex(0)
 				.pageSize(3)
 				.build();
 
 		// WHEN
-		Page<WashingMachineSimpleDTO> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
+		Page<GetWashingMachineSimpleResponseDTO> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
 
 		// THEN
 		assertThat(actual.getSize())
@@ -82,12 +82,12 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 	@ValueSource(strings = {"Gorenje", "WhirlPool"})
 	void should_ReturnFilteredList_By_Manufacturer(String manufacturer) {
 		// GIVEN
-		PageRequestDTO dto = defaultPageRequest.toBuilder()
+		SearchWashingMachineRequestDTO dto = searchWashingMachineRequestDTO.toBuilder()
 				.manufacturer(manufacturer)
 				.build();
 
 		// WHEN
-		Page<WashingMachineSimpleDTO> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
+		Page<GetWashingMachineSimpleResponseDTO> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
 
 		// THEN
 		assertThat(actual.getContent())
@@ -102,12 +102,12 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 	@EnumSource(DamageType.class)
 	void should_ReturnFilteredList_By_DamageType(DamageType damageType) {
 		// GIVEN
-		PageRequestDTO dto = defaultPageRequest.toBuilder()
+		SearchWashingMachineRequestDTO dto = searchWashingMachineRequestDTO.toBuilder()
 				.damageType(damageType)
 				.build();
 
 		// WHEN
-		Page<WashingMachineSimpleDTO> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
+		Page<GetWashingMachineSimpleResponseDTO> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
 
 		// THEN
 		assertThat(actual.getContent())
@@ -122,12 +122,12 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 	@EnumSource(ReturnType.class)
 	void should_ReturnFilteredList_By_ReturnType(ReturnType returnType) {
 		// GIVEN
-		PageRequestDTO dto = defaultPageRequest.toBuilder()
+		SearchWashingMachineRequestDTO dto = searchWashingMachineRequestDTO.toBuilder()
 				.returnType(returnType)
 				.build();
 
 		// WHEN
-		Page<WashingMachineSimpleDTO> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
+		Page<GetWashingMachineSimpleResponseDTO> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
 
 		// THEN
 		assertThat(actual.getContent())
@@ -142,12 +142,12 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 	@EnumSource(IdentificationMode.class)
 	void should_ReturnFilteredList_By_IdentificationMode(IdentificationMode identificationMode) {
 		// GIVEN
-		PageRequestDTO dto = defaultPageRequest.toBuilder()
+		SearchWashingMachineRequestDTO dto = searchWashingMachineRequestDTO.toBuilder()
 				.identificationMode(identificationMode)
 				.build();
 
 		// WHEN
-		Page<WashingMachineSimpleDTO> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
+		Page<GetWashingMachineSimpleResponseDTO> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
 
 		// THEN
 		assertThat(actual.getContent())
@@ -162,12 +162,12 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 	@ValueSource(strings = {"serial1", "serial2", "serial3"})
 	void should_ReturnFilteredList_By_SerialNumber(String serialNumber) {
 		// GIVEN
-		PageRequestDTO dto = defaultPageRequest.toBuilder()
+		SearchWashingMachineRequestDTO dto = searchWashingMachineRequestDTO.toBuilder()
 				.serialNumber(serialNumber)
 				.build();
 
 		// WHEN
-		Page<WashingMachineSimpleDTO> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
+		Page<GetWashingMachineSimpleResponseDTO> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
 
 		// THEN
 		assertThat(actual.getContent())
@@ -182,12 +182,12 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 	@ValueSource(strings = {"modelA", "modelB"})
 	void should_ReturnFilteredList_By_Model(String model) {
 		// GIVEN
-		PageRequestDTO dto = defaultPageRequest.toBuilder()
+		SearchWashingMachineRequestDTO dto = searchWashingMachineRequestDTO.toBuilder()
 				.model(model)
 				.build();
 
 		// WHEN
-		Page<WashingMachineSimpleDTO> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
+		Page<GetWashingMachineSimpleResponseDTO> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
 
 		// THEN
 		assertThat(actual.getContent())
@@ -202,12 +202,12 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 	@ValueSource(strings = {"TypeY", "TypeZ"})
 	void should_ReturnFilteredList_By_Type(String type) {
 		// GIVEN
-		PageRequestDTO dto = defaultPageRequest.toBuilder()
+		SearchWashingMachineRequestDTO dto = searchWashingMachineRequestDTO.toBuilder()
 				.type(type)
 				.build();
 
 		// WHEN
-		Page<WashingMachineSimpleDTO> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
+		Page<GetWashingMachineSimpleResponseDTO> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
 
 		// THEN
 		assertThat(actual.getContent())
@@ -222,12 +222,12 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 	@EnumSource(value = Recommendation.class, mode = EnumSource.Mode.EXCLUDE, names = "NONE")
 	void should_ReturnFilteredList_By_Recommendation(Recommendation recommendation) {
 		// GIVEN
-		PageRequestDTO dto = defaultPageRequest.toBuilder()
+		SearchWashingMachineRequestDTO dto = searchWashingMachineRequestDTO.toBuilder()
 				.recommendation(recommendation)
 				.build();
 
 		// WHEN
-		Page<WashingMachineSimpleDTO> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
+		Page<GetWashingMachineSimpleResponseDTO> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
 
 		// THEN
 		assertThat(actual.getContent())
@@ -241,11 +241,11 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 	@Test
 	void should_ReturnListWithDescendingDates() {
 		// GIVEN
-		PageRequestDTO dto = defaultPageRequest.toBuilder()
+		SearchWashingMachineRequestDTO dto = searchWashingMachineRequestDTO.toBuilder()
 				.build();
 
 		// WHEN
-		Page<WashingMachineSimpleDTO> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
+		Page<GetWashingMachineSimpleResponseDTO> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
 
 		// THEN
 		assertThat(actual.getContent())
@@ -260,13 +260,13 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 	@Test
 	void should_ReturnFilteredList_By_ManufacturerAndReturnType() {
 		// GIVEN
-		PageRequestDTO dto = defaultPageRequest.toBuilder()
+		SearchWashingMachineRequestDTO dto = searchWashingMachineRequestDTO.toBuilder()
 				.manufacturer("WhirlPool")
 				.returnType(ReturnType.TRANSPORT)
 				.build();
 
 		// WHEN
-		Page<WashingMachineSimpleDTO> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
+		Page<GetWashingMachineSimpleResponseDTO> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
 
 		// THEN
 		assertThat(actual.getContent())
@@ -284,14 +284,14 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 	@Test
 	void should_ReturnFilteredList_By_IdentificationModeAndModelAndType() {
 		// GIVEN
-		PageRequestDTO dto = defaultPageRequest.toBuilder()
+		SearchWashingMachineRequestDTO dto = searchWashingMachineRequestDTO.toBuilder()
 				.identificationMode(IdentificationMode.QR_CODE)
 				.model("modelC")
 				.type("TypeX")
 				.build();
 
 		// WHEN
-		Page<WashingMachineSimpleDTO> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
+		Page<GetWashingMachineSimpleResponseDTO> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
 
 		// THEN
 		assertThat(actual.getContent())

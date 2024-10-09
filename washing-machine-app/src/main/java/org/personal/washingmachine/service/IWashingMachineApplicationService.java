@@ -14,13 +14,13 @@ import java.util.List;
 @RequestMapping("/api/v1/washing-machines")
 public interface IWashingMachineApplicationService {
 	@PostMapping
-	Page<WashingMachineSimpleDTO> loadPaginatedAndFiltered(@Valid @RequestBody PageRequestDTO pageRequestDTO);
+	Page<GetWashingMachineSimpleResponseDTO> loadPaginatedAndFiltered(@Valid @RequestBody SearchWashingMachineRequestDTO searchWashingMachineRequestDTO);
 
 	@GetMapping("/{serialNumber}/expanded")
-	WashingMachineExpandedDTO loadExpanded(@PathVariable String serialNumber);
+	GetWashingMachineExpandedResponseDTO loadExpanded(@PathVariable String serialNumber);
 
 	@PostMapping(value = "/save", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	void save(@RequestPart WashingMachineDTO washingMachineDTO,
+	void save(@RequestPart CreateWashingMachineRequestDTO createWashingMachineRequestDTO,
 			  @RequestPart List<MultipartFile> imageFiles);
 
 	@PostMapping("/recommendation")

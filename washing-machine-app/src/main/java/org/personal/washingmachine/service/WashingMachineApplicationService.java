@@ -2,6 +2,7 @@ package org.personal.washingmachine.service;
 
 import com.querydsl.core.BooleanBuilder;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.personal.shared.clients.ProductClient;
 import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
@@ -17,12 +18,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.Optional;
 
 import static org.personal.washingmachine.dto.Mapper.WashingMachineMapper;
 import static org.personal.washingmachine.entity.QWashingMachine.washingMachine;
@@ -37,41 +40,51 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 	private final WashingMachineReportGenerator reportGenerator;
 
 	@Override
-	public Page<WashingMachineSimpleDTO> loadPaginatedAndFiltered(PageRequestDTO pageRequestDTO) {
+	public Page<GetWashingMachineSimpleResponseDTO> loadPaginatedAndFiltered(SearchWashingMachineRequestDTO searchWashingMachineRequestDTO) {
 		PageRequest pageRequest = PageRequest.of(
-				pageRequestDTO.pageIndex(),
-				pageRequestDTO.pageSize(),
+				searchWashingMachineRequestDTO.pageIndex(),
+				searchWashingMachineRequestDTO.pageSize(),
 				Sort.by(washingMachine.createdAt.getMetadata().getName()).descending());
 
 		BooleanBuilder booleanBuilder = new BooleanBuilder()
-				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.identificationMode, pageRequestDTO.identificationMode()))
-				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.manufacturer, pageRequestDTO.manufacturer()))
+				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.identificationMode, searchWashingMachineRequestDTO.identificationMode()))
+				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.manufacturer, searchWashingMachineRequestDTO.manufacturer()))
 
-				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.model, pageRequestDTO.model()))
-				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.type, pageRequestDTO.type()))
-				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.serialNumber, pageRequestDTO.serialNumber()))
+				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.model, searchWashingMachineRequestDTO.model()))
+				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.type, searchWashingMachineRequestDTO.type()))
+				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.serialNumber, searchWashingMachineRequestDTO.serialNumber()))
 
-				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.returnType, pageRequestDTO.returnType()))
-				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.damageType, pageRequestDTO.damageType()))
-				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.recommendation, pageRequestDTO.recommendation()))
+				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.returnType, searchWashingMachineRequestDTO.returnType()))
+				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.damageType, searchWashingMachineRequestDTO.damageType()))
+				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.recommendation, searchWashingMachineRequestDTO.recommendation()))
 
-				.and(QueryDSLUtils.addTimestampEqualCondition(washingMachine.createdAt, pageRequestDTO.createdAt()));
+				.and(QueryDSLUtils.addTimestampEqualCondition(washingMachine.createdAt, parseToLocalDate(searchWashingMachineRequestDTO.createdAt())));
 
 		Page<WashingMachine> responsePage = repository.findAll(booleanBuilder, pageRequest);
 
 		return responsePage.map(wm -> WashingMachineMapper.toSimpleDTO(wm));
 	}
 
+	private Optional<LocalDate> parseToLocalDate(String dateString) {
+		try {
+			return Optional.ofNullable(dateString)
+					.filter(s -> StringUtils.isNotBlank(s))
+					.map(s -> LocalDate.parse(s.trim()));
+		} catch (DateTimeParseException e) {
+			throw new CustomException("Invalid date provided", ErrorCode.INVALID_DATE, e);
+		}
+	}
+
 	@Override
-	public WashingMachineExpandedDTO loadExpanded(String serialNumber) {
+	public GetWashingMachineExpandedResponseDTO loadExpanded(String serialNumber) {
 		WashingMachine washingMachine = service.findBySerialNumber(serialNumber);
 		return WashingMachineMapper.toExpandedDTO(washingMachine);
 	}
 
 	@Override
-	public void save(WashingMachineDTO washingMachineDTO, List<MultipartFile> imageFiles) {
+	public void save(CreateWashingMachineRequestDTO createWashingMachineRequestDTO, List<MultipartFile> imageFiles) {
 
-		WashingMachine washingMachine = WashingMachineMapper.toEntity(washingMachineDTO);
+		WashingMachine washingMachine = WashingMachineMapper.toEntity(createWashingMachineRequestDTO);
 		imageFiles.forEach(image -> {
 			WashingMachineImage washingMachineImage = getWashingMachineImage(image);
 			washingMachine.addImage(washingMachineImage);
@@ -128,7 +141,7 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 	}
 
 	private String getImageExtension(MultipartFile imageFile) {
-		String extension = StringUtils.getFilenameExtension(imageFile.getOriginalFilename());
+		String extension = org.springframework.util.StringUtils.getFilenameExtension(imageFile.getOriginalFilename());
 
 		return switch (extension.toLowerCase()) {
 			case "png" -> "png";
