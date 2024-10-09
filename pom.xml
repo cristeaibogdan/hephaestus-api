@@ -16,8 +16,8 @@
         <module>shared</module>
         <module>washing-machine-app</module>
         <module>washing-machine-domain</module>
+        <module>solar-panel-app</module>
         <module>product</module>
-        <module>solar-panel</module>
     </modules>
 
     <properties>
