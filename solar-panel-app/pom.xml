@@ -25,38 +25,23 @@
         <!-- *** TRACEABILITY BETWEEN MICROSERVICES -->
         <!-- ***************************************** -->
 
-        <dependency>
-            <!-- Support for app monitoring, including metrics, health checks and so on -->
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            &lt;!&ndash; Support for app monitoring, including metrics, health checks and so on &ndash;&gt;-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-actuator</artifactId>-->
+<!--        </dependency>-->
 
-        <dependency>
-            <!-- Collect and record traces using OpenTelemetry APIs -->
-            <groupId>io.micrometer</groupId>
-            <artifactId>micrometer-tracing-bridge-otel</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            &lt;!&ndash; Collect and record traces using OpenTelemetry APIs &ndash;&gt;-->
+<!--            <groupId>io.micrometer</groupId>-->
+<!--            <artifactId>micrometer-tracing-bridge-otel</artifactId>-->
+<!--        </dependency>-->
 
-        <dependency>
-            <!-- Export traces to Zipkin -->
-            <groupId>io.opentelemetry</groupId>
-            <artifactId>opentelemetry-exporter-zipkin</artifactId>
-        </dependency>
-
-        <!-- ***************************************** -->
-        <!-- *** DATABASE -->
-        <!-- ***************************************** -->
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            &lt;!&ndash; Export traces to Zipkin &ndash;&gt;-->
+<!--            <groupId>io.opentelemetry</groupId>-->
+<!--            <artifactId>opentelemetry-exporter-zipkin</artifactId>-->
+<!--        </dependency>-->
     </dependencies>
 
     <profiles>
