@@ -1,24 +1,24 @@
+package org.personal.solarpanel.service;
+
 import org.junit.jupiter.api.Test;
 import org.personal.solarpanel.dto.SolarPanelDTO;
 import org.personal.solarpanel.repository.SolarPanelRepository;
-import org.personal.solarpanel.service.SolarPanelApplication;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-class SolarPanelApplicationTest {
+class SolarPanelApplicationServiceTest {
 
 	SolarPanelRepository solarPanelRepository = mock(SolarPanelRepository.class);
 
-	SolarPanelApplication solarPanelApplication = new SolarPanelApplication(solarPanelRepository);
+	SolarPanelApplicationService solarPanelApplicationService = new SolarPanelApplicationService(solarPanelRepository);
 
 	@Test
 	void someMethod() {
 
 		// GIVEN
-		solarPanelApplication.save("Solar Panel", "Red", 100);
+		solarPanelApplicationService.save("Solar Panel", "Red", 100);
 
 		// THEN
 
@@ -33,11 +33,11 @@ class SolarPanelApplicationTest {
 
 		SolarPanelDTO expected = new SolarPanelDTO("Solar Panel");
 
-		given(solarPanelRepository.findById(id))
-				.willReturn(expected);
+//		given(solarPanelRepository.findById(id))
+//				.willReturn(expected);
 
 		// WHEN
-		SolarPanelDTO dto = solarPanelApplication.get(id);
+		SolarPanelDTO dto = solarPanelApplicationService.get(id);
 
 		// THEN
 		assertThat(dto)

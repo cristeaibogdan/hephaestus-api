@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>org.personal</groupId>
         <artifactId>hephaestus-api</artifactId>
@@ -17,31 +17,33 @@
         <!-- ***************************************** -->
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>org.personal</groupId>
+            <artifactId>solar-panel-domain</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
+
 
         <!-- ***************************************** -->
         <!-- *** TRACEABILITY BETWEEN MICROSERVICES -->
         <!-- ***************************************** -->
 
-<!--        <dependency>-->
-<!--            &lt;!&ndash; Support for app monitoring, including metrics, health checks and so on &ndash;&gt;-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-actuator</artifactId>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            &lt;!&ndash; Support for app monitoring, including metrics, health checks and so on &ndash;&gt;-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-actuator</artifactId>-->
+        <!--        </dependency>-->
 
-<!--        <dependency>-->
-<!--            &lt;!&ndash; Collect and record traces using OpenTelemetry APIs &ndash;&gt;-->
-<!--            <groupId>io.micrometer</groupId>-->
-<!--            <artifactId>micrometer-tracing-bridge-otel</artifactId>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            &lt;!&ndash; Collect and record traces using OpenTelemetry APIs &ndash;&gt;-->
+        <!--            <groupId>io.micrometer</groupId>-->
+        <!--            <artifactId>micrometer-tracing-bridge-otel</artifactId>-->
+        <!--        </dependency>-->
 
-<!--        <dependency>-->
-<!--            &lt;!&ndash; Export traces to Zipkin &ndash;&gt;-->
-<!--            <groupId>io.opentelemetry</groupId>-->
-<!--            <artifactId>opentelemetry-exporter-zipkin</artifactId>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            &lt;!&ndash; Export traces to Zipkin &ndash;&gt;-->
+        <!--            <groupId>io.opentelemetry</groupId>-->
+        <!--            <artifactId>opentelemetry-exporter-zipkin</artifactId>-->
+        <!--        </dependency>-->
     </dependencies>
 
     <profiles>

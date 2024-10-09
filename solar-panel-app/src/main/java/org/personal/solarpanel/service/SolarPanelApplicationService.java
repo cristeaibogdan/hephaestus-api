@@ -5,7 +5,7 @@ import org.personal.solarpanel.dto.SolarPanelDTO;
 import org.personal.solarpanel.repository.SolarPanelRepository;
 
 @RequiredArgsConstructor
-public class SolarPanelApplication {
+public class SolarPanelApplicationService {
 
 	private final SolarPanelRepository solarPanelRepository;
 
@@ -14,6 +14,7 @@ public class SolarPanelApplication {
 	}
 
 	public SolarPanelDTO get(Long id) {
-		return solarPanelRepository.findById(id);
+		return null;
+//		return solarPanelRepository.findById(id);
 	}
 }
