@@ -18,12 +18,6 @@
 
 		<dependency>
 			<groupId>org.personal</groupId>
-			<artifactId>shared</artifactId>
-			<version>1.0-SNAPSHOT</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.personal</groupId>
 			<artifactId>washing-machine-domain</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
