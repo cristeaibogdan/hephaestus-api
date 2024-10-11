@@ -2,6 +2,8 @@ package org.personal.washingmachine.dto;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.personal.shared.exception.CustomException;
+import org.personal.shared.exception.ErrorCode;
 import org.personal.washingmachine.entity.User;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineDetail;
@@ -9,7 +11,9 @@ import org.personal.washingmachine.entity.WashingMachineImage;
 import org.personal.washingmachine.entity.embedded.HiddenSurfaceDamage;
 import org.personal.washingmachine.entity.embedded.PackageDamage;
 import org.personal.washingmachine.entity.embedded.VisibleSurfaceDamage;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.NONE)
@@ -50,6 +54,32 @@ public class Mapper {
 					.toList();
 		}
 
+		public static WashingMachineImage toEntity(MultipartFile imageFile) {
+
+			byte[] image;
+
+			try {
+				image = imageFile.getBytes();
+			} catch (IOException e) {
+				throw new CustomException("Could not extract bytes from image: " + imageFile.getName(), e, ErrorCode.GENERAL);
+			}
+
+			String imagePrefix = "data:image/" + getImageExtension(imageFile) + ";base64,";
+
+			return new WashingMachineImage(imagePrefix, image);
+		}
+
+		private static String getImageExtension(MultipartFile imageFile) {
+			String extension = org.springframework.util.StringUtils.getFilenameExtension(imageFile.getOriginalFilename());
+
+			return switch (extension.toLowerCase()) {
+				case "png" -> "png";
+				case "jpg" -> "jpg";
+				case "jpeg" -> "jpeg";
+				case "bmp" -> "bmp";
+				default -> throw new CustomException("Invalid image extension: " + extension, ErrorCode.GENERAL);
+			};
+		}
 	}
 
 	public static class WashingMachineDetailMapper {

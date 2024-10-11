@@ -21,12 +21,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Optional;
 
+import static org.personal.washingmachine.dto.Mapper.*;
 import static org.personal.washingmachine.dto.Mapper.WashingMachineMapper;
 import static org.personal.washingmachine.entity.QWashingMachine.washingMachine;
 
@@ -85,8 +85,9 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 	public void save(CreateWashingMachineRequestDTO createWashingMachineRequestDTO, List<MultipartFile> imageFiles) {
 
 		WashingMachine washingMachine = WashingMachineMapper.toEntity(createWashingMachineRequestDTO);
+
 		imageFiles.forEach(image -> {
-			WashingMachineImage washingMachineImage = getWashingMachineImage(image);
+			WashingMachineImage washingMachineImage = WashingMachineImageMapper.toEntity(image);
 			washingMachine.addImage(washingMachineImage);
 		});
 
@@ -95,7 +96,7 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 
 	@Override
 	public Recommendation getRecommendation(WashingMachineDetailDTO washingMachineDetailDTO) {
-		WashingMachineDetail detail = Mapper.WashingMachineDetailMapper.toEntity(washingMachineDetailDTO);
+		WashingMachineDetail detail = WashingMachineDetailMapper.toEntity(washingMachineDetailDTO);
 		return damageCalculator.getRecommendation(detail);
 	}
 
@@ -119,36 +120,5 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 	@Override
 	public boolean isSerialNumberInUse(String serialNumber) {
 		return repository.existsBySerialNumber(serialNumber);
-	}
-
-//*********************************************************************************************
-//******************** HELPER METHODS
-//*********************************************************************************************
-
-	private WashingMachineImage getWashingMachineImage(MultipartFile imageFile) {
-
-		byte[] image;
-
-		try {
-			image = imageFile.getBytes();
-		} catch (IOException e) {
-			throw new CustomException("Could not extract bytes from image: " + imageFile.getName(), e, ErrorCode.GENERAL);
-		}
-
-		String imagePrefix = "data:image/" + getImageExtension(imageFile) + ";base64,";
-
-		return new WashingMachineImage(imagePrefix, image);
-	}
-
-	private String getImageExtension(MultipartFile imageFile) {
-		String extension = org.springframework.util.StringUtils.getFilenameExtension(imageFile.getOriginalFilename());
-
-		return switch (extension.toLowerCase()) {
-			case "png" -> "png";
-			case "jpg" -> "jpg";
-			case "jpeg" -> "jpeg";
-			case "bmp" -> "bmp";
-			default -> throw new CustomException("Invalid image extension: " + extension, ErrorCode.GENERAL);
-		};
 	}
 }
