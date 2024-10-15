@@ -2,9 +2,9 @@ package org.personal.washingmachine.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.personal.shared.clients.ProductClient;
 import org.personal.washingmachine.dto.WashingMachineDetailDTO;
 import org.personal.washingmachine.repository.WashingMachineRepository;
@@ -15,7 +15,11 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.util.stream.Stream;
+
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.not;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -35,7 +39,7 @@ public class WashingMachineApplicationServiceMvcValidationTest {
 	@Nested
 	class testGetRecommendation {
 
-		private final WashingMachineDetailDTO defaultDetail = new WashingMachineDetailDTO(
+		private static final WashingMachineDetailDTO defaultDetail = new WashingMachineDetailDTO(
 				false,
 				false,
 				false,
@@ -62,7 +66,34 @@ public class WashingMachineApplicationServiceMvcValidationTest {
 				0
 		);
 
-		private void validationFails(WashingMachineDetailDTO dto, String propertyName) throws Exception {
+		 static Stream<Arguments> getInvalidWashingMachineDetailTestCases() {
+			return Stream.of(
+					arguments(defaultDetail.toBuilder().visibleSurfacesScratchesLength(-1).build(), "visibleSurfacesScratchesLength", -1),
+					arguments(defaultDetail.toBuilder().visibleSurfacesScratchesLength(11).build(), "visibleSurfacesScratchesLength", 11),
+					arguments(defaultDetail.toBuilder().visibleSurfacesDentsDepth(-1).build(), "visibleSurfacesDentsDepth", -1),
+					arguments(defaultDetail.toBuilder().visibleSurfacesDentsDepth(11).build(), "visibleSurfacesDentsDepth", 11),
+					arguments(defaultDetail.toBuilder().visibleSurfacesMinorDamage(null).build(), "visibleSurfacesMinorDamage", null),
+					arguments(defaultDetail.toBuilder().visibleSurfacesMinorDamage("A".repeat(201)).build(), "visibleSurfacesMinorDamage", "201 chars"),
+					arguments(defaultDetail.toBuilder().visibleSurfacesMajorDamage(null).build(), "visibleSurfacesMajorDamage", null),
+					arguments(defaultDetail.toBuilder().visibleSurfacesMajorDamage("A".repeat(201)).build(), "visibleSurfacesMajorDamage", "201 chars"),
+					arguments(defaultDetail.toBuilder().hiddenSurfacesScratchesLength(-1).build(), "hiddenSurfacesScratchesLength", -1),
+					arguments(defaultDetail.toBuilder().hiddenSurfacesScratchesLength(11).build(), "hiddenSurfacesScratchesLength", 11),
+					arguments(defaultDetail.toBuilder().hiddenSurfacesDentsDepth(-1).build(), "hiddenSurfacesDentsDepth", -1),
+					arguments(defaultDetail.toBuilder().hiddenSurfacesDentsDepth(11).build(), "hiddenSurfacesDentsDepth", 11),
+					arguments(defaultDetail.toBuilder().hiddenSurfacesMinorDamage(null).build(), "hiddenSurfacesMinorDamage", null),
+					arguments(defaultDetail.toBuilder().hiddenSurfacesMinorDamage("A".repeat(201)).build(), "hiddenSurfacesMinorDamage", "201 chars"),
+					arguments(defaultDetail.toBuilder().hiddenSurfacesMajorDamage(null).build(), "hiddenSurfacesMajorDamage", null),
+					arguments(defaultDetail.toBuilder().hiddenSurfacesMajorDamage("A".repeat(201)).build(), "hiddenSurfacesMajorDamage", "201 chars"),
+					arguments(defaultDetail.toBuilder().price(-1).build(), "price", -1),
+					arguments(defaultDetail.toBuilder().repairPrice(-1).build(), "repairPrice", -1)
+			);
+		}
+
+		@ParameterizedTest(name = "Validation fails for property {1}, with value {2}")
+		@MethodSource("getInvalidWashingMachineDetailTestCases")
+		void should_ThrowValidationException_When_providedInvalidDTO(WashingMachineDetailDTO dto, String propertyName, Object invalidValue) throws Exception {
+			// GIVEN
+
 			// WHEN
 			ResultActions resultActions = mockMvc.perform(
 					post("/api/v1/washing-machines/recommendation")
@@ -75,149 +106,40 @@ public class WashingMachineApplicationServiceMvcValidationTest {
 					.andExpect(content().string(containsString(propertyName)));
 		}
 
-		@ParameterizedTest(name = "Validation fails for value = {0}")
-		@ValueSource(ints = {-1, 11})
-		void should_ThrowValidationException_When_VisibleScratchesLengthIsInvalid(int value) throws Exception {
-			// GIVEN
-			WashingMachineDetailDTO dto = defaultDetail.toBuilder()
-					.visibleSurfacesScratchesLength(value)
-					.build();
-
-			validationFails(dto, "visibleSurfacesScratchesLength");
+		static Stream<Arguments> getValidWashingMachineDetailTestCases() {
+			return Stream.of(
+					arguments(defaultDetail.toBuilder().visibleSurfacesScratchesLength(0).build(), "visibleSurfacesScratchesLength", 0),
+					arguments(defaultDetail.toBuilder().visibleSurfacesScratchesLength(10).build(), "visibleSurfacesScratchesLength", 10),
+					arguments(defaultDetail.toBuilder().visibleSurfacesDentsDepth(0).build(), "visibleSurfacesDentsDepth", 0),
+					arguments(defaultDetail.toBuilder().visibleSurfacesDentsDepth(10).build(), "visibleSurfacesDentsDepth", 10),
+					arguments(defaultDetail.toBuilder().visibleSurfacesMinorDamage("B".repeat(200)).build(), "visibleSurfacesMinorDamage", "200 chars"),
+					arguments(defaultDetail.toBuilder().visibleSurfacesMajorDamage("B".repeat(200)).build(), "visibleSurfacesMajorDamage", "200 chars"),
+					arguments(defaultDetail.toBuilder().hiddenSurfacesScratchesLength(0).build(), "hiddenSurfacesScratchesLength", 0),
+					arguments(defaultDetail.toBuilder().hiddenSurfacesScratchesLength(10).build(), "hiddenSurfacesScratchesLength", 10),
+					arguments(defaultDetail.toBuilder().hiddenSurfacesDentsDepth(0).build(), "hiddenSurfacesDentsDepth", 0),
+					arguments(defaultDetail.toBuilder().hiddenSurfacesDentsDepth(10).build(), "hiddenSurfacesDentsDepth", 10),
+					arguments(defaultDetail.toBuilder().hiddenSurfacesMinorDamage("B".repeat(200)).build(), "hiddenSurfacesMinorDamage", "200 chars"),
+					arguments(defaultDetail.toBuilder().hiddenSurfacesMajorDamage("B".repeat(200)).build(), "hiddenSurfacesMajorDamage", "200 chars"),
+					arguments(defaultDetail.toBuilder().price(0).build(), "price", 0),
+					arguments(defaultDetail.toBuilder().repairPrice(0).build(), "repairPrice", 0)
+			);
 		}
 
-		@ParameterizedTest(name = "Validation fails for value = {0}")
-		@ValueSource(ints = {-1, 11})
-		void should_ThrowValidationException_When_VisibleDentsDepthIsInvalid(int value) throws Exception {
+		@ParameterizedTest(name = "Validation passes for property {1}, with value {2}")
+		@MethodSource("getValidWashingMachineDetailTestCases")
+		void should_PassValidation_When_providedValidDTO(WashingMachineDetailDTO dto, String propertyName, Object validValue) throws Exception {
 			// GIVEN
-			WashingMachineDetailDTO dto = defaultDetail.toBuilder()
-					.visibleSurfacesDentsDepth(value)
-					.build();
 
-			validationFails(dto, "visibleSurfacesDentsDepth");
+			// WHEN
+			ResultActions resultActions = mockMvc.perform(
+					post("/api/v1/washing-machines/recommendation")
+							.content(jackson.writeValueAsString(dto))
+							.contentType(MediaType.APPLICATION_JSON));
+
+			// THEN
+			resultActions
+					.andExpect(status().is2xxSuccessful())
+					.andExpect(content().string(not(containsString(propertyName))));
 		}
-
-		@Test
-		void should_ThrowValidationException_When_VisibleSurfacesMinorDamageIsNull() throws Exception {
-			// GIVEN
-			WashingMachineDetailDTO dto = defaultDetail.toBuilder()
-					.visibleSurfacesMinorDamage(null)
-					.build();
-
-			validationFails(dto, "visibleSurfacesMinorDamage");
-		}
-
-		@Test
-		void should_ThrowValidationException_When_VisibleSurfacesMinorDamageIsOver200Chars() throws Exception {
-			// GIVEN
-			WashingMachineDetailDTO dto = defaultDetail.toBuilder()
-					.visibleSurfacesMinorDamage("A".repeat(201))
-					.build();
-
-			validationFails(dto, "visibleSurfacesMinorDamage");
-		}
-
-		@Test
-		void should_ThrowValidationException_When_VisibleSurfacesMajorDamageIsNull() throws Exception {
-			// GIVEN
-			WashingMachineDetailDTO dto = defaultDetail.toBuilder()
-					.visibleSurfacesMajorDamage(null)
-					.build();
-
-			validationFails(dto, "visibleSurfacesMajorDamage");
-		}
-
-		@Test
-		void should_ThrowValidationException_When_VisibleSurfacesMajorDamageIsOver200Chars() throws Exception {
-			// GIVEN
-			WashingMachineDetailDTO dto = defaultDetail.toBuilder()
-					.visibleSurfacesMajorDamage("A".repeat(201))
-					.build();
-
-			validationFails(dto, "visibleSurfacesMajorDamage");
-		}
-
-		@ParameterizedTest(name = "Validation fails for value = {0}")
-		@ValueSource(ints = {-1, 11})
-		void should_ThrowValidationException_When_HiddenScratchesLengthIsInvalid(int value) throws Exception {
-			// GIVEN
-			WashingMachineDetailDTO dto = defaultDetail.toBuilder()
-					.hiddenSurfacesScratchesLength(value)
-					.build();
-
-			validationFails(dto, "hiddenSurfacesScratchesLength");
-		}
-
-		@ParameterizedTest(name = "Validation fails for value = {0}")
-		@ValueSource(ints = {-1, 11})
-		void should_ThrowValidationException_When_HiddenDentsDepthIsInvalid(int value) throws Exception {
-			// GIVEN
-			WashingMachineDetailDTO dto = defaultDetail.toBuilder()
-					.hiddenSurfacesDentsDepth(value)
-					.build();
-
-			validationFails(dto, "hiddenSurfacesDentsDepth");
-		}
-
-		@Test
-		void should_ThrowValidationException_When_HiddenSurfacesMinorDamageIsNull() throws Exception {
-			// GIVEN
-			WashingMachineDetailDTO dto = defaultDetail.toBuilder()
-					.hiddenSurfacesMinorDamage(null)
-					.build();
-
-			validationFails(dto, "hiddenSurfacesMinorDamage");
-		}
-
-		@Test
-		void should_ThrowValidationException_When_HiddenSurfacesMinorDamageIsOver200Chars() throws Exception {
-			// GIVEN
-			WashingMachineDetailDTO dto = defaultDetail.toBuilder()
-					.hiddenSurfacesMinorDamage("A".repeat(201))
-					.build();
-
-			validationFails(dto, "hiddenSurfacesMinorDamage");
-		}
-
-		@Test
-		void should_ThrowValidationException_When_HiddenSurfacesMajorDamageIsNull() throws Exception {
-			// GIVEN
-			WashingMachineDetailDTO dto = defaultDetail.toBuilder()
-					.hiddenSurfacesMajorDamage(null)
-					.build();
-
-			validationFails(dto, "hiddenSurfacesMajorDamage");
-		}
-
-		@Test
-		void should_ThrowValidationException_When_HiddenSurfacesMajorDamageIsOver200Chars() throws Exception {
-			// GIVEN
-			WashingMachineDetailDTO dto = defaultDetail.toBuilder()
-					.hiddenSurfacesMajorDamage("A".repeat(201))
-					.build();
-
-			validationFails(dto, "hiddenSurfacesMajorDamage");
-		}
-
-		@Test
-		void should_ThrowValidationException_When_PriceIsNegative() throws Exception {
-			// GIVEN
-			WashingMachineDetailDTO dto = defaultDetail.toBuilder()
-					.price(-1)
-					.build();
-
-			validationFails(dto, "price");
-		}
-
-		@Test
-		void should_ThrowValidationException_When_RepairPriceIsNegative() throws Exception {
-			// GIVEN
-			WashingMachineDetailDTO dto = defaultDetail.toBuilder()
-					.repairPrice(-1)
-					.build();
-
-			validationFails(dto, "repairPrice");
-		}
-
 	}
 }
