@@ -5,6 +5,7 @@ import org.personal.washingmachine.dto.*;
 import org.personal.washingmachine.enums.Recommendation;
 import org.personal.washingmachine.dto.WashingMachineReportDTO;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +21,7 @@ public interface IWashingMachineApplicationService {
 	GetWashingMachineExpandedResponseDTO loadExpanded(@PathVariable String serialNumber);
 
 	@PostMapping(value = "/save", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@ResponseStatus(HttpStatus.CREATED)
 	void save(@RequestPart CreateWashingMachineRequestDTO createWashingMachineRequestDTO,
 			  @RequestPart List<MultipartFile> imageFiles);
 
