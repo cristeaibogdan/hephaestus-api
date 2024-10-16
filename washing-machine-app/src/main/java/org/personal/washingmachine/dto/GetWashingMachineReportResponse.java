@@ -1,6 +1,6 @@
 package org.personal.washingmachine.dto;
 
-public record WashingMachineReportDTO(
+public record GetWashingMachineReportResponse(
         byte[] report,
         String createdAt
 ) {}

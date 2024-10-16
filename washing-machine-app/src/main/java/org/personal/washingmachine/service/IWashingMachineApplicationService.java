@@ -3,7 +3,7 @@ package org.personal.washingmachine.service;
 import jakarta.validation.Valid;
 import org.personal.washingmachine.dto.*;
 import org.personal.washingmachine.enums.Recommendation;
-import org.personal.washingmachine.dto.WashingMachineReportDTO;
+import org.personal.washingmachine.dto.GetWashingMachineReportResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,7 +29,7 @@ public interface IWashingMachineApplicationService {
 	Recommendation getRecommendation(@Valid @RequestBody WashingMachineDetailDTO washingMachineDetailDTO);
 
 	@GetMapping(value = "/{serialNumber}/report")
-	WashingMachineReportDTO getReport(@PathVariable String serialNumber);
+	GetWashingMachineReportResponse getReport(@PathVariable String serialNumber);
 
 	@GetMapping("/{category}/manufacturers")
 	List<String> getManufacturers(@PathVariable String category);
