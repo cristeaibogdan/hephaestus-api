@@ -31,23 +31,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(WashingMachineApplicationService.class)
 class WashingMachineApplicationServiceMvcValidationTest {
 
-	@Autowired
-	MockMvc mockMvc;
-	@Autowired
-	ObjectMapper jackson;
+	@Autowired MockMvc mockMvc;
+	@Autowired ObjectMapper jackson;
 
-	@MockBean
-	WashingMachineService service;
-	@MockBean
-	WashingMachineRepository repository;
-	@MockBean
-	WashingMachineDamageCalculator damageCalculator;
-	@MockBean
-	WashingMachineReportGenerator reportGenerator;
-	@MockBean
-	ProductClient productClient; //TODO: To be deleted
+	@MockBean WashingMachineService service;
+	@MockBean WashingMachineRepository repository;
+	@MockBean WashingMachineDamageCalculator damageCalculator;
+	@MockBean WashingMachineReportGenerator reportGenerator;
+	@MockBean ProductClient productClient; //TODO: To be deleted
 
-	private final CreateWashingMachineRequest createWashingMachineRequest = new CreateWashingMachineRequest(
+	private final CreateWashingMachineRequest DEFAULT_REQUEST = new CreateWashingMachineRequest(
 			"Washing Machine",
 			IdentificationMode.DATA_MATRIX,
 			"WhirlPool",
@@ -114,7 +107,7 @@ class WashingMachineApplicationServiceMvcValidationTest {
 	@MethodSource("getInvalidWashingMachineDetailTestCases")
 	void should_ThrowValidationException_When_providedInvalidDTO(WashingMachineDetailDTO dto, String propertyName, Object invalidValue) throws Exception {
 		// GIVEN
-		CreateWashingMachineRequest request = this.createWashingMachineRequest.toBuilder().washingMachineDetailDTO(dto).build();
+		CreateWashingMachineRequest request = DEFAULT_REQUEST.toBuilder().washingMachineDetailDTO(dto).build();
 		String jsonRequest = jackson.writeValueAsString(request);
 
 		MockMultipartFile jsonFile = new MockMultipartFile( // avoids error Content-Type 'application/octet-stream' is not supported
@@ -159,7 +152,7 @@ class WashingMachineApplicationServiceMvcValidationTest {
 	@MethodSource("getValidWashingMachineDetailTestCases")
 	void should_PassValidation_When_providedValidDTO(WashingMachineDetailDTO dto, String propertyName, Object validValue) throws Exception {
 		// GIVEN
-		CreateWashingMachineRequest request = this.createWashingMachineRequest.toBuilder().washingMachineDetailDTO(dto).build();
+		CreateWashingMachineRequest request = DEFAULT_REQUEST.toBuilder().washingMachineDetailDTO(dto).build();
 		String jsonRequest = jackson.writeValueAsString(request);
 
 		MockMultipartFile jsonFile = new MockMultipartFile( // avoids error Content-Type 'application/octet-stream' is not supported
