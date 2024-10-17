@@ -91,6 +91,9 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 			washingMachine.addImage(washingMachineImage);
 		});
 
+		Recommendation recommendation = damageCalculator.getRecommendation(washingMachine.getWashingMachineDetail());
+		washingMachine.setRecommendation(recommendation);
+
 		service.save(washingMachine);
 	}
 

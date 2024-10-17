@@ -182,7 +182,7 @@ public class Mapper {
 					dto.serialNumber(),
 					dto.model(),
 					dto.type(),
-					dto.recommendation(),
+					null,
 					WashingMachineDetailMapper.toEntity(dto.washingMachineDetailDTO())
 			);
 		}
