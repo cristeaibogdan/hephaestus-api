@@ -18,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -91,13 +92,16 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 			washingMachine.addImage(washingMachineImage);
 		});
 
+		Recommendation recommendation = damageCalculator.getRecommendation(washingMachine.getWashingMachineDetail());
+		washingMachine.setRecommendation(recommendation);
+
 		service.save(washingMachine);
 	}
 
 	@Override
-	public Recommendation getRecommendation(WashingMachineDetailDTO washingMachineDetailDTO) {
-		WashingMachineDetail detail = WashingMachineDetailMapper.toEntity(washingMachineDetailDTO);
-		return damageCalculator.getRecommendation(detail);
+	public Recommendation getRecommendation(@PathVariable String serialNumber) {
+		return repository.getRecommendation(serialNumber)
+				.orElseThrow(() -> new CustomException(ErrorCode.SERIAL_NUMBER_NOT_FOUND, serialNumber));
 	}
 
 	@Override

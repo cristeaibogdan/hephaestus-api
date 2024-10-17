@@ -1,10 +1,12 @@
 package org.personal.washingmachine.dto;
 
+import jakarta.validation.Valid;
+import lombok.Builder;
 import org.personal.washingmachine.enums.DamageType;
 import org.personal.washingmachine.enums.IdentificationMode;
-import org.personal.washingmachine.enums.Recommendation;
 import org.personal.washingmachine.enums.ReturnType;
 
+@Builder(toBuilder = true)
 public record CreateWashingMachineRequest(
         String category,
 		IdentificationMode identificationMode,
@@ -17,7 +19,6 @@ public record CreateWashingMachineRequest(
 		ReturnType returnType,
 		DamageType damageType,
 
-        Recommendation recommendation,
-
+		@Valid
         WashingMachineDetailDTO washingMachineDetailDTO
 ) { }
