@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.personal.washingmachine.BaseIntegrationTest;
 import org.personal.washingmachine.dto.WashingMachineDetailDTO;
-import org.personal.washingmachine.dto.GetWashingMachineExpandedResponseDTO;
+import org.personal.washingmachine.dto.GetWashingMachineExpandedResponse;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineDetail;
 import org.personal.washingmachine.entity.embedded.HiddenSurfaceDamage;
@@ -72,7 +72,7 @@ class WashingMachineApplicationServiceIntegrationTest extends BaseIntegrationTes
 
 			repository.save(washingMachine);
 
-			GetWashingMachineExpandedResponseDTO expected = new GetWashingMachineExpandedResponseDTO(
+			GetWashingMachineExpandedResponse expected = new GetWashingMachineExpandedResponse(
 					new WashingMachineDetailDTO(
 							true,
 							true,
@@ -103,11 +103,11 @@ class WashingMachineApplicationServiceIntegrationTest extends BaseIntegrationTes
 			);
 
 			// WHEN
-			ResponseEntity<GetWashingMachineExpandedResponseDTO> actual = restTemplate.exchange(
+			ResponseEntity<GetWashingMachineExpandedResponse> actual = restTemplate.exchange(
 					"/api/v1/washing-machines/{serialNumber}/expanded",
 					HttpMethod.GET,
 					null,
-					GetWashingMachineExpandedResponseDTO.class,
+					GetWashingMachineExpandedResponse.class,
 					"test"
 			);
 

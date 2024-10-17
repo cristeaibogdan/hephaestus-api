@@ -40,25 +40,25 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 	private final WashingMachineReportGenerator reportGenerator;
 
 	@Override
-	public Page<GetWashingMachineSimpleResponseDTO> loadPaginatedAndFiltered(SearchWashingMachineRequestDTO searchWashingMachineRequestDTO) {
+	public Page<GetWashingMachineSimpleResponse> loadPaginatedAndFiltered(SearchWashingMachineRequest searchWashingMachineRequest) {
 		PageRequest pageRequest = PageRequest.of(
-				searchWashingMachineRequestDTO.pageIndex(),
-				searchWashingMachineRequestDTO.pageSize(),
+				searchWashingMachineRequest.pageIndex(),
+				searchWashingMachineRequest.pageSize(),
 				Sort.by(washingMachine.createdAt.getMetadata().getName()).descending());
 
 		BooleanBuilder booleanBuilder = new BooleanBuilder()
-				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.identificationMode, searchWashingMachineRequestDTO.identificationMode()))
-				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.manufacturer, searchWashingMachineRequestDTO.manufacturer()))
+				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.identificationMode, searchWashingMachineRequest.identificationMode()))
+				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.manufacturer, searchWashingMachineRequest.manufacturer()))
 
-				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.model, searchWashingMachineRequestDTO.model()))
-				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.type, searchWashingMachineRequestDTO.type()))
-				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.serialNumber, searchWashingMachineRequestDTO.serialNumber()))
+				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.model, searchWashingMachineRequest.model()))
+				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.type, searchWashingMachineRequest.type()))
+				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.serialNumber, searchWashingMachineRequest.serialNumber()))
 
-				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.returnType, searchWashingMachineRequestDTO.returnType()))
-				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.damageType, searchWashingMachineRequestDTO.damageType()))
-				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.recommendation, searchWashingMachineRequestDTO.recommendation()))
+				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.returnType, searchWashingMachineRequest.returnType()))
+				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.damageType, searchWashingMachineRequest.damageType()))
+				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.recommendation, searchWashingMachineRequest.recommendation()))
 
-				.and(QueryDSLUtils.addTimestampEqualCondition(washingMachine.createdAt, parseToLocalDate(searchWashingMachineRequestDTO.createdAt())));
+				.and(QueryDSLUtils.addTimestampEqualCondition(washingMachine.createdAt, parseToLocalDate(searchWashingMachineRequest.createdAt())));
 
 		Page<WashingMachine> responsePage = repository.findAll(booleanBuilder, pageRequest);
 
@@ -76,15 +76,15 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 	}
 
 	@Override
-	public GetWashingMachineExpandedResponseDTO loadExpanded(String serialNumber) {
+	public GetWashingMachineExpandedResponse loadExpanded(String serialNumber) {
 		WashingMachine washingMachine = service.findBySerialNumber(serialNumber);
 		return WashingMachineMapper.toExpandedDTO(washingMachine);
 	}
 
 	@Override
-	public void save(CreateWashingMachineRequestDTO createWashingMachineRequestDTO, List<MultipartFile> imageFiles) {
+	public void save(CreateWashingMachineRequest createWashingMachineRequest, List<MultipartFile> imageFiles) {
 
-		WashingMachine washingMachine = WashingMachineMapper.toEntity(createWashingMachineRequestDTO);
+		WashingMachine washingMachine = WashingMachineMapper.toEntity(createWashingMachineRequest);
 
 		imageFiles.forEach(image -> {
 			WashingMachineImage washingMachineImage = WashingMachineImageMapper.toEntity(image);

@@ -5,13 +5,10 @@ import org.personal.washingmachine.enums.IdentificationMode;
 import org.personal.washingmachine.enums.Recommendation;
 import org.personal.washingmachine.enums.ReturnType;
 
-import java.time.LocalDateTime;
-
-public record GetWashingMachineSimpleResponseDTO(
+public record CreateWashingMachineRequest(
         String category,
-
-        String manufacturer,
 		IdentificationMode identificationMode,
+        String manufacturer,
 
         String model,
         String type,
@@ -21,5 +18,6 @@ public record GetWashingMachineSimpleResponseDTO(
 		DamageType damageType,
 
         Recommendation recommendation,
-        LocalDateTime createdAt
+
+        WashingMachineDetailDTO washingMachineDetailDTO
 ) { }
