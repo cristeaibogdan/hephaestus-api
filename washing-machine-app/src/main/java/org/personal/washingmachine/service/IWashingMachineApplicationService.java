@@ -25,8 +25,8 @@ public interface IWashingMachineApplicationService {
 	void save(@RequestPart CreateWashingMachineRequest createWashingMachineRequest,
 			  @RequestPart List<MultipartFile> imageFiles);
 
-	@PostMapping("/recommendation")
-	Recommendation getRecommendation(@Valid @RequestBody WashingMachineDetailDTO washingMachineDetailDTO);
+	@GetMapping("/{serialNumber}/recommendation")
+	Recommendation getRecommendation(@PathVariable String serialNumber);
 
 	@GetMapping(value = "/{serialNumber}/report")
 	GetWashingMachineReportResponse getReport(@PathVariable String serialNumber);
