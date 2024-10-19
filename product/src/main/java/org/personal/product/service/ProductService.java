@@ -1,7 +1,7 @@
 package org.personal.product.service;
 
 import lombok.RequiredArgsConstructor;
-import org.personal.product.dto.ProductModelTypeDTO;
+import org.personal.product.dto.GetModelAndTypeResponse;
 import org.personal.product.repository.ProductRepository;
 import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
@@ -25,8 +25,8 @@ public class ProductService {
         return response;
     }
 
-    public List<ProductModelTypeDTO> getModelsAndTypes(String manufacturer) {
-        List<ProductModelTypeDTO> response = productRepository.findByManufacturer(manufacturer.trim());
+    public List<GetModelAndTypeResponse> getModelsAndTypes(String manufacturer) {
+        List<GetModelAndTypeResponse> response = productRepository.findByManufacturer(manufacturer.trim());
 
         if (response.isEmpty()) {
             throw new CustomException(ErrorCode.NO_MODELS_TYPES_FOUND_FOR_MANUFACTURER);

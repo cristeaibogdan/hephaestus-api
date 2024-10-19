@@ -1,6 +1,6 @@
 package org.personal.product.service;
 
-import org.personal.product.dto.ProductModelTypeDTO;
+import org.personal.product.dto.GetModelAndTypeResponse;
 import org.personal.product.repository.ProductRepository;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Nested;
@@ -79,16 +79,16 @@ class ProductServiceTest {
         @Test
         void should_ReturnList_When_DatabaseHasData() {
             // GIVEN
-            List<ProductModelTypeDTO> expected = new ArrayList<>();
-            expected.add(new ProductModelTypeDTO("ModelOne", "TypeOne"));
-            expected.add(new ProductModelTypeDTO("ModelTwo", "TypeTwo"));
-            expected.add(new ProductModelTypeDTO("ModelThree", "TypeThree"));
+            List<GetModelAndTypeResponse> expected = new ArrayList<>();
+            expected.add(new GetModelAndTypeResponse("ModelOne", "TypeOne"));
+            expected.add(new GetModelAndTypeResponse("ModelTwo", "TypeTwo"));
+            expected.add(new GetModelAndTypeResponse("ModelThree", "TypeThree"));
 
             given(productRepositoryMock.findByManufacturer(anyString()))
                     .willReturn(expected);
 
             // WHEN
-            List<ProductModelTypeDTO> actual = underTest.getModelsAndTypes(RandomStringUtils.random(5));
+            List<GetModelAndTypeResponse> actual = underTest.getModelsAndTypes(RandomStringUtils.random(5));
 
             // THEN
             assertThat(actual).isEqualTo(expected);
