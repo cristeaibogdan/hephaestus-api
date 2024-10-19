@@ -142,6 +142,33 @@ public class Mapper {
 					dto.repairPrice()
 			);
 		}
+
+		public static WashingMachineDetail toEntity(CreateWashingMachineDetailRequest dto) {
+			return new WashingMachineDetail(
+					new PackageDamage(
+							dto.packageDamaged(),
+							dto.packageDirty(),
+							dto.packageMaterialAvailable()
+					),
+
+					new VisibleSurfaceDamage(
+							dto.visibleSurfacesScratchesLength(),
+							dto.visibleSurfacesDentsDepth(),
+							dto.visibleSurfacesMinorDamage(),
+							dto.visibleSurfacesMajorDamage()
+					),
+
+					new HiddenSurfaceDamage(
+							dto.hiddenSurfacesScratchesLength(),
+							dto.hiddenSurfacesDentsDepth(),
+							dto.hiddenSurfacesMinorDamage(),
+							dto.hiddenSurfacesMajorDamage()
+					),
+
+					dto.price(),
+					dto.repairPrice()
+			);
+		}
 	}
 
 	public static class WashingMachineMapper {
@@ -182,8 +209,8 @@ public class Mapper {
 					dto.serialNumber(),
 					dto.model(),
 					dto.type(),
-					null,
-					WashingMachineDetailMapper.toEntity(dto.washingMachineDetailDTO())
+					null, //TODO: What to do with this?
+					WashingMachineDetailMapper.toEntity(dto.createWashingMachineDetailRequest())
 			);
 		}
 	}

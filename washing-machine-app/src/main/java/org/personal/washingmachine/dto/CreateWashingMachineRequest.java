@@ -8,17 +8,17 @@ import org.personal.washingmachine.enums.ReturnType;
 
 @Builder(toBuilder = true)
 public record CreateWashingMachineRequest(
-        String category,
+		String category,
 		IdentificationMode identificationMode,
-        String manufacturer,
+		String manufacturer,
 
-        String model,
-        String type,
-        String serialNumber,
+		String model,
+		String type,
+		String serialNumber,
 
 		ReturnType returnType,
 		DamageType damageType,
 
 		@Valid
-        WashingMachineDetailDTO washingMachineDetailDTO
+		CreateWashingMachineDetailRequest createWashingMachineDetailRequest
 ) { }
