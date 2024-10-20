@@ -1,7 +1,6 @@
 package org.personal.washingmachine.dto;
 
-public record WashingMachineImageDTO (
+public record GetWashingMachineImageResponse(
         String imagePrefix,
         byte[] image
-) {
-}
+) { }

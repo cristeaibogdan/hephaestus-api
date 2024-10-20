@@ -46,9 +46,9 @@ public class Mapper {
 
 	public static class WashingMachineImageMapper {
 
-		public static List<WashingMachineImageDTO> toDTO(List<WashingMachineImage> entities) {
+		public static List<GetWashingMachineImageResponse> toDTO(List<WashingMachineImage> entities) {
 			return entities.stream()
-					.map(entity -> new WashingMachineImageDTO(
+					.map(entity -> new GetWashingMachineImageResponse(
 							entity.getImagePrefix(),
 							entity.getImage()))
 					.toList();
@@ -164,11 +164,11 @@ public class Mapper {
 		public static GetWashingMachineExpandedResponse toExpandedDTO(WashingMachine entity) {
 
 			GetWashingMachineDetailResponse getWashingMachineDetailResponse = WashingMachineDetailMapper.toDTO(entity.getWashingMachineDetail());
-			List<WashingMachineImageDTO> washingMachineImageDTOs = WashingMachineImageMapper.toDTO(entity.getWashingMachineImages());
+			List<GetWashingMachineImageResponse> getWashingMachineImageResponses = WashingMachineImageMapper.toDTO(entity.getWashingMachineImages());
 
 			return new GetWashingMachineExpandedResponse(
 					getWashingMachineDetailResponse,
-					washingMachineImageDTOs
+					getWashingMachineImageResponses
 			);
 		}
 
