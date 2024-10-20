@@ -1,189 +1,78 @@
-I. Module Setup
-    1. Created module
-    2. Added dependencies to pom.xml
-    3. Created SolarPanelApplication.java - @SpringBootApplication
-    4. Created packages - Controller, Service, Repository
-    5. Created a postgreSQL database named - solar_panel_db
-    6. Created application.properties with server port and name, db connection, username, password and ddl create-drop
-    7. Created packages - controller, service, repository, entity
-    8. Copied the BaseEntity from my other modules => This is a candidate to be moved in a *shared* module
-    9. Created entity SolarPanel that extends BaseEntity, with 3 initial properties:
-        Long id => inherited from BaseEntity
-        String category
-        String manufacturer.
-        With Protected no args constructor and constructor with takes in category and manufacturer
-    10. Run the application to see if everything is ok
-    11. Connect to database via IntelliJ to see the created empty table
+A. void save(CreateSolarPanelRequest createSolarPanelRequest)
+    public record CreateSolarPanelRequest {
+      String category,
+      String manufacturer,
+      String model,
+      String type,
+      String serialNumber,
 
-II. Infrastructure Setup - shouldn't have done...
-    1. Create SolarPanelRepository, annotate with @Repository
-    2. Create SolarPanelService, annotate with @Service and inject SolarPanelRepository
-    3. Create SolarPanelController, annotate with @RequiredArgsConstructor
-                                                  @RequestMapping("/api/v1/solar-panels")
-                                                  @RestController and inject SolarPanelService
+      CreateSolarPanelDamageRequest createSolarPanelDamageRequest
+    }
 
-III. Test Class Setup
-    1. Go to SolarPanelService and right click on it and create SolarPanelServiceTest
-    2. Add @ExtendWith, @InjectMocks, @Mock and create a nested class TestSaveSolarPanel
+    public record CreateSolarPanelDamageRequest {
+      boolean hotSpots,
+      boolean microCracks: boolean,
+      boolean snailTrails: boolean,
+      boolean brokenGlass: boolean,
+      String additionalDetails
+    }
 
-IV. TDD for SolarPanelService => Should I have started with a DTO???
-    A. Create @Test should_saveSolarPanel
-        // *** FIRST ITERATION ***
-        1. In GIVEN create a SolarPanel object
-        2. In WHEN write underTest.saveSolarPanel(solarPanel)
-        3. Test fails because that method does not exist
-        4. ALT+ENTER, ENTER to create it in the SolarPanelService class
-        5. Run the test again => PASS
+B. Page<GetSolarPanelSimpleResponse> loadPaginatedAndFiltered(SearchSolarPanelRequest searchSolarPanelRequest)
 
-        // *** SECOND ITERATION ***
-        1. Write the THEN part where the method from the repository is called once with the solar panel from GIVEN
-        2. Test fails because that method does not exist
-        3. Go to the service and write solarPanelRepository.save(solarPanel)
-        4. Run the test again => PASS
+    public record SearchSolarPanelRequest {
+      int pageIndex,
+      int pageSize,
 
-    B. Create @Test should_ThrowRuntimeException_When_SerialNumberIsTaken
-        // *** FIRST ITERATION ***
-        1. In GIVEN create a SolarPanel object with 3 arguments
-        2. Modify the SolarPanel entity and add a new parameter private String serialNumber;
-        3. Adjust previous tests with the new constructor
-        4. Run previous tests => PASS
+      String manufacturer,
 
-    // *** SECOND ITERATION ***
-    1. In GIVEN write given(solarPanelRepositoryMock.existsBySerialNumber(solarPanel.getSerialNumber()))
-                                          .willReturn(true);
-    2. Test fails because that method does not exist
-    3. ALT+ENTER, ENTER to create it in the SolarPanelRepository interface, set the return to boolean
-    4. Test fails because the mock is not used anywhere
-    5. Write the WHEN & THEN part
-    6. Test fails because no exception is thrown
-    7. Add logic to saveSolarPanel method to throw exception
-    8. Test passed
+      String model,
+      String type,
+      String serialNumber,
 
-V. Research for possible damages to solar panel
-    1. Identified the following properties:
-        int installationYear
-        boolean hasHotSpots
-        boolean hasMicrocracks
-        boolean hasBrokenGlass
-        boolean hasSnailTrails
-    2. Create SolarPanelDamageDetailsDTO with the above properties
-    3. Create some sort of result based on the properties
-        boolean hasHotSpots => -20%
-        boolean hasMicrocracks => -20%
-        boolean hasBrokenGlass => -20%
-        boolean hasSnailTrails => -20%
-        For int installationYear we have domains like:
-            a. (0 - 2] => 0%
-            b. (2 - 10] => -5%
-            c. (10 - 20] => -15%
-            d. > 20 => -20%
-        Total = 100% => pristine solar panel
-    4. The result will be named int solarPanelIntegrity
-    5. Based on its value the following text will be issued (generated via chatgpt):
-        a. 0 - 20 % Integrity
-        Recommendation: Replace Immediately
-        Explanation: The solar panel is in very poor condition and is likely not producing sufficient power. Immediate replacement is necessary to ensure your solar energy system remains effective and efficient.
+      String createdAt,
+      SolarPanelRecommendation recommendation
+    }
 
-        b. 20 - 40 % Integrity
-        Recommendation: Plan for Replacement
-        Explanation: The solar panel is significantly degraded. While it may still produce some power, its efficiency is low. Plan to replace it in the near future to avoid potential system failures and to maintain optimal energy production.
+    public enum SolarPanelRecommendation {
+    	REPAIR,
+    	RECYCLE,
+    	DISPOSE
+    }
 
-        c. 40 - 60 % Integrity
-        Recommendation: Monitor Closely
-        Explanation: The solar panel is moderately degraded. Regular monitoring is needed to ensure it continues to perform adequately. Consider budgeting for a replacement within the next couple of years to maintain system performance.
+    public record GetSolarPanelSimpleResponse {
+      String category,
+      String manufacturer,
+      String model,
+      String type,
+      String serialNumber,
 
-        d. 60 - 100 % Integrity
-        Recommendation: Maintain Regularly
-        Explanation: The solar panel is in good to excellent condition. Continue with regular maintenance and cleaning to ensure it operates at peak efficiency. No immediate action is required, but continue to monitor for any signs of degradation over time.
-    6. Create SolarPanelEvaluationDTO record with the properties:
-        int solarPanelIntegrity
-        String recommendation
-        String explanation
+      LocalDateTime createdAt,
+      SolarPanelRecommendation recommendation //TODO: Maybe rename it ?
+    }
 
-VI. Test Class Setup
-    1. Create class DamageCalculator and annotate it with @Service
-    2. Create a test class for it
+C. GetSolarPanelFullResponse loadExpanded(String serialNumber)
 
-VII. TDD - calculateSolarPanelIntegrity
-    A. Create @Test should_ReturnSolarPanelIntegrityEighty
-        // *** FIRST ITERATION ***
-        1. In GIVEN create a solarPanelDamageDetailsDTO object, make sure you put 2024 as the installationYear
-        2. In WHEN write underTest.calculateSolarPanelIntegrity(solarPanelDamageDetailsDTO)
-        3. Test fails because that method does not exist
-        4. ALT+ENTER, ENTER to create it in the DamageCalculator class, make it return an int of value 100
-        4. Run the test again => PASS
+    public record GetSolarPanelFullResponse {
+      String category,
+      String manufacturer,
+      String model,
+      String type,
+      String serialNumber,
 
-        // *** SECOND ITERATION ***
-        1. In GIVEN create int expected = 80
-        2. Write the THEN part where you compare the actual with the expected
-        3. Test fails because the method returns 0
-        4. Go to the DamageCalculator and implement the logic to return 80 if hasHotSpots = true
-        5. Run the test again => PASS
+      LocalDateTime createdAt,
+      SolarPanelRecommendation recommendation,
 
-    B. Create @Test should_ReturnSolarPanelIntegritySixty
-        1. Copy-paste previous test implementation and modify expected = 60;
-        2. Test fails because the method returns 80
-        3. Go to DamageCalculator and implement the logic to return 60 if hasHotSpots, hasMicrocracks = true
-        4. Run all the tests => PASS
+      SolarPanelDamage solarPanelDamage
+    }
 
-    C. Create @Test should_ReturnSolarPanelIntegrityForty
-        1. Copy-paste previous test implementation and modify expected = 40;
-        2. Test fails because the method returns 60
-        3. Go to DamageCalculator and implement the logic to return 40 if hasHotSpots, hasMicrocracks, hasSnailTrails = true
-        4. Run all the tests => PASS
+   public record SolarPanelDamage {
+      boolean hotSpots,
+      boolean microCracks,
+      boolean snailTrails,
+      boolean brokenGlass,
+      String additionalDetails
+    }
 
-    D. Create @Test should_ReturnSolarPanelIntegrityTwenty
-        1. Copy-paste previous test implementation and modify expected = 20;
-        2. Test fails because the method returns 40
-        3. Go to DamageCalculator and implement the logic to return 20 if hasHotSpots, hasMicrocracks, hasSnailTrails, hasBrokenGlass = true
-        4. Run all the tests => PASS
+D. SolarPanelRecommendation getRecommendation(String serialNumber)
 
-VIII. TDD - Create a @Nested test and name it testCalculateIntegrityForYearOfInstallation
-    A. Create @Test should_Return9_When_DifferenceIsBetween0And2Inclusive
-        // *** FIRST ITERATION ***
-        1. In GIVEN create:
-            int currentYear = 2024;
-            int yearOfInstallation = 2022;
-            int expected = 2;
-        2. In WHEN write underTest.calculateIntegrityForYearOfInstallation(currentYear, yearOfInstallation);
-        3. Test fails because that method does not exist
-        4. ALT+ENTER, ENTER to create it in the DamageCalculator class, make it return an int of value 0
-        4. Run the test again => PASS
-
-        // *** SECOND ITERATION ***
-        1. Write the THEN part where you compare the expected with the actual
-        3. Test fails because the method returns 0
-        4. Go to the DamageCalculator and implement the logic to return 0 if yearOfInstallation is 0 or <= 2
-        5. Run the test again => PASS
-        6. Refactor the test to take in more parameters and test more cases in the domain
-
-    B. Create @Test should_Return5_When_DifferenceIsBetween5and10Inclusive
-        1. Copy-paste previous test implementation and modify expected = 5;
-        2. Modify the @ValueSource to take older years
-        3. Test fails because the method returns -1
-        4. Go to DamageCalculator and implement the logic
-        5. Run all the tests => PASS
-
-    C. Create @Test should_Return15_When_DifferenceIsBetween10and20Inclusive
-        1. Copy-paste previous test implementation and modify expected = 15;
-        2. Modify the @ValueSource to take older years
-        3. Test fails because the method returns -1
-        4. Go to DamageCalculator and implement the logic
-        5. Run all the tests => PASS
-
-    D. Create @Test should_Return20_When_DifferenceOver20
-        1. Copy-paste previous test implementation and modify expected = 20;
-        2. Modify the @ValueSource to take older years
-        3. Test fails because the method returns -1
-        4. Go to DamageCalculator and implement the logic
-        5. Run all the tests => PASS
-
-    D. Create @Test should_ThrowRuntimeException_When_DifferenceNegative
-        1. Copy-paste previous test implementation and modify to check for RuntimeException;
-        2. Modify the @ValueSource to take negative years
-        3. Test fails because no exception is thrown
-        4. Go to DamageCalculator and implement an if that checks is one of the inputs is negative
-        5. Run all the tests => PASS
-
-IX. Put calculateIntegrityForYearOfInstallation in calculateSolarPanelIntegrity, tests should pass since I used 2024 as the starting year
-IX.
+E. YetToNameThisOne getReport(String serialNumber)
