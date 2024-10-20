@@ -84,8 +84,8 @@ public class Mapper {
 
 	public static class WashingMachineDetailMapper {
 
-		public static WashingMachineDetailDTO toDTO(WashingMachineDetail entity) {
-			return new WashingMachineDetailDTO(
+		public static GetWashingMachineDetailResponse toDTO(WashingMachineDetail entity) {
+			return new GetWashingMachineDetailResponse(
 					entity.getPackageDamage().isApplicable(),
 					entity.getPackageDamage().isPackageDamaged(),
 					entity.getPackageDamage().isPackageDirty(),
@@ -113,33 +113,6 @@ public class Mapper {
 
 					entity.getPrice(),
 					entity.getRepairPrice()
-			);
-		}
-
-		public static WashingMachineDetail toEntity(WashingMachineDetailDTO dto) {
-			return new WashingMachineDetail(
-					new PackageDamage(
-							dto.packageDamaged(),
-							dto.packageDirty(),
-							dto.packageMaterialAvailable()
-					),
-
-					new VisibleSurfaceDamage(
-							dto.visibleSurfacesScratchesLength(),
-							dto.visibleSurfacesDentsDepth(),
-							dto.visibleSurfacesMinorDamage(),
-							dto.visibleSurfacesMajorDamage()
-					),
-
-					new HiddenSurfaceDamage(
-							dto.hiddenSurfacesScratchesLength(),
-							dto.hiddenSurfacesDentsDepth(),
-							dto.hiddenSurfacesMinorDamage(),
-							dto.hiddenSurfacesMajorDamage()
-					),
-
-					dto.price(),
-					dto.repairPrice()
 			);
 		}
 
@@ -190,11 +163,11 @@ public class Mapper {
 
 		public static GetWashingMachineExpandedResponse toExpandedDTO(WashingMachine entity) {
 
-			WashingMachineDetailDTO washingMachineDetailDTO = WashingMachineDetailMapper.toDTO(entity.getWashingMachineDetail());
+			GetWashingMachineDetailResponse getWashingMachineDetailResponse = WashingMachineDetailMapper.toDTO(entity.getWashingMachineDetail());
 			List<WashingMachineImageDTO> washingMachineImageDTOs = WashingMachineImageMapper.toDTO(entity.getWashingMachineImages());
 
 			return new GetWashingMachineExpandedResponse(
-					washingMachineDetailDTO,
+					getWashingMachineDetailResponse,
 					washingMachineImageDTOs
 			);
 		}

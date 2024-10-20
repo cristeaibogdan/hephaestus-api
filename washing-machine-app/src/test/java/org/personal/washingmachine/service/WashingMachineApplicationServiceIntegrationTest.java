@@ -3,7 +3,7 @@ package org.personal.washingmachine.service;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.personal.washingmachine.BaseIntegrationTest;
-import org.personal.washingmachine.dto.WashingMachineDetailDTO;
+import org.personal.washingmachine.dto.GetWashingMachineDetailResponse;
 import org.personal.washingmachine.dto.GetWashingMachineExpandedResponse;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineDetail;
@@ -73,7 +73,7 @@ class WashingMachineApplicationServiceIntegrationTest extends BaseIntegrationTes
 			repository.save(washingMachine);
 
 			GetWashingMachineExpandedResponse expected = new GetWashingMachineExpandedResponse(
-					new WashingMachineDetailDTO(
+					new GetWashingMachineDetailResponse(
 							true,
 							true,
 							true,
