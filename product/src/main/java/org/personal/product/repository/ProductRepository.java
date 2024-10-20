@@ -11,13 +11,17 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    @Query("SELECT DISTINCT p.manufacturer " +
-            "FROM Product p " +
-            "WHERE LOWER(p.category) = LOWER(?1)")
+    @Query("""
+            SELECT DISTINCT p.manufacturer
+            FROM Product p
+            WHERE LOWER(p.category) = LOWER(?1)
+            """)
     List<String> getManufacturers(String category);
 
-    @Query("SELECT new org.personal.product.dto.GetModelAndTypeResponse(p.model, p.type) " +
-            "FROM Product p " +
-            "WHERE LOWER(p.manufacturer) = LOWER(?1)")
+    @Query("""
+            SELECT new org.personal.product.dto.GetModelAndTypeResponse(p.model, p.type)
+            FROM Product p
+            WHERE LOWER(p.manufacturer) = LOWER(?1)
+            """)
     List<GetModelAndTypeResponse> findByManufacturer(String manufacturer);
 }

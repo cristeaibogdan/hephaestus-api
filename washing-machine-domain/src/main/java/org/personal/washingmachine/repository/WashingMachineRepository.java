@@ -16,8 +16,10 @@ public interface WashingMachineRepository extends JpaRepository<WashingMachine, 
     boolean existsBySerialNumber(String serialNumber);
     Optional<WashingMachine> findBySerialNumber(String serialNumber);
 
-    @Query("SELECT wm.recommendation " +
-            "FROM WashingMachine wm " +
-            "WHERE wm.serialNumber = ?1")
+    @Query("""
+            SELECT wm.recommendation
+            FROM WashingMachine wm
+            WHERE wm.serialNumber = ?1
+            """)
     Optional<Recommendation> getRecommendation(String serialNumber);
 }
