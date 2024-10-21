@@ -71,8 +71,8 @@ public class WashingMachineReportGenerator {
 
 		Map<String, Object> parameters = new HashMap<>();
 		// Static Images
-		parameters.put("hephaestusLogo", getClass().getClassLoader().getResourceAsStream("reports/images/hephaestus-logo.png"));
-		parameters.put("HARServicesLogo", getClass().getClassLoader().getResourceAsStream("reports/images/har-services-logo.png"));
+		parameters.put("hephaestusLogo", getClass().getClassLoader().getResourceAsStream("images/hephaestus-logo.png"));
+		parameters.put("HARServicesLogo", getClass().getClassLoader().getResourceAsStream("images/har-services-logo.png"));
 		// Product Information
 		parameters.put("category", washingMachine.getCategory());
 		parameters.put("manufacturer", washingMachine.getManufacturer());
