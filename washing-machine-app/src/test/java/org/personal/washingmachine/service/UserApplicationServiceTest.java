@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.personal.shared.exception.CustomException;
-import org.personal.washingmachine.dto.OrganizationAndCountryDTO;
+import org.personal.washingmachine.dto.GetOrganizationAndCountryResponse;
 import org.personal.washingmachine.dto.LoginUserRequest;
 import org.personal.washingmachine.dto.UserDTO;
 import org.personal.washingmachine.repository.UserRepository;
@@ -67,23 +67,23 @@ class UserApplicationServiceTest {
 
 		static Stream<Arguments> getOrganizationAndCountryTestCases() {
 			return Stream.of(
-					arguments(new OrganizationAndCountryDTO("ZEOS", "SLOVENIA"), "RX1000"),
-					arguments(new OrganizationAndCountryDTO("GORENJE", "SLOVENIA"), "RX2001"),
-					arguments(new OrganizationAndCountryDTO("BOSCH", "GERMANY"), "RX3002"),
-					arguments(new OrganizationAndCountryDTO("SMEG", "ITALY"), "RX4003"),
-					arguments(new OrganizationAndCountryDTO("ORIGIN", "ROMANIA"), "RX5000")
+					arguments(new GetOrganizationAndCountryResponse("ZEOS", "SLOVENIA"), "RX1000"),
+					arguments(new GetOrganizationAndCountryResponse("GORENJE", "SLOVENIA"), "RX2001"),
+					arguments(new GetOrganizationAndCountryResponse("BOSCH", "GERMANY"), "RX3002"),
+					arguments(new GetOrganizationAndCountryResponse("SMEG", "ITALY"), "RX4003"),
+					arguments(new GetOrganizationAndCountryResponse("ORIGIN", "ROMANIA"), "RX5000")
 			);
 		}
 
 		@ParameterizedTest(name = "Valid OrganizationAndCountryDTO for {1}")
 		@MethodSource("getOrganizationAndCountryTestCases")
 		void should_ReturnOrganizationAndCountryDTO_When_RegistrationCodeIsValid(
-				OrganizationAndCountryDTO expected,
+				GetOrganizationAndCountryResponse expected,
 				String registrationCode) {
 			// GIVEN
 
 			// WHEN
-			OrganizationAndCountryDTO actual = underTest.getOrganizationAndCountry(registrationCode);
+			GetOrganizationAndCountryResponse actual = underTest.getOrganizationAndCountry(registrationCode);
 
 			// THEN
 			assertThat(actual).usingRecursiveComparison().isEqualTo(expected);

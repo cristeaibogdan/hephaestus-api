@@ -1,6 +1,6 @@
 package org.personal.washingmachine.service;
 
-import org.personal.washingmachine.dto.OrganizationAndCountryDTO;
+import org.personal.washingmachine.dto.GetOrganizationAndCountryResponse;
 import org.personal.washingmachine.dto.LoginUserRequest;
 import org.personal.washingmachine.dto.UserDTO;
 import org.springframework.http.HttpStatus;
@@ -12,7 +12,7 @@ public interface IUserApplicationService {
 	boolean isValidRegistrationCode(@PathVariable String registrationCode);
 
 	@GetMapping("/{registrationCode}/organization-and-country")
-	OrganizationAndCountryDTO getOrganizationAndCountry(@PathVariable String registrationCode);
+	GetOrganizationAndCountryResponse getOrganizationAndCountry(@PathVariable String registrationCode);
 
 	@PostMapping("/register")
 	@ResponseStatus(HttpStatus.CREATED)

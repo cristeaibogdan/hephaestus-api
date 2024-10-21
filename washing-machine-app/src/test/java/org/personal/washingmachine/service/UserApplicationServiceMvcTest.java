@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
-import org.personal.washingmachine.dto.OrganizationAndCountryDTO;
+import org.personal.washingmachine.dto.GetOrganizationAndCountryResponse;
 import org.personal.washingmachine.dto.LoginUserRequest;
 import org.personal.washingmachine.dto.UserDTO;
 import org.personal.washingmachine.entity.User;
@@ -79,7 +79,7 @@ class UserApplicationServiceMvcTest {
         void should_ReturnOrganizationAndCountryDTO_When_ValidCode() throws Exception {
             // GIVEN
             String registrationCode = "RX1001";
-            OrganizationAndCountryDTO expected = new OrganizationAndCountryDTO(
+            GetOrganizationAndCountryResponse expected = new GetOrganizationAndCountryResponse(
                     "ZEOS",
                     "SLOVENIA");
 
