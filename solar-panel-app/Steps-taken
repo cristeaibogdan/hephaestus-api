@@ -17,6 +17,58 @@ A. void save(CreateSolarPanelRequest createSolarPanelRequest)
       String additionalDetails
     }
 
+    0. Create package service
+
+    1. Create test with assertThat(true).isFalse()
+    2. Run => fail
+    3. Modify to isTrue
+    4. Run => pass
+    5. Remove assertThat from test
+
+    6. Write SolarPanelApplicationService service = new SolarPanelApplicationService in GIVEN part
+    7. Run => fail
+    8. ALT + ENTER to create the class
+    9. Run => pass
+
+    10. Write SolarPanelRepository repo = new SolarPanelRepository in GIVEN part
+    11. Run => fail
+    12. ALT+ENTER to create the class
+    13. Write verify(repo)
+    14. Run => pass
+
+    15. Write verify(repo).save();
+    16. Run => fail
+    17. ALT+ENTER create the method in SolarPanelRepository
+    18. Run => fail, because the method is not called repo.save() is not called
+    19. Inject the SolarPanelRepository in SolarPanelApplicationService with @RequiredArgsConstructor
+
+    20. Run => fail because of dependency injection
+    21. Pass the SolarPanelRepository to the SolarPanelApplicationService constructor
+    22. Run => fail, because the method is repo.save() is not called
+    23. Use the repo.save() method in SolarPanelApplicationService
+    24. Test fails because the class is not a mock
+    25. SolarPanelRepository repo = mock(SolarPanelRepository.class);
+
+    === I have mocks, therefore I changed the SolarPanelRepository to an interface ===
+
+    26. Change SolarPanelRepository to interface
+    27. Run => pass
+
+    28. Create variable SolarPanel, and pass it to the save method in the WHEN part
+    29. ALT+ENTER to create the SolarPanel class
+    30. Run => fail
+    31. ALT+ENTER to change signature for service.save(solarPanel)
+
+    32. Pass the solarPanel to verify repo.save(solarPanel) method
+    33. Run => fail
+    34. ALT+ENTER to change signature
+    35. Run => pass
+
+    36. === The end of pair programming ===
+
+
+
+
 B. Page<GetSolarPanelSimpleResponse> loadPaginatedAndFiltered(SearchSolarPanelRequest searchSolarPanelRequest)
 
     public record SearchSolarPanelRequest {
