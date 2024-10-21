@@ -3,6 +3,7 @@ package org.personal.washingmachine.service;
 import lombok.RequiredArgsConstructor;
 import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
+import org.personal.washingmachine.dto.CreateUserRequest;
 import org.personal.washingmachine.entity.User;
 import org.personal.washingmachine.dto.GetOrganizationAndCountryResponse;
 import org.personal.washingmachine.dto.LoginUserRequest;
@@ -56,8 +57,8 @@ public class UserApplicationService implements IUserApplicationService { // TODO
 	}
 
 	@Override
-	public void register(UserDTO userDTO) {
-		User user = UserMapper.toEntity(userDTO);
+	public void register(CreateUserRequest createUserRequest) {
+		User user = UserMapper.toEntity(createUserRequest);
 		service.register(user);
 	}
 

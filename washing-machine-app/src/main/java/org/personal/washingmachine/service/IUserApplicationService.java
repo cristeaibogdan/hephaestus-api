@@ -1,5 +1,6 @@
 package org.personal.washingmachine.service;
 
+import org.personal.washingmachine.dto.CreateUserRequest;
 import org.personal.washingmachine.dto.GetOrganizationAndCountryResponse;
 import org.personal.washingmachine.dto.LoginUserRequest;
 import org.personal.washingmachine.dto.UserDTO;
@@ -16,7 +17,7 @@ public interface IUserApplicationService {
 
 	@PostMapping("/register")
 	@ResponseStatus(HttpStatus.CREATED)
-	void register(@RequestBody UserDTO userDTO);
+	void register(@RequestBody CreateUserRequest createUserRequest);
 
 	@PostMapping("/login")
 	UserDTO login(@RequestBody LoginUserRequest loginUserRequest);

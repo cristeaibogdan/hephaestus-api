@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.personal.shared.exception.CustomException;
+import org.personal.washingmachine.dto.CreateUserRequest;
 import org.personal.washingmachine.dto.GetOrganizationAndCountryResponse;
 import org.personal.washingmachine.dto.LoginUserRequest;
 import org.personal.washingmachine.dto.UserDTO;
@@ -106,7 +107,7 @@ class UserApplicationServiceTest {
 		@Test
 		void should_SaveUser_When_ValidUserProvided() {
 			// GIVEN
-			UserDTO dto = new UserDTO(
+			CreateUserRequest dto = new CreateUserRequest(
 					"code",
 					"ORG",
 					"ROMANIA",
@@ -126,7 +127,7 @@ class UserApplicationServiceTest {
 		@Test
 		void should_ThrowCustomException_When_EmailIsAlreadyTaken() {
 			// GIVEN
-			UserDTO dto = new UserDTO(
+			CreateUserRequest dto = new CreateUserRequest(
 					"code",
 					"ORG",
 					"ROMANIA",
@@ -145,7 +146,7 @@ class UserApplicationServiceTest {
 		@Test
 		void should_ThrowCustomException_When_UsernamesAlreadyTaken() {
 			// GIVEN
-			UserDTO dto = new UserDTO(
+			CreateUserRequest dto = new CreateUserRequest(
 					"code",
 					"ORG",
 					"ROMANIA",
@@ -170,7 +171,7 @@ class UserApplicationServiceTest {
 			// GIVEN
 			LoginUserRequest credentials = new LoginUserRequest("User", "Pass");
 
-			UserDTO expected = new UserDTO(
+			CreateUserRequest expected = new CreateUserRequest(
 					"RX1001",
 					"Origin",
 					"Romania",

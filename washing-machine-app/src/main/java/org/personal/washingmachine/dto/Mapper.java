@@ -32,7 +32,7 @@ public class Mapper {
 			);
 		}
 
-		public static User toEntity(UserDTO dto) {
+		public static User toEntity(CreateUserRequest dto) {
 			return new User(
 					dto.code(),
 					dto.organization(),
