@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.personal.shared.exception.CustomException;
 import org.personal.washingmachine.dto.OrganizationAndCountryDTO;
-import org.personal.washingmachine.dto.UserCredentialsDTO;
+import org.personal.washingmachine.dto.LoginUserRequest;
 import org.personal.washingmachine.dto.UserDTO;
 import org.personal.washingmachine.repository.UserRepository;
 
@@ -168,7 +168,7 @@ class UserApplicationServiceTest {
 		@Test
 		void should_ReturnUserDTO_When_GoodCredentials() {
 			// GIVEN
-			UserCredentialsDTO credentials = new UserCredentialsDTO("User", "Pass");
+			LoginUserRequest credentials = new LoginUserRequest("User", "Pass");
 
 			UserDTO expected = new UserDTO(
 					"RX1001",
@@ -194,7 +194,7 @@ class UserApplicationServiceTest {
 		@Test
 		void should_ThrowException_When_BadCredentials() {
 			// GIVEN
-			UserCredentialsDTO credentials = new UserCredentialsDTO("UserBad", "PassBad");
+			LoginUserRequest credentials = new LoginUserRequest("UserBad", "PassBad");
 
 			given(userRepositoryMock.findByUsernameAndPassword(credentials.username(), credentials.password()))
 					.willThrow(CustomException.class);

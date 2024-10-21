@@ -5,7 +5,7 @@ import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
 import org.personal.washingmachine.entity.User;
 import org.personal.washingmachine.dto.OrganizationAndCountryDTO;
-import org.personal.washingmachine.dto.UserCredentialsDTO;
+import org.personal.washingmachine.dto.LoginUserRequest;
 import org.personal.washingmachine.dto.UserDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
@@ -62,8 +62,8 @@ public class UserApplicationService implements IUserApplicationService { // TODO
 	}
 
 	@Override
-	public UserDTO login(UserCredentialsDTO userCredentialsDTO) {
-		User user = service.login(userCredentialsDTO.username(), userCredentialsDTO.password());
+	public UserDTO login(LoginUserRequest loginUserRequest) {
+		User user = service.login(loginUserRequest.username(), loginUserRequest.password());
 		return UserMapper.toDTO(user);
 	}
 }

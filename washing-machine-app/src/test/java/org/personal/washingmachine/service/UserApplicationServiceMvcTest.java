@@ -5,9 +5,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
-import org.personal.washingmachine.dto.Mapper;
 import org.personal.washingmachine.dto.OrganizationAndCountryDTO;
-import org.personal.washingmachine.dto.UserCredentialsDTO;
+import org.personal.washingmachine.dto.LoginUserRequest;
 import org.personal.washingmachine.dto.UserDTO;
 import org.personal.washingmachine.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -160,7 +159,7 @@ class UserApplicationServiceMvcTest {
         @Test
         void should_ReturnUserDTO() throws Exception {
             // GIVEN
-            UserCredentialsDTO userCredentialsDTO = new UserCredentialsDTO(
+            LoginUserRequest loginUserRequest = new LoginUserRequest(
                     "bogdan",
                     "123456");
 
@@ -180,18 +179,18 @@ class UserApplicationServiceMvcTest {
                     "bogdan",
                     "123456");
 
-            given(userServiceMock.login(userCredentialsDTO.username(), userCredentialsDTO.password()))
+            given(userServiceMock.login(loginUserRequest.username(), loginUserRequest.password()))
                     .willReturn(user);
 
             // WHEN
             ResultActions resultActions = mockMvc.perform(post("/api/v1/users/login")
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(objectMapper.writeValueAsString(userCredentialsDTO)));
+                    .content(objectMapper.writeValueAsString(loginUserRequest)));
 
             // THEN
             then(userServiceMock)
                     .should(times(1))
-                    .login(userCredentialsDTO.username(), userCredentialsDTO.password()); //TODO: Is this still useful? Stubbed methods are auto verified by default
+                    .login(loginUserRequest.username(), loginUserRequest.password()); //TODO: Is this still useful? Stubbed methods are auto verified by default
 
             resultActions
                     .andExpect(status().isOk());
