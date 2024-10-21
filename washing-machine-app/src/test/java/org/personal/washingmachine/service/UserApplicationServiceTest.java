@@ -10,7 +10,7 @@ import org.personal.shared.exception.CustomException;
 import org.personal.washingmachine.dto.CreateUserRequest;
 import org.personal.washingmachine.dto.GetOrganizationAndCountryResponse;
 import org.personal.washingmachine.dto.LoginUserRequest;
-import org.personal.washingmachine.dto.UserDTO;
+import org.personal.washingmachine.dto.LoginUserResponse;
 import org.personal.washingmachine.repository.UserRepository;
 
 import java.util.Optional;
@@ -184,7 +184,7 @@ class UserApplicationServiceTest {
 					.willReturn(Optional.of(UserMapper.toEntity(expected)));
 
 			// WHEN
-			UserDTO actual = underTest.login(credentials);
+			LoginUserResponse actual = underTest.login(credentials);
 
 			// THEN
 			assertThat(actual)

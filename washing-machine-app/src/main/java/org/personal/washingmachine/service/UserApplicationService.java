@@ -7,7 +7,7 @@ import org.personal.washingmachine.dto.CreateUserRequest;
 import org.personal.washingmachine.entity.User;
 import org.personal.washingmachine.dto.GetOrganizationAndCountryResponse;
 import org.personal.washingmachine.dto.LoginUserRequest;
-import org.personal.washingmachine.dto.UserDTO;
+import org.personal.washingmachine.dto.LoginUserResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -63,7 +63,7 @@ public class UserApplicationService implements IUserApplicationService { // TODO
 	}
 
 	@Override
-	public UserDTO login(LoginUserRequest loginUserRequest) {
+	public LoginUserResponse login(LoginUserRequest loginUserRequest) {
 		User user = service.login(loginUserRequest.username(), loginUserRequest.password());
 		return UserMapper.toDTO(user);
 	}

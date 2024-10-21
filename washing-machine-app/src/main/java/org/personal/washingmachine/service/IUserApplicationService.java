@@ -3,7 +3,7 @@ package org.personal.washingmachine.service;
 import org.personal.washingmachine.dto.CreateUserRequest;
 import org.personal.washingmachine.dto.GetOrganizationAndCountryResponse;
 import org.personal.washingmachine.dto.LoginUserRequest;
-import org.personal.washingmachine.dto.UserDTO;
+import org.personal.washingmachine.dto.LoginUserResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,5 +20,5 @@ public interface IUserApplicationService {
 	void register(@RequestBody CreateUserRequest createUserRequest);
 
 	@PostMapping("/login")
-	UserDTO login(@RequestBody LoginUserRequest loginUserRequest);
+	LoginUserResponse login(@RequestBody LoginUserRequest loginUserRequest);
 }

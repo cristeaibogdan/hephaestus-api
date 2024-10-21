@@ -7,7 +7,7 @@ import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
 import org.personal.washingmachine.dto.GetOrganizationAndCountryResponse;
 import org.personal.washingmachine.dto.LoginUserRequest;
-import org.personal.washingmachine.dto.UserDTO;
+import org.personal.washingmachine.dto.LoginUserResponse;
 import org.personal.washingmachine.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -100,18 +100,17 @@ class UserApplicationServiceMvcTest {
         @Test
         void should_ReturnHttpStatusCreated() throws Exception {
             // GIVEN
-            UserDTO userDTO = new UserDTO(
+            LoginUserResponse loginUserResponse = new LoginUserResponse(
                     "RX1001",
                     "OLX",
                     "Romania",
                     "bogdan@gmail.com",
-                    "bogdan",
-                    "123456");
+                    "bogdan");
 
             // WHEN
             ResultActions resultActions = mockMvc.perform(post("/api/v1/users/register")
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(objectMapper.writeValueAsString(userDTO)));
+                    .content(objectMapper.writeValueAsString(loginUserResponse)));
 
             // THEN
             then(userServiceMock)
@@ -126,13 +125,12 @@ class UserApplicationServiceMvcTest {
         @Test
         void should_ThrowCustomException_When_EmailIsAlreadyTaken() throws Exception {
             // GIVEN
-            UserDTO userDTO = new UserDTO(
+            LoginUserResponse loginUserResponse = new LoginUserResponse(
                     "RX1001",
                     "OLX",
                     "Romania",
                     "bogdan@gmail.com",
-                    "bogdan",
-                    "123456");
+                    "bogdan");
 
             willThrow(new CustomException(ErrorCode.EMAIL_ALREADY_TAKEN))
                     .given(userServiceMock).register(any());
@@ -140,7 +138,7 @@ class UserApplicationServiceMvcTest {
             // WHEN
             ResultActions resultActions = mockMvc.perform(post("/api/v1/users/register")
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(objectMapper.writeValueAsString(userDTO)));
+                    .content(objectMapper.writeValueAsString(loginUserResponse)));
 
             // THEN
             then(userServiceMock)
@@ -163,13 +161,12 @@ class UserApplicationServiceMvcTest {
                     "bogdan",
                     "123456");
 
-            UserDTO expected = new UserDTO(
+            LoginUserResponse expected = new LoginUserResponse(
                     "RX1001",
                     "OLX",
                     "Romania",
                     "bogdan@gmail.com",
-                    "bogdan",
-                    "123456");
+                    "bogdan");
 
             User user = new User(
                     "RX1001",

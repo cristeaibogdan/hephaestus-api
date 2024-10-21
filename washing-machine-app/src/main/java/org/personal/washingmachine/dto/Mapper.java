@@ -21,14 +21,13 @@ public class Mapper {
 
 	public static class UserMapper {
 
-		public static UserDTO toDTO(User entity) {
-			return new UserDTO(
+		public static LoginUserResponse toDTO(User entity) {
+			return new LoginUserResponse(
 					entity.getCode(),
 					entity.getOrganization(),
 					entity.getCountry(),
 					entity.getEmail(),
-					entity.getUsername(),
-					null
+					entity.getUsername()
 			);
 		}
 
