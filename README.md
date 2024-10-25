@@ -18,6 +18,20 @@ The project consists of two components:
 - Frontend built with Angular 
 - Backend developed using Java ( **you are here 📍** )
 
+## Technologies Used
+* Java 17
+* Spring Boot 3
+* Spring Data JPA 
+* Junit 5
+* Mockito
+* PostgreSQL
+* Flyway
+* QueryDSL
+* Jib
+* Docker Compose
+* JasperReports
+* OpenAPI
+
 ## Requirements
 * IDE
 * Java 17
