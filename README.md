@@ -22,6 +22,7 @@ The project consists of two components:
 * Java 17
 * Spring Boot 3
 * Spring Data JPA 
+* OpenFeign
 * Junit 5
 * Mockito
 * PostgreSQL
