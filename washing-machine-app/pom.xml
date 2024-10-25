@@ -145,6 +145,7 @@
 					<!-- Exclude all test that have the tag "slow" when running maven lifecycle test -->
 					<excludedGroups>slow</excludedGroups>
 				</configuration>
+				<version>3.2.5</version>
 			</plugin>
 		</plugins>
 	</build>
