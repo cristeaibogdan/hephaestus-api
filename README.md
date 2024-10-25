@@ -31,6 +31,8 @@ The project consists of two components:
 * Docker Compose
 * JasperReports
 * OpenAPI
+* Micrometer Tracing
+* Zipkin
 
 ## Requirements
 * IDE
