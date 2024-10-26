@@ -19,24 +19,25 @@ The project consists of two components:
 - Backend developed using Java ( **you are here 📍** )
 
 ## Technologies Used
-* Java 17
-* Spring Boot 3
-* Spring Data JPA 
-* OpenFeign
-* Junit 5
-* Mockito
-* PostgreSQL
-* Flyway
-* QueryDSL
-* Jib
-* Docker Compose
-* JasperReports
-* OpenAPI
-* Micrometer Tracing
-* Zipkin
+* **Java 17** - The backend is written in Java 17, chosen for its long-term support and modern improvements.
+* **Spring Boot 3** - Provides a framework for rapid setup and configuration, offering embedded servers, dependency injection, and a robust plugin ecosystem.
+* **Spring Cloud Gateway** - Manages API requests and routes traffic, serving as the backend's main entry point.
+* **Spring Data JPA** - Simplifies database operations with repository interfaces.
+* **PostgreSQL** - A relational database system known for its advanced features, performance, and strong community support.
+* **Flyway** - Manages database migrations, maintaining schema consistency across environments.
+* **QueryDSL** - A framework for building type-safe readable queries.
+* **OpenFeign** - Simplifies REST API calls with declarative HTTP clients.
+* **Micrometer Tracing** - Provides observability through the collection of metrics and tracing, integrating with OpenTelemetry APIs for distributed tracing.
+* **Zipkin** - Works with Micrometer Tracing to export trace data, enabling monitoring and analysis of request flows within the application.
+* **Junit 5** - Primary testing framework used for writing and executing unit tests.
+* **Mockito 3** - Facilitates unit testing by creating mock objects, allowing for isolated testing of components without dependencies.
+* **Jib** - Simplifies Docker image creation for Java apps by building images directly from the source, eliminating the need for Dockerfiles.
+* **Docker Compose** - Manages multi-container applications, allowing the backend to run in isolated, reproducible environments with its dependencies.
+* **JasperReports** - Facilitates the creation of detailed, dynamic PDF reports with customizable layouts and data visualization.
+* **OpenAPI** - Standardized API documentation, improving endpoint understanding and interaction.
 
 ## Requirements
-* IDE
+* IntelliJ IDEA (or any other IDE)
 * Java 17
 * Docker
 * Docker Compose
