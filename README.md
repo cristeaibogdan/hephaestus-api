@@ -12,7 +12,7 @@
 </div>
 
 ## What does this project do?
-`Hephaestus` is a personal project developed by **HARServices** designed to help users make informed decisions about household appliances. The application evaluates the condition and damage of the appliance and provides tailored recommendations on what actions to take.
+`Hephaestus` is a personal project designed to help users make informed decisions about household appliances. The application evaluates the condition and damage of the appliance and provides a recommendation on what action to take.
 
 The project consists of two components:
 - Frontend built with Angular 
