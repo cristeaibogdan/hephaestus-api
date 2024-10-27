@@ -39,6 +39,10 @@
             <artifactId>opentelemetry-exporter-zipkin</artifactId>
         </dependency>
 
+        <!-- ***************************************** -->
+        <!-- *** OPENAPI -->
+        <!-- ***************************************** -->
+
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
@@ -67,6 +71,14 @@
                     <plugin>
                         <groupId>com.google.cloud.tools</groupId>
                         <artifactId>jib-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>package</phase> <!-- Execute on maven lifecycle -->
+                                <goals>
+                                    <goal>dockerBuild</goal> <!-- Create images in local docker daemon -->
+                                </goals>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>

@@ -143,15 +143,6 @@
                             </tags>
                         </to>
                     </configuration>
-                    <executions>
-                        <execution>
-                            <phase>package</phase>
-                            <goals>
-                                <!-- Create images in local docker daemon -->
-                                <goal>dockerBuild</goal>
-                            </goals>
-                        </execution>
-                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
