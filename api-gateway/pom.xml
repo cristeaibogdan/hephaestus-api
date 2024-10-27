@@ -39,6 +39,10 @@
             <artifactId>opentelemetry-exporter-zipkin</artifactId>
         </dependency>
 
+        <!-- ***************************************** -->
+        <!-- *** OPENAPI -->
+        <!-- ***************************************** -->
+
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>

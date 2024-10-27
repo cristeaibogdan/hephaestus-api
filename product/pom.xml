@@ -82,6 +82,10 @@
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 
+		<!-- ***************************************** -->
+		<!-- *** OPENAPI -->
+		<!-- ***************************************** -->
+
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
