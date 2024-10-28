@@ -134,7 +134,7 @@
                         <from>
                             <image>
                                 <!-- Base image to use + @sha to create the container image -->
-                                eclipse-temurin:17@sha256:121cf9125ed3cb3cfe5952225a59f5efe9985365ed021f051c043fb03260a24b
+                                eclipse-temurin:17.0.13_11-jre@sha256:f134ba24cfce43c6734a0627e4b6b8eb6ab0b2ae2ec07ff1c527c08165da26ff
                             </image>
                         </from>
                         <to>
