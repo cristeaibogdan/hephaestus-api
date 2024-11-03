@@ -69,7 +69,7 @@ A. void save(CreateSolarPanelRequest createSolarPanelRequest)
 
 
 
-B. Page<GetSolarPanelSimpleResponse> loadPaginatedAndFiltered(SearchSolarPanelRequest searchSolarPanelRequest)
+C. Page<GetSolarPanelSimpleResponse> loadPaginatedAndFiltered(SearchSolarPanelRequest searchSolarPanelRequest)
 
     public record SearchSolarPanelRequest {
       int pageIndex,
@@ -102,7 +102,7 @@ B. Page<GetSolarPanelSimpleResponse> loadPaginatedAndFiltered(SearchSolarPanelRe
       SolarPanelRecommendation recommendation //TODO: Maybe rename it ?
     }
 
-C. GetSolarPanelFullResponse loadExpanded(String serialNumber)
+B. GetSolarPanelFullResponse loadExpanded(String serialNumber)
 
     public record GetSolarPanelFullResponse {
       String category,
@@ -124,6 +124,24 @@ C. GetSolarPanelFullResponse loadExpanded(String serialNumber)
       boolean brokenGlass,
       String additionalDetails
     }
+
+    1. Copy-paste should_SaveSolarPanel()
+    2. Rename it to should_GetSolarPanelExpanded()
+    3. Remove WHEN and THEN part
+
+    4. Write in WHEN: service.getExpanded("someSerialNumber")
+    5. Run => fail
+    6. ALT+ENTER to create the method in the service
+    7. Run => pass
+
+    8. Write in THEN: verify(repo).findBySerialNumber("someSerialNumber");
+    9. Run => fail
+    10. ALT+ENTER to add findBySerialNumber() method to repository
+    11. Run => fail
+    12. Go to SolarPanelApplicationService and call the method repo.findBySerialNumber(serialNumber)
+    13. Run => pass
+    14. Extract "someSerialNumber" into a variable inside the test
+    15. Run => pass
 
 D. SolarPanelRecommendation getRecommendation(String serialNumber)
 

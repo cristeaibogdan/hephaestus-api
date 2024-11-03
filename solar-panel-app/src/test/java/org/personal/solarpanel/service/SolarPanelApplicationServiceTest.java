@@ -21,4 +21,20 @@ class SolarPanelApplicationServiceTest {
 		// THEN
 		verify(repo).save(solarPanel);
 	}
+
+	@Test
+	void should_GetSolarPanelExpanded() {
+		// GIVEN
+		SolarPanelRepository repo = mock(SolarPanelRepository.class);
+		SolarPanelApplicationService service = new SolarPanelApplicationService(repo);
+
+		String serialNumber = "someSerialNumber";
+
+		// WHEN
+		service.getExpanded(serialNumber);
+
+		// THEN
+		verify(repo).findBySerialNumber(serialNumber);
+
+	}
 }
