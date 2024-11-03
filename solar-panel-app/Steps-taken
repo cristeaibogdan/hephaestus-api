@@ -143,6 +143,24 @@ B. GetSolarPanelFullResponse loadExpanded(String serialNumber)
     14. Extract "someSerialNumber" into a variable inside the test
     15. Run => pass
 
+    === I want to return an GetSolarPanelFullResponse
+
+    0. For learning purposes I Won't modify the previous method
+    1. Copy paste should_GetSolarPanelExpanded
+    2. Rename it to should_ReturnGetSolarPanelExpanded()
+    3. Remove THEN part
+
+    4. in WHEN modify the line to: GetSolarPanelExpanded actual = service.getExpanded(serialNumber);
+    5. ALT+ENTER to create the record - no properties in it
+    6. ALT+ENTER to modify service.getExpanded(serialNumber) to return GetSolarPanelExpanded
+    7. Run => pass
+
+    8. Write in GIVEN: GetSolarPanelExpanded expected = new GetSolarPanelExpanded();
+    9. Write in THEN: assertThat(actual).isEqualTo(expected);
+    10. Run => fail
+    11. Go to SolarPanelApplicationService.getExpanded(serialNumber) and return new GetSolarPanelExpanded() instead of null
+    12. Run => pass
+
 D. SolarPanelRecommendation getRecommendation(String serialNumber)
 
 E. YetToNameThisOne getReport(String serialNumber)

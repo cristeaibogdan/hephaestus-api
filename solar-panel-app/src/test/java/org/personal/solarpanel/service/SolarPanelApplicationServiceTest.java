@@ -35,6 +35,23 @@ class SolarPanelApplicationServiceTest {
 
 		// THEN
 		verify(repo).findBySerialNumber(serialNumber);
+	}
+
+	@Test
+	void should_ReturnGetSolarPanelExpanded() {
+		// GIVEN
+		SolarPanelRepository repo = mock(SolarPanelRepository.class);
+		SolarPanelApplicationService service = new SolarPanelApplicationService(repo);
+
+		String serialNumber = "someSerialNumber";
+		GetSolarPanelExpanded expected = new GetSolarPanelExpanded();
+
+		// WHEN
+		GetSolarPanelExpanded actual = service.getExpanded(serialNumber);
+
+		// THEN
+		assertThat(actual).isEqualTo(expected);
 
 	}
+
 }
