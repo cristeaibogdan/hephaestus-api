@@ -49,7 +49,7 @@ A. void save(CreateSolarPanelRequest createSolarPanelRequest)
     24. Test fails because the class is not a mock
     25. SolarPanelRepository repo = mock(SolarPanelRepository.class);
 
-    === I have mocks, therefore I changed the SolarPanelRepository to an interface ===
+    === I don't like to mock classes, therefore I changed the SolarPanelRepository to an interface ===
 
     26. Change SolarPanelRepository to interface
     27. Run => pass
