@@ -116,5 +116,33 @@
 				</plugins>
 			</build>
 		</profile>
+
+		<profile>
+			<id>docker-github</id>
+			<properties>
+				<activatedProfile>docker-github</activatedProfile>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.google.cloud.tools</groupId>
+						<artifactId>jib-maven-plugin</artifactId>
+						<configuration>
+							<to>
+								<image>ghcr.io/cristeaibogdan/${project.artifactId}</image>
+							</to>
+						</configuration>
+						<executions>
+							<execution>
+								<phase>package</phase> <!-- Execute on maven lifecycle -->
+								<goals>
+									<goal>build</goal> <!-- Create image -->
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 	</profiles>
 </project>
