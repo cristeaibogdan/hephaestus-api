@@ -1,0 +1,26 @@
+server:
+  port: 8083
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        #TODO: Add proper security
+        - id: washing-machine
+          uri: https://washing-machine-app.onrender.com
+          predicates:
+            - Path=/api/v1/washing-machines/**, /api/v1/users/**, /v3/api-docs/washing-machine
+          filters:
+            - RewritePath=/v3/api-docs/washing-machine, /v3/api-docs  # Forward to actual OpenAPI docs path
+
+        - id: product
+          uri: https://product-1q9l.onrender.com
+          predicates:
+            - Path=/api/v1/products/**, /v3/api-docs/product
+          filters:
+            - RewritePath=/v3/api-docs/product, /v3/api-docs  # Forward to actual OpenAPI docs path
+
+management:
+  zipkin:
+    tracing:
+      endpoint: https://zipkin-f3xe.onrender.com/api/v2/spans
