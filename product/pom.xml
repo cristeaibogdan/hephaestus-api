@@ -95,16 +95,6 @@
 
 	<profiles>
 		<profile>
-			<id>dev</id>
-			<properties>
-				<activatedProfile>dev</activatedProfile>
-			</properties>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-		</profile>
-
-		<profile>
 			<id>docker</id>
 			<properties>
 				<activatedProfile>docker</activatedProfile>

@@ -2,9 +2,6 @@ server:
   port: 8083
 
 spring:
-  application:
-    name: api-gateway
-
   cloud:
     gateway:
       routes:
@@ -23,34 +20,7 @@ spring:
           filters:
             - RewritePath=/v3/api-docs/product, /v3/api-docs  # Forward to actual OpenAPI docs path
 
-      globalcors:
-        corsConfigurations:
-          '[/**]':
-            allowedOrigins: "*"
-            allowedMethods:
-              - GET
-              - POST
-              - PUT
-              - DELETE
-            allowedHeaders: "*"
-
 management:
-  tracing:
-    sampling:
-      probability: 1.0
   zipkin:
     tracing:
       endpoint: http://hephaestus-zipkin:9411/api/v2/spans
-
-logging:
-  level:
-    org.springframework.cloud.gateway: DEBUG
-
-springdoc:
-  swagger-ui:
-    urls:
-      - name: washing-machine
-        url: /v3/api-docs/washing-machine
-
-      - name: product
-        url: /v3/api-docs/product
