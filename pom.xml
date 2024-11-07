@@ -49,12 +49,6 @@
 
     <dependencies> <!-- Will be available in all modules -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-properties-migrator</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-
-        <dependency>
             <!-- @Getter, @Setter, @Data, @Slf4j ... -->
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
