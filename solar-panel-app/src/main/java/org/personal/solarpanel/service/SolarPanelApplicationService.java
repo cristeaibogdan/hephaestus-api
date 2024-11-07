@@ -10,4 +10,9 @@ public class SolarPanelApplicationService {
 	public void save(SolarPanel solarPanel) {
 		repository.save(solarPanel);
 	}
+
+	public GetSolarPanelExpanded getExpanded(String serialNumber) {
+		repository.findBySerialNumber(serialNumber);
+		return new GetSolarPanelExpanded();
+	}
 }

@@ -49,7 +49,7 @@ A. void save(CreateSolarPanelRequest createSolarPanelRequest)
     24. Test fails because the class is not a mock
     25. SolarPanelRepository repo = mock(SolarPanelRepository.class);
 
-    === I have mocks, therefore I changed the SolarPanelRepository to an interface ===
+    === I don't like to mock classes, therefore I changed the SolarPanelRepository to an interface ===
 
     26. Change SolarPanelRepository to interface
     27. Run => pass
@@ -69,7 +69,7 @@ A. void save(CreateSolarPanelRequest createSolarPanelRequest)
 
 
 
-B. Page<GetSolarPanelSimpleResponse> loadPaginatedAndFiltered(SearchSolarPanelRequest searchSolarPanelRequest)
+C. Page<GetSolarPanelSimpleResponse> loadPaginatedAndFiltered(SearchSolarPanelRequest searchSolarPanelRequest)
 
     public record SearchSolarPanelRequest {
       int pageIndex,
@@ -102,7 +102,7 @@ B. Page<GetSolarPanelSimpleResponse> loadPaginatedAndFiltered(SearchSolarPanelRe
       SolarPanelRecommendation recommendation //TODO: Maybe rename it ?
     }
 
-C. GetSolarPanelFullResponse loadExpanded(String serialNumber)
+B. GetSolarPanelFullResponse loadExpanded(String serialNumber)
 
     public record GetSolarPanelFullResponse {
       String category,
@@ -124,6 +124,42 @@ C. GetSolarPanelFullResponse loadExpanded(String serialNumber)
       boolean brokenGlass,
       String additionalDetails
     }
+
+    1. Copy-paste should_SaveSolarPanel()
+    2. Rename it to should_GetSolarPanelExpanded()
+    3. Remove WHEN and THEN part
+
+    4. Write in WHEN: service.getExpanded("someSerialNumber")
+    5. Run => fail
+    6. ALT+ENTER to create the method in the service
+    7. Run => pass
+
+    8. Write in THEN: verify(repo).findBySerialNumber("someSerialNumber");
+    9. Run => fail
+    10. ALT+ENTER to add findBySerialNumber() method to repository
+    11. Run => fail
+    12. Go to SolarPanelApplicationService and call the method repo.findBySerialNumber(serialNumber)
+    13. Run => pass
+    14. Extract "someSerialNumber" into a variable inside the test
+    15. Run => pass
+
+    === I want to return an GetSolarPanelFullResponse
+
+    0. For learning purposes I Won't modify the previous method
+    1. Copy paste should_GetSolarPanelExpanded
+    2. Rename it to should_ReturnGetSolarPanelExpanded()
+    3. Remove THEN part
+
+    4. in WHEN modify the line to: GetSolarPanelExpanded actual = service.getExpanded(serialNumber);
+    5. ALT+ENTER to create the record - no properties in it
+    6. ALT+ENTER to modify service.getExpanded(serialNumber) to return GetSolarPanelExpanded
+    7. Run => pass
+
+    8. Write in GIVEN: GetSolarPanelExpanded expected = new GetSolarPanelExpanded();
+    9. Write in THEN: assertThat(actual).isEqualTo(expected);
+    10. Run => fail
+    11. Go to SolarPanelApplicationService.getExpanded(serialNumber) and return new GetSolarPanelExpanded() instead of null
+    12. Run => pass
 
 D. SolarPanelRecommendation getRecommendation(String serialNumber)
 
