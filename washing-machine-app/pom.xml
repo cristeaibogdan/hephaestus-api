@@ -122,14 +122,6 @@
 	</profiles>
 
 	<build>
-		<resources>
-			<resource>
-				<!-- Used to load @activatedProfile@, the placeholder property in application.properties files -->
-				<directory>src/main/resources</directory>
-				<filtering>true</filtering>
-			</resource>
-		</resources>
-
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

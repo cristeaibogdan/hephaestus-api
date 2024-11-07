@@ -125,13 +125,5 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
-
-		<resources>
-			<resource>
-				<!-- Used to load @activatedProfile@, the placeholder property in application.properties files -->
-				<directory>src/main/resources</directory>
-				<filtering>true</filtering>
-			</resource>
-		</resources>
 	</build>
 </project>
