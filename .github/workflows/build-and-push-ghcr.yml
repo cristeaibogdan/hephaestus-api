@@ -1,4 +1,4 @@
-name: Build & Push Docker Images to GitHub Registry (Manual Trigger)
+name: Build & Push Docker Images to GitHub Registry (Manual)
 
 on:
   workflow_dispatch:
