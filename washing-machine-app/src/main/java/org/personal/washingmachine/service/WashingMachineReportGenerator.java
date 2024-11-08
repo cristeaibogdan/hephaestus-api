@@ -1,8 +1,11 @@
 package org.personal.washingmachine.service;
 
+import com.google.common.base.CaseFormat;
+import com.google.common.base.Splitter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jasperreports.engine.*;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.StopWatch;
 import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
@@ -15,10 +18,12 @@ import org.springframework.stereotype.Service;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -80,9 +85,9 @@ public class WashingMachineReportGenerator {
 		parameters.put("model", washingMachine.getModel());
 		parameters.put("type", washingMachine.getType());
 		// Damage Type and Identification Mode
-		parameters.put("identificationMode", washingMachine.getIdentificationMode().getLabel());
-		parameters.put("returnType", washingMachine.getReturnType().getLabel());
-		parameters.put("damageType", washingMachine.getDamageType().getLabel());
+		parameters.put("identificationMode", enumToReadableLabel(washingMachine.getIdentificationMode().name()));
+		parameters.put("returnType", enumToReadableLabel(washingMachine.getReturnType().name()));
+		parameters.put("damageType", enumToReadableLabel(washingMachine.getDamageType().name()));
 		// Damaged Product Images
 		parameters.put("image01", new ByteArrayInputStream(image01));
 		parameters.put("image02", new ByteArrayInputStream(image02));
@@ -157,5 +162,21 @@ public class WashingMachineReportGenerator {
 	private JasperReport getSecondPageReport() throws JRException {
 		InputStream reportPath = getClass().getClassLoader().getResourceAsStream("reports/WashingMachine_SecondPage.jrxml");
 		return JasperCompileManager.compileReport(reportPath);
+	}
+
+	private final Map<String, String> specialCases = new HashMap<>(Map.of(
+			"QR_CODE", "QR Code"
+	));
+
+	private String enumToReadableLabel(String enumKey) {
+		String specialCaseLabel = specialCases.get(enumKey);
+		if (specialCaseLabel != null) {
+			return specialCaseLabel;
+		}
+
+		return Arrays.stream(enumKey.split("_"))
+				.map(w -> w.toLowerCase())
+				.map(w -> StringUtils.capitalize(w))
+				.collect(Collectors.joining(" "));
 	}
 }
