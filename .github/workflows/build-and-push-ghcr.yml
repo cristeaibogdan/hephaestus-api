@@ -1,9 +1,7 @@
-name: Build and Push Docker Image
+name: Build & Push Docker Images to GitHub Registry (Manual Trigger)
 
 on:
-  push:
-    branches:
-      - staging-demo #TODO: rename this
+  workflow_dispatch:
 
 jobs:
   build:
