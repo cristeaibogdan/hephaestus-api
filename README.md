@@ -11,18 +11,22 @@
 
 </div>
 
-## What does this project do?
+## What Does This Project Do?
 <span style="color: #F76707; font-weight: bold;">Hephaestus</span> is a personal project designed to help users make informed decisions about household appliances. The application evaluates the condition and damage of the appliance and provides a recommendation on what action to take.
 
 The project consists of two components:
 - Frontend built with Angular 
 - Backend developed using Java ( **you are here 📍** )
 
-The backend application is deployed on Render and the docs are accessible at:
+The backend application is deployed on **Render**. You can access the following services:
 
-- **OpenAPI Documentation**: [OpenAPI Docs](https://api-gateway-8rxu.onrender.com/webjars/swagger-ui/index.html)
+#### 1. **API Documentation**
+- **[OpenAPI Docs](https://api-gateway-8rxu.onrender.com/webjars/swagger-ui/index.html)**  
+  This interactive documentation allows you to explore and test all the API endpoints in the backend.
 
-- **Zipkin Server**: [Zipkin on Render](https://zipkin-f3xe.onrender.com/zipkin/)
+#### 2. **Request Monitoring**
+- **[Zipkin on Render](https://zipkin-f3xe.onrender.com/zipkin/)**  
+  A **Zipkin server** is available to monitor and trace requests across the application.
 
 ## Technologies Used
 * **Java 17** - The backend is written in Java 17, chosen for its long-term support and modern improvements.
@@ -44,6 +48,7 @@ The backend application is deployed on Render and the docs are accessible at:
 
 ## Local Deployment with Docker
 ### Requirements
+To run the backend locally using Docker, make sure you have the following installed:
 * IntelliJ IDEA (or any other IDE)
 * Java 17
 * Docker
