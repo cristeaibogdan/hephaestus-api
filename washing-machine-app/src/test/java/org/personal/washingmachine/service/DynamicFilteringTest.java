@@ -91,9 +91,7 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 
 		// THEN
 		assertThat(actual.getContent())
-				.isNotEmpty();
-
-		assertThat(actual.getContent())
+				.isNotEmpty()
 				.extracting(wm -> wm.manufacturer())
 				.contains(manufacturer);
 	}
@@ -111,9 +109,7 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 
 		// THEN
 		assertThat(actual.getContent())
-				.isNotEmpty();
-
-		assertThat(actual.getContent())
+				.isNotEmpty()
 				.extracting(wm -> wm.damageType())
 				.containsOnly(damageType);
 	}
@@ -131,9 +127,7 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 
 		// THEN
 		assertThat(actual.getContent())
-				.isNotEmpty();
-
-		assertThat(actual.getContent())
+				.isNotEmpty()
 				.extracting(wm -> wm.returnType())
 				.containsOnly(returnType);
 	}
@@ -151,9 +145,7 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 
 		// THEN
 		assertThat(actual.getContent())
-				.isNotEmpty();
-
-		assertThat(actual.getContent())
+				.isNotEmpty()
 				.extracting(wm -> wm.identificationMode())
 				.containsOnly(identificationMode);
 	}
@@ -171,9 +163,7 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 
 		// THEN
 		assertThat(actual.getContent())
-				.isNotEmpty();
-
-		assertThat(actual.getContent())
+				.isNotEmpty()
 				.extracting(wm -> wm.serialNumber())
 				.contains(serialNumber);
 	}
@@ -191,9 +181,7 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 
 		// THEN
 		assertThat(actual.getContent())
-				.isNotEmpty();
-
-		assertThat(actual.getContent())
+				.isNotEmpty()
 				.extracting(wm -> wm.model())
 				.contains(model);
 	}
@@ -211,9 +199,7 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 
 		// THEN
 		assertThat(actual.getContent())
-				.isNotEmpty();
-
-		assertThat(actual.getContent())
+				.isNotEmpty()
 				.extracting(wm -> wm.type())
 				.contains(type);
 	}
@@ -231,9 +217,7 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 
 		// THEN
 		assertThat(actual.getContent())
-				.isNotEmpty();
-
-		assertThat(actual.getContent())
+				.isNotEmpty()
 				.extracting(wm -> wm.recommendation())
 				.containsOnly(recommendation);
 	}
@@ -249,9 +233,7 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 
 		// THEN
 		assertThat(actual.getContent())
-				.isNotEmpty();
-
-		assertThat(actual.getContent())
+				.isNotEmpty()
 				.extracting(wm -> wm.createdAt())
 				.doesNotContainNull()
 				.isSortedAccordingTo(Comparator.reverseOrder()); // Check descending order
@@ -261,7 +243,7 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 	void should_ReturnFilteredList_By_ManufacturerAndReturnType() {
 		// GIVEN
 		SearchWashingMachineRequest dto = searchWashingMachineRequest.toBuilder()
-				.manufacturer("WhirlPool")
+				.manufacturer("WhirL")
 				.returnType(ReturnType.TRANSPORT)
 				.build();
 
@@ -270,15 +252,11 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 
 		// THEN
 		assertThat(actual.getContent())
-				.isNotEmpty();
-
-		assertThat(actual.getContent())
-				.extracting(wm -> wm.manufacturer())
-				.contains(dto.manufacturer());
-
-		assertThat(actual.getContent())
-				.extracting(wm -> wm.returnType())
-				.containsOnly(dto.returnType());
+				.isNotEmpty()
+				.allSatisfy(wm -> {
+					assertThat(wm.manufacturer()).containsIgnoringCase(dto.manufacturer());
+					assertThat(wm.returnType()).isEqualTo(dto.returnType());
+				});
 	}
 
 	@Test
@@ -286,8 +264,8 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 		// GIVEN
 		SearchWashingMachineRequest dto = searchWashingMachineRequest.toBuilder()
 				.identificationMode(IdentificationMode.QR_CODE)
-				.model("modelC")
-				.type("TypeX")
+				.model("MoDElC")
+				.type("tYPeX")
 				.build();
 
 		// WHEN
@@ -295,19 +273,12 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 
 		// THEN
 		assertThat(actual.getContent())
-				.isNotEmpty();
-
-		assertThat(actual.getContent())
-				.extracting(wm -> wm.identificationMode())
-				.containsOnly(dto.identificationMode());
-
-		assertThat(actual.getContent())
-				.extracting(wm -> wm.model())
-				.contains(dto.model());
-
-		assertThat(actual.getContent())
-				.extracting(wm -> wm.type())
-				.contains(dto.type());
+				.isNotEmpty()
+				.allSatisfy(wm -> {
+					assertThat(wm.identificationMode()).isEqualTo(dto.identificationMode());
+					assertThat(wm.model()).containsIgnoringCase(dto.model());
+					assertThat(wm.type()).containsIgnoringCase(dto.type());
+				});
 	}
 
 }
