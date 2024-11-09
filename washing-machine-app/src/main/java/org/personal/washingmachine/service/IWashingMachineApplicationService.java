@@ -31,8 +31,8 @@ public interface IWashingMachineApplicationService {
 	@GetMapping(value = "/{serialNumber}/report")
 	GetWashingMachineReportResponse getReport(@PathVariable String serialNumber);
 
-	@GetMapping("/{category}/manufacturers")
-	List<String> getManufacturers(@PathVariable String category);
+//	@GetMapping("/{category}/manufacturers")
+//	List<String> getManufacturers(@PathVariable String category);
 
 	@GetMapping("/{serialNumber}/validate")
 	boolean isSerialNumberInUse(@PathVariable String serialNumber);

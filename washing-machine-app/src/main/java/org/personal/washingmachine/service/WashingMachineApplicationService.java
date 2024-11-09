@@ -116,10 +116,10 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 	//TODO: To be deleted
 	private final ProductClient productClient;
 
-	@Override
-	public List<String> getManufacturers(String category) {
-		return productClient.getManufacturers(category);
-	}
+//	@Override
+//	public List<String> getManufacturers(String category) {
+//		return productClient.getManufacturers(category);
+//	}
 
 	@Override
 	public boolean isSerialNumberInUse(String serialNumber) {
