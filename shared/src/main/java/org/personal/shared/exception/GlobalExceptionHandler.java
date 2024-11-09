@@ -34,7 +34,12 @@ class GlobalExceptionHandler {
 	private final MessageSource messageSource;
 
 	@ExceptionHandler(Exception.class)
-	ResponseEntity<String> handleAnyException(Exception e, HttpServletRequest request) {
+	ResponseEntity<String> handleAnyException(Exception e, HttpServletRequest request) throws Exception {
+
+		if(e instanceof NoResourceFoundException) {
+			throw e;
+		}
+
 		String userMessage = messageSource.getMessage(
 				ErrorCode.GENERAL.name(),
 				null,
@@ -65,18 +70,6 @@ class GlobalExceptionHandler {
 		log.error("Validation failed. Returning: {}", validationErrors, e);
 		return status(BAD_REQUEST)
 				.body(validationErrors);
-	}
-
-	@ExceptionHandler(NoResourceFoundException.class)  // In case module is accessed outside of gateway (shouldn't be possible)
-	ResponseEntity<String> handleNoResourceFoundException(Exception e, HttpServletRequest request) {
-		String userMessage = messageSource.getMessage(
-				ErrorCode.NOT_FOUND.name(),
-				null,
-				"Internal Translation Error",
-				request.getLocale());
-		log.error("Unexpected {}: {}", ErrorCode.NOT_FOUND, userMessage, e);
-		return status(NOT_FOUND)
-				.body(userMessage);
 	}
 
 // ************************************************************
