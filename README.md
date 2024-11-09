@@ -20,11 +20,9 @@ The project consists of two components:
 
 The backend application is deployed on **Render**. You can access the following services:
 
-#### 1. **API Documentation**
 - **[OpenAPI Docs](https://api-gateway-8rxu.onrender.com/webjars/swagger-ui/index.html)**  
   This interactive documentation allows you to explore and test all the API endpoints in the backend.
 
-#### 2. **Request Monitoring**
 - **[Zipkin on Render](https://zipkin-f3xe.onrender.com/zipkin/)**  
   A **Zipkin server** is available to monitor and trace requests across the application.
 
