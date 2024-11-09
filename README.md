@@ -12,7 +12,7 @@
 </div>
 
 ## What Does This Project Do?
-<span style="color: #F76707; font-weight: bold;">Hephaestus</span> is a personal project designed to help users make informed decisions about household appliances. The application evaluates the condition and damage of the appliance and provides a recommendation on what action to take.
+**Hephaestus** is a personal project designed to help users make informed decisions about household appliances. The application evaluates the condition and damage of the appliance and provides a recommendation on what action to take.
 
 The project consists of two components:
 - Frontend built with Angular 
