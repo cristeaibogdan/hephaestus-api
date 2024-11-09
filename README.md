@@ -12,11 +12,17 @@
 </div>
 
 ## What does this project do?
-`Hephaestus` is a personal project designed to help users make informed decisions about household appliances. The application evaluates the condition and damage of the appliance and provides a recommendation on what action to take.
+<span style="color: #F76707; font-weight: bold;">Hephaestus</span> is a personal project designed to help users make informed decisions about household appliances. The application evaluates the condition and damage of the appliance and provides a recommendation on what action to take.
 
 The project consists of two components:
 - Frontend built with Angular 
 - Backend developed using Java ( **you are here 📍** )
+
+The backend application is deployed on Render and the docs are accessible at:
+
+- **OpenAPI Documentation**: [OpenAPI Docs](https://api-gateway-8rxu.onrender.com/webjars/swagger-ui/index.html)
+
+- **Zipkin Server**: [Zipkin on Render](https://zipkin-f3xe.onrender.com/zipkin/)
 
 ## Technologies Used
 * **Java 17** - The backend is written in Java 17, chosen for its long-term support and modern improvements.
@@ -36,13 +42,14 @@ The project consists of two components:
 * **JasperReports** - Facilitates the creation of detailed, dynamic PDF reports with customizable layouts and data visualization.
 * **OpenAPI** - Standardized API documentation, improving endpoint understanding and interaction.
 
-## Requirements
+## Local Deployment with Docker
+### Requirements
 * IntelliJ IDEA (or any other IDE)
 * Java 17
 * Docker
 * Docker Compose
 
-## Usage
+### Usage
 1. Clone the repository:
 ```bash
 git clone https://github.com/cristeaibogdan/hephaestus-api.git
@@ -66,7 +73,7 @@ docker-compose up -d
 ```
 6. All backend services should be up and running.
 
-## Important URLs
+### Important URLs
 - [Pgadmin](http://localhost:5050) - `localhost:5050`
   1. Use `postgres` to login
   2. Register new server
