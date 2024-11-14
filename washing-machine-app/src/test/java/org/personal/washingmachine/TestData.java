@@ -1,5 +1,7 @@
 package org.personal.washingmachine;
 
+import org.personal.washingmachine.dto.CreateWashingMachineDetailRequest;
+import org.personal.washingmachine.dto.CreateWashingMachineRequest;
 import org.personal.washingmachine.dto.SearchWashingMachineRequest;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.enums.DamageType;
@@ -9,7 +11,7 @@ import org.personal.washingmachine.enums.ReturnType;
 
 public class TestData {
 
-	public static SearchWashingMachineRequest.SearchWashingMachineRequestBuilder searchWashingMachineRequest() {
+	public static SearchWashingMachineRequest searchWashingMachineRequest() {
 		return new SearchWashingMachineRequest(
 				0,
 				2,
@@ -22,21 +24,52 @@ public class TestData {
 				null,
 				null,
 				null
-		).toBuilder();
+		);
 	}
 
-	public static WashingMachine getWashingMachineWithoutDetailAndImages() {
-		return new WashingMachine(
+	public static CreateWashingMachineDetailRequest createWashingMachineDetailRequest() {
+		return new CreateWashingMachineDetailRequest(
+						false,
+						false,
+						false,
+						0,
+						0,
+						"",
+						"",
+						0,
+						0,
+						"",
+						"",
+						0,
+						0
+				);
+	}
+
+	public static CreateWashingMachineRequest createWashingMachineRequest() {
+		return new CreateWashingMachineRequest(
 				"Washing Machine",
-				"Gorenje",
-				DamageType.IN_USE,
-				ReturnType.SERVICE,
 				IdentificationMode.DATA_MATRIX,
-				"test",
-				"modelOne",
-				"typeOne",
-				Recommendation.RESALE,
-				null
+				"WhirlPool",
+				"model100",
+				"type200",
+				"serialNumber",
+				ReturnType.SERVICE,
+				DamageType.IN_USE,
+				new CreateWashingMachineDetailRequest(
+						false,
+						false,
+						false,
+						0,
+						0,
+						"",
+						"",
+						0,
+						0,
+						"",
+						"",
+						0,
+						0
+				)
 		);
 	}
 

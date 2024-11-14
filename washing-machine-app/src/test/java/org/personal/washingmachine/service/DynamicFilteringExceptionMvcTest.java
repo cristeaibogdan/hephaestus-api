@@ -37,7 +37,7 @@ class DynamicFilteringExceptionMvcTest {
 	@Test
 	void should_ThrowValidationException_When_PageIndexIsNegative() throws Exception {
 		// GIVEN
-		SearchWashingMachineRequest request = TestData.searchWashingMachineRequest()
+		SearchWashingMachineRequest request = TestData.searchWashingMachineRequest().toBuilder()
 				.pageIndex(-1)
 				.build();
 
@@ -56,7 +56,7 @@ class DynamicFilteringExceptionMvcTest {
 	@Test
 	void should_ThrowValidationException_When_PageSizeIsLessThanOne() throws Exception {
 		// GIVEN
-		SearchWashingMachineRequest request = TestData.searchWashingMachineRequest()
+		SearchWashingMachineRequest request = TestData.searchWashingMachineRequest().toBuilder()
 				.pageSize(0)
 				.build();
 
@@ -82,7 +82,7 @@ class DynamicFilteringExceptionMvcTest {
 	@MethodSource("localeProvider")
 	void should_ThrowCustomException_When_InvalidDate(String locale) throws Exception {
 		// GIVEN
-		SearchWashingMachineRequest request = TestData.searchWashingMachineRequest()
+		SearchWashingMachineRequest request = TestData.searchWashingMachineRequest().toBuilder()
 				.createdAt("invalid date")
 				.build();
 
