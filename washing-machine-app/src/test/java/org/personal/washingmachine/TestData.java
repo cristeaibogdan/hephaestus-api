@@ -1,12 +1,29 @@
 package org.personal.washingmachine;
 
+import org.personal.washingmachine.dto.SearchWashingMachineRequest;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.enums.DamageType;
 import org.personal.washingmachine.enums.IdentificationMode;
 import org.personal.washingmachine.enums.Recommendation;
 import org.personal.washingmachine.enums.ReturnType;
 
-public class WashingMachineTestData {
+public class TestData {
+
+	public static SearchWashingMachineRequest.SearchWashingMachineRequestBuilder searchWashingMachineRequest() {
+		return new SearchWashingMachineRequest(
+				0,
+				2,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null
+		).toBuilder();
+	}
 
 	public static WashingMachine getWashingMachineWithoutDetailAndImages() {
 		return new WashingMachine(

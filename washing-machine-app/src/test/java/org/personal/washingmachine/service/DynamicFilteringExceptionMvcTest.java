@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.personal.shared.clients.ProductClient;
+import org.personal.washingmachine.TestData;
 import org.personal.washingmachine.dto.SearchWashingMachineRequest;
 import org.personal.washingmachine.repository.WashingMachineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(WashingMachineApplicationService.class)
-class DynamicFilteringExceptionTest {
+class DynamicFilteringExceptionMvcTest {
 
 	@Autowired MockMvc mockMvc;
 	@Autowired ObjectMapper jackson;
@@ -33,31 +34,17 @@ class DynamicFilteringExceptionTest {
 	@MockBean WashingMachineReportGenerator reportGenerator;
 	@MockBean ProductClient productClient; //TODO: To be deleted
 
-	private final SearchWashingMachineRequest defaultPageRequest = new SearchWashingMachineRequest(
-			0,
-			2,
-			null,
-			null,
-			null,
-			null,
-			null,
-			null,
-			null,
-			null,
-			null
-	);
-
 	@Test
 	void should_ThrowValidationException_When_PageIndexIsNegative() throws Exception {
 		// GIVEN
-		SearchWashingMachineRequest dto = defaultPageRequest.toBuilder()
+		SearchWashingMachineRequest request = TestData.searchWashingMachineRequest()
 				.pageIndex(-1)
 				.build();
 
 		// WHEN
 		ResultActions resultActions = mockMvc.perform(
 				post("/api/v1/washing-machines")
-						.content(jackson.writeValueAsString(dto))
+						.content(jackson.writeValueAsString(request))
 						.contentType(MediaType.APPLICATION_JSON));
 
 		// THEN
@@ -69,14 +56,14 @@ class DynamicFilteringExceptionTest {
 	@Test
 	void should_ThrowValidationException_When_PageSizeIsLessThanOne() throws Exception {
 		// GIVEN
-		SearchWashingMachineRequest dto = defaultPageRequest.toBuilder()
+		SearchWashingMachineRequest request = TestData.searchWashingMachineRequest()
 				.pageSize(0)
 				.build();
 
 		// WHEN
 		ResultActions resultActions = mockMvc.perform(
 				post("/api/v1/washing-machines")
-						.content(jackson.writeValueAsString(dto))
+						.content(jackson.writeValueAsString(request))
 						.contentType(MediaType.APPLICATION_JSON));
 
 		// THEN
@@ -95,14 +82,14 @@ class DynamicFilteringExceptionTest {
 	@MethodSource("localeProvider")
 	void should_ThrowCustomException_When_InvalidDate(String locale) throws Exception {
 		// GIVEN
-		SearchWashingMachineRequest dto = defaultPageRequest.toBuilder()
+		SearchWashingMachineRequest request = TestData.searchWashingMachineRequest()
 				.createdAt("invalid date")
 				.build();
 
 		// WHEN
 		ResultActions resultActions = mockMvc.perform(
 				post("/api/v1/washing-machines")
-						.content(jackson.writeValueAsString(dto))
+						.content(jackson.writeValueAsString(request))
 						.contentType(MediaType.APPLICATION_JSON)
 						.header("Accept-Language", locale));
 

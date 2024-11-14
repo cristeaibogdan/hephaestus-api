@@ -7,6 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.personal.washingmachine.BaseIntegrationTest;
+import org.personal.washingmachine.TestData;
 import org.personal.washingmachine.dto.SearchWashingMachineRequest;
 import org.personal.washingmachine.dto.GetWashingMachineSimpleResponse;
 import org.personal.washingmachine.entity.WashingMachine;
@@ -48,24 +49,10 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 		washingMachineRepository.saveAll(washingMachines);
 	}
 
-	private final SearchWashingMachineRequest searchWashingMachineRequest = new SearchWashingMachineRequest(
-			0,
-			10,
-			null,
-			null,
-			null,
-			null,
-			null,
-			null,
-			null,
-			null,
-			null
-	);
-
 	@Test
 	void should_ReturnThreeWashingMachines() {
 		// GIVEN
-		SearchWashingMachineRequest dto = searchWashingMachineRequest.toBuilder()
+		SearchWashingMachineRequest dto = TestData.searchWashingMachineRequest()
 				.pageIndex(0)
 				.pageSize(3)
 				.build();
@@ -82,7 +69,7 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 	@ValueSource(strings = {"Gorenje", "WhirlPool"})
 	void should_ReturnFilteredList_By_Manufacturer(String manufacturer) {
 		// GIVEN
-		SearchWashingMachineRequest dto = searchWashingMachineRequest.toBuilder()
+		SearchWashingMachineRequest dto = TestData.searchWashingMachineRequest()
 				.manufacturer(manufacturer)
 				.build();
 
@@ -100,7 +87,7 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 	@EnumSource(DamageType.class)
 	void should_ReturnFilteredList_By_DamageType(DamageType damageType) {
 		// GIVEN
-		SearchWashingMachineRequest dto = searchWashingMachineRequest.toBuilder()
+		SearchWashingMachineRequest dto = TestData.searchWashingMachineRequest()
 				.damageType(damageType)
 				.build();
 
@@ -118,7 +105,7 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 	@EnumSource(ReturnType.class)
 	void should_ReturnFilteredList_By_ReturnType(ReturnType returnType) {
 		// GIVEN
-		SearchWashingMachineRequest dto = searchWashingMachineRequest.toBuilder()
+		SearchWashingMachineRequest dto = TestData.searchWashingMachineRequest()
 				.returnType(returnType)
 				.build();
 
@@ -136,7 +123,7 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 	@EnumSource(IdentificationMode.class)
 	void should_ReturnFilteredList_By_IdentificationMode(IdentificationMode identificationMode) {
 		// GIVEN
-		SearchWashingMachineRequest dto = searchWashingMachineRequest.toBuilder()
+		SearchWashingMachineRequest dto = TestData.searchWashingMachineRequest()
 				.identificationMode(identificationMode)
 				.build();
 
@@ -154,7 +141,7 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 	@ValueSource(strings = {"serial1", "serial2", "serial3"})
 	void should_ReturnFilteredList_By_SerialNumber(String serialNumber) {
 		// GIVEN
-		SearchWashingMachineRequest dto = searchWashingMachineRequest.toBuilder()
+		SearchWashingMachineRequest dto = TestData.searchWashingMachineRequest()
 				.serialNumber(serialNumber)
 				.build();
 
@@ -172,7 +159,7 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 	@ValueSource(strings = {"modelA", "modelB"})
 	void should_ReturnFilteredList_By_Model(String model) {
 		// GIVEN
-		SearchWashingMachineRequest dto = searchWashingMachineRequest.toBuilder()
+		SearchWashingMachineRequest dto = TestData.searchWashingMachineRequest()
 				.model(model)
 				.build();
 
@@ -190,7 +177,7 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 	@ValueSource(strings = {"TypeY", "TypeZ"})
 	void should_ReturnFilteredList_By_Type(String type) {
 		// GIVEN
-		SearchWashingMachineRequest dto = searchWashingMachineRequest.toBuilder()
+		SearchWashingMachineRequest dto = TestData.searchWashingMachineRequest()
 				.type(type)
 				.build();
 
@@ -208,7 +195,7 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 	@EnumSource(value = Recommendation.class, mode = EnumSource.Mode.EXCLUDE, names = "NONE")
 	void should_ReturnFilteredList_By_Recommendation(Recommendation recommendation) {
 		// GIVEN
-		SearchWashingMachineRequest dto = searchWashingMachineRequest.toBuilder()
+		SearchWashingMachineRequest dto = TestData.searchWashingMachineRequest()
 				.recommendation(recommendation)
 				.build();
 
@@ -225,7 +212,8 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 	@Test
 	void should_ReturnListWithDescendingDates() {
 		// GIVEN
-		SearchWashingMachineRequest dto = searchWashingMachineRequest.toBuilder()
+		SearchWashingMachineRequest dto = TestData.searchWashingMachineRequest()
+				.pageSize(5)
 				.build();
 
 		// WHEN
@@ -242,7 +230,7 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 	@Test
 	void should_ReturnFilteredList_By_ManufacturerAndReturnType() {
 		// GIVEN
-		SearchWashingMachineRequest dto = searchWashingMachineRequest.toBuilder()
+		SearchWashingMachineRequest dto = TestData.searchWashingMachineRequest()
 				.manufacturer("WhirL")
 				.returnType(ReturnType.TRANSPORT)
 				.build();
@@ -262,7 +250,7 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 	@Test
 	void should_ReturnFilteredList_By_IdentificationModeAndModelAndType() {
 		// GIVEN
-		SearchWashingMachineRequest dto = searchWashingMachineRequest.toBuilder()
+		SearchWashingMachineRequest dto = TestData.searchWashingMachineRequest()
 				.identificationMode(IdentificationMode.QR_CODE)
 				.model("MoDElC")
 				.type("tYPeX")
