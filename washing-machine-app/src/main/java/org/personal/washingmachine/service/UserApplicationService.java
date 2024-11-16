@@ -65,6 +65,6 @@ public class UserApplicationService implements IUserApplicationService { // TODO
 	@Override
 	public LoginUserResponse login(LoginUserRequest loginUserRequest) {
 		User user = service.login(loginUserRequest.username(), loginUserRequest.password());
-		return UserMapper.toDTO(user);
+		return UserMapper.toLoginUserResponse(user);
 	}
 }

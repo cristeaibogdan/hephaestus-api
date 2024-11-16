@@ -148,7 +148,7 @@ class WashingMachineApplicationServiceTest {
 		given(washingMachineRepositoryMock.findBySerialNumber(serialNumber))
 				.willReturn(Optional.of(washingMachine));
 
-		GetWashingMachineExpandedResponse expected = Mapper.WashingMachineMapper.toExpandedDTO(washingMachine);
+		GetWashingMachineExpandedResponse expected = Mapper.WashingMachineMapper.toGetWashingMachineExpandedResponse(washingMachine);
 
 		// WHEN
 		GetWashingMachineExpandedResponse actual = underTest.loadExpanded(serialNumber);

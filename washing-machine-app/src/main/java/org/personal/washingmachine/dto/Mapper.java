@@ -21,7 +21,7 @@ public class Mapper {
 
 	public static class UserMapper {
 
-		public static LoginUserResponse toDTO(User entity) {
+		public static LoginUserResponse toLoginUserResponse(User entity) {
 			return new LoginUserResponse(
 					entity.getCode(),
 					entity.getOrganization(),
@@ -45,7 +45,7 @@ public class Mapper {
 
 	public static class WashingMachineImageMapper {
 
-		public static List<GetWashingMachineImageResponse> toDTO(List<WashingMachineImage> entities) {
+		public static List<GetWashingMachineImageResponse> toGetWashingMachineImageResponses(List<WashingMachineImage> entities) {
 			return entities.stream()
 					.map(entity -> new GetWashingMachineImageResponse(
 							entity.getImagePrefix(),
@@ -83,7 +83,7 @@ public class Mapper {
 
 	public static class WashingMachineDetailMapper {
 
-		public static GetWashingMachineDetailResponse toDTO(WashingMachineDetail entity) {
+		public static GetWashingMachineDetailResponse toGetWashingMachineDetailResponse(WashingMachineDetail entity) {
 			return new GetWashingMachineDetailResponse(
 					entity.getPackageDamage().isApplicable(),
 					entity.getPackageDamage().isPackageDamaged(),
@@ -145,7 +145,7 @@ public class Mapper {
 
 	public static class WashingMachineMapper {
 
-		public static GetWashingMachineSimpleResponse toSimpleDTO(WashingMachine entity) {
+		public static GetWashingMachineSimpleResponse toGetWashingMachineSimpleResponse(WashingMachine entity) {
 			return new GetWashingMachineSimpleResponse(
 					entity.getCategory(),
 					entity.getManufacturer(),
@@ -160,10 +160,10 @@ public class Mapper {
 			);
 		}
 
-		public static GetWashingMachineExpandedResponse toExpandedDTO(WashingMachine entity) {
+		public static GetWashingMachineExpandedResponse toGetWashingMachineExpandedResponse(WashingMachine entity) {
 
-			GetWashingMachineDetailResponse getWashingMachineDetailResponse = WashingMachineDetailMapper.toDTO(entity.getWashingMachineDetail());
-			List<GetWashingMachineImageResponse> getWashingMachineImageResponses = WashingMachineImageMapper.toDTO(entity.getWashingMachineImages());
+			GetWashingMachineDetailResponse getWashingMachineDetailResponse = WashingMachineDetailMapper.toGetWashingMachineDetailResponse(entity.getWashingMachineDetail());
+			List<GetWashingMachineImageResponse> getWashingMachineImageResponses = WashingMachineImageMapper.toGetWashingMachineImageResponses(entity.getWashingMachineImages());
 
 			return new GetWashingMachineExpandedResponse(
 					getWashingMachineDetailResponse,

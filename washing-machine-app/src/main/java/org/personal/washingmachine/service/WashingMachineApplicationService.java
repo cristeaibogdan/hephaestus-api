@@ -8,7 +8,6 @@ import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
 import org.personal.washingmachine.dto.*;
 import org.personal.washingmachine.entity.WashingMachine;
-import org.personal.washingmachine.entity.WashingMachineDetail;
 import org.personal.washingmachine.entity.WashingMachineImage;
 import org.personal.washingmachine.enums.Recommendation;
 import org.personal.washingmachine.repository.WashingMachineRepository;
@@ -63,7 +62,7 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 
 		Page<WashingMachine> responsePage = repository.findAll(booleanBuilder, pageRequest);
 
-		return responsePage.map(wm -> WashingMachineMapper.toSimpleDTO(wm));
+		return responsePage.map(wm -> WashingMachineMapper.toGetWashingMachineSimpleResponse(wm));
 	}
 
 	private Optional<LocalDate> parseToLocalDate(String dateString) {
@@ -79,7 +78,7 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 	@Override
 	public GetWashingMachineExpandedResponse loadExpanded(String serialNumber) {
 		WashingMachine washingMachine = service.findBySerialNumber(serialNumber);
-		return WashingMachineMapper.toExpandedDTO(washingMachine);
+		return WashingMachineMapper.toGetWashingMachineExpandedResponse(washingMachine);
 	}
 
 	@Override
