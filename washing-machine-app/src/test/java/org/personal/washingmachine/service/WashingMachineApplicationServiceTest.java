@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.personal.shared.clients.ProductClient;
-import org.personal.washingmachine.dto.GetWashingMachineExpandedResponse;
+import org.personal.washingmachine.dto.GetWashingMachineFullResponse;
 import org.personal.washingmachine.dto.Mapper;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineDetail;
@@ -148,10 +148,10 @@ class WashingMachineApplicationServiceTest {
 		given(washingMachineRepositoryMock.findBySerialNumber(serialNumber))
 				.willReturn(Optional.of(washingMachine));
 
-		GetWashingMachineExpandedResponse expected = Mapper.WashingMachineMapper.toGetWashingMachineExpandedResponse(washingMachine);
+		GetWashingMachineFullResponse expected = Mapper.WashingMachineMapper.toGetWashingMachineFullResponse(washingMachine);
 
 		// WHEN
-		GetWashingMachineExpandedResponse actual = underTest.loadExpanded(serialNumber);
+		GetWashingMachineFullResponse actual = underTest.load(serialNumber);
 
 		// THEN
 		assertThat(actual.washingMachineDetail())

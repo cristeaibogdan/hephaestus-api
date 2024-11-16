@@ -160,14 +160,21 @@ public class Mapper {
 			);
 		}
 
-		public static GetWashingMachineExpandedResponse toGetWashingMachineExpandedResponse(WashingMachine entity) {
+		public static GetWashingMachineFullResponse toGetWashingMachineFullResponse(WashingMachine entity) {
+			return new GetWashingMachineFullResponse(
+					entity.getCategory(),
+					entity.getManufacturer(),
+					entity.getIdentificationMode(),
+					entity.getModel(),
+					entity.getType(),
+					entity.getSerialNumber(),
+					entity.getReturnType(),
+					entity.getDamageType(),
+					entity.getRecommendation(),
+					entity.getCreatedAt(),
 
-			GetWashingMachineDetailResponse getWashingMachineDetailResponse = WashingMachineDetailMapper.toGetWashingMachineDetailResponse(entity.getWashingMachineDetail());
-			List<GetWashingMachineImageResponse> getWashingMachineImageResponses = WashingMachineImageMapper.toGetWashingMachineImageResponses(entity.getWashingMachineImages());
-
-			return new GetWashingMachineExpandedResponse(
-					getWashingMachineDetailResponse,
-					getWashingMachineImageResponses
+					WashingMachineDetailMapper.toGetWashingMachineDetailResponse(entity.getWashingMachineDetail()),
+					WashingMachineImageMapper.toGetWashingMachineImageResponses(entity.getWashingMachineImages())
 			);
 		}
 

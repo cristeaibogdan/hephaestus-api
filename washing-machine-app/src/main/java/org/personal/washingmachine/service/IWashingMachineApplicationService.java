@@ -17,8 +17,8 @@ public interface IWashingMachineApplicationService {
 	@PostMapping
 	Page<GetWashingMachineSimpleResponse> loadPaginatedAndFiltered(@Valid @RequestBody SearchWashingMachineRequest searchWashingMachineRequest);
 
-	@GetMapping("/{serialNumber}/expanded")
-	GetWashingMachineExpandedResponse loadExpanded(@PathVariable String serialNumber);
+	@GetMapping("/{serialNumber}")
+	GetWashingMachineFullResponse load(@PathVariable String serialNumber);
 
 	@PostMapping(value = "/save", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)

@@ -76,9 +76,9 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 	}
 
 	@Override
-	public GetWashingMachineExpandedResponse loadExpanded(String serialNumber) {
+	public GetWashingMachineFullResponse load(String serialNumber) {
 		WashingMachine washingMachine = service.findBySerialNumber(serialNumber);
-		return WashingMachineMapper.toGetWashingMachineExpandedResponse(washingMachine);
+		return WashingMachineMapper.toGetWashingMachineFullResponse(washingMachine);
 	}
 
 	@Override
