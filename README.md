@@ -18,12 +18,12 @@ The project consists of two components:
 - Frontend built with Angular 
 - Backend developed using Java ( **you are here 📍** )
 
-The backend application is deployed on **Render**. You can access the following services:
+The backend application is deployed on **Azure**. You can access the following services:
 
-- **[OpenAPI Docs](https://api-gateway-8rxu.onrender.com/webjars/swagger-ui/index.html)**  
+- **[OpenAPI Docs](https://api-gateway.orangesmoke-f68e1158.northeurope.azurecontainerapps.io/webjars/swagger-ui/index.html)**  
   This interactive documentation allows you to explore and test all the API endpoints in the backend.
 
-- **[Zipkin on Render](https://zipkin-f3xe.onrender.com/zipkin/)**  
+- **[Zipkin on Azure](https://zipkin.orangesmoke-f68e1158.northeurope.azurecontainerapps.io)**  
   A **Zipkin server** is available to monitor and trace requests across the application.
 
 ## Technologies Used
