@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.personal.shared.clients.ProductClient;
+import org.personal.washingmachine.dto.GetWashingMachineExpandedResponse;
+import org.personal.washingmachine.dto.Mapper;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineDetail;
 import org.personal.washingmachine.entity.embedded.HiddenSurfaceDamage;
@@ -119,6 +121,42 @@ class WashingMachineApplicationServiceTest {
 			// THEN
 			assertThat(actual).isEqualTo(expected);
 		}
+	}
+
+	@Test
+	void should_ReturnExpanded_When_ProvidedValidSerialNumber() {
+		// GIVEN
+		String serialNumber = "AXZ-900";
+		WashingMachine washingMachine = new WashingMachine(
+				"Washing Machine",
+				"WhirlPool",
+				DamageType.IN_USE,
+				ReturnType.SERVICE,
+				IdentificationMode.DATA_MATRIX,
+				serialNumber,
+				"model001",
+				"type001",
+				Recommendation.RESALE,
+				new WashingMachineDetail(
+						new PackageDamage(false, false, true),
+						new VisibleSurfaceDamage(8, 4, "minor", "major"),
+						new HiddenSurfaceDamage(6, 3, "minor", "major"),
+						0,
+						0
+				)
+		);
+		given(washingMachineRepositoryMock.findBySerialNumber(serialNumber))
+				.willReturn(Optional.of(washingMachine));
+
+		GetWashingMachineExpandedResponse expected = Mapper.WashingMachineMapper.toExpandedDTO(washingMachine);
+
+		// WHEN
+		GetWashingMachineExpandedResponse actual = underTest.loadExpanded(serialNumber);
+
+		// THEN
+		assertThat(actual.washingMachineDetail())
+				.usingRecursiveComparison()
+				.isEqualTo(expected.washingMachineDetail());
 	}
 
 }
