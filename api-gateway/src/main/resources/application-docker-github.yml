@@ -11,7 +11,7 @@ spring:
             - RewritePath=/v3/api-docs/washing-machine, /v3/api-docs  # Forward to actual OpenAPI docs path
 
         - id: product
-          uri: https://product-1q9l.onrender.com
+          uri: https://product.internal.orangesmoke-f68e1158.northeurope.azurecontainerapps.io
           predicates:
             - Path=/api/v1/products/**, /v3/api-docs/product
           filters:
