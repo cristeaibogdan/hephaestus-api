@@ -1,0 +1,31 @@
+Goal:
+ Modify public WashingMachine findBySerialNumber(String serialNumber)
+ INTO
+ public Map<String, WashingMachine> findBySerialNumber(List<String> serialNumbers)
+
+ Ex.: When receiving List.of("serial1", "serial2", "serial3"), should send back:
+    Map<"serial1", WashingMachine containing that serial>
+    Map<"serial2", WashingMachine containing that serial>
+    Map<"serial3", WashingMachine containing that serial>
+
+ Other considerations:
+   a. No duplicates should be returned, even if the user sends the same serial number twice => Map already has unique keys.
+   b. If no washingMachine with the given serial number is found, it should return Map<"notFound", null>
+
+1. Created GetManyTest class
+2. Decided to extend the class with BaseIntegrationTest, as it is easier to test multiple scenarios
+3. Added dependencies, applicationService and repository with @Autowired
+4. Added @TestInstance(TestInstance.Lifecycle.PER_CLASS) so the @BeforeAll void loadDataInDB() method is executed only once.
+
+5. Created a simple test => assertThat(washingMachineRepository.count()).isEqualTo(5);
+6. Started Docker, since we are using TestContainers
+7. Run the entire class => no problems
+8. Run entire java test package => problems with the other integration tests. The data from the other integration tests conflicts with this one.
+
+9. Added p6spy dependency to see commits and rollbacks
+10. Added spy.properties to configure it
+11. Found out that @Transactional and @AutoConfigureMockMvc doesn't rollback the @BeforeAll methods
+12. For now I used cleanUpDB() with @AfterAll for both integration tests. So the data won't collide anymore.
+Point of discussion. Any better way?
+
+13.

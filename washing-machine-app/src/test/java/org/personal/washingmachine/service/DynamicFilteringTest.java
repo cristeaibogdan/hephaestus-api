@@ -1,5 +1,6 @@
 package org.personal.washingmachine.service;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -47,6 +48,11 @@ class DynamicFilteringTest extends BaseIntegrationTest {
 		washingMachines.add(new WashingMachine("Washing Machine", "WhirlPool", DamageType.IN_TRANSIT, ReturnType.TRANSPORT, IdentificationMode.DATA_MATRIX, "serial10", "modelD", "TypeY", Recommendation.DISASSEMBLE, null));
 
 		washingMachineRepository.saveAll(washingMachines);
+	}
+
+	@AfterAll
+	void cleanUpDB() {
+		washingMachineRepository.deleteAll();
 	}
 
 	@Test
