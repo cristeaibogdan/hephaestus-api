@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class GetManyTest extends BaseIntegrationTest {
@@ -42,7 +42,26 @@ class GetManyTest extends BaseIntegrationTest {
 	}
 
 	@Test
-	void should_X_When_Y() {
+	void should_Count5ElementsInDB() {
 		assertThat(washingMachineRepository.count()).isEqualTo(5);
+	}
+
+	@Test
+	void should_ReturnWashingMachines_When_ProvidedValidSerialNumbers() {
+		// GIVEN
+		List<String> serialNumbers = new ArrayList<>(List.of(
+				"serial1",
+				"serial2",
+				"serial3"
+		));
+
+		// WHEN
+		List<WashingMachine> actual = washingMachineApplicationService.loadMany(serialNumbers);
+
+		// THEN
+		assertThat(actual)
+				.isNotEmpty()
+				.extracting(wm -> wm.getSerialNumber())
+				.containsExactlyInAnyOrderElementsOf(serialNumbers);
 	}
 }

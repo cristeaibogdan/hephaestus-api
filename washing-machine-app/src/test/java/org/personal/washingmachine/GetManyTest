@@ -28,4 +28,26 @@ Goal:
 12. For now I used cleanUpDB() with @AfterAll for both integration tests. So the data won't collide anymore.
 Point of discussion. Any better way?
 
-13.
+13. Create test should_ReturnWashingMachines_When_ProvidedValidSerialNumbers
+14. Added blank GIVEN, WHEN, THEN
+15. Added List<String> serialNumbers in the GIVEN part
+16. Added washingMachineApplicationService.loadMany(serialNumbers);
+17. ALT + ENTER to create the method in WashingMachineApplicationService
+18. Test is green
+
+19. Store washingMachineApplicationService.loadMany(serialNumbers); into a List<WashingMachine> actual
+20. ALT + ENTER to change the return type of the method from void to List<WashingMachine>
+21. Write assertion that actual isNotEmpty
+22. Test fails because the method returns null
+23. Write in loadMany method return repository.findAllBySerialNumberIn(serialNumbers);
+24. ALT + ENTER to create the method in the repository
+25. Test is green
+
+26. Add .containsExactlyInAnyOrderElementsOf(serialNumbers) to check if the given serialNumbers are found in the washingMachines retrieved from the DB.
+27. Test is green
+*** Mutation test ***
+28. Comment washingMachine with serial1 from loadDataInDB
+29. Test fails => not an evergreen one
+30. Uncomment washingMachine with serial1 from loadDataInDB
+*** Mutation test end ***
+

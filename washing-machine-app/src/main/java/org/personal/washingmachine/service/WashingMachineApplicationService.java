@@ -124,4 +124,8 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 	public boolean isSerialNumberInUse(String serialNumber) {
 		return repository.existsBySerialNumber(serialNumber);
 	}
+
+	public List<WashingMachine> loadMany(List<String> serialNumbers) {
+		return repository.findAllBySerialNumberIn(serialNumbers);
+	}
 }

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -22,4 +23,6 @@ public interface WashingMachineRepository extends JpaRepository<WashingMachine, 
             WHERE wm.serialNumber = ?1
             """)
     Optional<Recommendation> getRecommendation(String serialNumber);
+
+	List<WashingMachine> findAllBySerialNumberIn(List<String> serialNumbers);
 }
