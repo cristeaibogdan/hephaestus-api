@@ -12,6 +12,7 @@ Goal:
    a. No duplicates should be returned, even if the user sends the same serial number twice => Map already has unique keys.
    b. If no washingMachine with the given serial number is found, it should return Map<"notFound", null>
 
+=== Phase 1 - Functionality to return a List<WashingMachine> given a list of serialNumbers ===
 1. Created GetManyTest class
 2. Decided to extend the class with BaseIntegrationTest, as it is easier to test multiple scenarios
 3. Added dependencies, applicationService and repository with @Autowired
@@ -50,21 +51,39 @@ Point of discussion. Any better way?
 29. Test fails => not an evergreen one
 30. Uncomment washingMachine with serial1 from loadDataInDB
 *** Mutation test end ***
+=== End of Phase 1 ===
 
-31. Create GetManyMvcTest
-32. Create test should_ThrowException_When_ListIsNull()
-33. Declare variable List<WashingMachine> content = null;
-34. Perform request to api/v1/washing-machines/many
-35. Test passes, but it is because Request method 'POST' is not supported
-36. Create the endpoint in IWashingMachineApplicationService
-37. Test is not needed as null is handled by spring via @RequestBody
+=== Phase 2 - Throw Exception when list is null or empty ===
+1. Create GetManyMvcTest
+2. Create test should_ThrowException_When_ListIsNull()
+3. Declare variable List<WashingMachine> content = null;
+4. Perform request to api/v1/washing-machines/many
+5. Test passes, but it is because Request method 'POST' is not supported
+6. Create the endpoint in IWashingMachineApplicationService
+7. Test is not needed as null is handled by spring via @RequestBody
 
-38. Rename test to should_ThrowException_When_ListIsEmpty()
-39. In THEN validate that the status is BAD_REQUEST
-40. Test fails
-41. Write a guard clause to check the list is empty that throw new CustomException(ErrorCode.LIST_NOT_EMPTY);
-42. Add in ErrorCode LIST_NOT_EMPTY (HttpStatus.BAD_REQUEST)
-43. Add LIST_NOT_EMPTY = List must not be empty in message.properties and for each locale
-44. Test is green
+8. Rename test to should_ThrowException_When_ListIsEmpty()
+9. In THEN validate that the status is BAD_REQUEST
+10. Test fails
+11. Write a guard clause to check the list is empty that throw new CustomException(ErrorCode.LIST_NOT_EMPTY);
+12. Add in ErrorCode LIST_NOT_EMPTY (HttpStatus.BAD_REQUEST)
+13. Add LIST_NOT_EMPTY = List must not be empty in message.properties and for each locale
+14. Test is green
+=== End of Phase 2 ===
 
-45.
+=== Phase 3 - Throw Exception when no serialNumber is found ===
+1. Copy paste prior test from GetManyExceptionMvcTest
+2. Rename to should_ThrowException_When_NoSerialNumbersAreFoundInDB()
+3. Create a list of serialNumbers
+4. Test fails
+
+5. Add another guard claus to loadMany method to check the result from repository, before sending it to the cliend
+6. Create another error code SERIAL_NUMBERS_NOT_FOUND
+7. Create a message in messages.properties file for SERIAL_NUMBERS_NOT_FOUND and for each -locale file
+8. Modify test to expect status NotFound
+9. Test is green
+=== End of Phase 3 ===
+
+=== Phase 4 - Filter null values from the received list ===
+1.
+=== End of Phase 4 ===

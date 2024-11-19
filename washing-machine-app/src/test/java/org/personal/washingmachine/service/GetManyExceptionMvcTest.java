@@ -1,11 +1,9 @@
 package org.personal.washingmachine.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.personal.shared.clients.ProductClient;
-import org.personal.washingmachine.TestData;
-import org.personal.washingmachine.dto.SearchWashingMachineRequest;
-import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.repository.WashingMachineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -38,7 +36,7 @@ class GetManyExceptionMvcTest {
 	@Test
 	void should_ThrowException_When_ListIsEmpty() throws Exception {
 		// GIVEN
-		List<WashingMachine> content = new ArrayList<>();
+		List<String> content = new ArrayList<>();
 
 		// WHEN
 		ResultActions resultActions = mockMvc.perform(
@@ -50,5 +48,28 @@ class GetManyExceptionMvcTest {
 		resultActions
 				.andExpect(status().isBadRequest())
 				.andExpect(content().string(not(containsString("Internal Translation Error"))));
+	}
+
+	@Test
+	void should_ThrowException_When_NoSerialNumbersAreFoundInDB() throws Exception {
+		// GIVEN
+		List<String> content = new ArrayList<>(List.of(
+				"I don't exist",
+				"Something",
+				"You won't find me"
+		));
+
+		// WHEN
+		ResultActions resultActions = mockMvc.perform(
+				post("/api/v1/washing-machines/many")
+						.content(jackson.writeValueAsString(content))
+						.contentType(MediaType.APPLICATION_JSON));
+
+		// THEN
+		resultActions
+				.andExpect(status().isNotFound())
+				.andExpect(content().string(containsString(content.get(0))))
+				.andExpect(content().string(containsString(content.get(1))))
+				.andExpect(content().string(containsString(content.get(2))));
 	}
 }

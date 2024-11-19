@@ -133,6 +133,12 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 			throw new CustomException(ErrorCode.LIST_NOT_EMPTY);
 		}
 
-		return repository.findAllBySerialNumberIn(serialNumbers);
+		List<WashingMachine> response = repository.findAllBySerialNumberIn(serialNumbers);
+
+		if (response.isEmpty()) {
+			throw new CustomException(ErrorCode.SERIAL_NUMBERS_NOT_FOUND, serialNumbers);
+		}
+
+		return response;
 	}
 }
