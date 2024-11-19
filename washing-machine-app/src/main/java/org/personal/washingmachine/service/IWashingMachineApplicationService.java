@@ -2,6 +2,7 @@ package org.personal.washingmachine.service;
 
 import jakarta.validation.Valid;
 import org.personal.washingmachine.dto.*;
+import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.enums.Recommendation;
 import org.personal.washingmachine.dto.GetWashingMachineReportResponse;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,9 @@ public interface IWashingMachineApplicationService {
 
 	@GetMapping("/{serialNumber}")
 	GetWashingMachineFullResponse load(@PathVariable String serialNumber);
+
+	@PostMapping("/many")
+	List<WashingMachine> loadMany(@RequestBody List<String> serialNumbers);
 
 	@PostMapping(value = "/save", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)

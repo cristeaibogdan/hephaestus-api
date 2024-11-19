@@ -1,6 +1,8 @@
 package org.personal.washingmachine.service;
 
 import com.querydsl.core.BooleanBuilder;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.personal.shared.clients.ProductClient;
@@ -125,7 +127,12 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 		return repository.existsBySerialNumber(serialNumber);
 	}
 
+	@Override
 	public List<WashingMachine> loadMany(List<String> serialNumbers) {
+		if (serialNumbers.isEmpty()) {
+			throw new CustomException(ErrorCode.LIST_NOT_EMPTY);
+		}
+
 		return repository.findAllBySerialNumberIn(serialNumbers);
 	}
 }

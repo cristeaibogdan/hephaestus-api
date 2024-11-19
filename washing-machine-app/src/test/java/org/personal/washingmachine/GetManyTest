@@ -51,3 +51,20 @@ Point of discussion. Any better way?
 30. Uncomment washingMachine with serial1 from loadDataInDB
 *** Mutation test end ***
 
+31. Create GetManyMvcTest
+32. Create test should_ThrowException_When_ListIsNull()
+33. Declare variable List<WashingMachine> content = null;
+34. Perform request to api/v1/washing-machines/many
+35. Test passes, but it is because Request method 'POST' is not supported
+36. Create the endpoint in IWashingMachineApplicationService
+37. Test is not needed as null is handled by spring via @RequestBody
+
+38. Rename test to should_ThrowException_When_ListIsEmpty()
+39. In THEN validate that the status is BAD_REQUEST
+40. Test fails
+41. Write a guard clause to check the list is empty that throw new CustomException(ErrorCode.LIST_NOT_EMPTY);
+42. Add in ErrorCode LIST_NOT_EMPTY (HttpStatus.BAD_REQUEST)
+43. Add LIST_NOT_EMPTY = List must not be empty in message.properties and for each locale
+44. Test is green
+
+45.
