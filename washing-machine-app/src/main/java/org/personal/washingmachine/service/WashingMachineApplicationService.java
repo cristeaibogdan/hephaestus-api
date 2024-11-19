@@ -26,7 +26,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.personal.washingmachine.dto.Mapper.*;
 import static org.personal.washingmachine.dto.Mapper.WashingMachineMapper;
@@ -129,14 +131,19 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 
 	@Override
 	public List<WashingMachine> loadMany(List<String> serialNumbers) {
-		if (serialNumbers.isEmpty()) {
+
+		List<String> nonNullSerialNumbers  = serialNumbers.stream()
+				.filter(sn -> Objects.nonNull(sn))
+				.toList();
+
+		if (nonNullSerialNumbers.isEmpty()) {
 			throw new CustomException(ErrorCode.LIST_NOT_EMPTY);
 		}
 
-		List<WashingMachine> response = repository.findAllBySerialNumberIn(serialNumbers);
+		List<WashingMachine> response = repository.findAllBySerialNumberIn(nonNullSerialNumbers);
 
 		if (response.isEmpty()) {
-			throw new CustomException(ErrorCode.SERIAL_NUMBERS_NOT_FOUND, serialNumbers);
+			throw new CustomException(ErrorCode.SERIAL_NUMBERS_NOT_FOUND, nonNullSerialNumbers);
 		}
 
 		return response;

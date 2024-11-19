@@ -84,6 +84,29 @@ Point of discussion. Any better way?
 9. Test is green
 === End of Phase 3 ===
 
-=== Phase 4 - Filter null values from the received list ===
-1.
+=== Phase 4 - Filter out null values from the received list ===
+1. Copy paste previous test in GetManyTest
+2. Rename to should_ReturnWashingMachines_When_SerialNumbersContainNull()
+3. Change one of the serialNUmber to be null, use .add method
+4. Modify assertThat to only check isNotEmpty
+5. Test fails
+
+6. Filter the list in loadMany method with: serialNumbers.stream()
+                                            				.filter(sn -> Objects.nonNull(sn))
+                                            				.toList();
+7. Store it in a variable nonNullSerialNumbers
+8. Pass that variable to everything else in the method.
+9. Test is green
+
+10. In the same test in GIVEN create a list expected and filter the serialNumbers
+11. Add in assertThat: 	assertThat(actual)
+                       		.isNotEmpty()
+                       		.extracting(wm -> wm.getSerialNumber())
+                       		.containsExactlyInAnyOrderElementsOf(expected);
+12. Test is green
+13. All tests in GetManyTest and GetManyExceptionMvcTest are green
 === End of Phase 4 ===
+
+=== Phase 5 - Make the method return a Map<Received serialNumber, WashingMachine> ===
+
+=== End of Phase 5 ===
