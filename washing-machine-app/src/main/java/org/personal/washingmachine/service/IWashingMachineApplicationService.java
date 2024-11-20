@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/api/v1/washing-machines")
 public interface IWashingMachineApplicationService {
@@ -22,7 +23,7 @@ public interface IWashingMachineApplicationService {
 	GetWashingMachineFullResponse load(@PathVariable String serialNumber);
 
 	@PostMapping("/many")
-	List<WashingMachine> loadMany(@RequestBody List<String> serialNumbers);
+	Map<String, WashingMachine> loadMany(@RequestBody List<String> serialNumbers);
 
 	@PostMapping(value = "/save", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)

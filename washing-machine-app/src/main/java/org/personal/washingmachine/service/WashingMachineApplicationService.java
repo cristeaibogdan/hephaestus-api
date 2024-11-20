@@ -1,8 +1,6 @@
 package org.personal.washingmachine.service;
 
 import com.querydsl.core.BooleanBuilder;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.personal.shared.clients.ProductClient;
@@ -25,9 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.personal.washingmachine.dto.Mapper.*;
@@ -130,7 +126,7 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 	}
 
 	@Override
-	public List<WashingMachine> loadMany(List<String> serialNumbers) {
+	public Map<String, WashingMachine> loadMany(List<String> serialNumbers) {
 
 		List<String> nonNullSerialNumbers  = serialNumbers.stream()
 				.filter(sn -> Objects.nonNull(sn))
@@ -140,12 +136,18 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 			throw new CustomException(ErrorCode.LIST_NOT_EMPTY);
 		}
 
-		List<WashingMachine> response = repository.findAllBySerialNumberIn(nonNullSerialNumbers);
+		List<WashingMachine> foundWashingMachines = repository.findAllBySerialNumberIn(nonNullSerialNumbers);
 
-		if (response.isEmpty()) {
+		if (foundWashingMachines.isEmpty()) {
 			throw new CustomException(ErrorCode.SERIAL_NUMBERS_NOT_FOUND, nonNullSerialNumbers);
 		}
 
-		return response;
+		Map<String, WashingMachine> result = foundWashingMachines.stream()
+				.collect(Collectors.toMap(
+						wm -> wm.getSerialNumber(),
+						wm -> wm
+				));
+
+		return result;
 	}
 }

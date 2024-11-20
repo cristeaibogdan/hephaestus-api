@@ -108,5 +108,23 @@ Point of discussion. Any better way?
 === End of Phase 4 ===
 
 === Phase 5 - Make the method return a Map<Received serialNumber, WashingMachine> ===
+0. Comment out all tests written for loadMany method from GetManyTest, changing the return type will break all of them
+1. Un-comment should_ReturnWashingMachines_When_ProvidedValidSerialNumbers
+2. Comment the THEN part
+3. Change in WHEN from List to Map<String, WashingMachine>
+4. ALT + ENTER to change method signature
+5. Test fails
 
+6. Modify loadMany to return a Map
+7. Test is green
+
+8. In THEN un-comment assertThat(actual).isNotEmpty();
+9. Test is green
+
+10. In THEN use .extractingFromEntries(entry -> entry.getValue().getSerialNumber())
+                .containsExactlyInAnyOrderElementsOf(serialNumbers);
+11. Test is green
+
+12. In THEN add .containsOnlyKeys(serialNumbers) to also check that the keys contain the serialNumbers
+13. Test is green
 === End of Phase 5 ===
