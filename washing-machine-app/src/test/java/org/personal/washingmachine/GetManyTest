@@ -160,3 +160,27 @@ Point of discussion. Any better way?
 13. Add more serialNumbers that are NOT present in DB in list serialNumbers and in list notFoundSerialNumbers
 14. Test is green
 === End of Phase 7 ===
+
+=== Phase 8 - Change from Map<String, WashingMachine> to Map<String, GetWashingMachineFullResponse> ===
+1. Comment out all tests from GetManyTest except the first one
+2. Modify the actual from Map<String, WashingMachine> to Map<String, GetWashingMachineFullResponse>
+3. ALT + ENTER to change method signature
+4. Compilation error
+
+5. Add logic to convert WashingMachine to GetWashingMachineFullResponse
+6. Test fails because WashingMachineDetail is null and the mapper throws NullPointerException
+7. In Object Mother TestData create a static method that returns a default WashingMachineDetail
+8. Use the method in the loadDataInDB
+9. Test fails => could not initialize proxy [org.personal.washingmachine.entity.WashingMachineDetail#1]
+
+10. Add @Transactional to loadMany method to avoid exception
+11. Test is green
+
+12. Un-comment second test
+13. Modify WHEN to Map<String, GetWashingMachineFullResponse> actual
+14. Test is green
+
+15. Un-comment third test
+16. Modify WHEN to Map<String, GetWashingMachineFullResponse> actual
+17. All tests green
+=== End of Phase 8 ===

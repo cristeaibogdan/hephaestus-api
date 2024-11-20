@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.personal.washingmachine.BaseIntegrationTest;
+import org.personal.washingmachine.TestData;
+import org.personal.washingmachine.dto.GetWashingMachineFullResponse;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.enums.DamageType;
 import org.personal.washingmachine.enums.IdentificationMode;
@@ -29,11 +31,11 @@ class GetManyTest extends BaseIntegrationTest {
 	@BeforeAll
 	void loadDataInDB() {
 		List<WashingMachine> washingMachines = new ArrayList<>();
-		washingMachines.add(new WashingMachine("Washing Machine", "Gorenje", DamageType.IN_USE, ReturnType.COMMERCIAL, IdentificationMode.DATA_MATRIX, "serial1", "modelA", "TypeZ", Recommendation.OUTLET, null));
-		washingMachines.add(new WashingMachine("Washing Machine", "Gorenje", DamageType.IN_USE, ReturnType.COMMERCIAL, IdentificationMode.DATA_MATRIX, "serial2", "modelA", "TypeZ", Recommendation.OUTLET, null));
-		washingMachines.add(new WashingMachine("Washing Machine", "Gorenje", DamageType.IN_USE, ReturnType.SERVICE, IdentificationMode.DATA_MATRIX, "serial3", "modelB", "TypeZ", Recommendation.REPACKAGE, null));
-		washingMachines.add(new WashingMachine("Washing Machine", "Gorenje", DamageType.IN_USE, ReturnType.SERVICE, IdentificationMode.QR_CODE, "serial4", "modelB", "TypeX", Recommendation.REPAIR, null));
-		washingMachines.add(new WashingMachine("Washing Machine", "Gorenje", DamageType.IN_USE, ReturnType.SERVICE, IdentificationMode.QR_CODE, "serial5", "modelC", "TypeX", Recommendation.REPAIR, null));
+		washingMachines.add(new WashingMachine("Washing Machine", "Gorenje", DamageType.IN_USE, ReturnType.COMMERCIAL, IdentificationMode.DATA_MATRIX, "serial1", "modelA", "TypeZ", Recommendation.OUTLET, TestData.washingMachineDetail()));
+		washingMachines.add(new WashingMachine("Washing Machine", "Gorenje", DamageType.IN_USE, ReturnType.COMMERCIAL, IdentificationMode.DATA_MATRIX, "serial2", "modelA", "TypeZ", Recommendation.OUTLET, TestData.washingMachineDetail()));
+		washingMachines.add(new WashingMachine("Washing Machine", "Gorenje", DamageType.IN_USE, ReturnType.SERVICE, IdentificationMode.DATA_MATRIX, "serial3", "modelB", "TypeZ", Recommendation.REPACKAGE, TestData.washingMachineDetail()));
+		washingMachines.add(new WashingMachine("Washing Machine", "Gorenje", DamageType.IN_USE, ReturnType.SERVICE, IdentificationMode.QR_CODE, "serial4", "modelB", "TypeX", Recommendation.REPAIR, TestData.washingMachineDetail()));
+		washingMachines.add(new WashingMachine("Washing Machine", "Gorenje", DamageType.IN_USE, ReturnType.SERVICE, IdentificationMode.QR_CODE, "serial5", "modelC", "TypeX", Recommendation.REPAIR, TestData.washingMachineDetail()));
 
 		washingMachineRepository.saveAll(washingMachines);
 	}
@@ -58,13 +60,13 @@ class GetManyTest extends BaseIntegrationTest {
 		));
 
 		// WHEN
-		Map<String, WashingMachine> actual = washingMachineApplicationService.loadMany(serialNumbers);
+		Map<String, GetWashingMachineFullResponse> actual = washingMachineApplicationService.loadMany(serialNumbers);
 
 		// THEN
 		assertThat(actual)
 				.isNotEmpty()
 				.containsOnlyKeys(serialNumbers)
-				.extractingFromEntries(entry -> entry.getValue().getSerialNumber())
+				.extractingFromEntries(entry -> entry.getValue().serialNumber())
 				.containsExactlyInAnyOrderElementsOf(serialNumbers);
 	}
 
@@ -81,13 +83,13 @@ class GetManyTest extends BaseIntegrationTest {
 				.toList();
 
 		// WHEN
-		Map<String, WashingMachine> actual = washingMachineApplicationService.loadMany(serialNumbers);
+		Map<String, GetWashingMachineFullResponse> actual = washingMachineApplicationService.loadMany(serialNumbers);
 
 		// THEN
 		assertThat(actual)
 				.isNotEmpty()
 				.containsOnlyKeys(expectedSerialNumbers)
-				.extractingFromEntries(entry -> entry.getValue().getSerialNumber())
+				.extractingFromEntries(entry -> entry.getValue().serialNumber())
 				.containsExactlyInAnyOrderElementsOf(expectedSerialNumbers);
 	}
 
@@ -111,7 +113,7 @@ class GetManyTest extends BaseIntegrationTest {
 		));
 
 		// WHEN
-		Map<String, WashingMachine> actual = washingMachineApplicationService.loadMany(serialNumbers);
+		Map<String, GetWashingMachineFullResponse> actual = washingMachineApplicationService.loadMany(serialNumbers);
 
 		// THEN
 		assertThat(actual)
