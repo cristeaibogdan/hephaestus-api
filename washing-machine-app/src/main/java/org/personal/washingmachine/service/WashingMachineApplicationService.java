@@ -127,7 +127,7 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 
 	@Override
 	public Map<String, WashingMachine> loadMany(List<String> serialNumbers) {
-
+		//TODO: Refactor this method
 		List<String> nonNullSerialNumbers  = serialNumbers.stream()
 				.filter(sn -> Objects.nonNull(sn))
 				.toList();
@@ -147,6 +147,8 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 						wm -> wm.getSerialNumber(),
 						wm -> wm
 				));
+
+		nonNullSerialNumbers.forEach(sn -> result.putIfAbsent(sn, null));
 
 		return result;
 	}

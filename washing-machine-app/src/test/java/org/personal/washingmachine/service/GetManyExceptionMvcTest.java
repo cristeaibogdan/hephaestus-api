@@ -1,6 +1,5 @@
 package org.personal.washingmachine.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.personal.shared.clients.ProductClient;

@@ -67,26 +67,58 @@ class GetManyTest extends BaseIntegrationTest {
 				.extractingFromEntries(entry -> entry.getValue().getSerialNumber())
 				.containsExactlyInAnyOrderElementsOf(serialNumbers);
 	}
-//
-//	@Test
-//	void should_ReturnWashingMachines_When_SerialNumbersContainNull() {
-//		// GIVEN
-//		List<String> serialNumbers = new ArrayList<>();
-//		serialNumbers.add(null);
-//		serialNumbers.add("serial1");
-//		serialNumbers.add("serial2");
-//
-//		List<String> expected = serialNumbers.stream()
-//				.filter(sn -> Objects.nonNull(sn))
-//				.toList();
-//
-//		// WHEN
-//		List<WashingMachine> actual = washingMachineApplicationService.loadMany(serialNumbers);
-//
-//		// THEN
-//		assertThat(actual)
-//				.isNotEmpty()
-//				.extracting(wm -> wm.getSerialNumber())
-//				.containsExactlyInAnyOrderElementsOf(expected);
-//	}
+
+	@Test
+	void should_ReturnWashingMachines_When_SerialNumbersContainNull() {
+		// GIVEN
+		List<String> serialNumbers = new ArrayList<>();
+		serialNumbers.add(null);
+		serialNumbers.add("serial1");
+		serialNumbers.add("serial2");
+
+		List<String> expected = serialNumbers.stream()
+				.filter(sn -> Objects.nonNull(sn))
+				.toList();
+
+		// WHEN
+		Map<String, WashingMachine> actual = washingMachineApplicationService.loadMany(serialNumbers);
+
+		// THEN
+		assertThat(actual)
+				.isNotEmpty()
+				.containsOnlyKeys(serialNumbers)
+				.extractingFromEntries(entry -> entry.getValue().getSerialNumber())
+				.containsExactlyInAnyOrderElementsOf(expected);
+	}
+
+	@Test
+	void should_ReturnNullWashingMachines_When_SerialNumbersAreNotFound() {
+		// GIVEN
+		List<String> serialNumbers = new ArrayList<>(List.of(
+				"I don't exist",
+				"serial1",
+				"serial2",
+				"serial3",
+				"serial4",
+				"Can't find me",
+				"Nothing"
+		));
+
+		List<String> notFoundSerialNumbers = new ArrayList<>(List.of(
+				"I don't exist",
+				"Can't find me",
+				"Nothing"
+		));
+
+		// WHEN
+		Map<String, WashingMachine> actual = washingMachineApplicationService.loadMany(serialNumbers);
+
+		// THEN
+		assertThat(actual)
+				.isNotEmpty()
+				.containsOnlyKeys(serialNumbers);
+
+		assertThat(notFoundSerialNumbers)
+				.allSatisfy(sn -> assertThat(actual).containsEntry(sn, null));
+	}
 }

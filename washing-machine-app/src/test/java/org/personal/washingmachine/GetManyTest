@@ -128,3 +128,35 @@ Point of discussion. Any better way?
 12. In THEN add .containsOnlyKeys(serialNumbers) to also check that the keys contain the serialNumbers
 13. Test is green
 === End of Phase 5 ===
+
+=== Phase 6 - Un-comment and fix should_ReturnWashingMachines_When_SerialNumbersContainNull ===
+1. Un-comment should_ReturnWashingMachines_When_SerialNumbersContainNull
+2. Switch actual type to Map<String, WashingMachine>
+3. Modify the assert to assertThat(actual)
+                        		.isNotEmpty()
+                        		.containsOnlyKeys(serialNumbers)
+                        		.extractingFromEntries(entry -> entry.getValue().getSerialNumber())
+                        		.containsExactlyInAnyOrderElementsOf(expected);
+4. Test is green
+=== End of Phase 6 ===
+
+=== Phase 7 - Return back to the client the serialNumber with null values if they have not been found in the DB ===
+1. Copy paste one of the previous tests
+2. Rename to should_ReturnNullWashingMachines_When_SerialNumbersAreNotFound
+3. In THEN comment out everything except .isNotEmpty()
+4. Test is green
+
+5. Add .containsOnlyKeys(serialNumbers); to THEN
+6. Test fails
+7. Add nonNullSerialNumbers.forEach(sn -> result.putIfAbsent(sn, null)); to add null entries to serialNumbers that were not found
+8. Test is green
+
+9. In GIVEN create another List notFoundSerialNumbers with serialNumbers NOT present in DB
+10. Add to THEN assertThat(notFoundSerialNumbers)
+                		.allSatisfy(sn -> assertThat(actual).containsEntry(sn, null));
+11. Test is green
+
+12. Add more serialNumbers that are present in the DB
+13. Add more serialNumbers that are NOT present in DB in list serialNumbers and in list notFoundSerialNumbers
+14. Test is green
+=== End of Phase 7 ===
