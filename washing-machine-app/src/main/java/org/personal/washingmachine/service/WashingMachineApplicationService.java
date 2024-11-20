@@ -133,7 +133,7 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 				.toList();
 
 		if (nonNullSerialNumbers.isEmpty()) {
-			throw new CustomException(ErrorCode.LIST_NOT_EMPTY);
+			throw new CustomException(ErrorCode.LIST_IS_EMPTY);
 		}
 
 		List<WashingMachine> foundWashingMachines = repository.findAllBySerialNumberIn(nonNullSerialNumbers);

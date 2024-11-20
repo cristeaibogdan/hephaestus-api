@@ -76,7 +76,7 @@ class GetManyTest extends BaseIntegrationTest {
 		serialNumbers.add("serial1");
 		serialNumbers.add("serial2");
 
-		List<String> expected = serialNumbers.stream()
+		List<String> expectedSerialNumbers = serialNumbers.stream()
 				.filter(sn -> Objects.nonNull(sn))
 				.toList();
 
@@ -86,9 +86,9 @@ class GetManyTest extends BaseIntegrationTest {
 		// THEN
 		assertThat(actual)
 				.isNotEmpty()
-				.containsOnlyKeys(serialNumbers)
+				.containsOnlyKeys(expectedSerialNumbers)
 				.extractingFromEntries(entry -> entry.getValue().getSerialNumber())
-				.containsExactlyInAnyOrderElementsOf(expected);
+				.containsExactlyInAnyOrderElementsOf(expectedSerialNumbers);
 	}
 
 	@Test
