@@ -173,7 +173,7 @@ Point of discussion. Any better way?
 8. Use the method in the loadDataInDB
 9. Test fails => could not initialize proxy [org.personal.washingmachine.entity.WashingMachineDetail#1]
 
-10. Add @Transactional to loadMany method to avoid exception
+10. Add @Transactional to test class GetManyTest
 11. Test is green
 
 12. Un-comment second test

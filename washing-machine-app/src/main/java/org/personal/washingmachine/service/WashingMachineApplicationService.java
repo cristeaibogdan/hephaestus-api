@@ -17,7 +17,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -127,7 +126,6 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 	}
 
 	@Override
-	@Transactional // avoid "could not initialize proxy" Exception
 	public Map<String, GetWashingMachineFullResponse> loadMany(List<String> serialNumbers) {
 		//TODO: Refactor this method
 		List<String> nonNullSerialNumbers  = serialNumbers.stream()
@@ -144,11 +142,8 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 			throw new CustomException(ErrorCode.SERIAL_NUMBERS_NOT_FOUND, nonNullSerialNumbers);
 		}
 
-		List<GetWashingMachineFullResponse> dtos = foundWashingMachines.stream()
+		Map<String, GetWashingMachineFullResponse> result = foundWashingMachines.stream()
 				.map(wm -> WashingMachineMapper.toGetWashingMachineFullResponse(wm))
-				.toList();
-
-		Map<String, GetWashingMachineFullResponse> result = dtos.stream()
 				.collect(Collectors.toMap(
 						wm -> wm.serialNumber(),
 						wm -> wm
