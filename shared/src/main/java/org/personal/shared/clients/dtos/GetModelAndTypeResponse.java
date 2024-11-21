@@ -1,6 +1,6 @@
 package org.personal.shared.clients.dtos;
 
-public record ProductModelTypeDTO(
+public record GetModelAndTypeResponse(
         String model,
         String type
 ) {}
