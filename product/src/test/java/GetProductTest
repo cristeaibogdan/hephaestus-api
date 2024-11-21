@@ -1,0 +1,8 @@
+Goal:
+ Create endpoint that takes in a String qrCode and returns a DTO with manufacturer, model and type
+
+ Other considerations:
+   a. A new property is needed on the entity, qrCode
+   b. A new column is needed in the DB qr_code
+   c. The new DB column needs to have a unique code => hephaestus-washing-machine-001 (project-module-number)
+   d. Flyway needs to do the above changes for DB
