@@ -4,6 +4,10 @@ import org.personal.washingmachine.dto.CreateWashingMachineDetailRequest;
 import org.personal.washingmachine.dto.CreateWashingMachineRequest;
 import org.personal.washingmachine.dto.SearchWashingMachineRequest;
 import org.personal.washingmachine.entity.WashingMachine;
+import org.personal.washingmachine.entity.WashingMachineDetail;
+import org.personal.washingmachine.entity.embedded.HiddenSurfaceDamage;
+import org.personal.washingmachine.entity.embedded.PackageDamage;
+import org.personal.washingmachine.entity.embedded.VisibleSurfaceDamage;
 import org.personal.washingmachine.enums.DamageType;
 import org.personal.washingmachine.enums.IdentificationMode;
 import org.personal.washingmachine.enums.Recommendation;
@@ -29,20 +33,20 @@ public class TestData {
 
 	public static CreateWashingMachineDetailRequest createWashingMachineDetailRequest() {
 		return new CreateWashingMachineDetailRequest(
-						false,
-						false,
-						false,
-						0,
-						0,
-						"",
-						"",
-						0,
-						0,
-						"",
-						"",
-						0,
-						0
-				);
+				false,
+				false,
+				false,
+				0,
+				0,
+				"",
+				"",
+				0,
+				0,
+				"",
+				"",
+				0,
+				0
+		);
 	}
 
 	public static CreateWashingMachineRequest createWashingMachineRequest() {
@@ -70,6 +74,27 @@ public class TestData {
 						0,
 						0
 				)
+		);
+	}
+
+	public static WashingMachineDetail washingMachineDetail() {
+		return new WashingMachineDetail(
+				new PackageDamage(
+						false,
+						false,
+						false),
+				new VisibleSurfaceDamage(
+						0,
+						0,
+						"",
+						""),
+				new HiddenSurfaceDamage(
+						0,
+						0,
+						"",
+						""),
+				0,
+				0
 		);
 	}
 

@@ -1,0 +1,186 @@
+Goal:
+ Modify public WashingMachine findBySerialNumber(String serialNumber)
+ INTO
+ public Map<String, WashingMachine> findBySerialNumber(List<String> serialNumbers)
+
+ Ex.: When receiving List.of("serial1", "serial2", "serial3"), should send back:
+    Map<"serial1", WashingMachine containing that serial>
+    Map<"serial2", WashingMachine containing that serial>
+    Map<"serial3", WashingMachine containing that serial>
+
+ Other considerations:
+   a. No duplicates should be returned, even if the user sends the same serial number twice => Map already has unique keys.
+   b. If no washingMachine with the given serial number is found, it should return Map<"notFound", null>
+
+=== Phase 1 - Functionality to return a List<WashingMachine> given a list of serialNumbers ===
+1. Created GetManyTest class
+2. Decided to extend the class with BaseIntegrationTest, as it is easier to test multiple scenarios
+3. Added dependencies, applicationService and repository with @Autowired
+4. Added @TestInstance(TestInstance.Lifecycle.PER_CLASS) so the @BeforeAll void loadDataInDB() method is executed only once.
+
+5. Created a simple test => assertThat(washingMachineRepository.count()).isEqualTo(5);
+6. Started Docker, since we are using TestContainers
+7. Run the entire class => no problems
+8. Run entire java test package => problems with the other integration tests. The data from the other integration tests conflicts with this one.
+
+9. Added p6spy dependency to see commits and rollbacks
+10. Added spy.properties to configure it
+11. Found out that @Transactional and @AutoConfigureMockMvc doesn't rollback the @BeforeAll methods
+12. For now I used cleanUpDB() with @AfterAll for both integration tests. So the data won't collide anymore.
+Point of discussion. Any better way?
+
+13. Create test should_ReturnWashingMachines_When_ProvidedValidSerialNumbers
+14. Added blank GIVEN, WHEN, THEN
+15. Added List<String> serialNumbers in the GIVEN part
+16. Added washingMachineApplicationService.loadMany(serialNumbers);
+17. ALT + ENTER to create the method in WashingMachineApplicationService
+18. Test is green
+
+19. Store washingMachineApplicationService.loadMany(serialNumbers); into a List<WashingMachine> actual
+20. ALT + ENTER to change the return type of the method from void to List<WashingMachine>
+21. Write assertion that actual isNotEmpty
+22. Test fails because the method returns null
+23. Write in loadMany method return repository.findAllBySerialNumberIn(serialNumbers);
+24. ALT + ENTER to create the method in the repository
+25. Test is green
+
+26. Add .containsExactlyInAnyOrderElementsOf(serialNumbers) to check if the given serialNumbers are found in the washingMachines retrieved from the DB.
+27. Test is green
+*** Mutation test ***
+28. Comment washingMachine with serial1 from loadDataInDB
+29. Test fails => not an evergreen one
+30. Uncomment washingMachine with serial1 from loadDataInDB
+*** Mutation test end ***
+=== End of Phase 1 ===
+
+=== Phase 2 - Throw Exception when list is null or empty ===
+1. Create GetManyMvcTest
+2. Create test should_ThrowException_When_ListIsNull()
+3. Declare variable List<WashingMachine> content = null;
+4. Perform request to api/v1/washing-machines/many
+5. Test passes, but it is because Request method 'POST' is not supported
+6. Create the endpoint in IWashingMachineApplicationService
+7. Test is not needed as null is handled by spring via @RequestBody
+
+8. Rename test to should_ThrowException_When_ListIsEmpty()
+9. In THEN validate that the status is BAD_REQUEST
+10. Test fails
+11. Write a guard clause to check the list is empty that throw new CustomException(ErrorCode.LIST_NOT_EMPTY);
+12. Add in ErrorCode LIST_NOT_EMPTY (HttpStatus.BAD_REQUEST)
+13. Add LIST_NOT_EMPTY = List must not be empty in message.properties and for each locale
+14. Test is green
+=== End of Phase 2 ===
+
+=== Phase 3 - Throw Exception when no serialNumber is found ===
+1. Copy paste prior test from GetManyExceptionMvcTest
+2. Rename to should_ThrowException_When_NoSerialNumbersAreFoundInDB()
+3. Create a list of serialNumbers
+4. Test fails
+
+5. Add another guard claus to loadMany method to check the result from repository, before sending it to the cliend
+6. Create another error code SERIAL_NUMBERS_NOT_FOUND
+7. Create a message in messages.properties file for SERIAL_NUMBERS_NOT_FOUND and for each -locale file
+8. Modify test to expect status NotFound
+9. Test is green
+=== End of Phase 3 ===
+
+=== Phase 4 - Filter out null values from the received list ===
+1. Copy paste previous test in GetManyTest
+2. Rename to should_ReturnWashingMachines_When_SerialNumbersContainNull()
+3. Change one of the serialNUmber to be null, use .add method
+4. Modify assertThat to only check isNotEmpty
+5. Test fails
+
+6. Filter the list in loadMany method with: serialNumbers.stream()
+                                            				.filter(sn -> Objects.nonNull(sn))
+                                            				.toList();
+7. Store it in a variable nonNullSerialNumbers
+8. Pass that variable to everything else in the method.
+9. Test is green
+
+10. In the same test in GIVEN create a list expected and filter the serialNumbers
+11. Add in assertThat: 	assertThat(actual)
+                       		.isNotEmpty()
+                       		.extracting(wm -> wm.getSerialNumber())
+                       		.containsExactlyInAnyOrderElementsOf(expected);
+12. Test is green
+13. All tests in GetManyTest and GetManyExceptionMvcTest are green
+=== End of Phase 4 ===
+
+=== Phase 5 - Make the method return a Map<Received serialNumber, WashingMachine> ===
+0. Comment out all tests written for loadMany method from GetManyTest, changing the return type will break all of them
+1. Un-comment should_ReturnWashingMachines_When_ProvidedValidSerialNumbers
+2. Comment the THEN part
+3. Change in WHEN from List to Map<String, WashingMachine>
+4. ALT + ENTER to change method signature
+5. Test fails
+
+6. Modify loadMany to return a Map
+7. Test is green
+
+8. In THEN un-comment assertThat(actual).isNotEmpty();
+9. Test is green
+
+10. In THEN use .extractingFromEntries(entry -> entry.getValue().getSerialNumber())
+                .containsExactlyInAnyOrderElementsOf(serialNumbers);
+11. Test is green
+
+12. In THEN add .containsOnlyKeys(serialNumbers) to also check that the keys contain the serialNumbers
+13. Test is green
+=== End of Phase 5 ===
+
+=== Phase 6 - Un-comment and fix should_ReturnWashingMachines_When_SerialNumbersContainNull ===
+1. Un-comment should_ReturnWashingMachines_When_SerialNumbersContainNull
+2. Switch actual type to Map<String, WashingMachine>
+3. Modify the assert to assertThat(actual)
+                        		.isNotEmpty()
+                        		.containsOnlyKeys(serialNumbers)
+                        		.extractingFromEntries(entry -> entry.getValue().getSerialNumber())
+                        		.containsExactlyInAnyOrderElementsOf(expected);
+4. Test is green
+=== End of Phase 6 ===
+
+=== Phase 7 - Return back to the client the serialNumber with null values if they have not been found in the DB ===
+1. Copy paste one of the previous tests
+2. Rename to should_ReturnNullWashingMachines_When_SerialNumbersAreNotFound
+3. In THEN comment out everything except .isNotEmpty()
+4. Test is green
+
+5. Add .containsOnlyKeys(serialNumbers); to THEN
+6. Test fails
+7. Add nonNullSerialNumbers.forEach(sn -> result.putIfAbsent(sn, null)); to add null entries to serialNumbers that were not found
+8. Test is green
+
+9. In GIVEN create another List notFoundSerialNumbers with serialNumbers NOT present in DB
+10. Add to THEN assertThat(notFoundSerialNumbers)
+                		.allSatisfy(sn -> assertThat(actual).containsEntry(sn, null));
+11. Test is green
+
+12. Add more serialNumbers that are present in the DB
+13. Add more serialNumbers that are NOT present in DB in list serialNumbers and in list notFoundSerialNumbers
+14. Test is green
+=== End of Phase 7 ===
+
+=== Phase 8 - Change from Map<String, WashingMachine> to Map<String, GetWashingMachineFullResponse> ===
+1. Comment out all tests from GetManyTest except the first one
+2. Modify the actual from Map<String, WashingMachine> to Map<String, GetWashingMachineFullResponse>
+3. ALT + ENTER to change method signature
+4. Compilation error
+
+5. Add logic to convert WashingMachine to GetWashingMachineFullResponse
+6. Test fails because WashingMachineDetail is null and the mapper throws NullPointerException
+7. In Object Mother TestData create a static method that returns a default WashingMachineDetail
+8. Use the method in the loadDataInDB
+9. Test fails => could not initialize proxy [org.personal.washingmachine.entity.WashingMachineDetail#1]
+
+10. Add @Transactional to test class GetManyTest
+11. Test is green
+
+12. Un-comment second test
+13. Modify WHEN to Map<String, GetWashingMachineFullResponse> actual
+14. Test is green
+
+15. Un-comment third test
+16. Modify WHEN to Map<String, GetWashingMachineFullResponse> actual
+17. All tests green
+=== End of Phase 8 ===
