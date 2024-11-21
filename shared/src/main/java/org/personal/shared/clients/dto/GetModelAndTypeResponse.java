@@ -1,4 +1,4 @@
-package org.personal.shared.clients.dtos;
+package org.personal.shared.clients.dto;
 
 public record GetModelAndTypeResponse(
         String model,
