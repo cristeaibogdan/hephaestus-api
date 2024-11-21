@@ -75,6 +75,16 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 		}
 	}
 
+	/**
+	 * @deprecated
+	 * <p> <b>In the context of</b> providing an API for retrieving a single {@link org.personal.washingmachine.dto.GetWashingMachineFullResponse} by serial number, </p>
+	 * <p> <b>facing</b> the concern that clients might call this method in a loop to retrieve multiple DTOs, </p>
+	 * <p> <b>we decided</b> to deprecate this method and introduce {@link org.personal.washingmachine.service.WashingMachineApplicationService#loadMany} </p>
+	 * <p> <b>to achieve</b> improved performance by reducing the number of network requests, </p>
+	 * <p> <b>accepting</b> that clients need to wrap single serial numbers in a list. </p>
+	 * <p> Use {@link org.personal.washingmachine.service.WashingMachineApplicationService#loadMany} instead.
+	 */
+	@Deprecated(since = "2024/11/21")
 	@Override
 	public GetWashingMachineFullResponse load(String serialNumber) {
 		WashingMachine washingMachine = service.findBySerialNumber(serialNumber);
@@ -127,7 +137,6 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 
 	@Override
 	public Map<String, GetWashingMachineFullResponse> loadMany(List<String> serialNumbers) {
-		//TODO: Refactor this method
 		List<String> nonNullSerialNumbers  = serialNumbers.stream()
 				.filter(sn -> Objects.nonNull(sn))
 				.toList();
