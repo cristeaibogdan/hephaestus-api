@@ -12,6 +12,7 @@ Goal:
    c. The new DB column needs to have a unique code => hephaestus-washing-machine-001 (project-module-number)
    d. Flyway needs to do the above changes for DB
 
+*** A. Social Unit Test *** => Created logic in controller/service/repository
 1. Create ProductControllerTest class
 2. Instantiate ProductController
 3. Instantiate ProductService
@@ -61,3 +62,33 @@ Goal:
 35. Test fails because productRepository is not invoked
 36. In ProductService write return productRepository.findByQrCode(qrCode);
 37. Test is green
+
+*** B. MockMVC Test *** => Added endpoint annotations, added exception when not found
+1. Create ProductControllerMvcTest class
+2. Add @WebMvcTest(ProductController.class)
+3. Add 	@Autowired MockMvc mockMvc;
+       	@Autowired ObjectMapper jackson;
+4. Add @MockBean ProductService productService;
+5. Write dummy test assertThat(true).isTrue();
+6. Test is green
+
+7. Rename test to should_ReturnStatusOk_When_ProvidedQrCode
+8. Add GIVEN, WHEN, THEN part
+9. In GIVEN write String qrCode = "hephaestus-washing-machine-001";
+10. In WHEN write ResultActions resultActions = mockMvc.perform(
+                  				get("/api/v1/products/{qrCode}", qrCode));
+11. Test is green
+
+12. In THEN write resultActions.andExpect(status().isOk());
+13. Test fails, throws 404 as the endpoints is now annotated with @GetMapping
+14. In ProductController for getProductIdentification write @GetMapping("/{qrCode}") and add @PathVariable to the parameter
+15. Test is green
+
+16. In GIVEN part write GetProductIdentificationResponse expected = new GetProductIdentificationResponse(
+                        	"Bosch",
+                        	"model100",
+                        	"Type192");
+17. In THEN part add .andExpect(content().string(jackson.writeValueAsString(expected)));
+18. Test fails, as no content is sent back
+19. In GIVEN write given(productRepository.findByQrCode(qrCode)).willReturn(expected);
+20. Test is green

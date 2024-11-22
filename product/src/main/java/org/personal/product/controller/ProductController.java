@@ -28,7 +28,8 @@ class ProductController {
 		return productService.getModelsAndTypes(manufacturer);
 	}
 
-	public GetProductIdentificationResponse getProductIdentification(String qrCode) {
+	@GetMapping("/{qrCode}")
+	public GetProductIdentificationResponse getProductIdentification(@PathVariable String qrCode) {
 		return productService.getProductIdentification(qrCode);
 	}
 }

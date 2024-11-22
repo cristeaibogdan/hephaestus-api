@@ -37,6 +37,7 @@ public class ProductService {
     }
 
     public GetProductIdentificationResponse getProductIdentification(String qrCode) {
+        System.out.println("I'm in the service");
         return productRepository.findByQrCode(qrCode);
     }
 }
