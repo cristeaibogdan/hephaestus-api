@@ -63,7 +63,8 @@ Goal:
 36. In ProductService write return productRepository.findByQrCode(qrCode);
 37. Test is green
 
-*** B. MockMVC Test *** => Added endpoint annotations, added exception when not found
+*** B. MockMVC Test *** => Added endpoint annotations, added Error code QR_CODE_NOT_FOUND and message in message.properties
+Phase 1 - ReturnStatusOk
 1. Create ProductControllerMvcTest class
 2. Add @WebMvcTest(ProductController.class)
 3. Add 	@Autowired MockMvc mockMvc;
@@ -92,3 +93,24 @@ Goal:
 18. Test fails, as no content is sent back
 19. In GIVEN write given(productRepository.findByQrCode(qrCode)).willReturn(expected);
 20. Test is green
+
+Phase 2 - ReturnStatusNotFound and user message
+1. Copy-paste previous test
+2. Rename to should_ReturnStatusNotFound_When_QrCodeNotFound
+3. Delete expected and THEN part
+4. In given add: given(productService.getProductIdentification(qrCode))
+                 				.willThrow(new CustomException(ErrorCode.QR_CODE_NOT_FOUND));
+5. Test fails, no ErrorCode.QR_CODE_NOT_FOUND exists
+6. ALT + ENTER to create QR_CODE_NOT_FOUND in ErrorCode
+7. Test is green
+
+8. In THEN part add resultActions.andExpect(status().isNotFound());
+9. Test fails because by default it sends a 500
+10. Modify QR_CODE_NOT_FOUND (HttpStatus.NOT_FOUND); to include the statusCode
+11. Test is green
+
+12. In THEN add .andExpect(content().string(not(containsString("Internal Translation Error"))));
+13. Test fails
+14. Open message.properties and add QR_CODE_NOT_FOUND = No product was found for the given qr code
+15. Translate the message to all the other locales
+16. All tests are green

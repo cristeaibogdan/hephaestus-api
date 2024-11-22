@@ -32,7 +32,8 @@ public enum ErrorCode {
 
     // PRODUCT ERRORS
     NO_MANUFACTURERS_FOUND (HttpStatus.BAD_REQUEST),
-    NO_MODELS_TYPES_FOUND_FOR_MANUFACTURER (HttpStatus.BAD_REQUEST);
+    NO_MODELS_TYPES_FOUND_FOR_MANUFACTURER (HttpStatus.BAD_REQUEST),
+    QR_CODE_NOT_FOUND (HttpStatus.NOT_FOUND);
 
     public final HttpStatus statusCode;
 
