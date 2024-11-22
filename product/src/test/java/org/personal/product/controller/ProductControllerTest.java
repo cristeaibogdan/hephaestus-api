@@ -5,6 +5,8 @@ import org.personal.product.dto.GetProductIdentificationResponse;
 import org.personal.product.repository.ProductRepository;
 import org.personal.product.service.ProductService;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
@@ -27,7 +29,7 @@ class ProductControllerTest {
 
 		String qrCode = "hephaestus-washing-machine-001";
 
-		given(productRepositoryMock.findByQrCode(qrCode)).willReturn(expected);
+		given(productRepositoryMock.findByQrCode(qrCode)).willReturn(Optional.of(expected));
 
 		// WHEN
 		GetProductIdentificationResponse actual = underTest.getProductIdentification(qrCode);

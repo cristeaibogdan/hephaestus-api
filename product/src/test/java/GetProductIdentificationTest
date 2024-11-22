@@ -114,3 +114,51 @@ Phase 2 - ReturnStatusNotFound and user message
 14. Open message.properties and add QR_CODE_NOT_FOUND = No product was found for the given qr code
 15. Translate the message to all the other locales
 16. All tests are green
+
+*** C. Integration Test *** => Added flyway migration scripts, add Optional and throw when empty
+Phase 1 - Return GetProductIdentificationResponse
+1. Create ProductControllerIntegrationTest class
+2. Add dummy test
+3. Copy paste BaseIntegrationTest from washing machine module
+4. Extend the class with it
+5. Add @TestInstance(TestInstance.Lifecycle.PER_CLASS) so the data is loaded only once when the class is initialized
+6. Add 	@Autowired ProductController underTest;
+       	@Autowired ProductRepository productRepository;
+7. Test fails because there is no property qrCode on Product entity
+
+8. Add property to Product @Column(name = "qr_code") private String qrCode;
+9. Schema validation fail, because qr_code doesn't exist
+10. Create V3__add-qr-code-column.sql with ALTER TABLE product ADD COLUMN qr_code VARCHAR;
+11. Test is green
+
+12. Add loadDataInDB() and populate with 2 Products
+13. Test is green
+
+14. Rename test method to should_ReturnGetProductIdentification_When_ProvidedQrCode()
+15. Add GIVEN, WHEN, THEN parts
+16. In GIVEN add String qrCode = "hephaestus-washing-machine-001";
+17. In WHEN add GetProductIdentificationResponse actual = underTest.getProductIdentification(qrCode);
+18. In THEN add assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
+19. In GIVEN add GetProductIdentificationResponse expected = new GetProductIdentificationResponse(
+                 				"Bosch",
+                 				"model1",
+                 				"type1");
+20. Test is green
+
+Phase 2 - Throw CustomException
+1. Copy paste previous test
+2. Rename to should_ThrowCustomException_When_QrCodeNotFound
+3. Modify qrCode to "something NOT in DB"
+4. Remove expected
+5. Merge together WHEN & THEN and write assertThatThrownBy(() -> underTest.getProductIdentification(qrCode))
+                                        				.isInstanceOf(CustomException.class);
+6. Test fails
+
+7. Modify the repository method to Optional<GetProductIdentificationResponse> findByQrCode(String qrCode);
+8. In ProductService modify getProductIdentification to         return productRepository.findByQrCode(qrCode)
+                                                                        .orElseThrow(() -> new CustomException(ErrorCode.QR_CODE_NOT_FOUND));
+9.In ProductControllerTest wrap the expected into Optional.of(expected)
+11. All tests are green
+
+Phase 3 - Populate existing column with some values
+1.

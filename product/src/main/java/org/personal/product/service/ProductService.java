@@ -37,6 +37,7 @@ public class ProductService {
     }
 
     public GetProductIdentificationResponse getProductIdentification(String qrCode) {
-        return productRepository.findByQrCode(qrCode);
+        return productRepository.findByQrCode(qrCode)
+                .orElseThrow(() -> new CustomException(ErrorCode.QR_CODE_NOT_FOUND));
     }
 }

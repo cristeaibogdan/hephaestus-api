@@ -29,4 +29,7 @@ public class Product extends BaseEntity {
 
     @Column(name = "type")
     private String type;
+
+    @Column(name = "qr_code")
+    private String qrCode;
 }
