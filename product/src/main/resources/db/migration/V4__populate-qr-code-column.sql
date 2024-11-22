@@ -1,0 +1,14 @@
+UPDATE product SET qr_code = 'hephaestus-washing-machine-001' WHERE id = 1;
+UPDATE product SET qr_code = 'hephaestus-washing-machine-002' WHERE id = 2;
+UPDATE product SET qr_code = 'hephaestus-washing-machine-003' WHERE id = 3;
+UPDATE product SET qr_code = 'hephaestus-washing-machine-004' WHERE id = 4;
+UPDATE product SET qr_code = 'hephaestus-washing-machine-005' WHERE id = 5;
+UPDATE product SET qr_code = 'hephaestus-washing-machine-006' WHERE id = 6;
+UPDATE product SET qr_code = 'hephaestus-washing-machine-007' WHERE id = 7;
+UPDATE product SET qr_code = 'hephaestus-washing-machine-008' WHERE id = 8;
+UPDATE product SET qr_code = 'hephaestus-washing-machine-009' WHERE id = 9;
+UPDATE product SET qr_code = 'hephaestus-washing-machine-010' WHERE id = 10;
+UPDATE product SET qr_code = 'hephaestus-washing-machine-011' WHERE id = 11;
+UPDATE product SET qr_code = 'hephaestus-washing-machine-012' WHERE id = 12;
+UPDATE product SET qr_code = 'hephaestus-washing-machine-013' WHERE id = 13;
+UPDATE product SET qr_code = 'hephaestus-washing-machine-014' WHERE id = 14;

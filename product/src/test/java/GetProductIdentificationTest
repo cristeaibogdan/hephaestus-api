@@ -1,0 +1,165 @@
+Goal:
+ Create endpoint that takes in a String qrCode and returns a
+    GetProductIdentificationResponse(
+        String manufacturer,
+        String model,
+        String type
+    )
+
+ Other considerations:
+   a. A new property is needed on the entity, qrCode
+   b. A new column is needed in the DB qr_code
+   c. The new DB column needs to have a unique code => hephaestus-washing-machine-001 (project-module-number)
+   d. Flyway needs to do the above changes for DB
+
+*** A. Social Unit Test *** => Created logic in controller/service/repository
+1. Create ProductControllerTest class
+2. Instantiate ProductController
+3. Instantiate ProductService
+4. Mock ProductRepository
+
+5. Write dummy test assertThat(false).isTrue;
+6. Run test
+7. Test fails
+
+8. Rename test to should_ReturnGetProductIdentification_When_ProvidedQrCode
+9. Create GIVEN, WHEN, THEN part
+10. In WHEN write underTest.getProductIdentification();
+11. ALT + ENTER to create the method in ProductController
+12. Test is green
+
+13. In WHEN store write GetProductIdentificationResponse actual = underTest.getProductIdentification();
+14. ALT + ENTER to create a record under dto package
+15. ALT + ENTER to change the return type of the method to GetProductIdentificationResponse
+16. Test is green
+
+17. In GIVEN write GetProductIdentification expected = new GetProductIdentificationResponse(
+                            "WhirlPool",
+                            "Model100",
+                            "Type100");
+18. ALT + ENTER to change the signature of the record
+19. Rename the properties manufacturer, model, type
+20. Test is green
+
+21. In GIVEN part write String qrCode = "hephaestus-washing-machine-001";
+22. Pass the qrCode to underTest.getProductIdentification(qrCode);
+23. ALT + ENTER to add the parameter to the method
+24. Test is green
+
+25. In the GIVEN part write given(productRepositoryMock.findByQrCode(qrCode)).willReturn(expected);
+25. ALT + ENTER to create GetProductIdentificationResponse findByQrCode(String qrCode); in ProductRepository
+26. Test is green
+
+27. In THEN write assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
+28. Test fails as null is returned
+29. In getProductIdentification write return new GetProductIdentificationResponse("WhirlPool", "Model100", "Type100");
+30. Test is green
+
+31. In THEN part write verify(productRepositoryMock).findByQrCode(qrCode);
+32. Test fails
+33. In ProductController overwrite the return with productService.getProductIdentification(qrCode);
+34. ALT + ENTER to create the method in ProductService
+35. Test fails because productRepository is not invoked
+36. In ProductService write return productRepository.findByQrCode(qrCode);
+37. Test is green
+
+*** B. MockMVC Test *** => Added endpoint annotations, added Error code QR_CODE_NOT_FOUND and message in message.properties
+Phase 1 - ReturnStatusOk
+1. Create ProductControllerMvcTest class
+2. Add @WebMvcTest(ProductController.class)
+3. Add 	@Autowired MockMvc mockMvc;
+       	@Autowired ObjectMapper jackson;
+4. Add @MockBean ProductService productService;
+5. Write dummy test assertThat(true).isTrue();
+6. Test is green
+
+7. Rename test to should_ReturnStatusOk_When_ProvidedQrCode
+8. Add GIVEN, WHEN, THEN part
+9. In GIVEN write String qrCode = "hephaestus-washing-machine-001";
+10. In WHEN write ResultActions resultActions = mockMvc.perform(
+                  				get("/api/v1/products/{qrCode}", qrCode));
+11. Test is green
+
+12. In THEN write resultActions.andExpect(status().isOk());
+13. Test fails, throws 404 as the endpoints is now annotated with @GetMapping
+14. In ProductController for getProductIdentification write @GetMapping("/{qrCode}") and add @PathVariable to the parameter
+15. Test is green
+
+16. In GIVEN part write GetProductIdentificationResponse expected = new GetProductIdentificationResponse(
+                        	"Bosch",
+                        	"model100",
+                        	"Type192");
+17. In THEN part add .andExpect(content().string(jackson.writeValueAsString(expected)));
+18. Test fails, as no content is sent back
+19. In GIVEN write given(productRepository.findByQrCode(qrCode)).willReturn(expected);
+20. Test is green
+
+Phase 2 - ReturnStatusNotFound and user message
+1. Copy-paste previous test
+2. Rename to should_ReturnStatusNotFound_When_QrCodeNotFound
+3. Delete expected and THEN part
+4. In given add: given(productService.getProductIdentification(qrCode))
+                 				.willThrow(new CustomException(ErrorCode.QR_CODE_NOT_FOUND));
+5. Test fails, no ErrorCode.QR_CODE_NOT_FOUND exists
+6. ALT + ENTER to create QR_CODE_NOT_FOUND in ErrorCode
+7. Test is green
+
+8. In THEN part add resultActions.andExpect(status().isNotFound());
+9. Test fails because by default it sends a 500
+10. Modify QR_CODE_NOT_FOUND (HttpStatus.NOT_FOUND); to include the statusCode
+11. Test is green
+
+12. In THEN add .andExpect(content().string(not(containsString("Internal Translation Error"))));
+13. Test fails
+14. Open message.properties and add QR_CODE_NOT_FOUND = No product was found for the given qr code
+15. Translate the message to all the other locales
+16. All tests are green
+
+*** C. Integration Test *** => Added flyway migration scripts, add Optional and throw when empty
+Phase 1 - Return GetProductIdentificationResponse
+1. Create ProductControllerIntegrationTest class
+2. Add dummy test
+3. Copy paste BaseIntegrationTest from washing machine module
+4. Extend the class with it
+5. Add @TestInstance(TestInstance.Lifecycle.PER_CLASS) so the data is loaded only once when the class is initialized
+6. Add 	@Autowired ProductController underTest;
+       	@Autowired ProductRepository productRepository;
+7. Test fails because there is no property qrCode on Product entity
+
+8. Add property to Product @Column(name = "qr_code") private String qrCode;
+9. Schema validation fail, because qr_code doesn't exist
+10. Create V3__add-qr-code-column.sql with ALTER TABLE product ADD COLUMN qr_code VARCHAR;
+11. Test is green
+
+12. Add loadDataInDB() and populate with 2 Products
+13. Test is green
+
+14. Rename test method to should_ReturnGetProductIdentification_When_ProvidedQrCode()
+15. Add GIVEN, WHEN, THEN parts
+16. In GIVEN add String qrCode = "hephaestus-washing-machine-001";
+17. In WHEN add GetProductIdentificationResponse actual = underTest.getProductIdentification(qrCode);
+18. In THEN add assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
+19. In GIVEN add GetProductIdentificationResponse expected = new GetProductIdentificationResponse(
+                 				"Bosch",
+                 				"model1",
+                 				"type1");
+20. Test is green
+
+Phase 2 - Throw CustomException
+1. Copy paste previous test
+2. Rename to should_ThrowCustomException_When_QrCodeNotFound
+3. Modify qrCode to "something NOT in DB"
+4. Remove expected
+5. Merge together WHEN & THEN and write assertThatThrownBy(() -> underTest.getProductIdentification(qrCode))
+                                        				.isInstanceOf(CustomException.class);
+6. Test fails
+
+7. Modify the repository method to Optional<GetProductIdentificationResponse> findByQrCode(String qrCode);
+8. In ProductService modify getProductIdentification to         return productRepository.findByQrCode(qrCode)
+                                                                        .orElseThrow(() -> new CustomException(ErrorCode.QR_CODE_NOT_FOUND));
+9.In ProductControllerTest wrap the expected into Optional.of(expected)
+11. All tests are green
+
+Phase 3 - Populate existing column with some values
+1. Add V3__populate-qr-code-column
+2. Modify each record and add hephaestus-washing-machine-001, where 1 is the id

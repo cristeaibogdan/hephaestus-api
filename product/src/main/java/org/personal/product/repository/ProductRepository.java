@@ -1,12 +1,14 @@
 package org.personal.product.repository;
 
 import org.personal.product.dto.GetModelAndTypeResponse;
+import org.personal.product.dto.GetProductIdentificationResponse;
 import org.personal.product.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
@@ -24,4 +26,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             WHERE LOWER(p.manufacturer) = LOWER(?1)
             """)
     List<GetModelAndTypeResponse> findByManufacturer(String manufacturer);
+
+	Optional<GetProductIdentificationResponse> findByQrCode(String qrCode);
 }
