@@ -1,0 +1,63 @@
+Goal:
+ Create endpoint that takes in a String qrCode and returns a
+    GetProductIdentificationResponse(
+        String manufacturer,
+        String model,
+        String type
+    )
+
+ Other considerations:
+   a. A new property is needed on the entity, qrCode
+   b. A new column is needed in the DB qr_code
+   c. The new DB column needs to have a unique code => hephaestus-washing-machine-001 (project-module-number)
+   d. Flyway needs to do the above changes for DB
+
+1. Create ProductControllerTest class
+2. Instantiate ProductController
+3. Instantiate ProductService
+4. Mock ProductRepository
+
+5. Write dummy test assertThat(false).isTrue;
+6. Run test
+7. Test fails
+
+8. Rename test to should_ReturnGetProductIdentification_When_ProvidedQrCode
+9. Create GIVEN, WHEN, THEN part
+10. In WHEN write underTest.getProductIdentification();
+11. ALT + ENTER to create the method in ProductController
+12. Test is green
+
+13. In WHEN store write GetProductIdentificationResponse actual = underTest.getProductIdentification();
+14. ALT + ENTER to create a record under dto package
+15. ALT + ENTER to change the return type of the method to GetProductIdentificationResponse
+16. Test is green
+
+17. In GIVEN write GetProductIdentification expected = new GetProductIdentificationResponse(
+                            "WhirlPool",
+                            "Model100",
+                            "Type100");
+18. ALT + ENTER to change the signature of the record
+19. Rename the properties manufacturer, model, type
+20. Test is green
+
+21. In GIVEN part write String qrCode = "hephaestus-washing-machine-001";
+22. Pass the qrCode to underTest.getProductIdentification(qrCode);
+23. ALT + ENTER to add the parameter to the method
+24. Test is green
+
+25. In the GIVEN part write given(productRepositoryMock.findByQrCode(qrCode)).willReturn(expected);
+25. ALT + ENTER to create GetProductIdentificationResponse findByQrCode(String qrCode); in ProductRepository
+26. Test is green
+
+27. In THEN write assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
+28. Test fails as null is returned
+29. In getProductIdentification write return new GetProductIdentificationResponse("WhirlPool", "Model100", "Type100");
+30. Test is green
+
+31. In THEN part write verify(productRepositoryMock).findByQrCode(qrCode);
+32. Test fails
+33. In ProductController overwrite the return with productService.getProductIdentification(qrCode);
+34. ALT + ENTER to create the method in ProductService
+35. Test fails because productRepository is not invoked
+36. In ProductService write return productRepository.findByQrCode(qrCode);
+37. Test is green

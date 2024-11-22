@@ -2,6 +2,7 @@ package org.personal.product.service;
 
 import lombok.RequiredArgsConstructor;
 import org.personal.product.dto.GetModelAndTypeResponse;
+import org.personal.product.dto.GetProductIdentificationResponse;
 import org.personal.product.repository.ProductRepository;
 import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
@@ -33,5 +34,9 @@ public class ProductService {
         }
 
         return response;
+    }
+
+    public GetProductIdentificationResponse getProductIdentification(String qrCode) {
+        return productRepository.findByQrCode(qrCode);
     }
 }
