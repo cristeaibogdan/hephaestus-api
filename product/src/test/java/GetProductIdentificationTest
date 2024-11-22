@@ -161,4 +161,5 @@ Phase 2 - Throw CustomException
 11. All tests are green
 
 Phase 3 - Populate existing column with some values
-1.
+1. Add V3__populate-qr-code-column
+2. Modify each record and add hephaestus-washing-machine-001, where 1 is the id
