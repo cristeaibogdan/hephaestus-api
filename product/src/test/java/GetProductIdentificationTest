@@ -131,7 +131,7 @@ Phase 1 - Return GetProductIdentificationResponse
 10. Create V3__add-qr-code-column.sql with ALTER TABLE product ADD COLUMN qr_code VARCHAR;
 11. Test is green
 
-12. Add loadDataInDB() and populate with 2 Products
+12. Add loadDataInDB() and populate with 2 Products. Also create cleanUpDB().
 13. Test is green
 
 14. Rename test method to should_ReturnGetProductIdentification_When_ProvidedQrCode()

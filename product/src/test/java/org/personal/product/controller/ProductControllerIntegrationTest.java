@@ -1,5 +1,6 @@
 package org.personal.product.controller;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -32,6 +33,11 @@ class ProductControllerIntegrationTest extends BaseIntegrationTest {
 		products.add(new Product("Washing Machine", "Bosch", "model1", "type1", "hephaestus-washing-machine-001"));
 		products.add(new Product("Washing Machine", "WhirlPool", "model2", "type2", "hephaestus-washing-machine-002"));
 		productRepository.saveAll(products);
+	}
+
+	@AfterAll
+	void cleanUpDB() {
+		productRepository.deleteAll();
 	}
 
 	@Test
