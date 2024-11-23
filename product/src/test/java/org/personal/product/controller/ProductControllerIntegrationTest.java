@@ -5,21 +5,15 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.personal.product.BaseIntegrationTest;
-import org.personal.product.dto.GetProductIdentificationResponse;
 import org.personal.product.entity.Product;
 import org.personal.product.repository.ProductRepository;
-import org.personal.product.service.ProductService;
 import org.personal.shared.exception.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ProductControllerIntegrationTest extends BaseIntegrationTest {
