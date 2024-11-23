@@ -18,7 +18,9 @@ The project consists of two components:
 - Frontend built with Angular 
 - Backend developed using Java ( **you are here 📍** )
 
-The backend application is deployed on **Azure**. You can access the following services:
+**Backend is hosted on Azure with a burst configuration, which means it may temporarily shut down when idle. If the service doesn't respond immediately, try refreshing a few times to wake it up.**
+
+You can access the following services:
 
 - **[OpenAPI Docs](https://api-gateway.orangesmoke-f68e1158.northeurope.azurecontainerapps.io/webjars/swagger-ui/index.html)**  
   Explore and test all the API endpoints in the backend.
