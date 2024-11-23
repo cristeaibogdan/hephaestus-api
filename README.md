@@ -21,7 +21,7 @@ The project consists of two components:
 The backend application is deployed on **Azure**. You can access the following services:
 
 - **[OpenAPI Docs](https://api-gateway.orangesmoke-f68e1158.northeurope.azurecontainerapps.io/webjars/swagger-ui/index.html)**  
-  This interactive documentation allows you to explore and test all the API endpoints in the backend.
+  Explore and test all the API endpoints in the backend.
 
 - **[Zipkin on Azure](https://zipkin.orangesmoke-f68e1158.northeurope.azurecontainerapps.io)**  
   A **Zipkin server** is available to monitor and trace requests across the application.
