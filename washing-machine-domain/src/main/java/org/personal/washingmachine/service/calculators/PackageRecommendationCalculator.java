@@ -10,7 +10,7 @@ import static org.personal.washingmachine.enums.Recommendation.*;
 public class PackageRecommendationCalculator {
 
 	public Recommendation calculate(PackageDamage packageDamage) {
-		if (!packageDamage.isApplicable()) {
+		if (packageDamage.isNotApplicable()) {
 			return NONE;
 		}
 

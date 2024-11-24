@@ -16,7 +16,7 @@ public class VisibleSurfacesRecommendationCalculator {
 	private static final int VISIBLE_SURFACES_THRESHOLD = 5;
 
 	public Recommendation calculate(VisibleSurfaceDamage detail) {
-		if (!detail.isApplicable()) {
+		if (detail.isNotApplicable()) {
 			return NONE;
 		}
 
@@ -35,7 +35,7 @@ public class VisibleSurfacesRecommendationCalculator {
 
 	@VisibleForTesting
 	Recommendation calculateForScratches(VisibleSurfaceDamage detail) {
-		if (!detail.hasScratches()) {
+		if (detail.hasNoScratches()) {
 			return NONE;
 		}
 
@@ -46,7 +46,7 @@ public class VisibleSurfacesRecommendationCalculator {
 
 	@VisibleForTesting
 	Recommendation calculateForDents(VisibleSurfaceDamage detail) {
-		if (!detail.hasDents()) {
+		if (detail.hasNoDents()) {
 			return NONE;
 		}
 

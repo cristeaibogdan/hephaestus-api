@@ -16,7 +16,7 @@ public class HiddenSurfacesRecommendationCalculator {
 	private static final int HIDDEN_SURFACES_THRESHOLD = 7;
 
 	public Recommendation calculate(HiddenSurfaceDamage detail) {
-		if (!detail.isApplicable()) {
+		if (detail.isNotApplicable()) {
 			return NONE;
 		}
 
@@ -35,7 +35,7 @@ public class HiddenSurfacesRecommendationCalculator {
 
 	@VisibleForTesting
 	Recommendation calculateForScratches(HiddenSurfaceDamage detail) {
-		if (!detail.hasScratches()) {
+		if (detail.hasNoScratches()) {
 			return NONE;
 		}
 
@@ -46,7 +46,7 @@ public class HiddenSurfacesRecommendationCalculator {
 
 	@VisibleForTesting
 	Recommendation calculateForDents(HiddenSurfaceDamage detail) {
-		if (!detail.hasDents()) {
+		if (detail.hasNoDents()) {
 			return NONE;
 		}
 

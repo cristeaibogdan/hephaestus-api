@@ -32,12 +32,24 @@ public class HiddenSurfaceDamage {
 				hasMajorDamage();
 	}
 
+	public boolean isNotApplicable() {
+		return !isApplicable();
+	}
+
 	public boolean hasScratches() {
 		return hiddenSurfacesScratchesLength > 0;
 	}
 
+	public boolean hasNoScratches() {
+		return !hasScratches();
+	}
+
 	public boolean hasDents() {
 		return hiddenSurfacesDentsDepth > 0;
+	}
+
+	public boolean hasNoDents() {
+		return !hasDents();
 	}
 
 	public boolean hasMinorDamage() {

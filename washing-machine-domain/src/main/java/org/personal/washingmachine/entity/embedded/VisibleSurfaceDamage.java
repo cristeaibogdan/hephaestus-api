@@ -32,12 +32,31 @@ public class VisibleSurfaceDamage {
 				hasMajorDamage();
 	}
 
+	/**
+	 * <p> <b>In the context</b> of improving readability, </p>
+	 * <p> <b>facing</b> the concern that developers might overlook the exclamation mark (!) in conditions like <code>!isApplicable()</code>,</p>
+	 * <p> <b>we decided</b> to introduce this method </p>
+	 * <p> <b>to achieve</b> improved clarity in condition checks, </p>
+	 * <p> <b>accepting</b> that this introduces slightly more code. </p>
+	 */
+	public boolean isNotApplicable() {
+		return !isApplicable();
+	}
+
 	public boolean hasScratches() {
 		return visibleSurfacesScratchesLength > 0;
 	}
 
+	public boolean hasNoScratches() {
+		return !hasScratches();
+	}
+
 	public boolean hasDents() {
 		return visibleSurfacesDentsDepth > 0;
+	}
+
+	public boolean hasNoDents() {
+		return !hasDents();
 	}
 
 	public boolean hasMinorDamage() {
