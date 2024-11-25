@@ -22,10 +22,10 @@ The project consists of two components:
 
 You can access the following services:
 
-- **[OpenAPI Docs](https://api-gateway.orangesmoke-f68e1158.northeurope.azurecontainerapps.io/webjars/swagger-ui/index.html)**  
+- **[OpenAPI Docs](https://api-gateaway.kindmeadow-812476e6.northeurope.azurecontainerapps.io/webjars/swagger-ui/index.html)**  
   Explore and test all the API endpoints in the backend.
 
-- **[Zipkin on Azure](https://zipkin.orangesmoke-f68e1158.northeurope.azurecontainerapps.io)**  
+- **[Zipkin on Azure](https://zipkin.kindmeadow-812476e6.northeurope.azurecontainerapps.io)**  
   A **Zipkin server** is available to monitor and trace requests across the application.
 
 ## Technologies Used
