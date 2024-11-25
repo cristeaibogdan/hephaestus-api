@@ -4,7 +4,7 @@ spring:
       routes:
         #TODO: Add proper security
         - id: washing-machine
-          uri: https://washing-machine.internal.orangesmoke-f68e1158.northeurope.azurecontainerapps.io
+          uri: https://washing-machine.internal.kindmeadow-812476e6.northeurope.azurecontainerapps.io
           predicates:
             - Path=/api/v1/washing-machines/**, /api/v1/users/**, /v3/api-docs/washing-machine
           filters:
