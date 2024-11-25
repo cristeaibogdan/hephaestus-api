@@ -20,4 +20,4 @@ spring:
 management:
   zipkin:
     tracing:
-      endpoint: https://zipkin.orangesmoke-f68e1158.northeurope.azurecontainerapps.io/api/v2/spans
+      endpoint: https://zipkin.kindmeadow-812476e6.northeurope.azurecontainerapps.io/api/v2/spans
