@@ -101,10 +101,6 @@ public class WashingMachine extends BaseEntity {
     }
 
     public boolean removeImage(Long washingMachineImageId) {
-        return washingMachineImages.stream()
-                .filter(image -> image.getId().equals(washingMachineImageId))
-                .findFirst()
-                .filter(image -> washingMachineImages.remove(image))
-                .isPresent();
+        return washingMachineImages.removeIf(image -> image.getId().equals(washingMachineImageId));
     }
 }
