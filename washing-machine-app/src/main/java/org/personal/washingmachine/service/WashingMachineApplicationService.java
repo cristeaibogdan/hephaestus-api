@@ -139,6 +139,7 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 	public Map<String, GetWashingMachineFullResponse> loadMany(List<String> serialNumbers) {
 		List<String> nonNullSerialNumbers  = serialNumbers.stream()
 				.filter(sn -> Objects.nonNull(sn))
+				.distinct()
 				.toList();
 
 		if (nonNullSerialNumbers.isEmpty()) {

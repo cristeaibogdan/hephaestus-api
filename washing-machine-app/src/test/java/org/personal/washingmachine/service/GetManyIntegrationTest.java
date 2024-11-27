@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @Transactional // Ensure Hibernate sessions are properly managed in your testing environment. Avoids "could not initialize proxy" Exception. Specific to tests only.
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class GetManyTest extends BaseIntegrationTest {
+class GetManyIntegrationTest extends BaseIntegrationTest {
 
 	@Autowired WashingMachineApplicationService washingMachineApplicationService;
 	@Autowired WashingMachineRepository washingMachineRepository;

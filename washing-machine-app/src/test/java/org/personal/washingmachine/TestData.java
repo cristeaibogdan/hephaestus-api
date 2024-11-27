@@ -98,10 +98,10 @@ public class TestData {
 		);
 	}
 
-	public static WashingMachine getWashingMachineWithoutDetailAndImages(String manufacturer) {
+	public static WashingMachine getWashingMachineWithoutImages() {
 		return new WashingMachine(
 				"Washing Machine",
-				manufacturer,
+				"WhirlPool",
 				DamageType.IN_USE,
 				ReturnType.SERVICE,
 				IdentificationMode.DATA_MATRIX,
@@ -109,7 +109,24 @@ public class TestData {
 				"modelOne",
 				"typeOne",
 				Recommendation.RESALE,
-				null
+				new WashingMachineDetail(
+						new PackageDamage(
+								false,
+								false,
+								false),
+						new VisibleSurfaceDamage(
+								0,
+								0,
+								"",
+								""),
+						new HiddenSurfaceDamage(
+								0,
+								0,
+								"",
+								""),
+						0,
+						0
+				)
 		);
 	}
 

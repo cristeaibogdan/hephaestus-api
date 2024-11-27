@@ -13,7 +13,7 @@ Goal:
    b. If no washingMachine with the given serial number is found, it should return Map<"notFound", null>
 
 === Phase 1 - Functionality to return a List<WashingMachine> given a list of serialNumbers ===
-1. Created GetManyTest class
+1. Created GetManyIntegrationTest class
 2. Decided to extend the class with BaseIntegrationTest, as it is easier to test multiple scenarios
 3. Added dependencies, applicationService and repository with @Autowired
 4. Added @TestInstance(TestInstance.Lifecycle.PER_CLASS) so the @BeforeAll void loadDataInDB() method is executed only once.
@@ -85,7 +85,7 @@ Point of discussion. Any better way?
 === End of Phase 3 ===
 
 === Phase 4 - Filter out null values from the received list ===
-1. Copy paste previous test in GetManyTest
+1. Copy paste previous test in GetManyIntegrationTest
 2. Rename to should_ReturnWashingMachines_When_SerialNumbersContainNull()
 3. Change one of the serialNUmber to be null, use .add method
 4. Modify assertThat to only check isNotEmpty
@@ -104,11 +104,11 @@ Point of discussion. Any better way?
                        		.extracting(wm -> wm.getSerialNumber())
                        		.containsExactlyInAnyOrderElementsOf(expected);
 12. Test is green
-13. All tests in GetManyTest and GetManyExceptionMvcTest are green
+13. All tests in GetManyIntegrationTest and GetManyExceptionMvcTest are green
 === End of Phase 4 ===
 
 === Phase 5 - Make the method return a Map<Received serialNumber, WashingMachine> ===
-0. Comment out all tests written for loadMany method from GetManyTest, changing the return type will break all of them
+0. Comment out all tests written for loadMany method from GetManyIntegrationTest, changing the return type will break all of them
 1. Un-comment should_ReturnWashingMachines_When_ProvidedValidSerialNumbers
 2. Comment the THEN part
 3. Change in WHEN from List to Map<String, WashingMachine>
@@ -162,7 +162,7 @@ Point of discussion. Any better way?
 === End of Phase 7 ===
 
 === Phase 8 - Change from Map<String, WashingMachine> to Map<String, GetWashingMachineFullResponse> ===
-1. Comment out all tests from GetManyTest except the first one
+1. Comment out all tests from GetManyIntegrationTest except the first one
 2. Modify the actual from Map<String, WashingMachine> to Map<String, GetWashingMachineFullResponse>
 3. ALT + ENTER to change method signature
 4. Compilation error
@@ -173,7 +173,7 @@ Point of discussion. Any better way?
 8. Use the method in the loadDataInDB
 9. Test fails => could not initialize proxy [org.personal.washingmachine.entity.WashingMachineDetail#1]
 
-10. Add @Transactional to test class GetManyTest
+10. Add @Transactional to test class GetManyIntegrationTest
 11. Test is green
 
 12. Un-comment second test
@@ -184,3 +184,21 @@ Point of discussion. Any better way?
 16. Modify WHEN to Map<String, GetWashingMachineFullResponse> actual
 17. All tests green
 === End of Phase 8 ===
+
+Additional logic added - The serial numbers used by repository.findAllBySerialNumberIn(nonNullSerialNumbers) should be unique / distinct
+1. Create class GetManySocialTest
+2. Instantiate the classes to be used and mock the repository
+3. Create test should_callRepository_With_DistinctSerialNumbers()
+4. In GIVEN part create a list of serialNumbers with duplicates
+5. In GIVEN part create a list expected with the same serialNumbers WITHOUT duplicates
+6. In WHEN write underTest.loadMany(serialNumbers);
+7. Test fails because the condition list.isEmpty() gets triggered
+
+8. In GIVEN write a List<WashingMachine> mockWashingMachines. The content of the list MUST NOT BE EMPTY to avoid the custom exception that checks if the result is empty
+9. In GIVEN write given(washingMachineRepositoryMock.findAllBySerialNumberIn(anyList()))
+                   				.willReturn(mockWashingMachines);
+11. In THEN write: verify(washingMachineRepositoryMock).findAllBySerialNumberIn(expected);
+12. Test fails because arguments are different
+
+13. Add distinct to the loadMany method
+14. Test is green
