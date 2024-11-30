@@ -11,7 +11,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
@@ -35,12 +34,13 @@ class GetManyExceptionMvcTest {
 	@Test
 	void should_ThrowException_When_ListIsEmpty() throws Exception {
 		// GIVEN
-		List<String> content = new ArrayList<>();
+		List<String> content = List.of();
+		String jsonRequest = jackson.writeValueAsString(content);
 
 		// WHEN
 		ResultActions resultActions = mockMvc.perform(
 				post("/api/v1/washing-machines/many")
-						.content(jackson.writeValueAsString(content))
+						.content(jsonRequest)
 						.contentType(MediaType.APPLICATION_JSON));
 
 		// THEN
@@ -52,16 +52,13 @@ class GetManyExceptionMvcTest {
 	@Test
 	void should_ThrowException_When_NoSerialNumbersAreFoundInDB() throws Exception {
 		// GIVEN
-		List<String> content = new ArrayList<>(List.of(
-				"I don't exist",
-				"Something",
-				"You won't find me"
-		));
+		List<String> content = List.of("I don't exist", "Something", "You won't find me");
+		String jsonRequest = jackson.writeValueAsString(content);
 
 		// WHEN
 		ResultActions resultActions = mockMvc.perform(
 				post("/api/v1/washing-machines/many")
-						.content(jackson.writeValueAsString(content))
+						.content(jsonRequest)
 						.contentType(MediaType.APPLICATION_JSON));
 
 		// THEN

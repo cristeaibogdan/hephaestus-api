@@ -26,15 +26,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(UserApplicationService.class)
 class UserApplicationServiceMvcTest {
+    @Autowired MockMvc mockMvc;
+    @Autowired ObjectMapper jackson;
 
-    @MockBean
-    UserService userServiceMock;
-
-    @Autowired
-    MockMvc mockMvc;
-
-    @Autowired
-    ObjectMapper objectMapper;
+    @MockBean UserService userServiceMock;
 
     @Nested
     class testIsValidRegistrationCode {
@@ -90,7 +85,7 @@ class UserApplicationServiceMvcTest {
             // THEN
             resultActions
                     .andExpect(status().isOk())
-                    .andExpect(content().string(objectMapper.writeValueAsString(expected)));
+                    .andExpect(content().string(jackson.writeValueAsString(expected)));
         }
     }
 
@@ -110,7 +105,7 @@ class UserApplicationServiceMvcTest {
             // WHEN
             ResultActions resultActions = mockMvc.perform(post("/api/v1/users/register")
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(objectMapper.writeValueAsString(loginUserResponse)));
+                    .content(jackson.writeValueAsString(loginUserResponse)));
 
             // THEN
             then(userServiceMock)
@@ -138,7 +133,7 @@ class UserApplicationServiceMvcTest {
             // WHEN
             ResultActions resultActions = mockMvc.perform(post("/api/v1/users/register")
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(objectMapper.writeValueAsString(loginUserResponse)));
+                    .content(jackson.writeValueAsString(loginUserResponse)));
 
             // THEN
             then(userServiceMock)
@@ -182,7 +177,7 @@ class UserApplicationServiceMvcTest {
             // WHEN
             ResultActions resultActions = mockMvc.perform(post("/api/v1/users/login")
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(objectMapper.writeValueAsString(loginUserRequest)));
+                    .content(jackson.writeValueAsString(loginUserRequest)));
 
             // THEN
             then(userServiceMock)
