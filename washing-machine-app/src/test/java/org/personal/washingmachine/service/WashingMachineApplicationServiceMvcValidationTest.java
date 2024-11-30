@@ -38,14 +38,34 @@ class WashingMachineApplicationServiceMvcValidationTest {
 	@MockBean WashingMachineReportGenerator reportGenerator;
 	@MockBean ProductClient productClient; //TODO: To be deleted
 
+	private static final MockMultipartFile MOCK_IMAGE_FILE = new MockMultipartFile( // API expects at least 1 image when saving.
+			"imageFiles",
+			"whatever.jpeg",
+			MediaType.IMAGE_JPEG_VALUE,
+			"image content".getBytes()
+	);
+
+	private MockMultipartFile getMockMultipartFile(String jsonRequest) {
+		return new MockMultipartFile( // avoids error Content-Type 'application/octet-stream' is not supported
+				"createWashingMachineRequest",
+				"I_Don't_Matter",
+				MediaType.APPLICATION_JSON_VALUE,
+				jsonRequest.getBytes());
+	}
+
 	static Stream<Arguments> getInvalidCreateWashingMachineRequestTestCases() {
 		return Stream.of(
 				arguments(TestData.createWashingMachineRequest().toBuilder().category(null).build(), "category", null),
+				arguments(TestData.createWashingMachineRequest().toBuilder().category("  ").build(), "category", " (blank string) "),
 				arguments(TestData.createWashingMachineRequest().toBuilder().identificationMode(null).build(), "identificationMode", null),
 				arguments(TestData.createWashingMachineRequest().toBuilder().manufacturer(null).build(), "manufacturer", null),
+				arguments(TestData.createWashingMachineRequest().toBuilder().manufacturer("  ").build(), "manufacturer", " (blank string) "),
 				arguments(TestData.createWashingMachineRequest().toBuilder().model(null).build(), "model", null),
+				arguments(TestData.createWashingMachineRequest().toBuilder().model("  ").build(), "model", " (blank string) "),
 				arguments(TestData.createWashingMachineRequest().toBuilder().type(null).build(), "type", null),
+				arguments(TestData.createWashingMachineRequest().toBuilder().type("  ").build(), "type", " (blank string) "),
 				arguments(TestData.createWashingMachineRequest().toBuilder().serialNumber(null).build(), "serialNumber", null),
+				arguments(TestData.createWashingMachineRequest().toBuilder().serialNumber("  ").build(), "serialNumber", " (blank string) "),
 				arguments(TestData.createWashingMachineRequest().toBuilder().returnType(null).build(), "returnType", null),
 				arguments(TestData.createWashingMachineRequest().toBuilder().damageType(null).build(), "damageType", null),
 				arguments(TestData.createWashingMachineRequest().toBuilder().createWashingMachineDetailRequest(null).build(), "createWashingMachineDetailRequest", null)
@@ -57,17 +77,13 @@ class WashingMachineApplicationServiceMvcValidationTest {
 	void should_ThrowValidationException_When_ProvidedInvalidCreateWashingMachineRequest(CreateWashingMachineRequest request, String propertyName, Object invalidValue) throws Exception {
 		// GIVEN
 		String jsonRequest = jackson.writeValueAsString(request);
-
-		MockMultipartFile jsonFile = new MockMultipartFile( // avoids error Content-Type 'application/octet-stream' is not supported
-				"createWashingMachineRequest",
-				"I_Don't_Matter",
-				MediaType.APPLICATION_JSON_VALUE,
-				jsonRequest.getBytes());
+		MockMultipartFile createWashingMachineRequestJson = getMockMultipartFile(jsonRequest);
 
 		// WHEN
 		ResultActions resultActions = mockMvc.perform(
 				multipart("/api/v1/washing-machines/save")
-						.file(jsonFile)
+						.file(createWashingMachineRequestJson)
+						.file(MOCK_IMAGE_FILE)
 						.contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
 		);
 
@@ -84,16 +100,20 @@ class WashingMachineApplicationServiceMvcValidationTest {
 				arguments(TestData.createWashingMachineDetailRequest().toBuilder().visibleSurfacesDentsDepth(-1).build(), "visibleSurfacesDentsDepth", -1),
 				arguments(TestData.createWashingMachineDetailRequest().toBuilder().visibleSurfacesDentsDepth(11).build(), "visibleSurfacesDentsDepth", 11),
 				arguments(TestData.createWashingMachineDetailRequest().toBuilder().visibleSurfacesMinorDamage(null).build(), "visibleSurfacesMinorDamage", null),
+				arguments(TestData.createWashingMachineDetailRequest().toBuilder().visibleSurfacesMinorDamage("  ").build(), "visibleSurfacesMinorDamage", " (blank string) "),
 				arguments(TestData.createWashingMachineDetailRequest().toBuilder().visibleSurfacesMinorDamage("A".repeat(201)).build(), "visibleSurfacesMinorDamage", "201 chars"),
 				arguments(TestData.createWashingMachineDetailRequest().toBuilder().visibleSurfacesMajorDamage(null).build(), "visibleSurfacesMajorDamage", null),
+				arguments(TestData.createWashingMachineDetailRequest().toBuilder().visibleSurfacesMajorDamage("  ").build(), "visibleSurfacesMajorDamage", " (blank string) "),
 				arguments(TestData.createWashingMachineDetailRequest().toBuilder().visibleSurfacesMajorDamage("A".repeat(201)).build(), "visibleSurfacesMajorDamage", "201 chars"),
 				arguments(TestData.createWashingMachineDetailRequest().toBuilder().hiddenSurfacesScratchesLength(-1).build(), "hiddenSurfacesScratchesLength", -1),
 				arguments(TestData.createWashingMachineDetailRequest().toBuilder().hiddenSurfacesScratchesLength(11).build(), "hiddenSurfacesScratchesLength", 11),
 				arguments(TestData.createWashingMachineDetailRequest().toBuilder().hiddenSurfacesDentsDepth(-1).build(), "hiddenSurfacesDentsDepth", -1),
 				arguments(TestData.createWashingMachineDetailRequest().toBuilder().hiddenSurfacesDentsDepth(11).build(), "hiddenSurfacesDentsDepth", 11),
 				arguments(TestData.createWashingMachineDetailRequest().toBuilder().hiddenSurfacesMinorDamage(null).build(), "hiddenSurfacesMinorDamage", null),
+				arguments(TestData.createWashingMachineDetailRequest().toBuilder().hiddenSurfacesMinorDamage("  ").build(), "hiddenSurfacesMinorDamage", " (blank string) "),
 				arguments(TestData.createWashingMachineDetailRequest().toBuilder().hiddenSurfacesMinorDamage("A".repeat(201)).build(), "hiddenSurfacesMinorDamage", "201 chars"),
 				arguments(TestData.createWashingMachineDetailRequest().toBuilder().hiddenSurfacesMajorDamage(null).build(), "hiddenSurfacesMajorDamage", null),
+				arguments(TestData.createWashingMachineDetailRequest().toBuilder().hiddenSurfacesMajorDamage("  ").build(), "hiddenSurfacesMajorDamage", " (blank string) "),
 				arguments(TestData.createWashingMachineDetailRequest().toBuilder().hiddenSurfacesMajorDamage("A".repeat(201)).build(), "hiddenSurfacesMajorDamage", "201 chars"),
 				arguments(TestData.createWashingMachineDetailRequest().toBuilder().price(-1).build(), "price", -1),
 				arguments(TestData.createWashingMachineDetailRequest().toBuilder().repairPrice(-1).build(), "repairPrice", -1)
@@ -106,17 +126,13 @@ class WashingMachineApplicationServiceMvcValidationTest {
 		// GIVEN
 		CreateWashingMachineRequest request = TestData.createWashingMachineRequest().toBuilder().createWashingMachineDetailRequest(dto).build();
 		String jsonRequest = jackson.writeValueAsString(request);
-
-		MockMultipartFile jsonFile = new MockMultipartFile( // avoids error Content-Type 'application/octet-stream' is not supported
-				"createWashingMachineRequest",
-				"I_Don't_Matter",
-				MediaType.APPLICATION_JSON_VALUE,
-				jsonRequest.getBytes());
+		MockMultipartFile createWashingMachineRequestJson = getMockMultipartFile(jsonRequest);
 
 		// WHEN
 		ResultActions resultActions = mockMvc.perform(
 				multipart("/api/v1/washing-machines/save")
-						.file(jsonFile)
+						.file(createWashingMachineRequestJson)
+						.file(MOCK_IMAGE_FILE)
 						.contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
 		);
 
@@ -151,25 +167,13 @@ class WashingMachineApplicationServiceMvcValidationTest {
 		// GIVEN
 		CreateWashingMachineRequest request = TestData.createWashingMachineRequest().toBuilder().createWashingMachineDetailRequest(dto).build();
 		String jsonRequest = jackson.writeValueAsString(request);
-
-		MockMultipartFile jsonFile = new MockMultipartFile( // avoids error Content-Type 'application/octet-stream' is not supported
-				"createWashingMachineRequest",
-				"I_Don't_Matter",
-				MediaType.APPLICATION_JSON_VALUE,
-				jsonRequest.getBytes());
-
-		MockMultipartFile mockFile = new MockMultipartFile(
-				"imageFiles",
-				"whatever.jpeg",
-				MediaType.IMAGE_JPEG_VALUE,
-				"image content".getBytes()
-		);
+		MockMultipartFile createWashingMachineRequestJson = getMockMultipartFile(jsonRequest);
 
 		// WHEN
 		ResultActions resultActions = mockMvc.perform(
 				multipart("/api/v1/washing-machines/save")
-						.file(jsonFile)
-						.file(mockFile)
+						.file(createWashingMachineRequestJson)
+						.file(MOCK_IMAGE_FILE)
 						.contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
 		);
 

@@ -1,6 +1,7 @@
 package org.personal.washingmachine.dto;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import org.personal.washingmachine.enums.DamageType;
@@ -9,18 +10,18 @@ import org.personal.washingmachine.enums.ReturnType;
 
 @Builder(toBuilder = true)
 public record CreateWashingMachineRequest(
-		@NotNull(message = "{FIELD_NOT_NULL}")
+		@NotBlank(message = "{FIELD_NOT_BLANK}")
 		String category,
 		@NotNull(message = "{FIELD_NOT_NULL}")
 		IdentificationMode identificationMode,
-		@NotNull(message = "{FIELD_NOT_NULL}")
+		@NotBlank(message = "{FIELD_NOT_BLANK}")
 		String manufacturer,
 
-		@NotNull(message = "{FIELD_NOT_NULL}")
+		@NotBlank(message = "{FIELD_NOT_BLANK}")
 		String model,
-		@NotNull(message = "{FIELD_NOT_NULL}")
+		@NotBlank(message = "{FIELD_NOT_BLANK}")
 		String type,
-		@NotNull(message = "{FIELD_NOT_NULL}")
+		@NotBlank(message = "{FIELD_NOT_BLANK}")
 		String serialNumber,
 
 		@NotNull(message = "{FIELD_NOT_NULL}")

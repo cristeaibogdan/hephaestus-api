@@ -20,11 +20,11 @@ public record CreateWashingMachineDetailRequest(
         double visibleSurfacesDentsDepth,
 
 		@Size(max = 200, message = "{STRING_MAXIMUM_LENGTH}")
-		@NotNull(message = "{FIELD_NOT_NULL}")
+		@NotBlank(message = "{FIELD_NOT_BLANK}")
         String visibleSurfacesMinorDamage,
 
 		@Size(max = 200, message = "{STRING_MAXIMUM_LENGTH}")
-		@NotNull(message = "{FIELD_NOT_NULL}")
+		@NotBlank(message = "{FIELD_NOT_BLANK}")
 		String visibleSurfacesMajorDamage,
 
         // HIDDEN SURFACES
@@ -37,11 +37,11 @@ public record CreateWashingMachineDetailRequest(
         double hiddenSurfacesDentsDepth,
 
 		@Size(max = 200, message = "{STRING_MAXIMUM_LENGTH}")
-		@NotNull(message = "{FIELD_NOT_NULL}")
+		@NotBlank(message = "{FIELD_NOT_BLANK}")
         String hiddenSurfacesMinorDamage,
 
 		@Size(max = 200, message = "{STRING_MAXIMUM_LENGTH}")
-		@NotNull(message = "{FIELD_NOT_NULL}")
+		@NotBlank(message = "{FIELD_NOT_BLANK}")
         String hiddenSurfacesMajorDamage,
 
 		// PRICING
