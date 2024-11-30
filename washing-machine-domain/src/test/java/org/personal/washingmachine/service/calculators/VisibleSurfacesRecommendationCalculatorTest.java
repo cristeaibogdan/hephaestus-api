@@ -27,13 +27,11 @@ class VisibleSurfacesRecommendationCalculatorTest {
 					.visibleSurfacesMajorDamage("")
 					.build();
 
-			Recommendation expected = NONE;
-
 			// WHEN
 			Recommendation actual = underTest.calculate(visibleSurfaceDamage);
 
 			// THEN
-			assertThat(actual).isEqualTo(expected);
+			assertThat(actual).isEqualTo(NONE);
 		}
 
 		@Test
@@ -43,13 +41,11 @@ class VisibleSurfacesRecommendationCalculatorTest {
 					.visibleSurfacesMajorDamage("I'm the tested property")
 					.build();
 
-			Recommendation expected = OUTLET;
-
 			// WHEN
 			Recommendation actual = underTest.calculate(visibleSurfaceDamage);
 
 			// THEN
-			assertThat(actual).isEqualTo(expected);
+			assertThat(actual).isEqualTo(OUTLET);
 		}
 	}
 
@@ -63,13 +59,11 @@ class VisibleSurfacesRecommendationCalculatorTest {
 					.visibleSurfacesScratchesLength(0)
 					.build();
 
-			Recommendation expected = NONE;
-
 			// WHEN
 			Recommendation actual = underTest.calculateForScratches(visibleSurfaceDamage);
 
 			// THEN
-			assertThat(actual).isEqualTo(expected);
+			assertThat(actual).isEqualTo(NONE);
 		}
 
 		@ParameterizedTest
@@ -80,30 +74,26 @@ class VisibleSurfacesRecommendationCalculatorTest {
 					.visibleSurfacesScratchesLength(scratchValue)
 					.build();
 
-			Recommendation expected = RESALE;
-
 			// WHEN
 			Recommendation actual = underTest.calculateForScratches(visibleSurfaceDamage);
 
 			// THEN
-			assertThat(actual).isEqualTo(expected);
+			assertThat(actual).isEqualTo(RESALE);
 		}
 
 		@ParameterizedTest
 		@ValueSource(doubles = {5, 5.5, 10})
 		void should_ReturnOUTLET_When_ScratchesAreEqualOrOver5cm(double scratchValue) {
 			// GIVEN
-			VisibleSurfaceDamage visibleSurfaceDamage =VisibleSurfaceDamage.builder()
+			VisibleSurfaceDamage visibleSurfaceDamage = VisibleSurfaceDamage.builder()
 					.visibleSurfacesScratchesLength(scratchValue)
 					.build();
-
-			Recommendation expected = OUTLET;
 
 			// WHEN
 			Recommendation actual = underTest.calculateForScratches(visibleSurfaceDamage);
 
 			// THEN
-			assertThat(actual).isEqualTo(expected);
+			assertThat(actual).isEqualTo(OUTLET);
 		}
 	}
 
@@ -117,13 +107,11 @@ class VisibleSurfacesRecommendationCalculatorTest {
 					.visibleSurfacesDentsDepth(0)
 					.build();
 
-			Recommendation expected = NONE;
-
 			// WHEN
 			Recommendation actual = underTest.calculateForDents(visibleSurfaceDamage);
 
 			// THEN
-			assertThat(actual).isEqualTo(expected);
+			assertThat(actual).isEqualTo(NONE);
 		}
 
 		@ParameterizedTest
@@ -134,13 +122,11 @@ class VisibleSurfacesRecommendationCalculatorTest {
 					.visibleSurfacesDentsDepth(dentDepth)
 					.build();
 
-			Recommendation expected = RESALE;
-
 			// WHEN
 			Recommendation actual = underTest.calculateForDents(visibleSurfaceDamage);
 
 			// THEN
-			assertThat(actual).isEqualTo(expected);
+			assertThat(actual).isEqualTo(RESALE);
 		}
 
 		@ParameterizedTest
@@ -151,13 +137,11 @@ class VisibleSurfacesRecommendationCalculatorTest {
 					.visibleSurfacesDentsDepth(dentDepth)
 					.build();
 
-			Recommendation expected = OUTLET;
-
 			// WHEN
 			Recommendation actual = underTest.calculateForDents(visibleSurfaceDamage);
 
 			// THEN
-			assertThat(actual).isEqualTo(expected);
+			assertThat(actual).isEqualTo(OUTLET);
 		}
 	}
 
@@ -171,13 +155,11 @@ class VisibleSurfacesRecommendationCalculatorTest {
 					.visibleSurfacesMinorDamage("I'm the tested property")
 					.build();
 
-			Recommendation expected = RESALE;
-
 			// WHEN
 			Recommendation actual = underTest.calculateForMinorDamage(visibleSurfaceDamage);
 
 			// THEN
-			assertThat(actual).isEqualTo(expected);
+			assertThat(actual).isEqualTo(RESALE);
 		}
 
 		@Test
@@ -187,13 +169,11 @@ class VisibleSurfacesRecommendationCalculatorTest {
 					.visibleSurfacesMinorDamage("")
 					.build();
 
-			Recommendation expected = NONE;
-
 			// WHEN
 			Recommendation actual = underTest.calculateForMinorDamage(visibleSurfaceDamage);
 
 			// THEN
-			assertThat(actual).isEqualTo(expected);
+			assertThat(actual).isEqualTo(NONE);
 		}
 	}
 
@@ -207,13 +187,11 @@ class VisibleSurfacesRecommendationCalculatorTest {
 					.visibleSurfacesMajorDamage("I'm the tested property")
 					.build();
 
-			Recommendation expected = OUTLET;
-
 			// WHEN
 			Recommendation actual = underTest.calculateForMajorDamage(visibleSurfaceDamage);
 
 			// THEN
-			assertThat(actual).isEqualTo(expected);
+			assertThat(actual).isEqualTo(OUTLET);
 		}
 
 		@Test
@@ -223,13 +201,11 @@ class VisibleSurfacesRecommendationCalculatorTest {
 					.visibleSurfacesMajorDamage("")
 					.build();
 
-			Recommendation expected = NONE;
-
 			// WHEN
 			Recommendation actual = underTest.calculateForMajorDamage(visibleSurfaceDamage);
 
 			// THEN
-			assertThat(actual).isEqualTo(expected);
+			assertThat(actual).isEqualTo(NONE);
 		}
 	}
 }

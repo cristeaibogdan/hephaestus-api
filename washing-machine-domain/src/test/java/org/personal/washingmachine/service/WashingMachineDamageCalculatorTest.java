@@ -50,14 +50,11 @@ class WashingMachineDamageCalculatorTest {
 				0
 			);
 
-			Recommendation expected = REPACKAGE;
-
 			// WHEN
 			Recommendation actual = underTest.getRecommendation(washingMachineDetail);
 
 			// WHEN & THEN
-			assertThat(actual)
-					.isEqualTo(expected);
+			assertThat(actual).isEqualTo(REPACKAGE);
 		}
 
 		@Test

@@ -26,13 +26,11 @@ class HiddenSurfacesRecommendationCalculatorTest {
 					.hiddenSurfacesMajorDamage("")
 					.build();
 
-			Recommendation expected = NONE;
-
 			// WHEN
 			Recommendation actual = underTest.calculate(hiddenSurfaceDamage);
 
 			// THEN
-			assertThat(actual).isEqualTo(expected);
+			assertThat(actual).isEqualTo(NONE);
 		}
 
 		@Test
@@ -42,13 +40,11 @@ class HiddenSurfacesRecommendationCalculatorTest {
 					.hiddenSurfacesMinorDamage("testing property")
 					.build();
 
-			Recommendation expected = RESALE;
-
 			// WHEN
 			Recommendation actual = underTest.calculate(hiddenSurfaceDamage);
 
 			// THEN
-			assertThat(actual).isEqualTo(expected);
+			assertThat(actual).isEqualTo(RESALE);
 		}
 	}
 
@@ -62,13 +58,11 @@ class HiddenSurfacesRecommendationCalculatorTest {
 					.hiddenSurfacesScratchesLength(0)
 					.build();
 
-			Recommendation expected = NONE;
-
 			// WHEN
 			Recommendation actual = underTest.calculateForScratches(hiddenSurfaceDamage);
 
 			// THEN
-			assertThat(actual).isEqualTo(expected);
+			assertThat(actual).isEqualTo(NONE);
 		}
 
 		@ParameterizedTest
@@ -79,13 +73,11 @@ class HiddenSurfacesRecommendationCalculatorTest {
 					.hiddenSurfacesScratchesLength(scratchLength)
 					.build();
 
-			Recommendation expected = RESALE;
-
 			// WHEN
 			Recommendation actual = underTest.calculateForScratches(hiddenSurfaceDamage);
 
 			// THEN
-			assertThat(actual).isEqualTo(expected);
+			assertThat(actual).isEqualTo(RESALE);
 		}
 
 		@ParameterizedTest
@@ -96,13 +88,11 @@ class HiddenSurfacesRecommendationCalculatorTest {
 					.hiddenSurfacesScratchesLength(scratchLength)
 					.build();
 
-			Recommendation expected = OUTLET;
-
 			// WHEN
 			Recommendation actual = underTest.calculateForScratches(hiddenSurfaceDamage);
 
 			// THEN
-			assertThat(actual).isEqualTo(expected);
+			assertThat(actual).isEqualTo(OUTLET);
 		}
 	}
 
@@ -116,13 +106,11 @@ class HiddenSurfacesRecommendationCalculatorTest {
 					.hiddenSurfacesDentsDepth(0)
 					.build();
 
-			Recommendation expected = NONE;
-
 			// WHEN
 			Recommendation actual = underTest.calculateForDents(hiddenSurfaceDamage);
 
 			// THEN
-			assertThat(actual).isEqualTo(expected);
+			assertThat(actual).isEqualTo(NONE);
 		}
 
 		@ParameterizedTest
@@ -133,13 +121,11 @@ class HiddenSurfacesRecommendationCalculatorTest {
 					.hiddenSurfacesDentsDepth(dentDepth)
 					.build();
 
-			Recommendation expected = RESALE;
-
 			// WHEN
 			Recommendation actual = underTest.calculateForDents(hiddenSurfaceDamage);
 
 			// THEN
-			assertThat(actual).isEqualTo(expected);
+			assertThat(actual).isEqualTo(RESALE);
 		}
 
 		@ParameterizedTest
@@ -150,13 +136,11 @@ class HiddenSurfacesRecommendationCalculatorTest {
 					.hiddenSurfacesDentsDepth(dentDepth)
 					.build();
 
-			Recommendation expected = OUTLET;
-
 			// WHEN
 			Recommendation actual = underTest.calculateForDents(hiddenSurfaceDamage);
 
 			// THEN
-			assertThat(actual).isEqualTo(expected);
+			assertThat(actual).isEqualTo(OUTLET);
 		}
 	}
 
@@ -170,13 +154,11 @@ class HiddenSurfacesRecommendationCalculatorTest {
 					.hiddenSurfacesMinorDamage("I'm the tested property")
 					.build();
 
-			Recommendation expected = RESALE;
-
 			// WHEN
 			Recommendation actual = underTest.calculateForMinorDamage(hiddenSurfaceDamage);
 
 			// THEN
-			assertThat(actual).isEqualTo(expected);
+			assertThat(actual).isEqualTo(RESALE);
 		}
 
 		@Test
@@ -186,13 +168,11 @@ class HiddenSurfacesRecommendationCalculatorTest {
 					.hiddenSurfacesMinorDamage("")
 					.build();
 
-			Recommendation expected = NONE;
-
 			// WHEN
 			Recommendation actual = underTest.calculateForMinorDamage(hiddenSurfaceDamage);
 
 			// THEN
-			assertThat(actual).isEqualTo(expected);
+			assertThat(actual).isEqualTo(NONE);
 		}
 	}
 
@@ -206,13 +186,11 @@ class HiddenSurfacesRecommendationCalculatorTest {
 					.hiddenSurfacesMajorDamage("I'm the tested property")
 					.build();
 
-			Recommendation expected = OUTLET;
-
 			// WHEN
 			Recommendation actual = underTest.calculateForMajorDamage(hiddenSurfaceDamage);
 
 			// THEN
-			assertThat(actual).isEqualTo(expected);
+			assertThat(actual).isEqualTo(OUTLET);
 		}
 
 		@Test
@@ -222,13 +200,11 @@ class HiddenSurfacesRecommendationCalculatorTest {
 					.hiddenSurfacesMajorDamage("")
 					.build();
 
-			Recommendation expected = NONE;
-
 			// WHEN
 			Recommendation actual = underTest.calculateForMajorDamage(hiddenSurfaceDamage);
 
 			// THEN
-			assertThat(actual).isEqualTo(expected);
+			assertThat(actual).isEqualTo(NONE);
 		}
 	}
 }

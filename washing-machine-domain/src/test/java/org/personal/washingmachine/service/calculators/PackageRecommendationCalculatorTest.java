@@ -7,7 +7,6 @@ import org.personal.washingmachine.enums.Recommendation;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.personal.washingmachine.enums.Recommendation.*;
 
-
 class PackageRecommendationCalculatorTest {
 
 	private final PackageRecommendationCalculator underTest = new PackageRecommendationCalculator();
@@ -21,13 +20,11 @@ class PackageRecommendationCalculatorTest {
 				.packageMaterialAvailable(false)
 				.build();
 
-		Recommendation expected = NONE;
-
 		// WHEN
 		Recommendation actual = underTest.calculate(packageDamage);
 
 		// THEN
-		assertThat(actual).isEqualTo(expected);
+		assertThat(actual).isEqualTo(NONE);
 	}
 
 	@Test
@@ -37,13 +34,11 @@ class PackageRecommendationCalculatorTest {
 				.packageMaterialAvailable(true)
 				.build();
 
-		Recommendation expected = REPACKAGE;
-
 		// WHEN
 		Recommendation actual = underTest.calculate(packageDamage);
 
 		// THEN
-		assertThat(actual).isEqualTo(expected);
+		assertThat(actual).isEqualTo(REPACKAGE);
 	}
 
 	@Test
@@ -54,12 +49,10 @@ class PackageRecommendationCalculatorTest {
 				.packageMaterialAvailable(false)
 				.build();
 
-		Recommendation expected = RESALE;
-
 		// WHEN
 		Recommendation actual = underTest.calculate(packageDamage);
 
 		// THEN
-		assertThat(actual).isEqualTo(expected);
+		assertThat(actual).isEqualTo(RESALE);
 	}
 }
