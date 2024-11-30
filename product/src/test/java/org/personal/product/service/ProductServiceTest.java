@@ -2,32 +2,22 @@ package org.personal.product.service;
 
 import org.personal.product.dto.GetModelAndTypeResponse;
 import org.personal.product.repository.ProductRepository;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.personal.shared.exception.CustomException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.mock;
 
-@ExtendWith(MockitoExtension.class)
 class ProductServiceTest {
 
-    @InjectMocks
-    private ProductService underTest;
-
-    @Mock
-    private ProductRepository productRepositoryMock;
+    private final ProductRepository productRepositoryMock = mock(ProductRepository.class);
+    private final ProductService underTest = new ProductService(productRepositoryMock );
 
     @Nested
     class TestGetManufacturers {
@@ -35,27 +25,26 @@ class ProductServiceTest {
         @Test
         void should_ThrowCustomException_When_DatabaseIsEmpty() {
             // GIVEN
-            given(productRepositoryMock.getManufacturers(anyString()))
+            String category = "Washing Machine";
+            given(productRepositoryMock.getManufacturers(category))
                     .willReturn(emptyList());
 
             // WHEN & THEN
-            assertThatThrownBy(() -> underTest.getManufacturers(RandomStringUtils.random(5)))
+            assertThatThrownBy(() -> underTest.getManufacturers(category))
                     .isInstanceOf(CustomException.class);
         }
 
         @Test
         void should_ReturnList_When_DatabaseHasData() {
             // GIVEN
-            List<String> expected = new ArrayList<>();
-            expected.add("Bosch");
-            expected.add("Siemens");
-            expected.add("Panasonic");
+            List<String> expected = List.of("Bosch", "Siemens", "Panasonic");
+            String category = "Washing Machine";
 
-            given(productRepositoryMock.getManufacturers(anyString()))
+            given(productRepositoryMock.getManufacturers(category))
                     .willReturn(expected);
 
             // WHEN
-            List<String> actual = underTest.getManufacturers(RandomStringUtils.random(5));
+            List<String> actual = underTest.getManufacturers(category);
 
             // THEN
             assertThat(actual).isEqualTo(expected);
@@ -68,27 +57,31 @@ class ProductServiceTest {
         @Test
         void should_ThrowCustomException_When_DatabaseIsEmpty() {
             // GIVEN
-            given(productRepositoryMock.findByManufacturer(anyString()))
+            String manufacturer = "Gorenje";
+
+            given(productRepositoryMock.findByManufacturer(manufacturer))
                     .willReturn(emptyList());
 
             // WHEN & THEN
-            assertThatThrownBy(() -> underTest.getModelsAndTypes(RandomStringUtils.random(5)))
+            assertThatThrownBy(() -> underTest.getModelsAndTypes(manufacturer))
                     .isInstanceOf(CustomException.class);
         }
 
         @Test
         void should_ReturnList_When_DatabaseHasData() {
             // GIVEN
-            List<GetModelAndTypeResponse> expected = new ArrayList<>();
-            expected.add(new GetModelAndTypeResponse("ModelOne", "TypeOne"));
-            expected.add(new GetModelAndTypeResponse("ModelTwo", "TypeTwo"));
-            expected.add(new GetModelAndTypeResponse("ModelThree", "TypeThree"));
+            List<GetModelAndTypeResponse> expected = List.of(
+                    new GetModelAndTypeResponse("ModelOne", "TypeOne"),
+                    new GetModelAndTypeResponse("ModelTwo", "TypeTwo"),
+                    new GetModelAndTypeResponse("ModelThree", "TypeThree")
+            );
+            String manufacturer = "Gorenje";
 
-            given(productRepositoryMock.findByManufacturer(anyString()))
+            given(productRepositoryMock.findByManufacturer(manufacturer))
                     .willReturn(expected);
 
             // WHEN
-            List<GetModelAndTypeResponse> actual = underTest.getModelsAndTypes(RandomStringUtils.random(5));
+            List<GetModelAndTypeResponse> actual = underTest.getModelsAndTypes(manufacturer);
 
             // THEN
             assertThat(actual).isEqualTo(expected);
