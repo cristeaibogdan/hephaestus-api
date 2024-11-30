@@ -44,7 +44,7 @@ class UserApplicationServiceTest {
 			// GIVEN
 
 			// WHEN
-			Boolean actual = underTest.isValidRegistrationCode(registrationCode);
+			boolean actual = underTest.isValidRegistrationCode(registrationCode);
 
 			// THEN
 			assertThat(actual).isTrue();
@@ -56,7 +56,7 @@ class UserApplicationServiceTest {
 			// GIVEN
 
 			// WHEN
-			Boolean actual = underTest.isValidRegistrationCode(registrationCode);
+			boolean actual = underTest.isValidRegistrationCode(registrationCode);
 
 			// THEN
 			assertThat(actual).isFalse();
