@@ -38,6 +38,45 @@ class WashingMachineApplicationServiceMvcValidationTest {
 	@MockBean WashingMachineReportGenerator reportGenerator;
 	@MockBean ProductClient productClient; //TODO: To be deleted
 
+	static Stream<Arguments> getInvalidCreateWashingMachineRequestTestCases() {
+		return Stream.of(
+				arguments(TestData.createWashingMachineRequest().toBuilder().category(null).build(), "category", null),
+				arguments(TestData.createWashingMachineRequest().toBuilder().identificationMode(null).build(), "identificationMode", null),
+				arguments(TestData.createWashingMachineRequest().toBuilder().manufacturer(null).build(), "manufacturer", null),
+				arguments(TestData.createWashingMachineRequest().toBuilder().model(null).build(), "model", null),
+				arguments(TestData.createWashingMachineRequest().toBuilder().type(null).build(), "type", null),
+				arguments(TestData.createWashingMachineRequest().toBuilder().serialNumber(null).build(), "serialNumber", null),
+				arguments(TestData.createWashingMachineRequest().toBuilder().returnType(null).build(), "returnType", null),
+				arguments(TestData.createWashingMachineRequest().toBuilder().damageType(null).build(), "damageType", null),
+				arguments(TestData.createWashingMachineRequest().toBuilder().createWashingMachineDetailRequest(null).build(), "createWashingMachineDetailRequest", null)
+		);
+	}
+
+	@ParameterizedTest(name = "Validation fails for property {1}, with value {2}")
+	@MethodSource("getInvalidCreateWashingMachineRequestTestCases")
+	void should_ThrowValidationException_When_ProvidedInvalidCreateWashingMachineRequest(CreateWashingMachineRequest request, String propertyName, Object invalidValue) throws Exception {
+		// GIVEN
+		String jsonRequest = jackson.writeValueAsString(request);
+
+		MockMultipartFile jsonFile = new MockMultipartFile( // avoids error Content-Type 'application/octet-stream' is not supported
+				"createWashingMachineRequest",
+				"I_Don't_Matter",
+				MediaType.APPLICATION_JSON_VALUE,
+				jsonRequest.getBytes());
+
+		// WHEN
+		ResultActions resultActions = mockMvc.perform(
+				multipart("/api/v1/washing-machines/save")
+						.file(jsonFile)
+						.contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+		);
+
+		// THEN
+		resultActions
+				.andExpect(status().is4xxClientError())
+				.andExpect(content().string(containsString(propertyName)));
+	}
+
 	static Stream<Arguments> getInvalidCreateWashingMachineDetailRequestTestCases() {
 		return Stream.of(
 				arguments(TestData.createWashingMachineDetailRequest().toBuilder().visibleSurfacesScratchesLength(-1).build(), "visibleSurfacesScratchesLength", -1),
@@ -63,7 +102,7 @@ class WashingMachineApplicationServiceMvcValidationTest {
 
 	@ParameterizedTest(name = "Validation fails for property {1}, with value {2}")
 	@MethodSource("getInvalidCreateWashingMachineDetailRequestTestCases")
-	void should_ThrowValidationException_When_ProvidedInvalidDTO(CreateWashingMachineDetailRequest dto, String propertyName, Object invalidValue) throws Exception {
+	void should_ThrowValidationException_When_ProvidedInvalidCreateWashingMachineDetailRequest(CreateWashingMachineDetailRequest dto, String propertyName, Object invalidValue) throws Exception {
 		// GIVEN
 		CreateWashingMachineRequest request = TestData.createWashingMachineRequest().toBuilder().createWashingMachineDetailRequest(dto).build();
 		String jsonRequest = jackson.writeValueAsString(request);
@@ -108,7 +147,7 @@ class WashingMachineApplicationServiceMvcValidationTest {
 
 	@ParameterizedTest(name = "Validation passes for property {1}, with value {2}")
 	@MethodSource("getValidCreateWashingMachineDetailRequestTestCases")
-	void should_PassValidation_When_ProvidedValidDTO(CreateWashingMachineDetailRequest dto, String propertyName, Object validValue) throws Exception {
+	void should_PassValidation_When_ProvidedValidCreateWashingMachineDetailRequest(CreateWashingMachineDetailRequest dto, String propertyName, Object validValue) throws Exception {
 		// GIVEN
 		CreateWashingMachineRequest request = TestData.createWashingMachineRequest().toBuilder().createWashingMachineDetailRequest(dto).build();
 		String jsonRequest = jackson.writeValueAsString(request);
