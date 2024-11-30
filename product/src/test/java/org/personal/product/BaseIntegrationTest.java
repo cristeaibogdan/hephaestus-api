@@ -10,7 +10,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 public abstract class BaseIntegrationTest {
 
 	@ServiceConnection
-	private final static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16-alpine");
+	private static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16-alpine");
 
 	static {
 		postgres.start();

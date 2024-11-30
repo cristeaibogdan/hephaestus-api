@@ -10,7 +10,6 @@ import org.personal.product.repository.ProductRepository;
 import org.personal.shared.exception.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -23,9 +22,11 @@ class ProductControllerIntegrationTest extends BaseIntegrationTest {
 
 	@BeforeAll
 	void loadDataInDB() {
-		List<Product> products = new ArrayList<>();
-		products.add(new Product("Washing Machine", "Bosch", "model1", "type1", "hephaestus-washing-machine-001"));
-		products.add(new Product("Washing Machine", "WhirlPool", "model2", "type2", "hephaestus-washing-machine-002"));
+		List<Product> products = List.of(
+				new Product("Washing Machine", "Bosch", "model1", "type1", "hephaestus-washing-machine-001"),
+				new Product("Washing Machine", "WhirlPool", "model2", "type2", "hephaestus-washing-machine-002")
+		);
+
 		productRepository.saveAll(products);
 	}
 
