@@ -67,8 +67,8 @@ class GetManyExceptionMvcTest {
 		// THEN
 		resultActions
 				.andExpect(status().isNotFound())
-				.andExpect(content().string(containsString(content.get(0))))
-				.andExpect(content().string(containsString(content.get(1))))
-				.andExpect(content().string(containsString(content.get(2))));
+				.andExpect(content().string(containsString("I don't exist")))
+				.andExpect(content().string(containsString("Something")))
+				.andExpect(content().string(containsString("You won't find me")));
 	}
 }

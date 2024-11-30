@@ -78,7 +78,7 @@ class UserApplicationServiceTest {
 
 		@ParameterizedTest(name = "Valid OrganizationAndCountryDTO for {1}")
 		@MethodSource("getOrganizationAndCountryTestCases")
-		void should_ReturnOrganizationAndCountryDTO_When_RegistrationCodeIsValid(
+		void should_ReturnGetOrganizationAndCountryResponse_When_RegistrationCodeIsValid(
 				GetOrganizationAndCountryResponse expected,
 				String registrationCode) {
 			// GIVEN
@@ -157,7 +157,7 @@ class UserApplicationServiceTest {
 			given(userRepositoryMock.existsByUsername(dto.username()))
 					.willReturn(true);
 
-			// When & THEN
+			// WHEN & THEN
 			assertThatThrownBy(() -> underTest.register(dto))
 					.isInstanceOf(CustomException.class);
 		}

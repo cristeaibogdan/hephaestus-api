@@ -19,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -32,12 +31,13 @@ class GetManyIntegrationTest extends BaseIntegrationTest {
 
 	@BeforeAll
 	void loadDataInDB() {
-		List<WashingMachine> washingMachines = new ArrayList<>();
-		washingMachines.add(new WashingMachine("Washing Machine", "Gorenje", DamageType.IN_USE, ReturnType.COMMERCIAL, IdentificationMode.DATA_MATRIX, "serial1", "modelA", "TypeZ", Recommendation.OUTLET, TestData.washingMachineDetail()));
-		washingMachines.add(new WashingMachine("Washing Machine", "Gorenje", DamageType.IN_USE, ReturnType.COMMERCIAL, IdentificationMode.DATA_MATRIX, "serial2", "modelA", "TypeZ", Recommendation.OUTLET, TestData.washingMachineDetail()));
-		washingMachines.add(new WashingMachine("Washing Machine", "Gorenje", DamageType.IN_USE, ReturnType.SERVICE, IdentificationMode.DATA_MATRIX, "serial3", "modelB", "TypeZ", Recommendation.REPACKAGE, TestData.washingMachineDetail()));
-		washingMachines.add(new WashingMachine("Washing Machine", "Gorenje", DamageType.IN_USE, ReturnType.SERVICE, IdentificationMode.QR_CODE, "serial4", "modelB", "TypeX", Recommendation.REPAIR, TestData.washingMachineDetail()));
-		washingMachines.add(new WashingMachine("Washing Machine", "Gorenje", DamageType.IN_USE, ReturnType.SERVICE, IdentificationMode.QR_CODE, "serial5", "modelC", "TypeX", Recommendation.REPAIR, TestData.washingMachineDetail()));
+		List<WashingMachine> washingMachines = List.of(
+				new WashingMachine("Washing Machine", "Gorenje", DamageType.IN_USE, ReturnType.COMMERCIAL, IdentificationMode.DATA_MATRIX, "serial1", "modelA", "TypeZ", Recommendation.OUTLET, TestData.washingMachineDetail()),
+				new WashingMachine("Washing Machine", "Gorenje", DamageType.IN_USE, ReturnType.COMMERCIAL, IdentificationMode.DATA_MATRIX, "serial2", "modelA", "TypeZ", Recommendation.OUTLET, TestData.washingMachineDetail()),
+				new WashingMachine("Washing Machine", "Gorenje", DamageType.IN_USE, ReturnType.SERVICE, IdentificationMode.DATA_MATRIX, "serial3", "modelB", "TypeZ", Recommendation.REPACKAGE, TestData.washingMachineDetail()),
+				new WashingMachine("Washing Machine", "Gorenje", DamageType.IN_USE, ReturnType.SERVICE, IdentificationMode.QR_CODE, "serial4", "modelB", "TypeX", Recommendation.REPAIR, TestData.washingMachineDetail()),
+				new WashingMachine("Washing Machine", "Gorenje", DamageType.IN_USE, ReturnType.SERVICE, IdentificationMode.QR_CODE, "serial5", "modelC", "TypeX", Recommendation.REPAIR, TestData.washingMachineDetail())
+		);
 
 		washingMachineRepository.saveAll(washingMachines);
 	}
@@ -55,11 +55,7 @@ class GetManyIntegrationTest extends BaseIntegrationTest {
 	@Test
 	void should_ReturnWashingMachines_When_ProvidedValidSerialNumbers() {
 		// GIVEN
-		List<String> serialNumbers = new ArrayList<>(List.of(
-				"serial1",
-				"serial2",
-				"serial3"
-		));
+		List<String> serialNumbers = List.of("serial1", "serial2", "serial3");
 
 		// WHEN
 		Map<String, GetWashingMachineFullResponse> actual = washingMachineApplicationService.loadMany(serialNumbers);
@@ -80,9 +76,7 @@ class GetManyIntegrationTest extends BaseIntegrationTest {
 		serialNumbers.add("serial1");
 		serialNumbers.add("serial2");
 
-		List<String> expectedSerialNumbers = serialNumbers.stream()
-				.filter(sn -> Objects.nonNull(sn))
-				.toList();
+		List<String> expectedSerialNumbers = List.of("serial1", "serial2");
 
 		// WHEN
 		Map<String, GetWashingMachineFullResponse> actual = washingMachineApplicationService.loadMany(serialNumbers);
@@ -98,7 +92,7 @@ class GetManyIntegrationTest extends BaseIntegrationTest {
 	@Test
 	void should_ReturnNullWashingMachines_When_SerialNumbersAreNotFound() {
 		// GIVEN
-		List<String> serialNumbers = new ArrayList<>(List.of(
+		List<String> serialNumbers = List.of(
 				"I don't exist",
 				"serial1",
 				"serial2",
@@ -106,13 +100,9 @@ class GetManyIntegrationTest extends BaseIntegrationTest {
 				"serial4",
 				"Can't find me",
 				"Nothing"
-		));
+		);
 
-		List<String> notFoundSerialNumbers = new ArrayList<>(List.of(
-				"I don't exist",
-				"Can't find me",
-				"Nothing"
-		));
+		List<String> notFoundSerialNumbers = List.of("I don't exist", "Can't find me", "Nothing");
 
 		// WHEN
 		Map<String, GetWashingMachineFullResponse> actual = washingMachineApplicationService.loadMany(serialNumbers);

@@ -27,6 +27,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+import static org.personal.washingmachine.dto.Mapper.*;
 
 class WashingMachineApplicationServiceTest {
 	WashingMachineRepository washingMachineRepositoryMock = mock(WashingMachineRepository.class);
@@ -148,7 +149,7 @@ class WashingMachineApplicationServiceTest {
 		given(washingMachineRepositoryMock.findBySerialNumber(serialNumber))
 				.willReturn(Optional.of(washingMachine));
 
-		GetWashingMachineFullResponse expected = Mapper.WashingMachineMapper.toGetWashingMachineFullResponse(washingMachine);
+		GetWashingMachineFullResponse expected = WashingMachineMapper.toGetWashingMachineFullResponse(washingMachine);
 
 		// WHEN
 		GetWashingMachineFullResponse actual = underTest.load(serialNumber);
