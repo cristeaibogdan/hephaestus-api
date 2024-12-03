@@ -16,7 +16,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-class GetManySocialTest {
+class LoadManySocialTest {
 	WashingMachineRepository washingMachineRepositoryMock = mock(WashingMachineRepository.class);
 
 	WashingMachineService washingMachineService = new WashingMachineService(washingMachineRepositoryMock);
