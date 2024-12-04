@@ -1,6 +1,7 @@
 package org.personal.washingmachine.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -27,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(WashingMachineApplicationService.class)
-class WashingMachineApplicationServiceMvcValidationTest {
+class SaveMvcTest {
 
 	@Autowired MockMvc mockMvc;
 	@Autowired ObjectMapper jackson;
@@ -89,6 +90,25 @@ class WashingMachineApplicationServiceMvcValidationTest {
 		resultActions
 				.andExpect(status().is4xxClientError())
 				.andExpect(content().string(containsString(propertyName)));
+	}
+
+	@Test
+	void should_ReturnCreatedStatus_When_ProvidedValidCreateWashingMachineRequest() throws Exception {
+		// GIVEN
+		CreateWashingMachineRequest request = TestData.createWashingMachineRequest();
+		String jsonRequest = jackson.writeValueAsString(request);
+		MockMultipartFile createWashingMachineRequestJson = getMockMultipartFile(jsonRequest);
+
+		// WHEN
+		ResultActions resultActions = mockMvc.perform(
+				multipart("/api/v1/washing-machines/save")
+						.file(createWashingMachineRequestJson)
+						.file(MOCK_IMAGE_FILE)
+						.contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+		);
+
+		// THEN
+		resultActions.andExpect(status().isCreated());
 	}
 
 	static Stream<Arguments> getInvalidCreateWashingMachineDetailRequestTestCases() {
