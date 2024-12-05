@@ -21,7 +21,6 @@ import org.springframework.test.web.servlet.ResultActions;
 import java.util.stream.Stream;
 
 import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -39,22 +38,7 @@ class SaveMvcTest {
 	@MockBean WashingMachineReportGenerator reportGenerator;
 	@MockBean ProductClient productClient; //TODO: To be deleted
 
-	private static final MockMultipartFile MOCK_IMAGE_FILE = new MockMultipartFile( // API expects at least 1 image when saving.
-			"imageFiles",
-			"whatever.jpeg",
-			MediaType.IMAGE_JPEG_VALUE,
-			"image content".getBytes()
-	);
-
-	private MockMultipartFile getMockMultipartFile(String jsonRequest) {
-		return new MockMultipartFile( // avoids error Content-Type 'application/octet-stream' is not supported
-				"createWashingMachineRequest",
-				"I_Don't_Matter",
-				MediaType.APPLICATION_JSON_VALUE,
-				jsonRequest.getBytes());
-	}
-
-	static Stream<Arguments> getInvalidCreateWashingMachineRequestTestCases() {
+	static Stream<Arguments> getInvalidCreateWashingMachineRequests() {
 		return Stream.of(
 				arguments(TestData.createWashingMachineRequest().toBuilder().category(null).build(), "category", null),
 				arguments(TestData.createWashingMachineRequest().toBuilder().category("  ").build(), "category", " (blank string) "),
@@ -72,23 +56,16 @@ class SaveMvcTest {
 	}
 
 	@ParameterizedTest(name = "Validation fails for property {1}, with value {2}")
-	@MethodSource("getInvalidCreateWashingMachineRequestTestCases")
+	@MethodSource("getInvalidCreateWashingMachineRequests")
 	void should_ThrowValidationException_When_ProvidedInvalidCreateWashingMachineRequest(CreateWashingMachineRequest request, String propertyName, Object invalidValue) throws Exception {
 		// GIVEN
-		String jsonRequest = jackson.writeValueAsString(request);
-		MockMultipartFile createWashingMachineRequestJson = getMockMultipartFile(jsonRequest);
 
 		// WHEN
-		ResultActions resultActions = mockMvc.perform(
-				multipart("/api/v1/washing-machines/save")
-						.file(createWashingMachineRequestJson)
-						.file(MOCK_IMAGE_FILE)
-						.contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
-		);
+		ResultActions resultActions = performRequest(request);
 
 		// THEN
 		resultActions
-				.andExpect(status().is4xxClientError())
+				.andExpect(status().isBadRequest())
 				.andExpect(content().string(containsString(propertyName)));
 	}
 
@@ -96,22 +73,15 @@ class SaveMvcTest {
 	void should_ReturnCreatedStatus_When_ProvidedValidCreateWashingMachineRequest() throws Exception {
 		// GIVEN
 		CreateWashingMachineRequest request = TestData.createWashingMachineRequest();
-		String jsonRequest = jackson.writeValueAsString(request);
-		MockMultipartFile createWashingMachineRequestJson = getMockMultipartFile(jsonRequest);
 
 		// WHEN
-		ResultActions resultActions = mockMvc.perform(
-				multipart("/api/v1/washing-machines/save")
-						.file(createWashingMachineRequestJson)
-						.file(MOCK_IMAGE_FILE)
-						.contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
-		);
+		ResultActions resultActions = performRequest(request);
 
 		// THEN
 		resultActions.andExpect(status().isCreated());
 	}
 
-	static Stream<Arguments> getInvalidCreateWashingMachineDetailRequestTestCases() {
+	static Stream<Arguments> getInvalidCreateWashingMachineDetailRequests() {
 		return Stream.of(
 				arguments(TestData.createWashingMachineDetailRequest().toBuilder().visibleSurfacesScratchesLength(-1).build(), "visibleSurfacesScratchesLength", -1),
 				arguments(TestData.createWashingMachineDetailRequest().toBuilder().visibleSurfacesScratchesLength(11).build(), "visibleSurfacesScratchesLength", 11),
@@ -135,28 +105,21 @@ class SaveMvcTest {
 	}
 
 	@ParameterizedTest(name = "Validation fails for property {1}, with value {2}")
-	@MethodSource("getInvalidCreateWashingMachineDetailRequestTestCases")
+	@MethodSource("getInvalidCreateWashingMachineDetailRequests")
 	void should_ThrowValidationException_When_ProvidedInvalidCreateWashingMachineDetailRequest(CreateWashingMachineDetailRequest dto, String propertyName, Object invalidValue) throws Exception {
 		// GIVEN
 		CreateWashingMachineRequest request = TestData.createWashingMachineRequest().toBuilder().createWashingMachineDetailRequest(dto).build();
-		String jsonRequest = jackson.writeValueAsString(request);
-		MockMultipartFile createWashingMachineRequestJson = getMockMultipartFile(jsonRequest);
 
 		// WHEN
-		ResultActions resultActions = mockMvc.perform(
-				multipart("/api/v1/washing-machines/save")
-						.file(createWashingMachineRequestJson)
-						.file(MOCK_IMAGE_FILE)
-						.contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
-		);
+		ResultActions resultActions = performRequest(request);
 
 		// THEN
 		resultActions
-				.andExpect(status().is4xxClientError())
+				.andExpect(status().isBadRequest())
 				.andExpect(content().string(containsString(propertyName)));
 	}
 
-	static Stream<Arguments> getValidCreateWashingMachineDetailRequestTestCases() {
+	static Stream<Arguments> getValidCreateWashingMachineDetailRequests() {
 		return Stream.of(
 				arguments(TestData.createWashingMachineDetailRequest().toBuilder().visibleSurfacesScratchesLength(0).build(), "visibleSurfacesScratchesLength", 0),
 				arguments(TestData.createWashingMachineDetailRequest().toBuilder().visibleSurfacesScratchesLength(10).build(), "visibleSurfacesScratchesLength", 10),
@@ -176,24 +139,35 @@ class SaveMvcTest {
 	}
 
 	@ParameterizedTest(name = "Validation passes for property {1}, with value {2}")
-	@MethodSource("getValidCreateWashingMachineDetailRequestTestCases")
+	@MethodSource("getValidCreateWashingMachineDetailRequests")
 	void should_PassValidation_When_ProvidedValidCreateWashingMachineDetailRequest(CreateWashingMachineDetailRequest dto, String propertyName, Object validValue) throws Exception {
 		// GIVEN
 		CreateWashingMachineRequest request = TestData.createWashingMachineRequest().toBuilder().createWashingMachineDetailRequest(dto).build();
-		String jsonRequest = jackson.writeValueAsString(request);
-		MockMultipartFile createWashingMachineRequestJson = getMockMultipartFile(jsonRequest);
 
 		// WHEN
-		ResultActions resultActions = mockMvc.perform(
-				multipart("/api/v1/washing-machines/save")
-						.file(createWashingMachineRequestJson)
-						.file(MOCK_IMAGE_FILE)
-						.contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
-		);
+		ResultActions resultActions = performRequest(request);
 
 		// THEN
-		resultActions
-				.andExpect(status().is2xxSuccessful())
-				.andExpect(content().string(not(containsString(propertyName))));
+		resultActions.andExpect(status().isCreated());
+	}
+
+	private ResultActions performRequest(CreateWashingMachineRequest request) throws Exception {
+		String jsonRequest = jackson.writeValueAsString(request);
+		return mockMvc.perform(
+				multipart("/api/v1/washing-machines/save")
+						.file(new MockMultipartFile( // avoids error Content-Type 'application/octet-stream' is not supported
+								"createWashingMachineRequest",
+								"I_Don't_Matter",
+								MediaType.APPLICATION_JSON_VALUE,
+								jsonRequest.getBytes())
+						)
+						.file(new MockMultipartFile( // API expects at least 1 image when saving.
+								"imageFiles",
+								"whatever.jpeg",
+								MediaType.IMAGE_JPEG_VALUE,
+								"image content".getBytes())
+						)
+						.contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+		);
 	}
 }

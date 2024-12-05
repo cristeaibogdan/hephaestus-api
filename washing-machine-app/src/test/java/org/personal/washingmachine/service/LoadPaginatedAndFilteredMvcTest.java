@@ -1,6 +1,7 @@
 package org.personal.washingmachine.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -42,14 +43,12 @@ class LoadPaginatedAndFilteredMvcTest {
 				.build();
 
 		// WHEN
-		ResultActions resultActions = mockMvc.perform(
-				post("/api/v1/washing-machines")
-						.content(jackson.writeValueAsString(request))
-						.contentType(MediaType.APPLICATION_JSON));
+		ResultActions resultActions = performRequest(request);
 
 		// THEN
 		resultActions
-				.andExpect(status().is4xxClientError())
+				.andExpect(status().isBadRequest())
+				.andExpect(content().string(not(containsString("{"))))
 				.andExpect(content().string(containsString("pageIndex")));
 	}
 
@@ -61,14 +60,12 @@ class LoadPaginatedAndFilteredMvcTest {
 				.build();
 
 		// WHEN
-		ResultActions resultActions = mockMvc.perform(
-				post("/api/v1/washing-machines")
-						.content(jackson.writeValueAsString(request))
-						.contentType(MediaType.APPLICATION_JSON));
+		ResultActions resultActions = performRequest(request);
 
 		// THEN
 		resultActions
-				.andExpect(status().is4xxClientError())
+				.andExpect(status().isBadRequest())
+				.andExpect(content().string(not(containsString("{"))))
 				.andExpect(content().string(containsString("pageSize")));
 	}
 
@@ -95,7 +92,14 @@ class LoadPaginatedAndFilteredMvcTest {
 
 		// THEN
 		resultActions
-				.andExpect(status().is4xxClientError())
+				.andExpect(status().isBadRequest())
 				.andExpect(content().string(not(containsString("Internal Translation Error"))));
+	}
+
+	private ResultActions performRequest(SearchWashingMachineRequest request) throws Exception {
+		return mockMvc.perform(
+				post("/api/v1/washing-machines")
+						.content(jackson.writeValueAsString(request))
+						.contentType(MediaType.APPLICATION_JSON));
 	}
 }

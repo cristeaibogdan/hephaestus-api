@@ -32,16 +32,12 @@ class LoadManyMvcTest {
 	@MockBean ProductClient productClient; //TODO: To be deleted
 
 	@Test
-	void should_ThrowException_When_ListIsEmpty() throws Exception {
+	void should_ThrowCustomException_When_ListIsEmpty() throws Exception {
 		// GIVEN
-		List<String> content = List.of();
-		String jsonRequest = jackson.writeValueAsString(content);
+		List<String> request = List.of();
 
 		// WHEN
-		ResultActions resultActions = mockMvc.perform(
-				post("/api/v1/washing-machines/many")
-						.content(jsonRequest)
-						.contentType(MediaType.APPLICATION_JSON));
+		ResultActions resultActions = performRequest(request);
 
 		// THEN
 		resultActions
@@ -50,16 +46,12 @@ class LoadManyMvcTest {
 	}
 
 	@Test
-	void should_ThrowException_When_NoSerialNumbersAreFoundInDB() throws Exception {
+	void should_ThrowCustomException_When_NoSerialNumbersAreFoundInDB() throws Exception {
 		// GIVEN
-		List<String> content = List.of("I don't exist", "Something", "You won't find me");
-		String jsonRequest = jackson.writeValueAsString(content);
+		List<String> request = List.of("I don't exist", "Something", "You won't find me");
 
 		// WHEN
-		ResultActions resultActions = mockMvc.perform(
-				post("/api/v1/washing-machines/many")
-						.content(jsonRequest)
-						.contentType(MediaType.APPLICATION_JSON));
+		ResultActions resultActions = performRequest(request);
 
 		// THEN
 		resultActions
@@ -67,5 +59,12 @@ class LoadManyMvcTest {
 				.andExpect(content().string(containsString("I don't exist")))
 				.andExpect(content().string(containsString("Something")))
 				.andExpect(content().string(containsString("You won't find me")));
+	}
+
+	private ResultActions performRequest(List<String> request) throws Exception {
+		return mockMvc.perform(
+				post("/api/v1/washing-machines/many")
+						.content(jackson.writeValueAsString(request))
+						.contentType(MediaType.APPLICATION_JSON));
 	}
 }
