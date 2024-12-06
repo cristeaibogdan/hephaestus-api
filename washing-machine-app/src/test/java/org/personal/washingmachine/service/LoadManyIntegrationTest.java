@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -102,7 +103,10 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 				"Nothing"
 		);
 
-		List<String> notFoundSerialNumbers = List.of("I don't exist", "Can't find me", "Nothing");
+		Map<String, GetWashingMachineFullResponse> notFoundMap = new HashMap<>();
+		notFoundMap.put("I don't exist", null);
+		notFoundMap.put("Can't find me", null);
+		notFoundMap.put("Nothing", null);
 
 		// WHEN
 		Map<String, GetWashingMachineFullResponse> actual = washingMachineApplicationService.loadMany(serialNumbers);
@@ -110,9 +114,7 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 		// THEN
 		assertThat(actual)
 				.isNotEmpty()
-				.containsOnlyKeys(serialNumbers);
-
-		assertThat(notFoundSerialNumbers)
-				.allSatisfy(sn -> assertThat(actual).containsEntry(sn, null));
+				.containsOnlyKeys(serialNumbers)
+				.containsAllEntriesOf(notFoundMap);
 	}
 }
