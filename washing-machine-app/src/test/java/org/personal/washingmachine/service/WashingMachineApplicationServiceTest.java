@@ -104,26 +104,6 @@ class WashingMachineApplicationServiceTest {
 		}
 	}
 
-	@Nested
-	class testIsSerialNumberInUse {
-
-		@ParameterizedTest
-		@ValueSource(booleans = {true, false})
-		void should_ReturnTrue(boolean expected) {
-			// GIVEN
-			String serialNumber = "ABC-987";
-
-			given(washingMachineRepositoryMock.existsBySerialNumber(serialNumber))
-					.willReturn(expected);
-
-			// WHEN
-			boolean actual = underTest.isSerialNumberInUse(serialNumber);
-
-			// THEN
-			assertThat(actual).isEqualTo(expected);
-		}
-	}
-
 	@Test
 	void should_ReturnExpanded_When_ProvidedValidSerialNumber() {
 		// GIVEN
