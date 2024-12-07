@@ -12,7 +12,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-class ProductControllerTest {
+class GetProductIdentificationSocialTest {
 
 	ProductRepository productRepositoryMock = mock(ProductRepository.class);
 	ProductService productService = new ProductService(productRepositoryMock);

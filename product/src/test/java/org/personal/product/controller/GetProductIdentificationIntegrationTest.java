@@ -15,7 +15,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class ProductControllerIntegrationTest extends BaseIntegrationTest {
+class GetProductIdentificationIntegrationTest extends BaseIntegrationTest {
 
 	@Autowired ProductController underTest;
 	@Autowired ProductRepository productRepository;

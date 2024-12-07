@@ -1,6 +1,7 @@
 package org.personal.product.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 import org.personal.product.dto.GetProductIdentificationResponse;
 import org.personal.product.service.ProductService;
@@ -20,13 +21,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(ProductController.class)
-class ProductControllerMvcTest {
+class GetProductIdentificationMvcTest {
 	@Autowired MockMvc mockMvc;
 	@Autowired ObjectMapper jackson;
 	@MockBean ProductService productService;
 
 	@Test
-	void should_ReturnStatusOk_When_ProvidedQrCode() throws Exception {
+	void should_ReturnStatusOk_When_QrCodePresent() throws Exception {
 		// GIVEN
 		String qrCode = "hephaestus-washing-machine-001";
 
@@ -39,8 +40,7 @@ class ProductControllerMvcTest {
 		given(productService.getProductIdentification(qrCode)).willReturn(expected);
 
 		// WHEN
-		ResultActions resultActions = mockMvc.perform(
-				get("/api/v1/products/{qrCode}", qrCode));
+		ResultActions resultActions = performRequest(qrCode);
 
 		// THEN
 		resultActions
@@ -57,12 +57,15 @@ class ProductControllerMvcTest {
 				.willThrow(new CustomException(ErrorCode.QR_CODE_NOT_FOUND));
 
 		// WHEN
-		ResultActions resultActions = mockMvc.perform(
-				get("/api/v1/products/{qrCode}", qrCode));
+		ResultActions resultActions = performRequest(qrCode);
 
 		// THEN
 		resultActions
 				.andExpect(status().isNotFound())
 				.andExpect(content().string(not(containsString("Internal Translation Error"))));
+	}
+
+	private ResultActions performRequest(String qrCode) throws Exception {
+		return mockMvc.perform(get("/api/v1/products/{qrCode}", qrCode));
 	}
 }

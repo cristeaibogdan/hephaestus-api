@@ -13,7 +13,7 @@ Goal:
    d. Flyway needs to do the above changes for DB
 
 *** A. Social Unit Test *** => Created logic in controller/service/repository
-1. Create ProductControllerTest class
+1. Create GetProductIdentificationSocialTest class
 2. Instantiate ProductController
 3. Instantiate ProductService
 4. Mock ProductRepository
@@ -65,7 +65,7 @@ Goal:
 
 *** B. MockMVC Test *** => Added endpoint annotations, added Error code QR_CODE_NOT_FOUND and message in message.properties
 Phase 1 - ReturnStatusOk
-1. Create ProductControllerMvcTest class
+1. Create GetProductIdentificationMvcTest class
 2. Add @WebMvcTest(ProductController.class)
 3. Add 	@Autowired MockMvc mockMvc;
        	@Autowired ObjectMapper jackson;
@@ -73,7 +73,7 @@ Phase 1 - ReturnStatusOk
 5. Write dummy test assertThat(true).isTrue();
 6. Test is green
 
-7. Rename test to should_ReturnStatusOk_When_ProvidedQrCode
+7. Rename test to should_ReturnStatusOk_When_QrCodePresent
 8. Add GIVEN, WHEN, THEN part
 9. In GIVEN write String qrCode = "hephaestus-washing-machine-001";
 10. In WHEN write ResultActions resultActions = mockMvc.perform(
@@ -117,7 +117,7 @@ Phase 2 - ReturnStatusNotFound and user message
 
 *** C. Integration Test *** => Added flyway migration scripts, add Optional and throw when empty
 Phase 1 - Return GetProductIdentificationResponse
-1. Create ProductControllerIntegrationTest class
+1. Create GetProductIdentificationIntegrationTest class
 2. Add dummy test
 3. Copy paste BaseIntegrationTest from washing machine module
 4. Extend the class with it
