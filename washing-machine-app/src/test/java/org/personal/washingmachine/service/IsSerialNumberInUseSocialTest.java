@@ -35,7 +35,7 @@ class IsSerialNumberInUseSocialTest {
 			productClient
 	);
 
-	@ParameterizedTest()
+	@ParameterizedTest
 	@ValueSource(booleans = {true, false})
 	void should_ReturnExpectedResult(boolean expected) {
 		// GIVEN
