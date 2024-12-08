@@ -22,6 +22,3 @@ jobs:
         
     - name: Build with Maven
       run: mvn -B package --file pom.xml
-
-    - name: Run Slow Integration Tests
-      run: mvn test -Dgroups=slow -X

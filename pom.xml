@@ -124,15 +124,15 @@
         </pluginManagement>
 
         <plugins> <!-- Will be available in all modules -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <!-- Exclude all test that have the tag "slow" when running maven lifecycle test -->
-                    <excludedGroups>slow</excludedGroups>
-                </configuration>
-                <version>3.2.5</version>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-surefire-plugin</artifactId>-->
+<!--                <configuration>-->
+<!--                    &lt;!&ndash; Exclude all test that have the tag "slow" when running maven lifecycle test &ndash;&gt;-->
+<!--                    <excludedGroups>slow</excludedGroups>-->
+<!--                </configuration>-->
+<!--                <version>3.2.5</version>-->
+<!--            </plugin>-->
         </plugins>
     </build>
 </project>
