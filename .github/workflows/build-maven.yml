@@ -24,4 +24,4 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: Run Slow Integration Tests
-      run: mvn test -Dgroups=slow
+      run: mvn test -Dgroups=slow -X
