@@ -51,59 +51,6 @@ class WashingMachineApplicationServiceTest {
 			productClient
 	);
 
-	@Nested
-	class testGetReport {
-
-		@Test
-		void should_ReturnReport() {
-			// GIVEN
-			String serialNumber = "ABC-987";
-
-			WashingMachineDetail washingMachineDetail = new WashingMachineDetail(
-					new PackageDamage(true, true, true),
-					new VisibleSurfaceDamage(
-							5.5,
-							0,
-							"some minor damage",
-							"some major damage"
-					),
-					new HiddenSurfaceDamage(
-							5.5,
-							0,
-							"some minor damage",
-							"some major damage"
-					),
-					0,
-					0
-			);
-
-			WashingMachine washingMachine = new WashingMachine(
-					"Washing Machine",
-					"Whirlpool",
-					DamageType.IN_USE,
-					ReturnType.SERVICE,
-					IdentificationMode.DATA_MATRIX,
-					"test",
-					"modelOne",
-					"typeOne",
-					Recommendation.RESALE,
-					washingMachineDetail
-			);
-
-			// washingMachine.addImage(); TODO: How to create images?
-
-			given(washingMachineRepositoryMock.findBySerialNumber(serialNumber))
-					.willReturn(Optional.of(washingMachine));
-
-			// WHEN
-//            WashingMachineReportDTO report = underTest.getReport(serialNumber);
-
-			// THEN
-//            assertThat(report.createdAt())
-//                    .isEqualTo(LocalDateTime.now()); TODO: This is not possible, as hibernate generated the date after saving...
-		}
-	}
-
 	@Test
 	void should_ReturnExpanded_When_ProvidedValidSerialNumber() {
 		// GIVEN
