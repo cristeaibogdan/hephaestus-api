@@ -130,7 +130,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <!-- Exclude all test that have the tag "slow" when running maven lifecycle test -->
-                    <!-- During GitHub actions this is set to none, meaning all tests are included and ran -->
+                    <!-- During GitHub actions this is set to (none), meaning all tests are included and ran -->
                     <excludedGroups>${excluded-tests.group}</excludedGroups>
                 </configuration>
                 <version>3.2.5</version>
