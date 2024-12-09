@@ -1,11 +1,10 @@
 package org.personal.washingmachine.service;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.personal.washingmachine.BaseIntegrationTest;
 import org.personal.washingmachine.TestData;
@@ -18,17 +17,32 @@ import org.personal.washingmachine.enums.Recommendation;
 import org.personal.washingmachine.enums.ReturnType;
 import org.personal.washingmachine.repository.WashingMachineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.not;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
+@AutoConfigureMockMvc
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
-	@Autowired WashingMachineApplicationService washingMachineApplicationService;
+
+	@Autowired MockMvc mockMvc;
+	@Autowired ObjectMapper jackson;
+
+	@Autowired WashingMachineApplicationService underTest;
 	@Autowired WashingMachineRepository washingMachineRepository;
 
 	@BeforeAll
@@ -64,7 +78,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 				.build();
 
 		// WHEN
-		Page<GetWashingMachineSimpleResponse> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
+		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(dto);
 
 		// THEN
 		assertThat(actual.getSize())
@@ -80,7 +94,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 				.build();
 
 		// WHEN
-		Page<GetWashingMachineSimpleResponse> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
+		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(dto);
 
 		// THEN
 		assertThat(actual.getContent())
@@ -98,7 +112,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 				.build();
 
 		// WHEN
-		Page<GetWashingMachineSimpleResponse> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
+		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(dto);
 
 		// THEN
 		assertThat(actual.getContent())
@@ -116,7 +130,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 				.build();
 
 		// WHEN
-		Page<GetWashingMachineSimpleResponse> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
+		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(dto);
 
 		// THEN
 		assertThat(actual.getContent())
@@ -134,7 +148,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 				.build();
 
 		// WHEN
-		Page<GetWashingMachineSimpleResponse> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
+		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(dto);
 
 		// THEN
 		assertThat(actual.getContent())
@@ -152,7 +166,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 				.build();
 
 		// WHEN
-		Page<GetWashingMachineSimpleResponse> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
+		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(dto);
 
 		// THEN
 		assertThat(actual.getContent())
@@ -170,7 +184,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 				.build();
 
 		// WHEN
-		Page<GetWashingMachineSimpleResponse> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
+		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(dto);
 
 		// THEN
 		assertThat(actual.getContent())
@@ -188,7 +202,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 				.build();
 
 		// WHEN
-		Page<GetWashingMachineSimpleResponse> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
+		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(dto);
 
 		// THEN
 		assertThat(actual.getContent())
@@ -206,7 +220,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 				.build();
 
 		// WHEN
-		Page<GetWashingMachineSimpleResponse> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
+		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(dto);
 
 		// THEN
 		assertThat(actual.getContent())
@@ -223,7 +237,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 				.build();
 
 		// WHEN
-		Page<GetWashingMachineSimpleResponse> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
+		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(dto);
 
 		// THEN
 		assertThat(actual.getContent())
@@ -242,7 +256,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 				.build();
 
 		// WHEN
-		Page<GetWashingMachineSimpleResponse> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
+		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(dto);
 
 		// THEN
 		assertThat(actual.getContent())
@@ -263,7 +277,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 				.build();
 
 		// WHEN
-		Page<GetWashingMachineSimpleResponse> actual = washingMachineApplicationService.loadPaginatedAndFiltered(dto);
+		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(dto);
 
 		// THEN
 		assertThat(actual.getContent())
@@ -275,4 +289,34 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 				});
 	}
 
+	@Nested
+	class MvcTest {
+
+		private static final String[] availableLocales = {"en", "es", "it", "ro", "sl"};
+
+		private static Stream<String> localeProvider() {
+			return Stream.of(availableLocales);
+		}
+
+		@ParameterizedTest
+		@MethodSource("localeProvider")
+		void should_ThrowCustomException_When_InvalidDate(String locale) throws Exception {
+			// GIVEN
+			SearchWashingMachineRequest request = TestData.searchWashingMachineRequest().toBuilder()
+					.createdAt("invalid date")
+					.build();
+
+			// WHEN
+			ResultActions resultActions = mockMvc.perform(
+					post("/api/v1/washing-machines")
+							.content(jackson.writeValueAsString(request))
+							.contentType(MediaType.APPLICATION_JSON)
+							.header("Accept-Language", locale));
+
+			// THEN
+			resultActions
+					.andExpect(status().isBadRequest())
+					.andExpect(content().string(not(containsString("Internal Translation Error"))));
+		}
+	}
 }
