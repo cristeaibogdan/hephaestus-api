@@ -14,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -53,11 +54,16 @@ class GetRecommendationIntegrationTest extends BaseIntegrationTest {
 		washingMachineRepository.deleteAll();
 	}
 
+	@Test
+	void should_Count1ElementInDB() {
+		assertThat(washingMachineRepository.count()).isEqualTo(1);
+	}
+
 	@Nested
 	class MvcTest {
 
 		@Test
-		void should_ReturnStatusOk() throws Exception {
+		void should_ReturnExpectedContent_When_SerialNumberExists() throws Exception {
 			// GIVEN
 			String serialNumber = "I exist in DB";
 
@@ -65,7 +71,9 @@ class GetRecommendationIntegrationTest extends BaseIntegrationTest {
 			ResultActions resultActions = performRequest(serialNumber);
 
 			// THEN
-			resultActions.andExpect(status().isOk());
+			resultActions
+					.andExpect(status().isOk())
+					.andExpect(content().string(jackson.writeValueAsString(Recommendation.OUTLET)));
 		}
 
 		@Test
