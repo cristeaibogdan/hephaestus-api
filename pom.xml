@@ -24,6 +24,7 @@
     <properties>
         <java.version>17</java.version>
         <spring-cloud.version>2023.0.2</spring-cloud.version>
+        <excluded-tests.group>slow</excluded-tests.group>
     </properties>
 
     <parent>
@@ -124,15 +125,16 @@
         </pluginManagement>
 
         <plugins> <!-- Will be available in all modules -->
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-surefire-plugin</artifactId>-->
-<!--                <configuration>-->
-<!--                    &lt;!&ndash; Exclude all test that have the tag "slow" when running maven lifecycle test &ndash;&gt;-->
-<!--                    <excludedGroups>slow</excludedGroups>-->
-<!--                </configuration>-->
-<!--                <version>3.2.5</version>-->
-<!--            </plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <!-- Exclude all test that have the tag "slow" when running maven lifecycle test -->
+                    <!-- During GitHub actions this is set to none, meaning all tests are included and ran -->
+                    <excludedGroups>${excluded-tests.group}</excludedGroups>
+                </configuration>
+                <version>3.2.5</version>
+            </plugin>
         </plugins>
     </build>
 </project>
