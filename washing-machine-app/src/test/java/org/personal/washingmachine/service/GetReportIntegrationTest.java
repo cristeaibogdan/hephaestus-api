@@ -87,7 +87,7 @@ class GetReportIntegrationTest extends BaseIntegrationTest {
 		}
 
 		@Test
-		void should_ReturnStatusOk_When_SerialNumberIsFound() throws Exception {
+		void should_ReturnStatusOk_When_SerialNumberExists() throws Exception {
 			// GIVEN
 			String request = "I will return a Report!";
 
