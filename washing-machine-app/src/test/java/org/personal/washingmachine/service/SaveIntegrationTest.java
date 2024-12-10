@@ -9,6 +9,7 @@ import org.personal.washingmachine.dto.CreateWashingMachineRequest;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.enums.DamageType;
 import org.personal.washingmachine.enums.IdentificationMode;
+import org.personal.washingmachine.enums.Recommendation;
 import org.personal.washingmachine.enums.ReturnType;
 import org.personal.washingmachine.repository.WashingMachineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -132,8 +134,28 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 	@Nested
 	class MvcTest {
 
+		@Test
+		void should_ThrowCustomException_When_SerialNumberAlreadyTaken() throws Exception {
+			// GIVEN
+			CreateWashingMachineDetailRequest detail = TestData.createWashingMachineDetailRequest().toBuilder()
+					.packageDamaged(true)
+					.build();
 
+			CreateWashingMachineRequest request = TestData.createWashingMachineRequest().toBuilder()
+					.serialNumber("I already exist in DB")
+					.createWashingMachineDetailRequest(detail)
+					.build();
 
+			performRequest(request);
+
+			// WHEN
+			ResultActions resultActions = performRequest(request);
+
+			// THEN
+			resultActions
+					.andExpect(status().isConflict())
+					.andExpect(content().string(not(containsString("Internal Translation Error"))));
+		}
 
 		private ResultActions performRequest(CreateWashingMachineRequest request) throws Exception {
 			String jsonRequest = jackson.writeValueAsString(request);
