@@ -1,9 +1,7 @@
 package org.personal.washingmachine.service;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.*;
 import org.personal.washingmachine.BaseIntegrationTest;
 import org.personal.washingmachine.TestData;
 import org.personal.washingmachine.dto.GetWashingMachineFullResponse;
@@ -14,6 +12,10 @@ import org.personal.washingmachine.enums.Recommendation;
 import org.personal.washingmachine.enums.ReturnType;
 import org.personal.washingmachine.repository.WashingMachineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -22,10 +24,19 @@ import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.not;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Transactional // Ensure Hibernate sessions are properly managed in your testing environment. Avoids "could not initialize proxy" Exception. Specific to tests only.
+@AutoConfigureMockMvc
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class LoadManyIntegrationTest extends BaseIntegrationTest {
+
+	@Autowired MockMvc mockMvc;
+	@Autowired ObjectMapper jackson;
 
 	@Autowired WashingMachineApplicationService washingMachineApplicationService;
 	@Autowired WashingMachineRepository washingMachineRepository;
@@ -91,7 +102,7 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 	}
 
 	@Test
-	void should_ReturnNullWashingMachines_When_SerialNumbersAreNotFound() {
+	void should_ReturnNullWashingMachines_When_SerialNumbersNotFound() {
 		// GIVEN
 		List<String> serialNumbers = List.of(
 				"I don't exist",
@@ -116,5 +127,46 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 				.isNotEmpty()
 				.containsOnlyKeys(serialNumbers)
 				.containsAllEntriesOf(notFoundMap);
+	}
+
+	@Nested
+	class MvcTest {
+
+		@Test
+		void should_ThrowCustomException_When_ListIsEmpty() throws Exception {
+			// GIVEN
+			List<String> request = List.of();
+
+			// WHEN
+			ResultActions resultActions = performRequest(request);
+
+			// THEN
+			resultActions
+					.andExpect(status().isBadRequest())
+					.andExpect(content().string(not(containsString("Internal Translation Error"))));
+		}
+
+		@Test
+		void should_ThrowCustomException_When_SerialNumbersNotFound() throws Exception {
+			// GIVEN
+			List<String> request = List.of("I don't exist", "Something", "You won't find me");
+
+			// WHEN
+			ResultActions resultActions = performRequest(request);
+
+			// THEN
+			resultActions
+					.andExpect(status().isNotFound())
+					.andExpect(content().string(containsString("I don't exist")))
+					.andExpect(content().string(containsString("Something")))
+					.andExpect(content().string(containsString("You won't find me")));
+		}
+
+		private ResultActions performRequest(List<String> request) throws Exception {
+			return mockMvc.perform(
+					post("/api/v1/washing-machines/many")
+							.content(jackson.writeValueAsString(request))
+							.contentType(MediaType.APPLICATION_JSON));
+		}
 	}
 }

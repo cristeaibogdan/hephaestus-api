@@ -202,3 +202,5 @@ Additional logic added - The serial numbers used by repository.findAllBySerialNu
 
 13. Add distinct to the loadMany method
 14. Test is green
+
+Later refactor: Moved MvcTest inside IntegrationTest
