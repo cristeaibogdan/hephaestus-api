@@ -141,7 +141,7 @@ class UserApplicationServiceMvcTest {
                     .register(any());
 
             resultActions
-                    .andExpect(status().is4xxClientError());
+                    .andExpect(status().isConflict());
         }
 
     }
