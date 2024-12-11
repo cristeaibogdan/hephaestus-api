@@ -51,6 +51,7 @@ class GetModelsAndTypesIntegrationTest extends BaseIntegrationTest {
 		List<GetModelAndTypeResponse> actual = underTest.getModelsAndTypes("Orokin");
 
 		// THEN
-		assertThat(actual).containsAll(expected);
+		assertThat(actual)
+				.containsExactlyInAnyOrderElementsOf(expected);
 	}
 }
