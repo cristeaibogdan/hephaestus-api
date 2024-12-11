@@ -16,6 +16,7 @@ import org.personal.washingmachine.enums.ReturnType;
 import org.personal.washingmachine.repository.WashingMachineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
@@ -23,6 +24,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.not;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Transactional // Ensure Hibernate sessions are properly managed in your testing environment. Avoids "could not initialize proxy" Exception. Specific to tests only.
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -132,6 +138,41 @@ class LoadIntegrationTest extends BaseIntegrationTest {
 
 		// THEN
 		assertThat(actual.createdAt().toLocalDate()).isEqualTo(LocalDate.now());
+	}
+
+	@Nested
+	class MvcTest {
+
+		@Test
+		void should_ThrowCustomException_When_SerialNumberNotFound() throws Exception {
+			// GIVEN
+			String request = "I don't exist in DB";
+
+			// WHEN
+			ResultActions resultActions = performRequest(request);
+
+			// THEN
+			resultActions
+					.andExpect(status().isNotFound())
+					.andExpect(content().string(not(containsString("Internal Translation Error"))));
+		}
+
+		@Test
+		void should_ReturnStatusOk_When_SerialNumberExists() throws Exception {
+			// GIVEN
+			String request = "The only one in DB";
+
+			// WHEN
+			ResultActions resultActions = performRequest(request);
+
+			// THEN
+			resultActions.andExpect(status().isOk());
+		}
+
+		private ResultActions performRequest(String serialNumber) throws Exception {
+			return mockMvc.perform(
+					get("/api/v1/washing-machines/{serialNumber}", serialNumber));
+		}
 	}
 
 }
