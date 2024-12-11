@@ -1,7 +1,10 @@
 package org.personal.washingmachine.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.personal.washingmachine.BaseIntegrationTest;
 import org.personal.washingmachine.TestData;
 import org.personal.washingmachine.dto.CreateWashingMachineDetailRequest;
@@ -87,44 +90,43 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 		WashingMachine actual = washingMachineRepository.findBySerialNumber("I'm saved")
 				.orElseThrow();
 
-		assertThat(actual)
-				.satisfies(act -> {
-					// main fields
-					assertThat(act.getCategory()).isEqualTo(request.category());
-					assertThat(act.getManufacturer()).isEqualTo(request.manufacturer());
-					assertThat(act.getIdentificationMode()).isEqualTo(request.identificationMode());
-					assertThat(act.getReturnType()).isEqualTo(request.returnType());
-					assertThat(act.getDamageType()).isEqualTo(request.damageType());
-					assertThat(act.getSerialNumber()).isEqualTo(request.serialNumber());
-					assertThat(act.getModel()).isEqualTo(request.model());
-					assertThat(act.getType()).isEqualTo(request.type());
-					assertThat(act.getRecommendation()).isNotNull();
-					assertThat(act.getCreatedAt().toLocalDate()).isEqualTo(LocalDate.now());
+		assertThat(actual).satisfies(act -> {
+			// main fields
+			assertThat(act.getCategory()).isEqualTo(request.category());
+			assertThat(act.getManufacturer()).isEqualTo(request.manufacturer());
+			assertThat(act.getIdentificationMode()).isEqualTo(request.identificationMode());
+			assertThat(act.getReturnType()).isEqualTo(request.returnType());
+			assertThat(act.getDamageType()).isEqualTo(request.damageType());
+			assertThat(act.getSerialNumber()).isEqualTo(request.serialNumber());
+			assertThat(act.getModel()).isEqualTo(request.model());
+			assertThat(act.getType()).isEqualTo(request.type());
+			assertThat(act.getRecommendation()).isNotNull();
+			assertThat(act.getCreatedAt().toLocalDate()).isEqualTo(LocalDate.now());
 
-					// package
-					assertThat(act.getWashingMachineDetail().getPackageDamage().isPackageDamaged()).isEqualTo(request.createWashingMachineDetailRequest().packageDamaged());
-					assertThat(act.getWashingMachineDetail().getPackageDamage().isPackageDirty()).isEqualTo(request.createWashingMachineDetailRequest().packageDirty());
-					assertThat(act.getWashingMachineDetail().getPackageDamage().isPackageMaterialAvailable()).isEqualTo(request.createWashingMachineDetailRequest().packageMaterialAvailable());
+			// package
+			assertThat(act.getWashingMachineDetail().getPackageDamage().isPackageDamaged()).isEqualTo(request.createWashingMachineDetailRequest().packageDamaged());
+			assertThat(act.getWashingMachineDetail().getPackageDamage().isPackageDirty()).isEqualTo(request.createWashingMachineDetailRequest().packageDirty());
+			assertThat(act.getWashingMachineDetail().getPackageDamage().isPackageMaterialAvailable()).isEqualTo(request.createWashingMachineDetailRequest().packageMaterialAvailable());
 
-					// visible surfaces
-					assertThat(act.getWashingMachineDetail().getVisibleSurfaceDamage().getVisibleSurfacesScratchesLength()).isEqualTo(request.createWashingMachineDetailRequest().visibleSurfacesScratchesLength());
-					assertThat(act.getWashingMachineDetail().getVisibleSurfaceDamage().getVisibleSurfacesDentsDepth()).isEqualTo(request.createWashingMachineDetailRequest().visibleSurfacesDentsDepth());
-					assertThat(act.getWashingMachineDetail().getVisibleSurfaceDamage().getVisibleSurfacesMinorDamage()).isEqualTo(request.createWashingMachineDetailRequest().visibleSurfacesMinorDamage());
-					assertThat(act.getWashingMachineDetail().getVisibleSurfaceDamage().getVisibleSurfacesMajorDamage()).isEqualTo(request.createWashingMachineDetailRequest().visibleSurfacesMajorDamage());
+			// visible surfaces
+			assertThat(act.getWashingMachineDetail().getVisibleSurfaceDamage().getVisibleSurfacesScratchesLength()).isEqualTo(request.createWashingMachineDetailRequest().visibleSurfacesScratchesLength());
+			assertThat(act.getWashingMachineDetail().getVisibleSurfaceDamage().getVisibleSurfacesDentsDepth()).isEqualTo(request.createWashingMachineDetailRequest().visibleSurfacesDentsDepth());
+			assertThat(act.getWashingMachineDetail().getVisibleSurfaceDamage().getVisibleSurfacesMinorDamage()).isEqualTo(request.createWashingMachineDetailRequest().visibleSurfacesMinorDamage());
+			assertThat(act.getWashingMachineDetail().getVisibleSurfaceDamage().getVisibleSurfacesMajorDamage()).isEqualTo(request.createWashingMachineDetailRequest().visibleSurfacesMajorDamage());
 
-					// hidden surfaces
-					assertThat(act.getWashingMachineDetail().getHiddenSurfaceDamage().getHiddenSurfacesScratchesLength()).isEqualTo(request.createWashingMachineDetailRequest().hiddenSurfacesScratchesLength());
-					assertThat(act.getWashingMachineDetail().getHiddenSurfaceDamage().getHiddenSurfacesDentsDepth()).isEqualTo(request.createWashingMachineDetailRequest().hiddenSurfacesDentsDepth());
-					assertThat(act.getWashingMachineDetail().getHiddenSurfaceDamage().getHiddenSurfacesMinorDamage()).isEqualTo(request.createWashingMachineDetailRequest().hiddenSurfacesMinorDamage());
-					assertThat(act.getWashingMachineDetail().getHiddenSurfaceDamage().getHiddenSurfacesMajorDamage()).isEqualTo(request.createWashingMachineDetailRequest().hiddenSurfacesMajorDamage());
+			// hidden surfaces
+			assertThat(act.getWashingMachineDetail().getHiddenSurfaceDamage().getHiddenSurfacesScratchesLength()).isEqualTo(request.createWashingMachineDetailRequest().hiddenSurfacesScratchesLength());
+			assertThat(act.getWashingMachineDetail().getHiddenSurfaceDamage().getHiddenSurfacesDentsDepth()).isEqualTo(request.createWashingMachineDetailRequest().hiddenSurfacesDentsDepth());
+			assertThat(act.getWashingMachineDetail().getHiddenSurfaceDamage().getHiddenSurfacesMinorDamage()).isEqualTo(request.createWashingMachineDetailRequest().hiddenSurfacesMinorDamage());
+			assertThat(act.getWashingMachineDetail().getHiddenSurfaceDamage().getHiddenSurfacesMajorDamage()).isEqualTo(request.createWashingMachineDetailRequest().hiddenSurfacesMajorDamage());
 
-					// pricing
-					assertThat(act.getWashingMachineDetail().getPrice()).isEqualTo(request.createWashingMachineDetailRequest().price());
-					assertThat(act.getWashingMachineDetail().getRepairPrice()).isEqualTo(request.createWashingMachineDetailRequest().repairPrice());
+			// pricing
+			assertThat(act.getWashingMachineDetail().getPrice()).isEqualTo(request.createWashingMachineDetailRequest().price());
+			assertThat(act.getWashingMachineDetail().getRepairPrice()).isEqualTo(request.createWashingMachineDetailRequest().repairPrice());
 
-					// images
-					assertThat(act.getWashingMachineImages()).hasSize(1);
-				});
+			// images
+			assertThat(act.getWashingMachineImages()).hasSize(1);
+		});
 	}
 
 	@Nested
