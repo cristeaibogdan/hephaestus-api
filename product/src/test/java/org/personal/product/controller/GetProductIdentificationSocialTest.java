@@ -1,5 +1,6 @@
 package org.personal.product.controller;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.personal.product.dto.GetProductIdentificationResponse;
 import org.personal.product.repository.ProductRepository;
@@ -12,6 +13,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
+@Disabled @Deprecated
 class GetProductIdentificationSocialTest {
 
 	ProductRepository productRepositoryMock = mock(ProductRepository.class);

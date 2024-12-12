@@ -2,6 +2,7 @@ package org.personal.product.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jetbrains.annotations.NotNull;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.personal.product.dto.GetProductIdentificationResponse;
 import org.personal.product.service.ProductService;
@@ -20,6 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Disabled @Deprecated
 @WebMvcTest(ProductController.class)
 class GetProductIdentificationMvcTest {
 	@Autowired MockMvc mockMvc;

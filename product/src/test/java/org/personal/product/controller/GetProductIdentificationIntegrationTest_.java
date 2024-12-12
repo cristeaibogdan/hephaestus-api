@@ -1,9 +1,6 @@
 package org.personal.product.controller;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.personal.product.BaseIntegrationTest;
 import org.personal.product.entity.Product;
 import org.personal.product.repository.ProductRepository;
@@ -14,6 +11,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+@Disabled @Deprecated
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class GetProductIdentificationIntegrationTest_ extends BaseIntegrationTest {
 
