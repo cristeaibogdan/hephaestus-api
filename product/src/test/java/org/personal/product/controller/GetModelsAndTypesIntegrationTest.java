@@ -106,9 +106,9 @@ class GetModelsAndTypesIntegrationTest extends BaseIntegrationTest {
 					.andExpect(content().string(not(emptyString())));
 		}
 
-		private ResultActions performRequest(String request) throws Exception {
+		private ResultActions performRequest(String manufacturer) throws Exception {
 			return mockMvc.perform(
-					get("/api/v1/products/{manufacturer}/models-and-types", request));
+					get("/api/v1/products/{manufacturer}/models-and-types", manufacturer));
 		}
 	}
 }
