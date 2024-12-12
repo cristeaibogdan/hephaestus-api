@@ -34,6 +34,7 @@ class GetModelsAndTypesIntegrationTest extends BaseIntegrationTest {
 
 	@BeforeAll
 	void loadDataInDB() {
+		cleanUpDB(); // Remove data already present due to flyway migration files
 		List<Product> products = List.of(
 				new Product("Washing Machine", "Orokin", "ModelA", "TypeA", "QWE-001"),
 				new Product("Washing Machine", "Orokin", "ModelB", "TypeB", "QWE-002"),
@@ -50,15 +51,13 @@ class GetModelsAndTypesIntegrationTest extends BaseIntegrationTest {
 
 	@BeforeEach
 	void dataPresentInDB() {
-		// some data is already present due to flyway migration files
-		assertThat(productRepository.count()).isEqualTo(18);
+		assertThat(productRepository.count()).isEqualTo(4);
 	}
 
 	@MethodSource("provideModelsAndTypesTestCases")
 	@ParameterizedTest(name = "Found models and types for manufacturer {0}")
 	void should_ReturnListOfModelsAndTypes_When_ManufacturerFoundInDB(String manufacturer, List<GetModelAndTypeResponse> expected) {
 		// GIVEN
-
 		// WHEN
 		List<GetModelAndTypeResponse> actual = underTest.getModelsAndTypes(manufacturer);
 
@@ -86,10 +85,8 @@ class GetModelsAndTypesIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ThrowCustomException_When_ManufacturerNotFound() throws Exception {
 			// GIVEN
-			String manufacturer = "I don't exist";
-
 			// WHEN
-			ResultActions resultActions = performRequest(manufacturer);
+			ResultActions resultActions = performRequest("I don't exist");
 
 			// THEN
 			resultActions
@@ -100,10 +97,8 @@ class GetModelsAndTypesIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnStatusOk_When_ManufacturerFound() throws Exception {
 			// GIVEN
-			String manufacturer = "Orokin";
-
 			// WHEN
-			ResultActions resultActions = performRequest(manufacturer);
+			ResultActions resultActions = performRequest("Orokin");
 
 			// THEN
 			resultActions

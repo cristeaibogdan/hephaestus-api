@@ -51,12 +51,10 @@ class GetManufacturersIntegrationTest extends BaseIntegrationTest {
 	@Test
 	void should_ReturnListOfManufacturers_By_Category() {
 		// GIVEN
-		String category = "Washing Machine";
-
 		List<String> expected = List.of("ManufacturerA", "ManufacturerB", "ManufacturerC", "ManufacturerD");
 
 		// WHEN
-		List<String> actual = underTest.getManufacturers(category);
+		List<String> actual = underTest.getManufacturers("Washing Machine");
 
 		// THEN
 		assertThat(actual)
@@ -69,10 +67,8 @@ class GetManufacturersIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ThrowCustomException_When_CategoryNotFound() throws Exception {
 			// GIVEN
-			String category = "I don't exist";
-
 			// WHEN
-			ResultActions resultActions = performRequest(category);
+			ResultActions resultActions = performRequest("I don't exist");
 
 			// THEN
 			resultActions
@@ -83,10 +79,8 @@ class GetManufacturersIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnStatusOk_When_CategoryFound() throws Exception {
 			// GIVEN
-			String category = "Washing Machine";
-
 			// WHEN
-			ResultActions resultActions = performRequest(category);
+			ResultActions resultActions = performRequest("Washing Machine");
 
 			// THEN
 			resultActions
