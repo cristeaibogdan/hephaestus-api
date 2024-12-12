@@ -1,5 +1,6 @@
 package org.personal.product.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -9,15 +10,24 @@ import org.personal.product.dto.GetModelAndTypeResponse;
 import org.personal.product.entity.Product;
 import org.personal.product.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class GetModelsAndTypesIntegrationTest extends BaseIntegrationTest {
+
+	@Autowired MockMvc mockMvc;
+	@Autowired ObjectMapper jackson;
 
 	@Autowired ProductController underTest;
 	@Autowired ProductRepository productRepository;
@@ -39,7 +49,7 @@ class GetModelsAndTypesIntegrationTest extends BaseIntegrationTest {
 	}
 
 	@BeforeEach
-	void oneEntityInDB() {
+	void dataPresentInDB() {
 		// some data is already present due to flyway migration files
 		assertThat(productRepository.count()).isEqualTo(18);
 	}
@@ -68,5 +78,42 @@ class GetModelsAndTypesIntegrationTest extends BaseIntegrationTest {
 						new GetModelAndTypeResponse("ModelD", "TypeD")
 				))
 		);
+	}
+
+	@Nested
+	class MvcTest {
+
+		@Test
+		void should_ThrowCustomException_When_ManufacturerNotFound() throws Exception {
+			// GIVEN
+			String manufacturer = "I don't exist";
+
+			// WHEN
+			ResultActions resultActions = performRequest(manufacturer);
+
+			// THEN
+			resultActions
+					.andExpect(status().isNotFound())
+					.andExpect(content().string(not(containsString("Internal Translation Error"))));
+		}
+
+		@Test
+		void should_ReturnStatusOk_When_ManufacturerFound() throws Exception {
+			// GIVEN
+			String manufacturer = "Orokin";
+
+			// WHEN
+			ResultActions resultActions = performRequest(manufacturer);
+
+			// THEN
+			resultActions
+					.andExpect(status().isOk())
+					.andExpect(content().string(not(emptyString())));
+		}
+
+		private ResultActions performRequest(String request) throws Exception {
+			return mockMvc.perform(
+					get("/api/v1/products/{manufacturer}/models-and-types", request));
+		}
 	}
 }
