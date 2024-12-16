@@ -50,13 +50,13 @@ class GetModelsAndTypesIntegrationTest extends BaseIntegrationTest {
 	}
 
 	@BeforeEach
-	void dataPresentInDB() {
+	void checkInitialDataInDB() {
 		assertThat(productRepository.count()).isEqualTo(4);
 	}
 
 	@MethodSource("provideModelsAndTypesTestCases")
 	@ParameterizedTest(name = "Found models and types for manufacturer {0}")
-	void should_ReturnListOfModelsAndTypes_When_ManufacturerFoundInDB(String manufacturer, List<GetModelAndTypeResponse> expected) {
+	void should_ReturnListOfModelsAndTypes_When_ManufacturerFound(String manufacturer, List<GetModelAndTypeResponse> expected) {
 		// GIVEN
 		// WHEN
 		List<GetModelAndTypeResponse> actual = underTest.getModelsAndTypes(manufacturer);

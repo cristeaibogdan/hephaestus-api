@@ -45,7 +45,7 @@ class GetProductIdentificationIntegrationTest extends BaseIntegrationTest {
 	}
 
 	@BeforeEach
-	void dataPresentInDB() {
+	void checkInitialDataInDB() {
 		assertThat(repository.count()).isEqualTo(4);
 	}
 
