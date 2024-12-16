@@ -38,7 +38,7 @@ class LoadManySocialTest {
 			productClient
 	);
 
-	@Test
+	@Test //TODO: Consider moving to IntegrationTest
 	void should_callRepository_With_DistinctSerialNumbers() {
 		// GIVEN
 		List<String> serialNumbers = List.of(

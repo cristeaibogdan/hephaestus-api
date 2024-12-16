@@ -23,8 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -57,13 +56,13 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 		washingMachineRepository.deleteAll();
 	}
 
-	@Test
-	void should_Count5ElementsInDB() {
+	@BeforeEach
+	void checkInitialDataInDB() {
 		assertThat(washingMachineRepository.count()).isEqualTo(5);
 	}
 
 	@Test
-	void should_ReturnWashingMachines_When_ProvidedValidSerialNumbers() {
+	void should_ReturnDTOs_When_SerialNumbersFound() {
 		// GIVEN
 		List<String> serialNumbers = List.of("serial1", "serial2", "serial3");
 
@@ -79,7 +78,7 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 	}
 
 	@Test
-	void should_ReturnWashingMachines_When_SerialNumbersContainNull() {
+	void should_ReturnDTOs_When_SerialNumbersContainNull() {
 		// GIVEN
 		List<String> serialNumbers = new ArrayList<>();
 		serialNumbers.add(null);
@@ -100,7 +99,7 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 	}
 
 	@Test
-	void should_ReturnNullWashingMachines_When_SerialNumbersNotFound() {
+	void should_ReturnNullDTOs_When_SerialNumbersNotFound() {
 		// GIVEN
 		List<String> serialNumbers = List.of(
 				"I don't exist",
@@ -133,10 +132,8 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ThrowCustomException_When_ListIsEmpty() throws Exception {
 			// GIVEN
-			List<String> request = List.of();
-
 			// WHEN
-			ResultActions resultActions = performRequest(request);
+			ResultActions resultActions = performRequest(List.of());
 
 			// THEN
 			resultActions
@@ -147,17 +144,32 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ThrowCustomException_When_SerialNumbersNotFound() throws Exception {
 			// GIVEN
-			List<String> request = List.of("I don't exist", "Something", "You won't find me");
-
 			// WHEN
-			ResultActions resultActions = performRequest(request);
+			ResultActions resultActions = performRequest(
+					List.of("I don't exist", "Something", "You won't find me")
+			);
 
 			// THEN
 			resultActions
 					.andExpect(status().isNotFound())
+					.andExpect(content().string(not(containsString("Internal Translation Error"))))
 					.andExpect(content().string(containsString("I don't exist")))
 					.andExpect(content().string(containsString("Something")))
 					.andExpect(content().string(containsString("You won't find me")));
+		}
+
+		@Test
+		void should_ReturnStatusOk_When_SerialNumbersFound() throws Exception {
+			// GIVEN
+			// WHEN
+			ResultActions resultActions = performRequest(
+					List.of("serial4", "serial5")
+			);
+
+			// THEN
+			resultActions
+					.andExpect(status().isOk())
+					.andExpect(content().string(not(emptyString())));
 		}
 
 		private ResultActions performRequest(List<String> request) throws Exception {
