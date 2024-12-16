@@ -52,8 +52,8 @@ class GetRecommendationIntegrationTest extends BaseIntegrationTest {
 		washingMachineRepository.deleteAll();
 	}
 
-	@Test
-	void should_Count1ElementInDB() {
+	@BeforeEach
+	void checkInitialDataInDB() {
 		assertThat(washingMachineRepository.count()).isEqualTo(1);
 	}
 
@@ -63,10 +63,8 @@ class GetRecommendationIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnExpectedContent_When_SerialNumberExists() throws Exception {
 			// GIVEN
-			String serialNumber = "I exist in DB";
-
 			// WHEN
-			ResultActions resultActions = performRequest(serialNumber);
+			ResultActions resultActions = performRequest("I exist in DB");
 
 			// THEN
 			resultActions
@@ -77,10 +75,8 @@ class GetRecommendationIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ThrowCustomException_When_SerialNumberNotFound() throws Exception {
 			// GIVEN
-			String serialNumber = "I don't exist";
-
 			// WHEN
-			ResultActions resultActions = performRequest(serialNumber);
+			ResultActions resultActions = performRequest("I don't exist");
 
 			// THEN
 			resultActions
