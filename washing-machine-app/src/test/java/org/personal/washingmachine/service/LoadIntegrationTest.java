@@ -24,8 +24,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -66,7 +65,7 @@ class LoadIntegrationTest extends BaseIntegrationTest {
 	}
 
 	@BeforeEach
-	void oneEntityInDB() {
+	void checkInitialDataInDB() {
 		assertThat(washingMachineRepository.count()).isOne();
 	}
 
@@ -132,12 +131,12 @@ class LoadIntegrationTest extends BaseIntegrationTest {
 	@Test
 	void should_ReturnCurrentDateInCreatedAt() {
 		// GIVEN
-
 		// WHEN
 		GetWashingMachineFullResponse actual = underTest.load("The only one in DB");
 
 		// THEN
-		assertThat(actual.createdAt().toLocalDate()).isEqualTo(LocalDate.now());
+		assertThat(actual.createdAt().toLocalDate())
+				.isEqualTo(LocalDate.now());
 	}
 
 	@Nested
@@ -146,10 +145,8 @@ class LoadIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ThrowCustomException_When_SerialNumberNotFound() throws Exception {
 			// GIVEN
-			String request = "I don't exist in DB";
-
 			// WHEN
-			ResultActions resultActions = performRequest(request);
+			ResultActions resultActions = performRequest("I don't exist in DB");
 
 			// THEN
 			resultActions
@@ -160,13 +157,13 @@ class LoadIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnStatusOk_When_SerialNumberExists() throws Exception {
 			// GIVEN
-			String request = "The only one in DB";
-
 			// WHEN
-			ResultActions resultActions = performRequest(request);
+			ResultActions resultActions = performRequest("The only one in DB");
 
 			// THEN
-			resultActions.andExpect(status().isOk());
+			resultActions
+					.andExpect(status().isOk())
+					.andExpect(content().string(not(emptyString())));
 		}
 
 		private ResultActions performRequest(String serialNumber) throws Exception {
