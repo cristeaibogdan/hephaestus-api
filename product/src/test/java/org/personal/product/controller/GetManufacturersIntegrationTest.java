@@ -44,7 +44,7 @@ class GetManufacturersIntegrationTest extends BaseIntegrationTest {
 	}
 
 	@BeforeEach
-	void dataPresentInDB() {
+	void checkInitialDataInDB() {
 		assertThat(repository.count()).isEqualTo(4);
 	}
 
@@ -88,9 +88,9 @@ class GetManufacturersIntegrationTest extends BaseIntegrationTest {
 					.andExpect(content().string(not(emptyString())));
 		}
 
-		private ResultActions performRequest(String manufacturer) throws Exception {
+		private ResultActions performRequest(String category) throws Exception {
 			return mockMvc.perform(
-					get("/api/v1/products/{category}/manufacturers", manufacturer));
+					get("/api/v1/products/{category}/manufacturers", category));
 		}
 	}
 }
