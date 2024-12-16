@@ -44,18 +44,16 @@ class GetReportIntegrationTest extends BaseIntegrationTest {
 		washingMachineRepository.deleteAll();
 	}
 
-	@Test
-	void should_Count1ElementInDB() {
+	@BeforeEach
+	void checkInitialDataInDB() {
 		assertThat(washingMachineRepository.count()).isEqualTo(1);
 	}
 
 	@Test // TODO: Had to put it in an integration test dues to createdAt property. Reflection might be another option, via ReflectionTestUtils
 	void should_ReturnDTO_With_ValidProperties() {
 		// GIVEN
-		String serialNumber = "I will return a Report!";
-
 		// WHEN
-		GetWashingMachineReportResponse actual = underTest.getReport(serialNumber);
+		GetWashingMachineReportResponse actual = underTest.getReport("I will return a Report!");
 
 		// THEN
 		assertThat(actual.report())
@@ -73,10 +71,8 @@ class GetReportIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ThrowCustomException_When_SerialNumberNotFound() throws Exception {
 			// GIVEN
-			String request = "I don't exist in DB";
-
 			// WHEN
-			ResultActions resultActions = performRequest(request);
+			ResultActions resultActions = performRequest("I don't exist in DB");
 
 			// THEN
 			resultActions
@@ -85,15 +81,15 @@ class GetReportIntegrationTest extends BaseIntegrationTest {
 		}
 
 		@Test
-		void should_ReturnStatusOk_When_SerialNumberExists() throws Exception {
+		void should_ReturnStatusOk_When_SerialNumberFound() throws Exception {
 			// GIVEN
-			String request = "I will return a Report!";
-
 			// WHEN
-			ResultActions resultActions = performRequest(request);
+			ResultActions resultActions = performRequest("I will return a Report!");
 
 			// THEN
-			resultActions.andExpect(status().isOk());
+			resultActions
+					.andExpect(status().isOk())
+					.andExpect(content().string(not(emptyString())));
 		}
 
 		private ResultActions performRequest(String serialNumber) throws Exception {
