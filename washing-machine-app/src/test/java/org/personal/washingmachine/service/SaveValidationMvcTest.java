@@ -1,7 +1,6 @@
 package org.personal.washingmachine.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -59,7 +58,6 @@ class SaveValidationMvcTest {
 	@MethodSource("getInvalidCreateWashingMachineRequests")
 	void should_ThrowValidationException_When_ProvidedInvalidCreateWashingMachineRequest(CreateWashingMachineRequest request, String propertyName, Object invalidValue) throws Exception {
 		// GIVEN
-
 		// WHEN
 		ResultActions resultActions = performRequest(request);
 
@@ -67,18 +65,6 @@ class SaveValidationMvcTest {
 		resultActions
 				.andExpect(status().isBadRequest())
 				.andExpect(content().string(containsString(propertyName)));
-	}
-
-	@Test
-	void should_ReturnCreatedStatus_When_ProvidedValidCreateWashingMachineRequest() throws Exception {
-		// GIVEN
-		CreateWashingMachineRequest request = TestData.createWashingMachineRequest();
-
-		// WHEN
-		ResultActions resultActions = performRequest(request);
-
-		// THEN
-		resultActions.andExpect(status().isCreated());
 	}
 
 	static Stream<Arguments> getInvalidCreateWashingMachineDetailRequests() {

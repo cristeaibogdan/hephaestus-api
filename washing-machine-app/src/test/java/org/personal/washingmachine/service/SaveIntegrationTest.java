@@ -25,8 +25,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -48,7 +47,7 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 	@Autowired WashingMachineRepository washingMachineRepository;
 
 	@BeforeEach
-	void databaseIsEmpty() {
+	void checkInitialDataInDB() {
 		assertThat(washingMachineRepository.count()).isZero();
 	}
 
@@ -131,6 +130,27 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 
 	@Nested
 	class MvcTest {
+
+		@Test
+		void should_ReturnStatusCreated_When_DTOSaved() throws Exception {
+			// GIVEN
+			CreateWashingMachineDetailRequest detail = TestData.createWashingMachineDetailRequest().toBuilder()
+					.packageDirty(true)
+					.build();
+
+			CreateWashingMachineRequest request = TestData.createWashingMachineRequest().toBuilder()
+					.serialNumber("I'm ready to be saved in DB")
+					.createWashingMachineDetailRequest(detail)
+					.build();
+
+			// WHEN
+			ResultActions resultActions = performRequest(request);
+
+			// THEN
+			resultActions
+					.andExpect(status().isCreated())
+					.andExpect(content().string(emptyString()));
+		}
 
 		@Test
 		void should_ThrowCustomException_When_SerialNumberAlreadyTaken() throws Exception {
