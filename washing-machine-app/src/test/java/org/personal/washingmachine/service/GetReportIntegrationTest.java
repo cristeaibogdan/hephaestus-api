@@ -38,10 +38,6 @@ class GetReportIntegrationTest extends BaseIntegrationTest {
 		assertThat(repository.count()).isZero();
 	}
 
-	private void insertIntoDB(WashingMachine... washingMachines) {
-		repository.saveAll(List.of(washingMachines));
-	}
-
 	@Test // TODO: Had to put it in an integration test dues to createdAt property. Reflection might be another option, via ReflectionTestUtils
 	void should_ReturnDTO_With_ValidProperties() {
 		// GIVEN
@@ -69,6 +65,10 @@ class GetReportIntegrationTest extends BaseIntegrationTest {
 		assertThat(actual.createdAt())
 				.isNotNull()
 				.isNotEmpty();
+	}
+
+	private void insertIntoDB(WashingMachine... washingMachines) {
+		repository.saveAll(List.of(washingMachines));
 	}
 
 	@Nested
