@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.personal.washingmachine.BaseIntegrationTest;
 import org.personal.washingmachine.TestData;
 import org.personal.washingmachine.dto.CreateWashingMachineDetailRequest;
@@ -31,7 +30,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Transactional // Ensure Hibernate sessions are properly managed in your testing environment. Avoids "could not initialize proxy" Exception. Specific to tests only.
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class SaveIntegrationTest extends BaseIntegrationTest {
 
 	private static final MockMultipartFile MOCK_IMAGE_FILE = new MockMultipartFile( // API expects at least 1 image when saving.
@@ -44,11 +42,11 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 	@Autowired ObjectMapper jackson;
 
 	@Autowired WashingMachineApplicationService underTest;
-	@Autowired WashingMachineRepository washingMachineRepository;
+	@Autowired WashingMachineRepository repository;
 
 	@BeforeEach
-	void checkInitialDataInDB() {
-		assertThat(washingMachineRepository.count()).isZero();
+	void checkNoDataInDB() {
+		assertThat(repository.count()).isZero();
 	}
 
 	@Test
@@ -86,7 +84,7 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 		underTest.save(request, List.of(MOCK_IMAGE_FILE));
 
 		// THEN
-		WashingMachine actual = washingMachineRepository.findBySerialNumber("I'm saved")
+		WashingMachine actual = repository.findBySerialNumber("I'm saved")
 				.orElseThrow();
 
 		assertThat(actual).satisfies(act -> {

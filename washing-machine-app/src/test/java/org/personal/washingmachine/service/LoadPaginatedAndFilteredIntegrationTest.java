@@ -40,7 +40,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 	@Autowired ObjectMapper jackson;
 
 	@Autowired WashingMachineApplicationService underTest;
-	@Autowired WashingMachineRepository washingMachineRepository;
+	@Autowired WashingMachineRepository repository;
 
 	@BeforeAll
 	void loadDataInDB() {
@@ -58,17 +58,17 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 				new WashingMachine("Washing Machine", "WhirlPool", DamageType.IN_TRANSIT, ReturnType.TRANSPORT, IdentificationMode.DATA_MATRIX, "serial10", "modelD", "TypeY", Recommendation.DISASSEMBLE, null)
 		);
 
-		washingMachineRepository.saveAll(washingMachines);
+		repository.saveAll(washingMachines);
 	}
 
 	@AfterAll
 	void cleanUpDB() {
-		washingMachineRepository.deleteAll();
+		repository.deleteAll();
 	}
 
 	@BeforeEach
 	void checkInitialDataInDB() {
-		assertThat(washingMachineRepository.count()).isEqualTo(10);
+		assertThat(repository.count()).isEqualTo(10);
 	}
 
 	@Test
