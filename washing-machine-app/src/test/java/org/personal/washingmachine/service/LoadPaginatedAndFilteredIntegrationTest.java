@@ -27,8 +27,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -65,6 +64,13 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 	void cleanUpDB() {
 		washingMachineRepository.deleteAll();
 	}
+
+	@BeforeEach
+	void checkInitialDataInDB() {
+		assertThat(washingMachineRepository.count()).isEqualTo(10);
+	}
+
+	// TODO: Add mapping test. Sent DTO has all required properties.
 
 	@Test
 	void should_ReturnThreeWashingMachines() {
@@ -314,6 +320,25 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 			resultActions
 					.andExpect(status().isBadRequest())
 					.andExpect(content().string(not(containsString("Internal Translation Error"))));
+		}
+
+		@Test
+		void should_ReturnStatusOk_When_SerialNumberFound() throws Exception {
+			// GIVEN
+			SearchWashingMachineRequest request = TestData.searchWashingMachineRequest().toBuilder()
+					.serialNumber("serial8")
+					.build();
+
+			// WHEN
+			ResultActions resultActions = mockMvc.perform(
+					post("/api/v1/washing-machines")
+							.content(jackson.writeValueAsString(request))
+							.contentType(MediaType.APPLICATION_JSON));
+
+			// THEN
+			resultActions
+					.andExpect(status().isOk())
+					.andExpect(content().string(not(emptyString())));
 		}
 	}
 }
