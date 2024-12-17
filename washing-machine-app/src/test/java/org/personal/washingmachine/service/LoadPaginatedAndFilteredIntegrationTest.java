@@ -22,6 +22,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Stream;
@@ -70,7 +71,38 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 		assertThat(washingMachineRepository.count()).isEqualTo(10);
 	}
 
-	// TODO: Add mapping test. Sent DTO has all required properties.
+	@Test
+	void should_ReturnDTOs_With_CorrectProperties() {
+		// GIVEN
+		SearchWashingMachineRequest dto = TestData.searchWashingMachineRequest().toBuilder()
+				.pageIndex(0)
+				.pageSize(1)
+				.serialNumber("serial10")
+				.build();
+
+		List<GetWashingMachineSimpleResponse> expected = List.of(
+				new GetWashingMachineSimpleResponse(
+					"Washing Machine",
+					"WhirlPool",
+					IdentificationMode.DATA_MATRIX,
+					"modelD",
+					"TypeY",
+					"serial10",
+					ReturnType.TRANSPORT,
+					DamageType.IN_TRANSIT,
+					Recommendation.DISASSEMBLE,
+					LocalDateTime.now())
+		);
+
+		// WHEN
+		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(dto);
+
+		// THEN
+		assertThat(actual.getContent())
+				.usingRecursiveComparison()
+				.ignoringFields("createdAt")
+				.isEqualTo(expected);
+	}
 
 	@Test
 	void should_ReturnThreeWashingMachines() {
