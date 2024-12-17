@@ -12,6 +12,9 @@ import org.personal.washingmachine.repository.WashingMachineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
@@ -20,49 +23,43 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@Transactional
 class GetRecommendationIntegrationTest extends BaseIntegrationTest {
 
 	@Autowired MockMvc mockMvc;
 	@Autowired ObjectMapper jackson;
 
 	@Autowired WashingMachineApplicationService underTest;
-	@Autowired WashingMachineRepository washingMachineRepository;
-
-	@BeforeAll
-	void loadDataInDB() {
-		washingMachineRepository.save(
-				new WashingMachine(
-						"Washing Machine",
-						"Gorenje",
-						DamageType.IN_USE,
-						ReturnType.COMMERCIAL,
-						IdentificationMode.DATA_MATRIX,
-						"I exist in DB",
-						"modelA",
-						"TypeZ",
-						Recommendation.OUTLET,
-						null
-				)
-		);
-	}
-
-	@AfterAll
-	void cleanUpDB() {
-		washingMachineRepository.deleteAll();
-	}
+	@Autowired WashingMachineRepository repository;
 
 	@BeforeEach
-	void checkInitialDataInDB() {
-		assertThat(washingMachineRepository.count()).isEqualTo(1);
+	void checkNoDataInDB() {
+		assertThat(repository.count()).isZero();
+	}
+
+	private void insertIntoDB(WashingMachine... washingMachines) {
+		repository.saveAll(List.of(washingMachines));
 	}
 
 	@Nested
 	class MvcTest {
 
 		@Test
-		void should_ReturnExpectedContent_When_SerialNumberExists() throws Exception {
+		void should_ReturnExpectedContent_When_SerialNumberFound() throws Exception {
 			// GIVEN
+			insertIntoDB(new WashingMachine(
+					"Washing Machine",
+					"Gorenje",
+					DamageType.IN_USE,
+					ReturnType.COMMERCIAL,
+					IdentificationMode.DATA_MATRIX,
+					"I exist in DB",
+					"modelA",
+					"TypeZ",
+					Recommendation.OUTLET,
+					null
+			));
+
 			// WHEN
 			ResultActions resultActions = performRequest("I exist in DB");
 

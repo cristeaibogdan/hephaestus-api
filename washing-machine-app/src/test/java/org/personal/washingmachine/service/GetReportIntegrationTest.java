@@ -16,6 +16,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -23,35 +25,39 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Transactional // Ensure Hibernate sessions are properly managed in your testing environment. Avoids "could not initialize proxy" Exception. Specific to tests only.
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class GetReportIntegrationTest extends BaseIntegrationTest {
 
 	@Autowired MockMvc mockMvc;
 	@Autowired ObjectMapper jackson;
 
 	@Autowired WashingMachineApplicationService underTest;
-	@Autowired WashingMachineRepository washingMachineRepository;
-
-	@BeforeAll
-	void loadDataInDB() {
-		washingMachineRepository.save(
-				new WashingMachine("Washing Machine", "Gorenje", DamageType.IN_USE, ReturnType.COMMERCIAL, IdentificationMode.DATA_MATRIX, "I will return a Report!", "modelA", "TypeZ", Recommendation.OUTLET, TestData.washingMachineDetail())
-		);
-	}
-
-	@AfterAll
-	void cleanUpDB() {
-		washingMachineRepository.deleteAll();
-	}
+	@Autowired WashingMachineRepository repository;
 
 	@BeforeEach
-	void checkInitialDataInDB() {
-		assertThat(washingMachineRepository.count()).isEqualTo(1);
+	void checkNoDataInDB() {
+		assertThat(repository.count()).isZero();
+	}
+
+	private void insertIntoDB(WashingMachine... washingMachines) {
+		repository.saveAll(List.of(washingMachines));
 	}
 
 	@Test // TODO: Had to put it in an integration test dues to createdAt property. Reflection might be another option, via ReflectionTestUtils
 	void should_ReturnDTO_With_ValidProperties() {
 		// GIVEN
+		insertIntoDB(new WashingMachine(
+				"Washing Machine",
+				"Gorenje",
+				DamageType.IN_USE,
+				ReturnType.COMMERCIAL,
+				IdentificationMode.DATA_MATRIX,
+				"I will return a Report!",
+				"modelA",
+				"TypeZ",
+				Recommendation.OUTLET,
+				TestData.washingMachineDetail()
+		));
+
 		// WHEN
 		GetWashingMachineReportResponse actual = underTest.getReport("I will return a Report!");
 
@@ -83,8 +89,21 @@ class GetReportIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnStatusOk_When_SerialNumberFound() throws Exception {
 			// GIVEN
+			insertIntoDB(new WashingMachine(
+					"Washing Machine",
+					"Gorenje",
+					DamageType.IN_USE,
+					ReturnType.COMMERCIAL,
+					IdentificationMode.DATA_MATRIX,
+					"I exist",
+					"modelA",
+					"TypeZ",
+					Recommendation.OUTLET,
+					TestData.washingMachineDetail()
+			));
+
 			// WHEN
-			ResultActions resultActions = performRequest("I will return a Report!");
+			ResultActions resultActions = performRequest("I exist");
 
 			// THEN
 			resultActions
