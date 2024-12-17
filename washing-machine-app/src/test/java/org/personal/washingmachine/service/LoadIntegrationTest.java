@@ -37,7 +37,7 @@ class LoadIntegrationTest extends BaseIntegrationTest {
 	@Autowired ObjectMapper jackson;
 
 	@Autowired WashingMachineApplicationService underTest;
-	@Autowired WashingMachineRepository washingMachineRepository;
+	@Autowired WashingMachineRepository repository;
 
 	@BeforeAll
 	void loadDataInDB() {
@@ -56,17 +56,17 @@ class LoadIntegrationTest extends BaseIntegrationTest {
 		washingMachine.addImage(
 				new WashingMachineImage("some random prefix", new byte[0])
 		);
-		washingMachineRepository.save(washingMachine);
+		repository.save(washingMachine);
 	}
 
 	@AfterAll
 	void cleanUpDB() {
-		washingMachineRepository.deleteAll();
+		repository.deleteAll();
 	}
 
 	@BeforeEach
 	void checkInitialDataInDB() {
-		assertThat(washingMachineRepository.count()).isOne();
+		assertThat(repository.count()).isOne();
 	}
 
 	@Test

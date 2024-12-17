@@ -35,8 +35,8 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 	@Autowired MockMvc mockMvc;
 	@Autowired ObjectMapper jackson;
 
-	@Autowired WashingMachineApplicationService washingMachineApplicationService;
-	@Autowired WashingMachineRepository washingMachineRepository;
+	@Autowired WashingMachineApplicationService underTest;
+	@Autowired WashingMachineRepository repository;
 
 	@BeforeAll
 	void loadDataInDB() {
@@ -48,17 +48,17 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 				new WashingMachine("Washing Machine", "Gorenje", DamageType.IN_USE, ReturnType.SERVICE, IdentificationMode.QR_CODE, "serial5", "modelC", "TypeX", Recommendation.REPAIR, TestData.washingMachineDetail())
 		);
 
-		washingMachineRepository.saveAll(washingMachines);
+		repository.saveAll(washingMachines);
 	}
 
 	@AfterAll
 	void cleanUpDB() {
-		washingMachineRepository.deleteAll();
+		repository.deleteAll();
 	}
 
 	@BeforeEach
 	void checkInitialDataInDB() {
-		assertThat(washingMachineRepository.count()).isEqualTo(5);
+		assertThat(repository.count()).isEqualTo(5);
 	}
 
 	@Test
@@ -67,7 +67,7 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 		List<String> serialNumbers = List.of("serial1", "serial2", "serial3");
 
 		// WHEN
-		Map<String, GetWashingMachineFullResponse> actual = washingMachineApplicationService.loadMany(serialNumbers);
+		Map<String, GetWashingMachineFullResponse> actual = underTest.loadMany(serialNumbers);
 
 		// THEN
 		assertThat(actual)
@@ -88,7 +88,7 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 		List<String> expectedSerialNumbers = List.of("serial1", "serial2");
 
 		// WHEN
-		Map<String, GetWashingMachineFullResponse> actual = washingMachineApplicationService.loadMany(serialNumbers);
+		Map<String, GetWashingMachineFullResponse> actual = underTest.loadMany(serialNumbers);
 
 		// THEN
 		assertThat(actual)
@@ -117,7 +117,7 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 		notFoundMap.put("Nothing", null);
 
 		// WHEN
-		Map<String, GetWashingMachineFullResponse> actual = washingMachineApplicationService.loadMany(serialNumbers);
+		Map<String, GetWashingMachineFullResponse> actual = underTest.loadMany(serialNumbers);
 
 		// THEN
 		assertThat(actual)
