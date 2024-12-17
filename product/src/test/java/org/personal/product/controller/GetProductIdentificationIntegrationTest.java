@@ -18,7 +18,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class GetProductIdentificationIntegrationTest extends BaseIntegrationTest {
 
 	@Autowired MockMvc mockMvc;
@@ -27,31 +26,19 @@ class GetProductIdentificationIntegrationTest extends BaseIntegrationTest {
 	@Autowired ProductController underTest;
 	@Autowired ProductRepository repository;
 
-	@BeforeAll
-	void loadDataInDB() {
-		cleanUpDB(); // Remove data already present due to flyway migration files
-		List<Product> products = List.of(
-				new Product("Washing Machine", "ManufacturerA", "ModelA", "TypeA", "QWE-001"),
-				new Product("Washing Machine", "ManufacturerB", "ModelB", "TypeB", "QWE-002"),
-				new Product("Washing Machine", "ManufacturerC", "ModelC", "TypeC", "QWE-003"),
-				new Product("Washing Machine", "ManufacturerD", "ModelD", "TypeD", "QWE-004")
-		);
-		repository.saveAll(products);
-	}
-
-	@AfterAll
-	void cleanUpDB() {
-		repository.deleteAll();
-	}
-
 	@BeforeEach
-	void checkInitialDataInDB() {
-		assertThat(repository.count()).isEqualTo(4);
+	void checkNoDataInDB() {
+		repository.deleteAll(); // Remove data already present due to flyway migration files
+		assertThat(repository.count()).isZero();
 	}
 
 	@Test
 	void should_ReturnDTO_When_QrCodeFound() {
 		// GIVEN
+		insertIntoDB(
+				new Product("Washing Machine", "ManufacturerA", "ModelA", "TypeA", "QWE-001")
+		);
+
 		GetProductIdentificationResponse expected = new GetProductIdentificationResponse(
 				"ManufacturerA",
 				"ModelA",
@@ -65,6 +52,10 @@ class GetProductIdentificationIntegrationTest extends BaseIntegrationTest {
 		assertThat(actual)
 				.usingRecursiveComparison()
 				.isEqualTo(expected);
+	}
+
+	private void insertIntoDB(Product... products) {
+		repository.saveAll(List.of(products));
 	}
 
 	@Nested
@@ -85,6 +76,10 @@ class GetProductIdentificationIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnStatusOk_When_QrCodeFound() throws Exception {
 			// GIVEN
+			insertIntoDB(
+					new Product("Washing Machine", "ManufacturerD", "ModelD", "TypeD", "QWE-004")
+			);
+
 			// WHEN
 			ResultActions resultActions = performRequest("QWE-004");
 

@@ -23,41 +23,31 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class GetModelsAndTypesIntegrationTest extends BaseIntegrationTest {
 
 	@Autowired MockMvc mockMvc;
 	@Autowired ObjectMapper jackson;
 
 	@Autowired ProductController underTest;
-	@Autowired ProductRepository productRepository;
-
-	@BeforeAll
-	void loadDataInDB() {
-		cleanUpDB(); // Remove data already present due to flyway migration files
-		List<Product> products = List.of(
-				new Product("Washing Machine", "Orokin", "ModelA", "TypeA", "QWE-001"),
-				new Product("Washing Machine", "Orokin", "ModelB", "TypeB", "QWE-002"),
-				new Product("Washing Machine", "LG", "ModelC", "TypeC", "QWE-003"),
-				new Product("Washing Machine", "LG", "ModelD", "TypeD", "QWE-004")
-		);
-		productRepository.saveAll(products);
-	}
-
-	@AfterAll
-	void cleanUpDB() {
-		productRepository.deleteAll();
-	}
+	@Autowired ProductRepository repository;
 
 	@BeforeEach
-	void checkInitialDataInDB() {
-		assertThat(productRepository.count()).isEqualTo(4);
+	void checkNoDataInDB() {
+		repository.deleteAll(); // Remove data already present due to flyway migration files
+		assertThat(repository.count()).isZero();
 	}
 
 	@MethodSource("provideModelsAndTypesTestCases")
 	@ParameterizedTest(name = "Found models and types for manufacturer {0}")
 	void should_ReturnListOfModelsAndTypes_When_ManufacturerFound(String manufacturer, List<GetModelAndTypeResponse> expected) {
 		// GIVEN
+		insertIntoDB(
+				new Product("Washing Machine", "Orokin", "ModelA", "TypeA", "QWE-001"),
+				new Product("Washing Machine", "Orokin", "ModelB", "TypeB", "QWE-002"),
+				new Product("Washing Machine", "LG", "ModelC", "TypeC", "QWE-003"),
+				new Product("Washing Machine", "LG", "ModelD", "TypeD", "QWE-004")
+		);
+
 		// WHEN
 		List<GetModelAndTypeResponse> actual = underTest.getModelsAndTypes(manufacturer);
 
@@ -79,6 +69,10 @@ class GetModelsAndTypesIntegrationTest extends BaseIntegrationTest {
 		);
 	}
 
+	private void insertIntoDB(Product... products) {
+		repository.saveAll(List.of(products));
+	}
+
 	@Nested
 	class MvcTest {
 
@@ -97,6 +91,10 @@ class GetModelsAndTypesIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnStatusOk_When_ManufacturerFound() throws Exception {
 			// GIVEN
+			insertIntoDB(
+					new Product("Washing Machine", "Orokin", "ModelA", "TypeA", "QWE-001")
+			);
+
 			// WHEN
 			ResultActions resultActions = performRequest("Orokin");
 

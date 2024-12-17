@@ -17,7 +17,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class GetManufacturersIntegrationTest extends BaseIntegrationTest {
 
 	@Autowired MockMvc mockMvc;
@@ -26,32 +25,21 @@ class GetManufacturersIntegrationTest extends BaseIntegrationTest {
 	@Autowired ProductController underTest;
 	@Autowired ProductRepository repository;
 
-	@BeforeAll
-	void loadDataInDB() {
-		cleanUpDB(); // Remove data already present due to flyway migration files
-		List<Product> products = List.of(
-				new Product("Washing Machine", "ManufacturerA", "ModelA", "TypeA", "QWE-001"),
-				new Product("Washing Machine", "ManufacturerB", "ModelB", "TypeB", "QWE-002"),
-				new Product("Washing Machine", "ManufacturerC", "ModelC", "TypeC", "QWE-003"),
-				new Product("Washing Machine", "ManufacturerD", "ModelD", "TypeD", "QWE-004")
-		);
-		repository.saveAll(products);
-	}
-
-	@AfterAll
-	void cleanUpDB() {
-		repository.deleteAll();
-	}
-
 	@BeforeEach
-	void checkInitialDataInDB() {
-		assertThat(repository.count()).isEqualTo(4);
+	void checkNoDataInDB() {
+		repository.deleteAll(); // Remove data already present due to flyway migration files
+		assertThat(repository.count()).isZero();
 	}
 
 	@Test
 	void should_ReturnListOfManufacturers_By_Category() {
 		// GIVEN
-		List<String> expected = List.of("ManufacturerA", "ManufacturerB", "ManufacturerC", "ManufacturerD");
+		insertIntoDB(
+				new Product("Washing Machine", "ManufacturerA", "ModelA", "TypeA", "QWE-001"),
+				new Product("Washing Machine", "ManufacturerB", "ModelB", "TypeB", "QWE-002"),
+				new Product("Washing Machine", "ManufacturerC", "ModelC", "TypeC", "QWE-003")
+		);
+		List<String> expected = List.of("ManufacturerA", "ManufacturerB", "ManufacturerC");
 
 		// WHEN
 		List<String> actual = underTest.getManufacturers("Washing Machine");
@@ -59,6 +47,10 @@ class GetManufacturersIntegrationTest extends BaseIntegrationTest {
 		// THEN
 		assertThat(actual)
 				.containsExactlyInAnyOrderElementsOf(expected);
+	}
+
+	private void insertIntoDB(Product... products) {
+		repository.saveAll(List.of(products));
 	}
 
 	@Nested
@@ -79,6 +71,10 @@ class GetManufacturersIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnStatusOk_When_CategoryFound() throws Exception {
 			// GIVEN
+			insertIntoDB(
+					new Product("Washing Machine", "ManufacturerA", "ModelA", "TypeA", "QWE-001")
+			);
+
 			// WHEN
 			ResultActions resultActions = performRequest("Washing Machine");
 
