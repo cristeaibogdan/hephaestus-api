@@ -16,16 +16,16 @@ import static org.personal.washingmachine.dto.Mapper.UserMapper;
 @RequiredArgsConstructor
 public class UserApplicationService implements IUserApplicationService { // TODO: Replace with proper authentication
 	private final UserService service;
-	private final RegistrationCodes registrationCodes = RegistrationCodes.getInstance();
+	private final RegistrationCodeContainer registrationCodeContainer = RegistrationCodeContainer.getInstance();
 
 	@Override
 	public boolean isValidRegistrationCode(String registrationCode) {
-		return registrationCodes.exists(registrationCode);
+		return registrationCodeContainer.exists(registrationCode);
 	}
 
 	@Override
 	public GetOrganizationAndCountryResponse getOrganizationAndCountry(String registrationCode) {
-		return registrationCodes.getOrganizationAndCountry(registrationCode);
+		return registrationCodeContainer.getOrganizationAndCountry(registrationCode);
 	}
 
 	@Override

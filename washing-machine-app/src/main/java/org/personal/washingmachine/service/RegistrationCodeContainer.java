@@ -18,10 +18,10 @@ import java.util.Map;
  * In a multithreaded environment, additional synchronization
  * would be needed to ensure thread safety.</p>
  */
-public class RegistrationCodes {
+public final class RegistrationCodeContainer {
 
-	/** Singleton instance of the {@code RegistrationCodes} class. */
-	private static RegistrationCodes instance;
+	/** Singleton instance of the {@code RegistrationCodeContainer} class. */
+	private static RegistrationCodeContainer instance;
 
 	/**
 	 * A map containing registration codes associated with organizations and countries.
@@ -34,7 +34,7 @@ public class RegistrationCodes {
 	 * Private constructor to prevent instantiation from outside the class.
 	 * Initializes the {@code codes} map with predefined registration codes.
 	 */
-	private RegistrationCodes() {
+	private RegistrationCodeContainer() {
 		codes.put(new GetOrganizationAndCountryResponse("ZEOS", "SLOVENIA"), List.of("RX1000", "RX1001", "RX1002", "RX1003"));
 		codes.put(new GetOrganizationAndCountryResponse("GORENJE", "SLOVENIA"), List.of("RX2000", "RX2001", "RX2002", "RX2003"));
 		codes.put(new GetOrganizationAndCountryResponse("BOSCH", "GERMANY"), List.of("RX3000", "RX3001", "RX3002", "RX3003"));
@@ -43,12 +43,12 @@ public class RegistrationCodes {
 	}
 
 	/**
-	 * Returns the Singleton instance of the {@code RegistrationCodes} class.
+	 * Returns the Singleton instance of the {@code RegistrationCodeContainer} class.
 	 * If the instance does not exist, it will be created lazily.
 	 */
-	public static RegistrationCodes getInstance() {
+	public static RegistrationCodeContainer getInstance() {
 		if(instance == null) {
-			instance = new RegistrationCodes();
+			instance = new RegistrationCodeContainer();
 		}
 		return instance;
 	}
@@ -63,7 +63,6 @@ public class RegistrationCodes {
 		return codes.entrySet().stream()
 				.anyMatch(entry -> entry.getValue().contains(registrationCode));
 	}
-
 
 	/**
 	 * Retrieves the organization and country associated with a given registration code.
