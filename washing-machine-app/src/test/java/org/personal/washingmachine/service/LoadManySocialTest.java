@@ -52,7 +52,7 @@ class LoadManySocialTest {
 		List<String> expected = List.of("serial1", "serial2", "serial3");
 
 		List<WashingMachine> mockWashingMachines = List.of(
-				TestData.getWashingMachineWithoutImages()
+				TestData.createWashingMachine()
 		);
 
 		given(washingMachineRepositoryMock.findAllBySerialNumberIn(expected))

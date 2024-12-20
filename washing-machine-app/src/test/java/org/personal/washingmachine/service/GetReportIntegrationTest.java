@@ -51,7 +51,7 @@ class GetReportIntegrationTest extends BaseIntegrationTest {
 				"modelA",
 				"TypeZ",
 				Recommendation.OUTLET,
-				TestData.washingMachineDetail()
+				TestData.createWashingMachineDetail()
 		));
 
 		// WHEN
@@ -99,7 +99,7 @@ class GetReportIntegrationTest extends BaseIntegrationTest {
 					"modelA",
 					"TypeZ",
 					Recommendation.OUTLET,
-					TestData.washingMachineDetail()
+					TestData.createWashingMachineDetail()
 			));
 
 			// WHEN

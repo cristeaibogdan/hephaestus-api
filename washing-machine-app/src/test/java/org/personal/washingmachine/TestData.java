@@ -77,7 +77,7 @@ public class TestData {
 		);
 	}
 
-	public static WashingMachineDetail washingMachineDetail() {
+	public static WashingMachineDetail createWashingMachineDetail() {
 		return new WashingMachineDetail(
 				new PackageDamage(
 						false,
@@ -98,7 +98,7 @@ public class TestData {
 		);
 	}
 
-	public static WashingMachine getWashingMachineWithoutImages() {
+	public static WashingMachine createWashingMachine() {
 		return new WashingMachine(
 				"Washing Machine",
 				"WhirlPool",
