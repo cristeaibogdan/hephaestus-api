@@ -130,18 +130,35 @@ public class TestData {
 		);
 	}
 
-	public static WashingMachine getWashingMachineWithoutDetailAndImages(IdentificationMode identificationMode) {
+	public static WashingMachine createWashingMachineWithSerialNumber(String serialNumber) {
 		return new WashingMachine(
 				"Washing Machine",
 				"Whirlpool",
 				DamageType.IN_USE,
 				ReturnType.SERVICE,
-				identificationMode,
-				"test",
+				IdentificationMode.DATA_MATRIX,
+				serialNumber,
 				"modelOne",
 				"typeOne",
 				Recommendation.RESALE,
-				null
+				new WashingMachineDetail(
+						new PackageDamage(
+								false,
+								false,
+								false),
+						new VisibleSurfaceDamage(
+								0,
+								0,
+								"",
+								""),
+						new HiddenSurfaceDamage(
+								0,
+								0,
+								"",
+								""),
+						0,
+						0
+				)
 		);
 	}
 }

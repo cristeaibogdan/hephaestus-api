@@ -8,7 +8,11 @@ import org.personal.washingmachine.dto.GetWashingMachineDetailResponse;
 import org.personal.washingmachine.dto.GetWashingMachineFullResponse;
 import org.personal.washingmachine.dto.GetWashingMachineImageResponse;
 import org.personal.washingmachine.entity.WashingMachine;
+import org.personal.washingmachine.entity.WashingMachineDetail;
 import org.personal.washingmachine.entity.WashingMachineImage;
+import org.personal.washingmachine.entity.embedded.HiddenSurfaceDamage;
+import org.personal.washingmachine.entity.embedded.PackageDamage;
+import org.personal.washingmachine.entity.embedded.VisibleSurfaceDamage;
 import org.personal.washingmachine.enums.DamageType;
 import org.personal.washingmachine.enums.IdentificationMode;
 import org.personal.washingmachine.enums.Recommendation;
@@ -39,8 +43,14 @@ class LoadIntegrationTest extends BaseIntegrationTest {
 	@Autowired WashingMachineApplicationService underTest;
 	@Autowired WashingMachineRepository repository;
 
-	@BeforeAll
-	void loadDataInDB() {
+	@BeforeEach
+	void checkInitialDataInDB() {
+		assertThat(repository.count()).isZero();
+	}
+
+	@Test
+	void should_ReturnDTO_When_ProvidedValidSerialNumber() {
+		// GIVEN
 		WashingMachine washingMachine = new WashingMachine(
 				"Washing Machine",
 				"Gorenje",
@@ -51,58 +61,26 @@ class LoadIntegrationTest extends BaseIntegrationTest {
 				"modelA",
 				"TypeZ",
 				Recommendation.OUTLET,
-				TestData.washingMachineDetail()
+				new WashingMachineDetail(
+						new PackageDamage(false,false,false),
+						new VisibleSurfaceDamage(
+								0,
+								0,
+								"",
+								""),
+						new HiddenSurfaceDamage(
+								0,
+								0,
+								"",
+								""),
+						0,
+						0
+				)
 		);
 		washingMachine.addImage(
 				new WashingMachineImage("some random prefix", new byte[0])
 		);
-		repository.save(washingMachine);
-	}
-
-	@AfterAll
-	void cleanUpDB() {
-		repository.deleteAll();
-	}
-
-	@BeforeEach
-	void checkInitialDataInDB() {
-		assertThat(repository.count()).isOne();
-	}
-
-	@Test
-	void should_ReturnDTO_When_ProvidedValidSerialNumber() {
-		// GIVEN
-		GetWashingMachineDetailResponse detail = new GetWashingMachineDetailResponse(
-				false,
-				false,
-				false,
-				false,
-				false,
-				false,
-				0,
-				false,
-				0,
-				false,
-				"",
-				false,
-				"",
-				false,
-				false,
-				0,
-				false,
-				0,
-				false,
-				"",
-				false,
-				"",
-				0,
-				0
-		);
-
-		GetWashingMachineImageResponse image = new GetWashingMachineImageResponse(
-				"some random prefix",
-				new byte[0]
-		);
+		insertIntoDB(washingMachine);
 
 		GetWashingMachineFullResponse expected = new GetWashingMachineFullResponse(
 				"Washing Machine",
@@ -115,8 +93,36 @@ class LoadIntegrationTest extends BaseIntegrationTest {
 				DamageType.IN_USE,
 				Recommendation.OUTLET,
 				LocalDateTime.now(),
-				detail,
-				List.of(image)
+				new GetWashingMachineDetailResponse(
+						false,
+						false,
+						false,
+						false,
+						false,
+						false,
+						0,
+						false,
+						0,
+						false,
+						"",
+						false,
+						"",
+						false,
+						false,
+						0,
+						false,
+						0,
+						false,
+						"",
+						false,
+						"",
+						0,
+						0
+				),
+				List.of(new GetWashingMachineImageResponse(
+						"some random prefix",
+						new byte[0]
+				))
 		);
 
 		// WHEN
@@ -131,12 +137,18 @@ class LoadIntegrationTest extends BaseIntegrationTest {
 	@Test
 	void should_ReturnCurrentDateInCreatedAt() {
 		// GIVEN
+		insertIntoDB(TestData.createWashingMachineWithSerialNumber("current-date-test"));
+
 		// WHEN
-		GetWashingMachineFullResponse actual = underTest.load("The only one in DB");
+		GetWashingMachineFullResponse actual = underTest.load("current-date-test");
 
 		// THEN
 		assertThat(actual.createdAt().toLocalDate())
 				.isEqualTo(LocalDate.now());
+	}
+
+	private void insertIntoDB(WashingMachine... washingMachines) {
+		repository.saveAll(List.of(washingMachines));
 	}
 
 	@Nested
@@ -157,8 +169,10 @@ class LoadIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnStatusOk_When_SerialNumberExists() throws Exception {
 			// GIVEN
+			insertIntoDB(TestData.createWashingMachineWithSerialNumber("ok-status"));
+
 			// WHEN
-			ResultActions resultActions = performRequest("The only one in DB");
+			ResultActions resultActions = performRequest("ok-status");
 
 			// THEN
 			resultActions
