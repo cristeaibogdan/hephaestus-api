@@ -207,7 +207,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 		assertThat(actual.getContent())
 				.isNotEmpty()
 				.extracting(wm -> wm.serialNumber())
-				.contains(serialNumber);
+				.contains(serialNumber); // If I were to use .containsOnly, the test would fail, as it will return serial1 AND serial10.
 	}
 
 	@ParameterizedTest
