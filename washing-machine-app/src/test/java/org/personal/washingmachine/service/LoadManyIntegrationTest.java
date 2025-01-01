@@ -6,10 +6,6 @@ import org.personal.washingmachine.BaseIntegrationTest;
 import org.personal.washingmachine.TestData;
 import org.personal.washingmachine.dto.GetWashingMachineFullResponse;
 import org.personal.washingmachine.entity.WashingMachine;
-import org.personal.washingmachine.enums.DamageType;
-import org.personal.washingmachine.enums.IdentificationMode;
-import org.personal.washingmachine.enums.Recommendation;
-import org.personal.washingmachine.enums.ReturnType;
 import org.personal.washingmachine.repository.WashingMachineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -28,8 +24,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Transactional // Ensure Hibernate sessions are properly managed in your testing environment. Avoids "could not initialize proxy" Exception. Specific to tests only.
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@Transactional
 class LoadManyIntegrationTest extends BaseIntegrationTest {
 
 	@Autowired MockMvc mockMvc;
@@ -38,48 +33,41 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 	@Autowired WashingMachineApplicationService underTest;
 	@Autowired WashingMachineRepository repository;
 
-	@BeforeAll
-	void loadDataInDB() {
-		List<WashingMachine> washingMachines = List.of(
-				new WashingMachine("Washing Machine", "Gorenje", DamageType.IN_USE, ReturnType.COMMERCIAL, IdentificationMode.DATA_MATRIX, "serial1", "modelA", "TypeZ", Recommendation.OUTLET, TestData.createWashingMachineDetail()),
-				new WashingMachine("Washing Machine", "Gorenje", DamageType.IN_USE, ReturnType.COMMERCIAL, IdentificationMode.DATA_MATRIX, "serial2", "modelA", "TypeZ", Recommendation.OUTLET, TestData.createWashingMachineDetail()),
-				new WashingMachine("Washing Machine", "Gorenje", DamageType.IN_USE, ReturnType.SERVICE, IdentificationMode.DATA_MATRIX, "serial3", "modelB", "TypeZ", Recommendation.REPACKAGE, TestData.createWashingMachineDetail()),
-				new WashingMachine("Washing Machine", "Gorenje", DamageType.IN_USE, ReturnType.SERVICE, IdentificationMode.QR_CODE, "serial4", "modelB", "TypeX", Recommendation.REPAIR, TestData.createWashingMachineDetail()),
-				new WashingMachine("Washing Machine", "Gorenje", DamageType.IN_USE, ReturnType.SERVICE, IdentificationMode.QR_CODE, "serial5", "modelC", "TypeX", Recommendation.REPAIR, TestData.createWashingMachineDetail())
-		);
-
-		repository.saveAll(washingMachines);
-	}
-
-	@AfterAll
-	void cleanUpDB() {
-		repository.deleteAll();
-	}
-
 	@BeforeEach
 	void checkInitialDataInDB() {
-		assertThat(repository.count()).isEqualTo(5);
+		assertThat(repository.count()).isZero();
 	}
 
 	@Test
 	void should_ReturnDTOs_When_SerialNumbersFound() {
 		// GIVEN
-		List<String> serialNumbers = List.of("serial1", "serial2", "serial3");
+		insertIntoDB(
+				TestData.createWashingMachineWithSerialNumber("serial1"),
+				TestData.createWashingMachineWithSerialNumber("serial2"),
+				TestData.createWashingMachineWithSerialNumber("serial3")
+		);
 
 		// WHEN
-		Map<String, GetWashingMachineFullResponse> actual = underTest.loadMany(serialNumbers);
+		Map<String, GetWashingMachineFullResponse> actual = underTest.loadMany(List.of("serial1", "serial2"));
 
 		// THEN
 		assertThat(actual)
-				.isNotEmpty()
-				.containsOnlyKeys(serialNumbers)
-				.extractingFromEntries(entry -> entry.getValue().serialNumber())
-				.containsExactlyInAnyOrderElementsOf(serialNumbers);
+				.containsOnlyKeys(List.of("serial1", "serial2"));
+
+		assertThat(actual.values())
+				.extracting(wm -> wm.serialNumber())
+				.containsExactlyInAnyOrderElementsOf(List.of("serial1", "serial2"));
 	}
 
 	@Test
 	void should_ReturnDTOs_When_SerialNumbersContainNull() {
 		// GIVEN
+		insertIntoDB(
+				TestData.createWashingMachineWithSerialNumber("serial1"),
+				TestData.createWashingMachineWithSerialNumber("serial2"),
+				TestData.createWashingMachineWithSerialNumber("serial3")
+		);
+
 		List<String> serialNumbers = new ArrayList<>();
 		serialNumbers.add(null);
 		serialNumbers.add("serial1");
@@ -92,38 +80,44 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 
 		// THEN
 		assertThat(actual)
-				.isNotEmpty()
-				.containsOnlyKeys(expectedSerialNumbers)
-				.extractingFromEntries(entry -> entry.getValue().serialNumber())
+				.containsOnlyKeys(expectedSerialNumbers);
+
+		assertThat(actual.values())
+				.extracting(wm -> wm.serialNumber())
 				.containsExactlyInAnyOrderElementsOf(expectedSerialNumbers);
 	}
 
 	@Test
 	void should_ReturnNullDTOs_When_SerialNumbersNotFound() {
 		// GIVEN
+		insertIntoDB(
+				TestData.createWashingMachineWithSerialNumber("serial1"),
+				TestData.createWashingMachineWithSerialNumber("serial2")
+		);
+
 		List<String> serialNumbers = List.of(
 				"I don't exist",
 				"serial1",
 				"serial2",
-				"serial3",
-				"serial4",
-				"Can't find me",
 				"Nothing"
 		);
 
 		Map<String, GetWashingMachineFullResponse> notFoundMap = new HashMap<>();
 		notFoundMap.put("I don't exist", null);
-		notFoundMap.put("Can't find me", null);
 		notFoundMap.put("Nothing", null);
 
 		// WHEN
 		Map<String, GetWashingMachineFullResponse> actual = underTest.loadMany(serialNumbers);
 
 		// THEN
-		assertThat(actual)
-				.isNotEmpty()
+		assertThat(actual) //TODO: consider comparing with an actual Map<String, GetWashingMachineFullResponse>
+//				.containsExactlyInAnyOrderEntriesOf(notFoundMap);
 				.containsOnlyKeys(serialNumbers)
 				.containsAllEntriesOf(notFoundMap);
+	}
+
+	private void insertIntoDB(WashingMachine... washingMachines) {
+		repository.saveAll(List.of(washingMachines));
 	}
 
 	@Nested
@@ -146,7 +140,7 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 			// GIVEN
 			// WHEN
 			ResultActions resultActions = performRequest(
-					List.of("I don't exist", "Something", "You won't find me")
+					List.of("I don't exist", "You won't find me")
 			);
 
 			// THEN
@@ -154,13 +148,17 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 					.andExpect(status().isNotFound())
 					.andExpect(content().string(not(containsString("Internal Translation Error"))))
 					.andExpect(content().string(containsString("I don't exist")))
-					.andExpect(content().string(containsString("Something")))
 					.andExpect(content().string(containsString("You won't find me")));
 		}
 
 		@Test
 		void should_ReturnStatusOk_When_SerialNumbersFound() throws Exception {
 			// GIVEN
+			insertIntoDB(
+					TestData.createWashingMachineWithSerialNumber("serial4"),
+					TestData.createWashingMachineWithSerialNumber("serial5")
+			);
+
 			// WHEN
 			ResultActions resultActions = performRequest(
 					List.of("serial4", "serial5")

@@ -141,7 +141,24 @@ public class TestData {
 				"modelOne",
 				"typeOne",
 				Recommendation.RESALE,
-				null
+				new WashingMachineDetail(
+						new PackageDamage(
+								false,
+								false,
+								false),
+						new VisibleSurfaceDamage(
+								0,
+								0,
+								"",
+								""),
+						new HiddenSurfaceDamage(
+								0,
+								0,
+								"",
+								""),
+						0,
+						0
+				)
 		);
 	}
 
