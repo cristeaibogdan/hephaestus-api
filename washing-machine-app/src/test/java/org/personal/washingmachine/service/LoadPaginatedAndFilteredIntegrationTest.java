@@ -136,7 +136,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 	@ValueSource(strings = {"Gorenje", "WhirlPool"})
 	void should_ReturnFilteredList_By_Manufacturer(String manufacturer) {
 		// GIVEN
-		insertIntoDB(
+		insertIntoDB( // TODO: Lombok accessors chaining could get rid of all these "additional" TestData methods
 				TestData.createWashingMachineWithManufacturer("serialOne", "Gorenje"),
 				TestData.createWashingMachineWithManufacturer("serialTwo", "Gorenje"),
 				TestData.createWashingMachineWithManufacturer("serialThree", "WhirlPool"),
