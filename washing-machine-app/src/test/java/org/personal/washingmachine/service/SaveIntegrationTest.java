@@ -136,13 +136,13 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 					.packageDirty(true)
 					.build();
 
-			CreateWashingMachineRequest request = TestData.createWashingMachineRequest().toBuilder()
-					.serialNumber("I'm ready to be saved in DB")
-					.createWashingMachineDetailRequest(detail)
-					.build();
-
 			// WHEN
-			ResultActions resultActions = performRequest(request);
+			ResultActions resultActions = performRequest(
+					TestData.createWashingMachineRequest().toBuilder()
+							.serialNumber("I'm ready to be saved in DB")
+							.createWashingMachineDetailRequest(detail)
+							.build()
+			);
 
 			// THEN
 			resultActions
