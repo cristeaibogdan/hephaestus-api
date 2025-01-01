@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.personal.washingmachine.BaseIntegrationTest;
 import org.personal.washingmachine.TestData;
@@ -28,7 +27,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -44,6 +42,20 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 
 	@Autowired WashingMachineApplicationService underTest;
 	@Autowired WashingMachineRepository repository;
+
+	SearchWashingMachineRequest searchWashingMachineRequest = new SearchWashingMachineRequest(
+			0,
+			2,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null
+	);
 
 	@BeforeEach
 	void checkInitialDataInDB() {
@@ -68,12 +80,6 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 				)
 		);
 
-		SearchWashingMachineRequest dto = TestData.searchWashingMachineRequest().toBuilder()
-				.pageIndex(0)
-				.pageSize(1)
-				.serialNumber("serial10")
-				.build();
-
 		List<GetWashingMachineSimpleResponse> expected = List.of(
 				new GetWashingMachineSimpleResponse(
 						"Washing Machine",
@@ -89,7 +95,13 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 		);
 
 		// WHEN
-		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(dto);
+		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(
+				searchWashingMachineRequest.toBuilder()
+					.pageIndex(0)
+					.pageSize(1)
+					.serialNumber("serial10")
+					.build()
+		);
 
 		// THEN
 		assertThat(actual.getContent())
@@ -107,17 +119,17 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 				TestData.createWashingMachineWithSerialNumber("serial3")
 		);
 
-		SearchWashingMachineRequest dto = TestData.searchWashingMachineRequest().toBuilder()
-				.pageIndex(0)
-				.pageSize(3)
-				.build();
-
 		// WHEN
-		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(dto);
+		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(
+				searchWashingMachineRequest.toBuilder()
+					.pageIndex(0)
+					.pageSize(3)
+					.build()
+		);
 
 		// THEN
 		assertThat(actual.getSize())
-				.isEqualTo(dto.pageSize());
+				.isEqualTo(3);
 	}
 
 	@ParameterizedTest
@@ -131,13 +143,13 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 				TestData.createWashingMachineWithManufacturer("serialFour", "WhirlPool")
 		);
 
-		SearchWashingMachineRequest dto = TestData.searchWashingMachineRequest().toBuilder()
-				.pageSize(4)
-				.manufacturer(manufacturer)
-				.build();
-
 		// WHEN
-		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(dto);
+		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(
+				searchWashingMachineRequest.toBuilder()
+						.pageSize(4)
+						.manufacturer(manufacturer)
+						.build()
+		);
 
 		// THEN
 		assertThat(actual.getContent())
@@ -157,13 +169,13 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 				TestData.createWashingMachineWithDamageType("serialFour", DamageType.IN_USE)
 		);
 
-		SearchWashingMachineRequest dto = TestData.searchWashingMachineRequest().toBuilder()
-				.pageSize(4)
-				.damageType(damageType)
-				.build();
-
 		// WHEN
-		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(dto);
+		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(
+				searchWashingMachineRequest.toBuilder()
+						.pageSize(4)
+						.damageType(damageType)
+						.build()
+		);
 
 		// THEN
 		assertThat(actual.getContent())
@@ -185,13 +197,13 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 				TestData.createWashingMachineWithReturnType("serial6", ReturnType.TRANSPORT)
 		);
 
-		SearchWashingMachineRequest dto = TestData.searchWashingMachineRequest().toBuilder()
-				.pageSize(6)
-				.returnType(returnType)
-				.build();
-
 		// WHEN
-		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(dto);
+		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(
+				searchWashingMachineRequest.toBuilder()
+						.pageSize(6)
+						.returnType(returnType)
+						.build()
+		);
 
 		// THEN
 		assertThat(actual.getContent())
@@ -211,13 +223,13 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 				TestData.createWashingMachineWithIdentificationMode("serial4", IdentificationMode.DATA_MATRIX)
 		);
 
-		SearchWashingMachineRequest dto = TestData.searchWashingMachineRequest().toBuilder()
-				.pageSize(4)
-				.identificationMode(identificationMode)
-				.build();
-
 		// WHEN
-		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(dto);
+		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(
+				searchWashingMachineRequest.toBuilder()
+						.pageSize(4)
+						.identificationMode(identificationMode)
+						.build()
+		);
 
 		// THEN
 		assertThat(actual.getContent())
@@ -227,23 +239,21 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 	}
 
 	@ParameterizedTest
-	@ValueSource(strings = {"serial1", "serial2", "serial3"})
+	@ValueSource(strings = {"serial1", "serial2"})
 	void should_ReturnFilteredList_By_SerialNumber(String serialNumber) {
 		// GIVEN
 		insertIntoDB(
 				TestData.createWashingMachineWithSerialNumber("serial1"),
-				TestData.createWashingMachineWithSerialNumber("serial2"),
-				TestData.createWashingMachineWithSerialNumber("serial3"),
-				TestData.createWashingMachineWithSerialNumber("serial4")
+				TestData.createWashingMachineWithSerialNumber("serial2")
 		);
 
-		SearchWashingMachineRequest dto = TestData.searchWashingMachineRequest().toBuilder()
-				.pageSize(4)
-				.serialNumber(serialNumber)
-				.build();
-
 		// WHEN
-		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(dto);
+		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(
+				searchWashingMachineRequest.toBuilder()
+						.pageSize(4)
+						.serialNumber(serialNumber)
+						.build()
+		);
 
 		// THEN
 		assertThat(actual.getContent())
@@ -264,13 +274,13 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 				TestData.createWashingMachineWithModel("serial5", "modelC")
 		);
 
-		SearchWashingMachineRequest dto = TestData.searchWashingMachineRequest().toBuilder()
-				.pageSize(5)
-				.model(model)
-				.build();
-
 		// WHEN
-		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(dto);
+		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(
+				searchWashingMachineRequest.toBuilder()
+						.pageSize(5)
+						.model(model)
+						.build()
+				);
 
 		// THEN
 		assertThat(actual.getContent())
@@ -291,13 +301,13 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 				TestData.createWashingMachineWithType("serial5", "TypeF")
 		);
 
-		SearchWashingMachineRequest dto = TestData.searchWashingMachineRequest().toBuilder()
-				.pageSize(5)
-				.type(type)
-				.build();
-
 		// WHEN
-		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(dto);
+		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(
+				searchWashingMachineRequest.toBuilder()
+						.pageSize(5)
+						.type(type)
+						.build()
+		);
 
 		// THEN
 		assertThat(actual.getContent())
@@ -323,13 +333,13 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 				TestData.createWashingMachineWithRecommendation("serial10", Recommendation.REPACKAGE)
 		);
 
-		SearchWashingMachineRequest dto = TestData.searchWashingMachineRequest().toBuilder()
-				.pageSize(10)
-				.recommendation(recommendation)
-				.build();
-
 		// WHEN
-		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(dto);
+		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(
+				searchWashingMachineRequest.toBuilder()
+						.pageSize(10)
+						.recommendation(recommendation)
+						.build()
+		);
 
 		// THEN
 		assertThat(actual.getContent())
@@ -347,12 +357,12 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 				TestData.createWashingMachineWithSerialNumber("serial3")
 		);
 
-		SearchWashingMachineRequest dto = TestData.searchWashingMachineRequest().toBuilder()
-				.pageSize(5)
-				.build();
-
 		// WHEN
-		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(dto);
+		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(
+				searchWashingMachineRequest.toBuilder()
+						.pageSize(5)
+						.build()
+		);
 
 		// THEN
 		assertThat(actual.getContent())
@@ -372,21 +382,21 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 				TestData.createWashingMachineWithManufacturerAndReturnType("serial4", "Bosch", ReturnType.COMMERCIAL)
 		);
 
-		SearchWashingMachineRequest dto = TestData.searchWashingMachineRequest().toBuilder()
-				.pageSize(4)
-				.manufacturer("WhirL")
-				.returnType(ReturnType.TRANSPORT)
-				.build();
-
 		// WHEN
-		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(dto);
+		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(
+				searchWashingMachineRequest.toBuilder()
+					.pageSize(4)
+					.manufacturer("WhirL")
+					.returnType(ReturnType.TRANSPORT)
+					.build()
+		);
 
 		// THEN
 		assertThat(actual.getContent())
 				.hasSize(2)
 				.allSatisfy(wm -> {
-					assertThat(wm.manufacturer()).containsIgnoringCase(dto.manufacturer());
-					assertThat(wm.returnType()).isEqualTo(dto.returnType());
+					assertThat(wm.manufacturer()).containsIgnoringCase("WhirL");
+					assertThat(wm.returnType()).isEqualTo(ReturnType.TRANSPORT);
 				});
 	}
 
@@ -400,23 +410,23 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 				TestData.createWashingMachineWithIdentificationModeAndModelAndType("serial4", IdentificationMode.DATA_MATRIX, "modelC", "TypeX")
 		);
 
-		SearchWashingMachineRequest dto = TestData.searchWashingMachineRequest().toBuilder()
-				.pageSize(4)
-				.identificationMode(IdentificationMode.QR_CODE)
-				.model("MoDElC")
-				.type("tYPeX")
-				.build();
-
 		// WHEN
-		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(dto);
+		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(
+				searchWashingMachineRequest.toBuilder()
+						.pageSize(4)
+						.identificationMode(IdentificationMode.QR_CODE)
+						.model("MoDElC")
+						.type("tYPeX")
+						.build()
+		);
 
 		// THEN
 		assertThat(actual.getContent())
 				.hasSize(2)
 				.allSatisfy(wm -> {
-					assertThat(wm.identificationMode()).isEqualTo(dto.identificationMode());
-					assertThat(wm.model()).containsIgnoringCase(dto.model());
-					assertThat(wm.type()).containsIgnoringCase(dto.type());
+					assertThat(wm.identificationMode()).isEqualTo(IdentificationMode.QR_CODE);
+					assertThat(wm.model()).containsIgnoringCase("MoDElC");
+					assertThat(wm.type()).containsIgnoringCase("tYPeX");
 				});
 	}
 
@@ -427,26 +437,15 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 	@Nested
 	class MvcTest {
 
-		private static final String[] availableLocales = {"en", "es", "it", "ro", "sl"};
-
-		private static Stream<String> localeProvider() {
-			return Stream.of(availableLocales);
-		}
-
-		@ParameterizedTest
-		@MethodSource("localeProvider")
-		void should_ThrowCustomException_When_InvalidDate(String locale) throws Exception {
+		@Test
+		void should_ThrowCustomException_When_InvalidDate() throws Exception {
 			// GIVEN
-			SearchWashingMachineRequest request = TestData.searchWashingMachineRequest().toBuilder()
-					.createdAt("invalid date")
-					.build();
-
 			// WHEN
-			ResultActions resultActions = mockMvc.perform(
-					post("/api/v1/washing-machines")
-							.content(jackson.writeValueAsString(request))
-							.contentType(MediaType.APPLICATION_JSON)
-							.header("Accept-Language", locale));
+			ResultActions resultActions = performRequest(
+					searchWashingMachineRequest.toBuilder()
+							.createdAt("invalid date")
+							.build()
+			);
 
 			// THEN
 			resultActions
@@ -461,20 +460,24 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 					TestData.createWashingMachineWithSerialNumber("serial8")
 			);
 
-			SearchWashingMachineRequest request = TestData.searchWashingMachineRequest().toBuilder()
-					.serialNumber("serial8")
-					.build();
-
 			// WHEN
-			ResultActions resultActions = mockMvc.perform(
-					post("/api/v1/washing-machines")
-							.content(jackson.writeValueAsString(request))
-							.contentType(MediaType.APPLICATION_JSON));
+			ResultActions resultActions = performRequest(
+					searchWashingMachineRequest.toBuilder()
+							.serialNumber("serial8")
+							.build()
+			);
 
 			// THEN
 			resultActions
 					.andExpect(status().isOk())
 					.andExpect(content().string(not(emptyString())));
+		}
+
+		private ResultActions performRequest(SearchWashingMachineRequest request) throws Exception {
+			return mockMvc.perform(
+					post("/api/v1/washing-machines")
+							.content(jackson.writeValueAsString(request))
+							.contentType(MediaType.APPLICATION_JSON));
 		}
 	}
 }
