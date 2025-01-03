@@ -42,9 +42,9 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 	void should_ReturnDTOs_When_SerialNumbersFound() {
 		// GIVEN
 		insertIntoDB(
-				TestData.createWashingMachineWithSerialNumber("serial1"),
-				TestData.createWashingMachineWithSerialNumber("serial2"),
-				TestData.createWashingMachineWithSerialNumber("serial3")
+				TestData.createWashingMachine().setSerialNumber("serial1"),
+				TestData.createWashingMachine().setSerialNumber("serial2"),
+				TestData.createWashingMachine().setSerialNumber("serial3")
 		);
 
 		// WHEN
@@ -63,20 +63,20 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 	void should_ReturnDTOs_When_SerialNumbersContainNull() {
 		// GIVEN
 		insertIntoDB(
-				TestData.createWashingMachineWithSerialNumber("serial1"),
-				TestData.createWashingMachineWithSerialNumber("serial2"),
-				TestData.createWashingMachineWithSerialNumber("serial3")
+				TestData.createWashingMachine().setSerialNumber("serial1"),
+				TestData.createWashingMachine().setSerialNumber("serial2"),
+				TestData.createWashingMachine().setSerialNumber("serial3")
 		);
 
-		List<String> serialNumbers = new ArrayList<>();
-		serialNumbers.add(null);
-		serialNumbers.add("serial1");
-		serialNumbers.add("serial2");
+		List<String> request = new ArrayList<>();
+		request.add(null);
+		request.add("serial1");
+		request.add("serial2");
 
 		List<String> expectedSerialNumbers = List.of("serial1", "serial2");
 
 		// WHEN
-		Map<String, GetWashingMachineFullResponse> actual = underTest.loadMany(serialNumbers);
+		Map<String, GetWashingMachineFullResponse> actual = underTest.loadMany(request);
 
 		// THEN
 		assertThat(actual)
@@ -91,8 +91,8 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 	void should_ReturnNullDTOs_When_SerialNumbersNotFound() {
 		// GIVEN
 		insertIntoDB(
-				TestData.createWashingMachineWithSerialNumber("serial1"),
-				TestData.createWashingMachineWithSerialNumber("serial2")
+				TestData.createWashingMachine().setSerialNumber("serial1"),
+				TestData.createWashingMachine().setSerialNumber("serial2")
 		);
 
 		List<String> serialNumbers = List.of(
@@ -155,8 +155,8 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 		void should_ReturnStatusOk_When_SerialNumbersFound() throws Exception {
 			// GIVEN
 			insertIntoDB(
-					TestData.createWashingMachineWithSerialNumber("serial4"),
-					TestData.createWashingMachineWithSerialNumber("serial5")
+					TestData.createWashingMachine().setSerialNumber("serial4"),
+					TestData.createWashingMachine().setSerialNumber("serial5")
 			);
 
 			// WHEN

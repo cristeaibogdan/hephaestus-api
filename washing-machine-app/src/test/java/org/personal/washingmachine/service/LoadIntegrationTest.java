@@ -137,7 +137,7 @@ class LoadIntegrationTest extends BaseIntegrationTest {
 	@Test
 	void should_ReturnCurrentDateInCreatedAt() {
 		// GIVEN
-		insertIntoDB(TestData.createWashingMachineWithSerialNumber("current-date-test"));
+		insertIntoDB(TestData.createWashingMachine().setSerialNumber("current-date-test"));
 
 		// WHEN
 		GetWashingMachineFullResponse actual = underTest.load("current-date-test");
@@ -169,7 +169,7 @@ class LoadIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnStatusOk_When_SerialNumberExists() throws Exception {
 			// GIVEN
-			insertIntoDB(TestData.createWashingMachineWithSerialNumber("ok-status"));
+			insertIntoDB(TestData.createWashingMachine().setSerialNumber("ok-status"));
 
 			// WHEN
 			ResultActions resultActions = performRequest("ok-status");
@@ -185,5 +185,4 @@ class LoadIntegrationTest extends BaseIntegrationTest {
 					get("/api/v1/washing-machines/{serialNumber}", serialNumber));
 		}
 	}
-
 }
