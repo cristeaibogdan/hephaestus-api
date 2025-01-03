@@ -3,6 +3,7 @@ package org.personal.washingmachine.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
 import org.personal.washingmachine.BaseIntegrationTest;
+import org.personal.washingmachine.TestData;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.enums.DamageType;
 import org.personal.washingmachine.enums.IdentificationMode;
@@ -47,18 +48,9 @@ class GetRecommendationIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnExpectedContent_When_SerialNumberFound() throws Exception {
 			// GIVEN
-			insertIntoDB(new WashingMachine(
-					"Washing Machine",
-					"Gorenje",
-					DamageType.IN_USE,
-					ReturnType.COMMERCIAL,
-					IdentificationMode.DATA_MATRIX,
-					"I exist in DB",
-					"modelA",
-					"TypeZ",
-					Recommendation.OUTLET,
-					null
-			));
+			insertIntoDB(
+					TestData.createWashingMachine().setSerialNumber("I exist in DB").setRecommendation(Recommendation.OUTLET)
+			);
 
 			// WHEN
 			ResultActions resultActions = performRequest("I exist in DB");

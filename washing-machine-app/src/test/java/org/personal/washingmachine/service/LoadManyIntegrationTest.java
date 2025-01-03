@@ -110,8 +110,7 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 		Map<String, GetWashingMachineFullResponse> actual = underTest.loadMany(serialNumbers);
 
 		// THEN
-		assertThat(actual) //TODO: consider comparing with an actual Map<String, GetWashingMachineFullResponse>
-//				.containsExactlyInAnyOrderEntriesOf(notFoundMap);
+		assertThat(actual)
 				.containsOnlyKeys(serialNumbers)
 				.containsAllEntriesOf(notFoundMap);
 	}

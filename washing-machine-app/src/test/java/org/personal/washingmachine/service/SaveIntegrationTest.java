@@ -132,15 +132,14 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnStatusCreated_When_DTOSaved() throws Exception {
 			// GIVEN
-			CreateWashingMachineDetailRequest detail = TestData.createWashingMachineDetailRequest().toBuilder()
-					.packageDirty(true)
-					.build();
-
 			// WHEN
 			ResultActions resultActions = performRequest(
 					TestData.createWashingMachineRequest().toBuilder()
 							.serialNumber("I'm ready to be saved in DB")
-							.createWashingMachineDetailRequest(detail)
+							.createWashingMachineDetailRequest(
+									TestData.createWashingMachineDetailRequest().toBuilder()
+											.packageDirty(true)
+											.build())
 							.build()
 			);
 
@@ -153,13 +152,12 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ThrowCustomException_When_SerialNumberAlreadyTaken() throws Exception {
 			// GIVEN
-			CreateWashingMachineDetailRequest detail = TestData.createWashingMachineDetailRequest().toBuilder()
-					.packageDamaged(true)
-					.build();
-
 			CreateWashingMachineRequest request = TestData.createWashingMachineRequest().toBuilder()
 					.serialNumber("I already exist in DB")
-					.createWashingMachineDetailRequest(detail)
+					.createWashingMachineDetailRequest(
+							TestData.createWashingMachineDetailRequest().toBuilder()
+									.packageDamaged(true)
+									.build())
 					.build();
 
 			performRequest(request);

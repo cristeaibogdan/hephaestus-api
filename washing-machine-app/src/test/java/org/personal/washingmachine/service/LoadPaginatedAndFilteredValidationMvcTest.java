@@ -50,6 +50,7 @@ class LoadPaginatedAndFilteredValidationMvcTest {
 		ResultActions resultActions = performRequest(
 				searchWashingMachineRequest.toBuilder()
 						.pageIndex(-1)
+						.pageSize(1)
 						.build()
 		);
 
@@ -66,6 +67,7 @@ class LoadPaginatedAndFilteredValidationMvcTest {
 		// WHEN
 		ResultActions resultActions = performRequest(
 				searchWashingMachineRequest.toBuilder()
+						.pageIndex(0)
 						.pageSize(0)
 						.build()
 		);

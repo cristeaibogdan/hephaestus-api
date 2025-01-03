@@ -89,18 +89,9 @@ class GetReportIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnStatusOk_When_SerialNumberFound() throws Exception {
 			// GIVEN
-			insertIntoDB(new WashingMachine(
-					"Washing Machine",
-					"Gorenje",
-					DamageType.IN_USE,
-					ReturnType.COMMERCIAL,
-					IdentificationMode.DATA_MATRIX,
-					"I exist",
-					"modelA",
-					"TypeZ",
-					Recommendation.OUTLET,
-					TestData.createWashingMachineDetail()
-			));
+			insertIntoDB(
+					TestData.createWashingMachine().setSerialNumber("I exist")
+			);
 
 			// WHEN
 			ResultActions resultActions = performRequest("I exist");

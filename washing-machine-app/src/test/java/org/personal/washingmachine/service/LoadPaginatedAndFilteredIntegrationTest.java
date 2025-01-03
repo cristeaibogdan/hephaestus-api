@@ -144,8 +144,6 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 				TestData.createWashingMachine().setSerialNumber("serial4").setManufacturer("WhirlPool")
 		);
 
-		Optional<WashingMachine> serial1 = repository.findBySerialNumber("serial1");
-		System.out.println(serial1.get().getManufacturer());
 		// WHEN
 		Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(
 				searchWashingMachineRequest.toBuilder()

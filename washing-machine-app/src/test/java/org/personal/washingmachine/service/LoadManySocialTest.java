@@ -51,12 +51,11 @@ class LoadManySocialTest {
 
 		List<String> expected = List.of("serial1", "serial2", "serial3");
 
-		List<WashingMachine> mockWashingMachines = List.of(
-				TestData.createWashingMachine()
-		);
-
 		given(washingMachineRepositoryMock.findAllBySerialNumberIn(expected))
-				.willReturn(mockWashingMachines);
+				.willReturn(
+						List.of(
+						TestData.createWashingMachine()
+				));
 
 		// WHEN
 		underTest.loadMany(serialNumbers);
