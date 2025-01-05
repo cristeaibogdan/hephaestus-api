@@ -52,22 +52,6 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 	@Test
 	void should_saveRequest_With_AllPropertiesInDB() {
 		// GIVEN
-		CreateWashingMachineDetailRequest detail = new CreateWashingMachineDetailRequest(
-				true,
-				false,
-				true,
-				5,
-				2,
-				"some minor visible surface damage",
-				"major visible damage",
-				8,
-				3,
-				"hidden minor damage",
-				"some more hidden major damage",
-				1_000,
-				100
-		);
-
 		CreateWashingMachineRequest request = new CreateWashingMachineRequest(
 				"Washing Machine",
 				IdentificationMode.DATA_MATRIX,
@@ -77,7 +61,21 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 				"I'm saved",
 				ReturnType.SERVICE,
 				DamageType.IN_USE,
-				detail
+				new CreateWashingMachineDetailRequest(
+						true,
+						false,
+						true,
+						5,
+						2,
+						"some minor visible surface damage",
+						"major visible damage",
+						8,
+						3,
+						"hidden minor damage",
+						"some more hidden major damage",
+						1_000,
+						100
+				)
 		);
 
 		// WHEN
