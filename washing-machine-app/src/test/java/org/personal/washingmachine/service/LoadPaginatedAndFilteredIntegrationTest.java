@@ -27,7 +27,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -59,12 +58,12 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 	);
 
 	@BeforeEach
-	void checkInitialDataInDB() {
+	void checkNoDataInDB() {
 		assertThat(repository.count()).isZero();
 	}
 
 	@Test
-	void should_ReturnDTOs_With_CorrectProperties() {
+	void should_ReturnDTO_With_CorrectProperties() {
 		// GIVEN
 		insertIntoDB(
 				new WashingMachine(
@@ -166,8 +165,8 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 		// GIVEN
 		insertIntoDB(
 				TestData.createWashingMachine().setSerialNumber("serialOne").setDamageType(DamageType.IN_TRANSIT),
-				TestData.createWashingMachine().setSerialNumber("serialTwo").setDamageType(DamageType.IN_USE),
-				TestData.createWashingMachine().setSerialNumber("serialThree").setDamageType(DamageType.IN_TRANSIT),
+				TestData.createWashingMachine().setSerialNumber("serialTwo").setDamageType(DamageType.IN_TRANSIT),
+				TestData.createWashingMachine().setSerialNumber("serialThree").setDamageType(DamageType.IN_USE),
 				TestData.createWashingMachine().setSerialNumber("serialFour").setDamageType(DamageType.IN_USE)
 		);
 

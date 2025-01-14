@@ -52,11 +52,11 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 
 		// THEN
 		assertThat(actual)
-				.containsOnlyKeys(List.of("serial1", "serial2"));
+				.containsOnlyKeys("serial1", "serial2");
 
 		assertThat(actual.values())
 				.extracting(wm -> wm.serialNumber())
-				.containsExactlyInAnyOrderElementsOf(List.of("serial1", "serial2"));
+				.containsOnly("serial1", "serial2");
 	}
 
 	@Test
@@ -73,18 +73,16 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 		request.add("serial1");
 		request.add("serial2");
 
-		List<String> expectedSerialNumbers = List.of("serial1", "serial2");
-
 		// WHEN
 		Map<String, GetWashingMachineFullResponse> actual = underTest.loadMany(request);
 
 		// THEN
 		assertThat(actual)
-				.containsOnlyKeys(expectedSerialNumbers);
+				.containsOnlyKeys("serial1", "serial2");
 
 		assertThat(actual.values())
 				.extracting(wm -> wm.serialNumber())
-				.containsExactlyInAnyOrderElementsOf(expectedSerialNumbers);
+				.containsOnly("serial1", "serial2");
 	}
 
 	@Test
@@ -95,23 +93,21 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 				TestData.createWashingMachine().setSerialNumber("serial2")
 		);
 
-		List<String> serialNumbers = List.of(
-				"I don't exist",
-				"serial1",
-				"serial2",
-				"Nothing"
-		);
-
 		Map<String, GetWashingMachineFullResponse> notFoundMap = new HashMap<>();
 		notFoundMap.put("I don't exist", null);
 		notFoundMap.put("Nothing", null);
 
 		// WHEN
-		Map<String, GetWashingMachineFullResponse> actual = underTest.loadMany(serialNumbers);
+		Map<String, GetWashingMachineFullResponse> actual = underTest.loadMany(List.of(
+				"I don't exist",
+				"serial1",
+				"serial2",
+				"Nothing"
+		));
 
 		// THEN
 		assertThat(actual)
-				.containsOnlyKeys(serialNumbers)
+				.containsOnlyKeys("I don't exist", "serial1", "serial2", "Nothing")
 				.containsAllEntriesOf(notFoundMap);
 	}
 

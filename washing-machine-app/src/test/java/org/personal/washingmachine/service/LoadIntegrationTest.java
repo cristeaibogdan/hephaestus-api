@@ -43,7 +43,7 @@ class LoadIntegrationTest extends BaseIntegrationTest {
 	@Autowired WashingMachineRepository repository;
 
 	@BeforeEach
-	void checkInitialDataInDB() {
+	void checkNoDataInDB() {
 		assertThat(repository.count()).isZero();
 	}
 
