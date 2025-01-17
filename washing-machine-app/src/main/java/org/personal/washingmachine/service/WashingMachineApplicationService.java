@@ -137,21 +137,18 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 
 	@Override
 	public Map<String, GetWashingMachineFullResponse> loadMany(List<String> serialNumbers) {
-		List<String> nonNullSerialNumbers  = serialNumbers.stream()
-				.filter(sn -> Objects.nonNull(sn))
-				.distinct()
-				.toList();
 
-		if (nonNullSerialNumbers.isEmpty()) {
-			throw new CustomException(ErrorCode.LIST_IS_EMPTY);
-		}
+		List<String> filteredSerialNumbers = filterSerialNumbers(serialNumbers);
 
-		List<WashingMachine> foundWashingMachines = repository.findAllBySerialNumberIn(nonNullSerialNumbers);
-
+		List<WashingMachine> foundWashingMachines = repository.findAllBySerialNumberIn(filteredSerialNumbers);
 		if (foundWashingMachines.isEmpty()) {
-			throw new CustomException(ErrorCode.SERIAL_NUMBERS_NOT_FOUND, nonNullSerialNumbers);
+			throw new CustomException(ErrorCode.SERIAL_NUMBERS_NOT_FOUND, filteredSerialNumbers);
 		}
 
+		return buildResponseMap(foundWashingMachines, filteredSerialNumbers);
+	}
+
+	private Map<String, GetWashingMachineFullResponse> buildResponseMap(List<WashingMachine> foundWashingMachines, List<String> filteredSerialNumbers) {
 		Map<String, GetWashingMachineFullResponse> result = foundWashingMachines.stream()
 				.map(wm -> WashingMachineMapper.toGetWashingMachineFullResponse(wm))
 				.collect(Collectors.toMap(
@@ -159,8 +156,19 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 						wm -> wm
 				));
 
-		nonNullSerialNumbers.forEach(sn -> result.putIfAbsent(sn, null));
-
+		filteredSerialNumbers.forEach(sn -> result.putIfAbsent(sn, null));
 		return result;
+	}
+
+	private List<String> filterSerialNumbers(List<String> serialNumbers) {
+		List<String> filteredSerialNumbers  = serialNumbers.stream()
+				.filter(sn -> Objects.nonNull(sn))
+				.distinct()
+				.toList();
+
+		if (filteredSerialNumbers.isEmpty()) {
+			throw new CustomException(ErrorCode.LIST_IS_EMPTY);
+		}
+		return filteredSerialNumbers;
 	}
 }
