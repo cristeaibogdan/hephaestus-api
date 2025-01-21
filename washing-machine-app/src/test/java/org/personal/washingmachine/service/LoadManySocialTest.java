@@ -41,14 +41,6 @@ class LoadManySocialTest {
 	@Test //TODO: Consider moving to IntegrationTest
 	void should_callRepository_With_DistinctSerialNumbers() {
 		// GIVEN
-		List<String> serialNumbers = List.of(
-				"serial1",
-				"serial1",
-				"serial2",
-				"serial2",
-				"serial3"
-		);
-
 		List<String> expected = List.of("serial1", "serial2", "serial3");
 
 		given(washingMachineRepositoryMock.findAllBySerialNumberIn(expected))
@@ -58,7 +50,13 @@ class LoadManySocialTest {
 				));
 
 		// WHEN
-		underTest.loadMany(serialNumbers);
+		underTest.loadMany(List.of(
+				"serial1",
+				"serial1",
+				"serial2",
+				"serial2",
+				"serial3"
+		));
 
 		// THEN
 		verify(washingMachineRepositoryMock).findAllBySerialNumberIn(expected);
