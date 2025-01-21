@@ -13,7 +13,12 @@ class IsValidRegistrationCodeSocialTest {
 	UserApplicationService underTest = new UserApplicationService(userService);
 
 	@ParameterizedTest(name = "Registration code {0} is valid")
-	@ValueSource(strings = {"RX1000", "RX2001", "RX3002", "RX4003", "RX5000"})
+	@ValueSource(strings = {
+			"RX1000", "RX1001", "RX1002", "RX1003",
+			"RX2000", "RX2001", "RX2002", "RX2003",
+			"RX3000", "RX3001", "RX3002", "RX3003",
+			"RX4000", "RX4001", "RX4002", "RX4003",
+	})
 	void should_ReturnTrue_When_RegistrationCodeValid(String registrationCode) {
 		// GIVEN
 		// WHEN

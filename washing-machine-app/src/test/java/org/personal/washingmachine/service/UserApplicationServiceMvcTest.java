@@ -32,42 +32,6 @@ class UserApplicationServiceMvcTest {
     @MockBean UserService userServiceMock;
 
     @Nested
-    class testIsValidRegistrationCode {
-
-        @Test
-        void should_ReturnTrue_When_ValidCode() throws Exception {
-            // GIVEN
-            String registrationCode = "RX2000";
-            boolean expected = true;
-
-            // WHEN
-            ResultActions resultActions = mockMvc.perform(
-                    get("/api/v1/users/{registrationCode}", registrationCode));
-
-            // THEN
-            resultActions
-                    .andExpect(status().isOk())
-                    .andExpect(content().string(Boolean.toString(expected)));
-        }
-
-        @Test
-        void should_ReturnFalse_When_InvalidCode() throws Exception {
-            // GIVEN
-            String registrationCode = "I will fail";
-            boolean expected = false;
-
-            // WHEN
-            ResultActions resultActions = mockMvc.perform(
-                    get("/api/v1/users/{registrationCode}", registrationCode));
-
-            // THEN
-            resultActions
-                    .andExpect(status().isOk())
-                    .andExpect(content().string(Boolean.toString(expected)));
-        }
-    }
-
-    @Nested
     class testGetOrganizationAndCountry {
 
         @Test

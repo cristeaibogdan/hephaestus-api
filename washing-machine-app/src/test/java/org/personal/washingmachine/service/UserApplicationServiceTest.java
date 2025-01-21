@@ -31,39 +31,6 @@ class UserApplicationServiceTest {
 	UserApplicationService underTest = new UserApplicationService(userService);
 
 	@Nested
-	class TestIsValidRegistrationCode {
-
-		@ParameterizedTest(name = "{0} is a valid registration code")
-		@ValueSource(strings = {
-				"RX1000", "RX1001", "RX1002", "RX1003",
-				"RX2000", "RX2001", "RX2002", "RX2003",
-				"RX3000", "RX3001", "RX3002", "RX3003",
-				"RX4000", "RX4001", "RX4002", "RX4003",
-		})
-		void should_ReturnTrue_When_RegistrationCodeIsValid(String registrationCode) {
-			// GIVEN
-
-			// WHEN
-			boolean actual = underTest.isValidRegistrationCode(registrationCode);
-
-			// THEN
-			assertThat(actual).isTrue();
-		}
-
-		@ParameterizedTest(name = "{0} is not a valid registration code")
-		@ValueSource(strings = {"RX1234", "   ", "test", "something"})
-		void should_ReturnFalse_When_RegistrationCodeIsInvalid(String registrationCode) {
-			// GIVEN
-
-			// WHEN
-			boolean actual = underTest.isValidRegistrationCode(registrationCode);
-
-			// THEN
-			assertThat(actual).isFalse();
-		}
-	}
-
-	@Nested
 	class TestGetOrganizationAndCountry {
 
 		static Stream<Arguments> getOrganizationAndCountryTestCases() {
