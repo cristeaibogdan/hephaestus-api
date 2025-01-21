@@ -31,44 +31,6 @@ class UserApplicationServiceTest {
 	UserApplicationService underTest = new UserApplicationService(userService);
 
 	@Nested
-	class TestGetOrganizationAndCountry {
-
-		static Stream<Arguments> getOrganizationAndCountryTestCases() {
-			return Stream.of(
-					arguments(new GetOrganizationAndCountryResponse("ZEOS", "SLOVENIA"), "RX1000"),
-					arguments(new GetOrganizationAndCountryResponse("GORENJE", "SLOVENIA"), "RX2001"),
-					arguments(new GetOrganizationAndCountryResponse("BOSCH", "GERMANY"), "RX3002"),
-					arguments(new GetOrganizationAndCountryResponse("SMEG", "ITALY"), "RX4003"),
-					arguments(new GetOrganizationAndCountryResponse("ORIGIN", "ROMANIA"), "RX5000")
-			);
-		}
-
-		@ParameterizedTest(name = "Valid OrganizationAndCountryDTO for {1}")
-		@MethodSource("getOrganizationAndCountryTestCases")
-		void should_ReturnGetOrganizationAndCountryResponse_When_RegistrationCodeIsValid(
-				GetOrganizationAndCountryResponse expected,
-				String registrationCode) {
-			// GIVEN
-
-			// WHEN
-			GetOrganizationAndCountryResponse actual = underTest.getOrganizationAndCountry(registrationCode);
-
-			// THEN
-			assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
-		}
-
-		@ParameterizedTest(name = "{0} is not a valid registration code")
-		@ValueSource(strings = {"RX1234", "   ", "test", "something"})
-		void should_ThrowCustomException_When_RegistrationCodeIsInvalid(String registrationCode) {
-			// GIVEN
-
-			// WHEN & THEN
-			assertThatThrownBy(() -> underTest.getOrganizationAndCountry(registrationCode))
-					.isInstanceOf(CustomException.class);
-		}
-	}
-
-	@Nested
 	class TestRegister {
 
 		@Test

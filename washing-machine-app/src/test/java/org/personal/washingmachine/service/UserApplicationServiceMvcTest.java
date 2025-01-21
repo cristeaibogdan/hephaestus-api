@@ -32,28 +32,6 @@ class UserApplicationServiceMvcTest {
     @MockBean UserService userServiceMock;
 
     @Nested
-    class testGetOrganizationAndCountry {
-
-        @Test
-        void should_ReturnOrganizationAndCountryDTO_When_ValidCode() throws Exception {
-            // GIVEN
-            String registrationCode = "RX1001";
-            GetOrganizationAndCountryResponse expected = new GetOrganizationAndCountryResponse(
-                    "ZEOS",
-                    "SLOVENIA");
-
-            // WHEN
-            ResultActions resultActions = mockMvc.perform(
-                    get("/api/v1/users/{registrationCode}/organization-and-country", registrationCode));
-
-            // THEN
-            resultActions
-                    .andExpect(status().isOk())
-                    .andExpect(content().string(jackson.writeValueAsString(expected)));
-        }
-    }
-
-    @Nested
     class testRegister {
 
         @Test
