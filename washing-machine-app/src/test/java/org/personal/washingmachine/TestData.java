@@ -1,7 +1,9 @@
 package org.personal.washingmachine;
 
+import org.personal.washingmachine.dto.CreateUserRequest;
 import org.personal.washingmachine.dto.CreateWashingMachineDetailRequest;
 import org.personal.washingmachine.dto.CreateWashingMachineRequest;
+import org.personal.washingmachine.entity.User;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineDetail;
 import org.personal.washingmachine.entity.embedded.HiddenSurfaceDamage;
@@ -110,6 +112,28 @@ public class TestData {
 						0,
 						0
 				)
+		);
+	}
+
+	public static User createUser() {
+		return new User(
+				"RX1001",
+				"Bosch",
+				"Poland",
+				"unique@email.com",
+				"unique_username",
+				"somePassword"
+		);
+	}
+
+	public static CreateUserRequest createUserRequest() {
+		return new CreateUserRequest(
+				"RX1001",
+				"Bosch",
+				"Poland",
+				"unique@email.com",
+				"unique_username",
+				"somePassword"
 		);
 	}
 }

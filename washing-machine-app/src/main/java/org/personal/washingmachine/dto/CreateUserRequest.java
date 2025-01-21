@@ -2,7 +2,7 @@ package org.personal.washingmachine.dto;
 
 import lombok.Builder;
 
-@Builder
+@Builder(toBuilder = true)
 public record CreateUserRequest(
         String code,
         String organization,

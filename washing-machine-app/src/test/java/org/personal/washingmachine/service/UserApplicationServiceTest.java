@@ -31,68 +31,6 @@ class UserApplicationServiceTest {
 	UserApplicationService underTest = new UserApplicationService(userService);
 
 	@Nested
-	class TestRegister {
-
-		@Test
-		void should_SaveUser_When_ValidUserProvided() {
-			// GIVEN
-			CreateUserRequest dto = new CreateUserRequest(
-					"code",
-					"ORG",
-					"ROMANIA",
-					"email@yahoo.com",
-					"user123456",
-					"pass123456");
-
-			// WHEN
-			underTest.register(dto);
-
-			// THEN
-//			then(userRepositoryMock)
-//					.should(times(1))
-//					.save(UserMapper.toEntity(dto));
-		}
-
-		@Test
-		void should_ThrowCustomException_When_EmailIsAlreadyTaken() {
-			// GIVEN
-			CreateUserRequest dto = new CreateUserRequest(
-					"code",
-					"ORG",
-					"ROMANIA",
-					"takenEmail@yahoo.com",
-					"user123456",
-					"pass123456");
-
-			given(userRepositoryMock.existsByEmail(dto.email()))
-					.willReturn(true);
-
-			// When & THEN
-			assertThatThrownBy(() -> underTest.register(dto))
-					.isInstanceOf(CustomException.class);
-		}
-
-		@Test
-		void should_ThrowCustomException_When_UsernamesAlreadyTaken() {
-			// GIVEN
-			CreateUserRequest dto = new CreateUserRequest(
-					"code",
-					"ORG",
-					"ROMANIA",
-					"email@yahoo.com",
-					"takenUser",
-					"pass123456");
-
-			given(userRepositoryMock.existsByUsername(dto.username()))
-					.willReturn(true);
-
-			// WHEN & THEN
-			assertThatThrownBy(() -> underTest.register(dto))
-					.isInstanceOf(CustomException.class);
-		}
-	}
-
-	@Nested
 	class TestLogin {
 
 		@Test

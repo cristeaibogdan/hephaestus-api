@@ -32,63 +32,6 @@ class UserApplicationServiceMvcTest {
     @MockBean UserService userServiceMock;
 
     @Nested
-    class testRegister {
-
-        @Test
-        void should_ReturnHttpStatusCreated() throws Exception {
-            // GIVEN
-            LoginUserResponse loginUserResponse = new LoginUserResponse(
-                    "RX1001",
-                    "OLX",
-                    "Romania",
-                    "bogdan@gmail.com",
-                    "bogdan");
-
-            // WHEN
-            ResultActions resultActions = mockMvc.perform(post("/api/v1/users/register")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(jackson.writeValueAsString(loginUserResponse)));
-
-            // THEN
-            then(userServiceMock)
-                    .should(times(1))
-                    .register(any()); //TODO: Should use matchers or not?
-
-            resultActions
-                    .andExpect(status().isCreated())
-                    .andExpect(content().string(""));
-        }
-
-        @Test
-        void should_ThrowCustomException_When_EmailIsAlreadyTaken() throws Exception {
-            // GIVEN
-            LoginUserResponse loginUserResponse = new LoginUserResponse(
-                    "RX1001",
-                    "OLX",
-                    "Romania",
-                    "bogdan@gmail.com",
-                    "bogdan");
-
-            willThrow(new CustomException(ErrorCode.EMAIL_ALREADY_TAKEN))
-                    .given(userServiceMock).register(any());
-
-            // WHEN
-            ResultActions resultActions = mockMvc.perform(post("/api/v1/users/register")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(jackson.writeValueAsString(loginUserResponse)));
-
-            // THEN
-            then(userServiceMock)
-                    .should(times(1))
-                    .register(any());
-
-            resultActions
-                    .andExpect(status().isConflict());
-        }
-
-    }
-
-    @Nested
     class testLogin {
 
         @Test
