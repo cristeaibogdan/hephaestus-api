@@ -47,103 +47,106 @@ class LoadIntegrationTest extends BaseIntegrationTest {
 		assertThat(repository.count()).isZero();
 	}
 
-	@Test
-	void should_ReturnDTO_When_ProvidedValidSerialNumber() {
-		// GIVEN
-		WashingMachine washingMachine = new WashingMachine(
-				"Washing Machine",
-				"Gorenje",
-				DamageType.IN_USE,
-				ReturnType.COMMERCIAL,
-				IdentificationMode.DATA_MATRIX,
-				"The only one in DB",
-				"modelA",
-				"TypeZ",
-				Recommendation.OUTLET,
-				new WashingMachineDetail(
-						new PackageDamage(false,false,false),
-						new VisibleSurfaceDamage(
-								0,
-								0,
-								"",
-								""),
-						new HiddenSurfaceDamage(
-								0,
-								0,
-								"",
-								""),
-						0,
-						0
-				)
-		);
-		washingMachine.addImage(
-				new WashingMachineImage("some random prefix", new byte[0])
-		);
-		insertIntoDB(washingMachine);
+	@Nested
+	class IntegrationTest {
+		@Test
+		void should_ReturnDTO_When_ProvidedValidSerialNumber() {
+			// GIVEN
+			WashingMachine washingMachine = new WashingMachine(
+					"Washing Machine",
+					"Gorenje",
+					DamageType.IN_USE,
+					ReturnType.COMMERCIAL,
+					IdentificationMode.DATA_MATRIX,
+					"The only one in DB",
+					"modelA",
+					"TypeZ",
+					Recommendation.OUTLET,
+					new WashingMachineDetail(
+							new PackageDamage(false,false,false),
+							new VisibleSurfaceDamage(
+									0,
+									0,
+									"",
+									""),
+							new HiddenSurfaceDamage(
+									0,
+									0,
+									"",
+									""),
+							0,
+							0
+					)
+			);
+			washingMachine.addImage(
+					new WashingMachineImage("some random prefix", new byte[0])
+			);
+			insertIntoDB(washingMachine);
 
-		GetWashingMachineFullResponse expected = new GetWashingMachineFullResponse(
-				"Washing Machine",
-				"Gorenje",
-				IdentificationMode.DATA_MATRIX,
-				"modelA",
-				"TypeZ",
-				"The only one in DB",
-				ReturnType.COMMERCIAL,
-				DamageType.IN_USE,
-				Recommendation.OUTLET,
-				LocalDateTime.now(),
-				new GetWashingMachineDetailResponse(
-						false,
-						false,
-						false,
-						false,
-						false,
-						false,
-						0,
-						false,
-						0,
-						false,
-						"",
-						false,
-						"",
-						false,
-						false,
-						0,
-						false,
-						0,
-						false,
-						"",
-						false,
-						"",
-						0,
-						0
-				),
-				List.of(new GetWashingMachineImageResponse(
-						"some random prefix",
-						new byte[0]
-				))
-		);
+			GetWashingMachineFullResponse expected = new GetWashingMachineFullResponse(
+					"Washing Machine",
+					"Gorenje",
+					IdentificationMode.DATA_MATRIX,
+					"modelA",
+					"TypeZ",
+					"The only one in DB",
+					ReturnType.COMMERCIAL,
+					DamageType.IN_USE,
+					Recommendation.OUTLET,
+					LocalDateTime.now(),
+					new GetWashingMachineDetailResponse(
+							false,
+							false,
+							false,
+							false,
+							false,
+							false,
+							0,
+							false,
+							0,
+							false,
+							"",
+							false,
+							"",
+							false,
+							false,
+							0,
+							false,
+							0,
+							false,
+							"",
+							false,
+							"",
+							0,
+							0
+					),
+					List.of(new GetWashingMachineImageResponse(
+							"some random prefix",
+							new byte[0]
+					))
+			);
 
-		// WHEN
-		GetWashingMachineFullResponse actual = underTest.load("The only one in DB");
+			// WHEN
+			GetWashingMachineFullResponse actual = underTest.load("The only one in DB");
 
-		// THEN
-		assertThat(actual).usingRecursiveComparison()
-				.ignoringFields("createdAt")
-				.isEqualTo(expected);
-	}
+			// THEN
+			assertThat(actual).usingRecursiveComparison()
+					.ignoringFields("createdAt")
+					.isEqualTo(expected);
+		}
 
-	@Test
-	void should_ReturnCurrentDateInCreatedAt() {
-		// GIVEN
-		insertIntoDB(TestData.createWashingMachine().setSerialNumber("current-date-test"));
+		@Test
+		void should_ReturnCurrentDateInCreatedAt() {
+			// GIVEN
+			insertIntoDB(TestData.createWashingMachine().setSerialNumber("current-date-test"));
 
-		// WHEN
-		GetWashingMachineFullResponse actual = underTest.load("current-date-test");
+			// WHEN
+			GetWashingMachineFullResponse actual = underTest.load("current-date-test");
 
-		// THEN
-		assertThat(actual.createdAt().toLocalDate())
-				.isEqualTo(LocalDate.now());
+			// THEN
+			assertThat(actual.createdAt().toLocalDate())
+					.isEqualTo(LocalDate.now());
+		}
 	}
 
 	private void insertIntoDB(WashingMachine... washingMachines) {

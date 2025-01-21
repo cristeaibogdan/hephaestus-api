@@ -38,40 +38,44 @@ class LoginIntegrationTest extends BaseIntegrationTest {
 		assertThat(repository.count()).isZero();
 	}
 
-	@Test
-	void should_ReturnDTO_With_AllPropertiesFromDB() {
-		// GIVEN
-		insertIntoDB(
-				new User(
+	@Nested
+	class IntegrationTest {
+
+		@Test
+		void should_ReturnDTO_With_AllPropertiesFromDB() {
+			// GIVEN
+			insertIntoDB(
+					new User(
+							"RX1001",
+							"Bosch",
+							"Poland",
+							"unique@email.com",
+							"unique_username",
+							"somePassword"
+					));
+
+			LoginUserResponse expected = new LoginUserResponse(
 					"RX1001",
 					"Bosch",
 					"Poland",
 					"unique@email.com",
-					"unique_username",
-					"somePassword"
-				));
+					"unique_username"
+			);
 
-		LoginUserResponse expected = new LoginUserResponse(
-				"RX1001",
-				"Bosch",
-				"Poland",
-				"unique@email.com",
-				"unique_username"
-		);
+			// WHEN
+			LoginUserResponse actual = underTest.login(
+					new LoginUserRequest("unique_username", "somePassword")
+			);
 
-		// WHEN
-		LoginUserResponse actual = underTest.login(
-				new LoginUserRequest("unique_username", "somePassword")
-		);
-
-		// THEN
-		assertThat(actual).satisfies(act -> {
-			assertThat(act.code()).isEqualTo(expected.code());
-			assertThat(act.organization()).isEqualTo(expected.organization());
-			assertThat(act.country()).isEqualTo(expected.country());
-			assertThat(act.email()).isEqualTo(expected.email());
-			assertThat(act.username()).isEqualTo(expected.username());
-		});
+			// THEN
+			assertThat(actual).satisfies(act -> {
+				assertThat(act.code()).isEqualTo(expected.code());
+				assertThat(act.organization()).isEqualTo(expected.organization());
+				assertThat(act.country()).isEqualTo(expected.country());
+				assertThat(act.email()).isEqualTo(expected.email());
+				assertThat(act.username()).isEqualTo(expected.username());
+			});
+		}
 	}
 
 	private void insertIntoDB(User... users) {

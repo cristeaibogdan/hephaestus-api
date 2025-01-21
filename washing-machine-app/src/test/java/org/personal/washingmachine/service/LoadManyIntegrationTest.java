@@ -38,77 +38,81 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 		assertThat(repository.count()).isZero();
 	}
 
-	@Test
-	void should_ReturnDTOs_When_SerialNumbersFound() {
-		// GIVEN
-		insertIntoDB(
-				TestData.createWashingMachine().setSerialNumber("serial1"),
-				TestData.createWashingMachine().setSerialNumber("serial2"),
-				TestData.createWashingMachine().setSerialNumber("serial3")
-		);
+	@Nested
+	class IntegrationTest {
 
-		// WHEN
-		Map<String, GetWashingMachineFullResponse> actual = underTest.loadMany(List.of("serial1", "serial2"));
+		@Test
+		void should_ReturnDTOs_When_SerialNumbersFound() {
+			// GIVEN
+			insertIntoDB(
+					TestData.createWashingMachine().setSerialNumber("serial1"),
+					TestData.createWashingMachine().setSerialNumber("serial2"),
+					TestData.createWashingMachine().setSerialNumber("serial3")
+			);
 
-		// THEN
-		assertThat(actual)
-				.containsOnlyKeys("serial1", "serial2");
+			// WHEN
+			Map<String, GetWashingMachineFullResponse> actual = underTest.loadMany(List.of("serial1", "serial2"));
 
-		assertThat(actual.values())
-				.extracting(wm -> wm.serialNumber())
-				.containsOnly("serial1", "serial2");
-	}
+			// THEN
+			assertThat(actual)
+					.containsOnlyKeys("serial1", "serial2");
 
-	@Test
-	void should_ReturnDTOs_When_SerialNumbersContainNull() {
-		// GIVEN
-		insertIntoDB(
-				TestData.createWashingMachine().setSerialNumber("serial1"),
-				TestData.createWashingMachine().setSerialNumber("serial2"),
-				TestData.createWashingMachine().setSerialNumber("serial3")
-		);
+			assertThat(actual.values())
+					.extracting(wm -> wm.serialNumber())
+					.containsOnly("serial1", "serial2");
+		}
 
-		List<String> request = new ArrayList<>();
-		request.add(null);
-		request.add("serial1");
-		request.add("serial2");
+		@Test
+		void should_ReturnDTOs_When_SerialNumbersContainNull() {
+			// GIVEN
+			insertIntoDB(
+					TestData.createWashingMachine().setSerialNumber("serial1"),
+					TestData.createWashingMachine().setSerialNumber("serial2"),
+					TestData.createWashingMachine().setSerialNumber("serial3")
+			);
 
-		// WHEN
-		Map<String, GetWashingMachineFullResponse> actual = underTest.loadMany(request);
+			List<String> request = new ArrayList<>();
+			request.add(null);
+			request.add("serial1");
+			request.add("serial2");
 
-		// THEN
-		assertThat(actual)
-				.containsOnlyKeys("serial1", "serial2");
+			// WHEN
+			Map<String, GetWashingMachineFullResponse> actual = underTest.loadMany(request);
 
-		assertThat(actual.values())
-				.extracting(wm -> wm.serialNumber())
-				.containsOnly("serial1", "serial2");
-	}
+			// THEN
+			assertThat(actual)
+					.containsOnlyKeys("serial1", "serial2");
 
-	@Test
-	void should_ReturnNullDTOs_When_SerialNumbersNotFound() {
-		// GIVEN
-		insertIntoDB(
-				TestData.createWashingMachine().setSerialNumber("serial1"),
-				TestData.createWashingMachine().setSerialNumber("serial2")
-		);
+			assertThat(actual.values())
+					.extracting(wm -> wm.serialNumber())
+					.containsOnly("serial1", "serial2");
+		}
 
-		Map<String, GetWashingMachineFullResponse> notFoundMap = new HashMap<>();
-		notFoundMap.put("I don't exist", null);
-		notFoundMap.put("Nothing", null);
+		@Test
+		void should_ReturnNullDTOs_When_SerialNumbersNotFound() {
+			// GIVEN
+			insertIntoDB(
+					TestData.createWashingMachine().setSerialNumber("serial1"),
+					TestData.createWashingMachine().setSerialNumber("serial2")
+			);
 
-		// WHEN
-		Map<String, GetWashingMachineFullResponse> actual = underTest.loadMany(List.of(
-				"I don't exist",
-				"serial1",
-				"serial2",
-				"Nothing"
-		));
+			Map<String, GetWashingMachineFullResponse> notFoundMap = new HashMap<>();
+			notFoundMap.put("I don't exist", null);
+			notFoundMap.put("Nothing", null);
 
-		// THEN
-		assertThat(actual)
-				.containsOnlyKeys("I don't exist", "serial1", "serial2", "Nothing")
-				.containsAllEntriesOf(notFoundMap);
+			// WHEN
+			Map<String, GetWashingMachineFullResponse> actual = underTest.loadMany(List.of(
+					"I don't exist",
+					"serial1",
+					"serial2",
+					"Nothing"
+			));
+
+			// THEN
+			assertThat(actual)
+					.containsOnlyKeys("I don't exist", "serial1", "serial2", "Nothing")
+					.containsAllEntriesOf(notFoundMap);
+		}
 	}
 
 	private void insertIntoDB(WashingMachine... washingMachines) {

@@ -38,33 +38,36 @@ class GetReportIntegrationTest extends BaseIntegrationTest {
 		assertThat(repository.count()).isZero();
 	}
 
-	@Test // TODO: Had to put it in an integration test dues to createdAt property. Reflection might be another option, via ReflectionTestUtils
-	void should_ReturnDTO_With_ValidProperties() {
-		// GIVEN
-		insertIntoDB(new WashingMachine(
-				"Washing Machine",
-				"Gorenje",
-				DamageType.IN_USE,
-				ReturnType.COMMERCIAL,
-				IdentificationMode.DATA_MATRIX,
-				"I will return a Report!",
-				"modelA",
-				"TypeZ",
-				Recommendation.OUTLET,
-				TestData.createWashingMachineDetail()
-		));
+	@Nested
+	class IntegrationTest {
+		@Test // TODO: Had to put it in an integration test dues to createdAt property. Reflection might be another option, via ReflectionTestUtils
+		void should_ReturnDTO_With_ValidProperties() {
+			// GIVEN
+			insertIntoDB(new WashingMachine(
+					"Washing Machine",
+					"Gorenje",
+					DamageType.IN_USE,
+					ReturnType.COMMERCIAL,
+					IdentificationMode.DATA_MATRIX,
+					"I will return a Report!",
+					"modelA",
+					"TypeZ",
+					Recommendation.OUTLET,
+					TestData.createWashingMachineDetail()
+			));
 
-		// WHEN
-		GetWashingMachineReportResponse actual = underTest.getReport("I will return a Report!");
+			// WHEN
+			GetWashingMachineReportResponse actual = underTest.getReport("I will return a Report!");
 
-		// THEN
-		assertThat(actual.report())
-				.isNotNull()
-				.isNotEmpty();
+			// THEN
+			assertThat(actual.report())
+					.isNotNull()
+					.isNotEmpty();
 
-		assertThat(actual.createdAt())
-				.isNotNull()
-				.isNotEmpty();
+			assertThat(actual.createdAt())
+					.isNotNull()
+					.isNotEmpty();
+		}
 	}
 
 	private void insertIntoDB(WashingMachine... washingMachines) {

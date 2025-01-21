@@ -1,6 +1,7 @@
 package org.personal.washingmachine.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.personal.shared.clients.ProductClient;
 import org.personal.shared.exception.CustomException;
@@ -18,7 +19,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Deprecated
+@Deprecated @Disabled
 @WebMvcTest(WashingMachineApplicationService.class)
 class GetReportUselessMvcTest {
 

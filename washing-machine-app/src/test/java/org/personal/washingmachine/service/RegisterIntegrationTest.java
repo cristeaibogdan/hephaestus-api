@@ -41,34 +41,37 @@ class RegisterIntegrationTest extends BaseIntegrationTest {
 		assertThat(repository.count()).isZero();
 	}
 
-	@Test
-	void should_saveRequest_With_AllPropertiesInDB() {
-		// GIVEN
-		CreateUserRequest request = new CreateUserRequest(
-				"RX1001",
-				"Bosch",
-				"Poland",
-				"unique@email.com",
-				"unique_username",
-				"somePassword"
-		);
+	@Nested
+	class IntegrationTest {
+		@Test
+		void should_saveRequest_With_AllPropertiesInDB() {
+			// GIVEN
+			CreateUserRequest request = new CreateUserRequest(
+					"RX1001",
+					"Bosch",
+					"Poland",
+					"unique@email.com",
+					"unique_username",
+					"somePassword"
+			);
 
-		// WHEN
-		underTest.register(request);
+			// WHEN
+			underTest.register(request);
 
-		// THEN
-		User actual = repository.findByUsernameAndPassword("unique_username", "somePassword")
-				.orElseThrow();
+			// THEN
+			User actual = repository.findByUsernameAndPassword("unique_username", "somePassword")
+					.orElseThrow();
 
-		assertThat(actual).satisfies(act -> {
-			assertThat(act.getCode()).isEqualTo(request.code());
-			assertThat(act.getOrganization()).isEqualTo(request.organization());
-			assertThat(act.getCountry()).isEqualTo(request.country());
-			assertThat(act.getEmail()).isEqualTo(request.email());
-			assertThat(act.getUsername()).isEqualTo(request.username());
-			assertThat(act.getPassword()).isEqualTo(request.password());
-			assertThat(act.getCreatedAt().toLocalDate()).isEqualTo(LocalDate.now());
-		});
+			assertThat(actual).satisfies(act -> {
+				assertThat(act.getCode()).isEqualTo(request.code());
+				assertThat(act.getOrganization()).isEqualTo(request.organization());
+				assertThat(act.getCountry()).isEqualTo(request.country());
+				assertThat(act.getEmail()).isEqualTo(request.email());
+				assertThat(act.getUsername()).isEqualTo(request.username());
+				assertThat(act.getPassword()).isEqualTo(request.password());
+				assertThat(act.getCreatedAt().toLocalDate()).isEqualTo(LocalDate.now());
+			});
+		}
 	}
 
 	private void insertIntoDB(User... users) {
