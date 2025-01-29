@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public interface WashingMachineRepository extends JpaRepository<WashingMachine, Long>,
@@ -24,5 +25,5 @@ public interface WashingMachineRepository extends JpaRepository<WashingMachine, 
             """)
     Optional<Recommendation> getRecommendation(String serialNumber);
 
-	List<WashingMachine> findAllBySerialNumberIn(List<String> serialNumbers);
+	List<WashingMachine> findAllBySerialNumberIn(Set<String> serialNumbers);
 }

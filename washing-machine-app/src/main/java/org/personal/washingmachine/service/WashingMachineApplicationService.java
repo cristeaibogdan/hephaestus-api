@@ -136,19 +136,25 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 	}
 
 	@Override
-	public Map<String, GetWashingMachineFullResponse> loadMany(List<String> serialNumbers) {
+	public Map<String, GetWashingMachineFullResponse> loadMany(Set<String> serialNumbers) {
 
-		List<String> filteredSerialNumbers = filterSerialNumbers(serialNumbers);
-
-		List<WashingMachine> foundWashingMachines = repository.findAllBySerialNumberIn(filteredSerialNumbers);
-		if (foundWashingMachines.isEmpty()) {
-			throw new CustomException(ErrorCode.SERIAL_NUMBERS_NOT_FOUND, filteredSerialNumbers);
+		if (serialNumbers.isEmpty()) {
+			throw new CustomException(ErrorCode.LIST_IS_EMPTY);
 		}
 
-		return buildResponseMap(foundWashingMachines, filteredSerialNumbers);
+		if (serialNumbers.stream().anyMatch(sn -> sn == null)) {
+			throw new CustomException("List contains null: "+serialNumbers, ErrorCode.LIST_CONTAINS_NULL);
+		}
+
+		List<WashingMachine> foundWashingMachines = repository.findAllBySerialNumberIn(serialNumbers);
+		if (foundWashingMachines.isEmpty()) {
+			throw new CustomException(ErrorCode.SERIAL_NUMBERS_NOT_FOUND, serialNumbers);
+		}
+
+		return buildResponseMap(foundWashingMachines, serialNumbers);
 	}
 
-	private Map<String, GetWashingMachineFullResponse> buildResponseMap(List<WashingMachine> foundWashingMachines, List<String> filteredSerialNumbers) {
+	private Map<String, GetWashingMachineFullResponse> buildResponseMap(List<WashingMachine> foundWashingMachines, Set<String> serialNumbers) {
 		Map<String, GetWashingMachineFullResponse> result = foundWashingMachines.stream()
 				.map(wm -> WashingMachineMapper.toGetWashingMachineFullResponse(wm))
 				.collect(Collectors.toMap(
@@ -156,19 +162,7 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 						wm -> wm
 				));
 
-		filteredSerialNumbers.forEach(sn -> result.putIfAbsent(sn, null));
+		serialNumbers.forEach(sn -> result.putIfAbsent(sn, null));
 		return result;
-	}
-
-	private List<String> filterSerialNumbers(List<String> serialNumbers) {
-		List<String> filteredSerialNumbers  = serialNumbers.stream()
-				.filter(sn -> Objects.nonNull(sn))
-				.distinct()
-				.toList();
-
-		if (filteredSerialNumbers.isEmpty()) {
-			throw new CustomException(ErrorCode.LIST_IS_EMPTY);
-		}
-		return filteredSerialNumbers;
 	}
 }

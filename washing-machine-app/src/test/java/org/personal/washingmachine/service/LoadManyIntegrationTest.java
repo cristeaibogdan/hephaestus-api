@@ -13,10 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -51,33 +48,7 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Map<String, GetWashingMachineFullResponse> actual = underTest.loadMany(List.of("serial1", "serial2"));
-
-			// THEN
-			assertThat(actual)
-					.containsOnlyKeys("serial1", "serial2");
-
-			assertThat(actual.values())
-					.extracting(wm -> wm.serialNumber())
-					.containsOnly("serial1", "serial2");
-		}
-
-		@Test
-		void should_ReturnDTOs_When_SerialNumbersContainNull() {
-			// GIVEN
-			insertIntoDB(
-					TestData.createWashingMachine().setSerialNumber("serial1"),
-					TestData.createWashingMachine().setSerialNumber("serial2"),
-					TestData.createWashingMachine().setSerialNumber("serial3")
-			);
-
-			List<String> request = new ArrayList<>();
-			request.add(null);
-			request.add("serial1");
-			request.add("serial2");
-
-			// WHEN
-			Map<String, GetWashingMachineFullResponse> actual = underTest.loadMany(request);
+			Map<String, GetWashingMachineFullResponse> actual = underTest.loadMany(Set.of("serial1", "serial2"));
 
 			// THEN
 			assertThat(actual)
@@ -101,10 +72,10 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 			notFoundMap.put("Nothing", null);
 
 			// WHEN
-			Map<String, GetWashingMachineFullResponse> actual = underTest.loadMany(List.of(
-					"I don't exist",
+			Map<String, GetWashingMachineFullResponse> actual = underTest.loadMany(Set.of(
 					"serial1",
 					"serial2",
+					"I don't exist",
 					"Nothing"
 			));
 
@@ -123,10 +94,27 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 	class MvcTest {
 
 		@Test
-		void should_ThrowCustomException_When_ListIsEmpty() throws Exception {
+		void should_ThrowCustomException_When_SerialNumbersIsEmpty() throws Exception {
 			// GIVEN
 			// WHEN
-			ResultActions resultActions = performRequest(List.of());
+			ResultActions resultActions = performRequest(Set.of());
+
+			// THEN
+			resultActions
+					.andExpect(status().isBadRequest())
+					.andExpect(content().string(not(containsString("Internal Translation Error"))));
+		}
+
+		@Test
+		void should_ThrowCustomException_When_SerialNumbersContainNull() throws Exception {
+			// GIVEN
+			Set<String> request = new HashSet<>();
+			request.add(null);
+			request.add("serial1");
+			request.add("serial2");
+
+			// WHEN
+			ResultActions resultActions = performRequest(request);
 
 			// THEN
 			resultActions
@@ -139,7 +127,7 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 			// GIVEN
 			// WHEN
 			ResultActions resultActions = performRequest(
-					List.of("I don't exist", "You won't find me")
+					Set.of("I don't exist", "You won't find me")
 			);
 
 			// THEN
@@ -160,7 +148,7 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 
 			// WHEN
 			ResultActions resultActions = performRequest(
-					List.of("serial4", "serial5")
+					Set.of("serial4", "serial5")
 			);
 
 			// THEN
@@ -169,7 +157,7 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 					.andExpect(content().string(not(emptyString())));
 		}
 
-		private ResultActions performRequest(List<String> request) throws Exception {
+		private ResultActions performRequest(Set<String> request) throws Exception {
 			return mockMvc.perform(
 					post("/api/v1/washing-machines/many")
 							.content(jackson.writeValueAsString(request))
