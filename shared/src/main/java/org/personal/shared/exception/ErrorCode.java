@@ -25,7 +25,6 @@ public enum ErrorCode {
     INVALID_DATE (HttpStatus.BAD_REQUEST),
 
     // MANUAL VALIDATION ERRORS
-    LIST_IS_EMPTY(HttpStatus.BAD_REQUEST),
     LIST_CONTAINS_NULL(HttpStatus.BAD_REQUEST),
     SERIAL_NUMBERS_NOT_FOUND (HttpStatus.NOT_FOUND),
 
