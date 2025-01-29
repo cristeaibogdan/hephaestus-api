@@ -138,10 +138,6 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 	@Override
 	public Map<String, GetWashingMachineFullResponse> loadMany(Set<String> serialNumbers) {
 
-		if (serialNumbers.isEmpty()) {
-			throw new CustomException(ErrorCode.LIST_IS_EMPTY);
-		}
-
 		if (serialNumbers.stream().anyMatch(sn -> sn == null)) {
 			throw new CustomException("List contains null: "+serialNumbers, ErrorCode.LIST_CONTAINS_NULL);
 		}

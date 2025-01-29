@@ -1,6 +1,7 @@
 package org.personal.washingmachine.service;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import org.personal.washingmachine.dto.*;
 import org.personal.washingmachine.enums.Recommendation;
 import org.personal.washingmachine.dto.GetWashingMachineReportResponse;
@@ -23,7 +24,7 @@ public interface IWashingMachineApplicationService {
 	GetWashingMachineFullResponse load(@PathVariable String serialNumber);
 
 	@PostMapping("/many")
-	Map<String, GetWashingMachineFullResponse> loadMany(@RequestBody Set<String> serialNumbers);
+	Map<String, GetWashingMachineFullResponse> loadMany(@RequestBody @NotEmpty(message = "{LIST_NOT_EMPTY}") Set<String> serialNumbers);
 
 	@PostMapping(value = "/save", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)

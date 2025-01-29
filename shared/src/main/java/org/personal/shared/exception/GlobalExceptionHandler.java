@@ -9,9 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.List;
+import java.util.Locale;
 
 import static org.springframework.http.HttpStatus.*;
 import static org.springframework.http.ResponseEntity.status;
@@ -69,6 +71,18 @@ class GlobalExceptionHandler {
 				.toList();
 		log.error("Validation failed. Returning: {}", validationErrors, e);
 		return status(BAD_REQUEST)
+				.body(validationErrors);
+	}
+
+	@ExceptionHandler(HandlerMethodValidationException.class)
+	ResponseEntity<List<String>> handleMethodParameterValidationException(HandlerMethodValidationException e) {
+		List<String> validationErrors = e.getAllValidationResults().stream()
+				.flatMap(result -> result.getResolvableErrors().stream())
+				.map(error -> error.getDefaultMessage())
+				.toList();
+		log.error("Method parameter validation failed. Returning: {}", validationErrors, e);
+		return ResponseEntity
+				.status(BAD_REQUEST)
 				.body(validationErrors);
 	}
 
