@@ -5,15 +5,11 @@ import org.junit.jupiter.api.*;
 import org.personal.washingmachine.BaseIntegrationTest;
 import org.personal.washingmachine.TestData;
 import org.personal.washingmachine.entity.WashingMachine;
-import org.personal.washingmachine.enums.DamageType;
-import org.personal.washingmachine.enums.IdentificationMode;
 import org.personal.washingmachine.enums.Recommendation;
-import org.personal.washingmachine.enums.ReturnType;
 import org.personal.washingmachine.repository.WashingMachineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,7 +20,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Transactional
 class GetRecommendationIntegrationTest extends BaseIntegrationTest {
 
 	@Autowired MockMvc mockMvc;

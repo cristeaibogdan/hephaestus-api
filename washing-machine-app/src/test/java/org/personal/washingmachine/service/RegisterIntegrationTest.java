@@ -7,27 +7,22 @@ import org.junit.jupiter.api.Test;
 import org.personal.washingmachine.BaseIntegrationTest;
 import org.personal.washingmachine.TestData;
 import org.personal.washingmachine.dto.CreateUserRequest;
-import org.personal.washingmachine.dto.GetWashingMachineReportResponse;
 import org.personal.washingmachine.entity.User;
 import org.personal.washingmachine.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.InstanceOfAssertFactories.atomicReferenceArray;
 import static org.hamcrest.Matchers.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Transactional // Ensure Hibernate sessions are properly managed in your testing environment. Avoids "could not initialize proxy" Exception. Specific to tests only.
 class RegisterIntegrationTest extends BaseIntegrationTest {
 
 	@Autowired MockMvc mockMvc;

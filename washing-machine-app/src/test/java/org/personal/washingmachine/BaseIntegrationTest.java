@@ -4,8 +4,10 @@ import org.junit.jupiter.api.Tag;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
+import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.PostgreSQLContainer;
 
+@Transactional
 /*
 	@Transactional
 	on class = is applied on all methods; every @Test + @BeforeEach and anything before
@@ -20,6 +22,8 @@ import org.testcontainers.containers.PostgreSQLContainer;
  	Limitations: Can't test code that uses:
  		- @Async
  		- @Transactional(REQUIRES_NEW)
+
+ 	Previously it was used to avoid "could not initialize proxy - no Session" Exception. Specific to tests only.
 */
 
 @Tag("slow")
