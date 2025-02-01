@@ -33,7 +33,6 @@ class LoadManyValidationMvcTest {
 	@MockBean WashingMachineReportGenerator reportGenerator;
 	@MockBean ProductClient productClient; //TODO: To be deleted
 
-
 	@Test
 	void should_ThrowValidationException_When_SerialNumbersIsEmpty() throws Exception {
 		// GIVEN
@@ -56,6 +55,18 @@ class LoadManyValidationMvcTest {
 
 		// WHEN
 		ResultActions resultActions = performRequest(request);
+
+		// THEN
+		resultActions
+				.andExpect(status().isBadRequest())
+				.andExpect(content().string(not(containsString("{"))));
+	}
+
+	@Test
+	void should_ThrowValidationException_When_SerialNumbersContainEmptyString() throws Exception {
+		// GIVEN
+		// WHEN
+		ResultActions resultActions = performRequest(Set.of("   ", ""));
 
 		// THEN
 		resultActions
