@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import static org.hamcrest.Matchers.containsString;
@@ -38,6 +39,23 @@ class LoadManyValidationMvcTest {
 		// GIVEN
 		// WHEN
 		ResultActions resultActions = performRequest(Set.of());
+
+		// THEN
+		resultActions
+				.andExpect(status().isBadRequest())
+				.andExpect(content().string(not(containsString("{"))));
+	}
+
+	@Test
+	void should_ThrowValidationException_When_SerialNumbersContainNull() throws Exception {
+		// GIVEN
+		Set<String> request = new HashSet<>();
+		request.add(null);
+		request.add("serial1");
+		request.add("serial2");
+
+		// WHEN
+		ResultActions resultActions = performRequest(request);
 
 		// THEN
 		resultActions

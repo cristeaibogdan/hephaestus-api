@@ -137,10 +137,6 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 	@Override
 	public Map<String, GetWashingMachineFullResponse> loadMany(Set<String> serialNumbers) {
 
-		if (serialNumbers.stream().anyMatch(sn -> sn == null)) {
-			throw new CustomException("List contains null: "+serialNumbers, ErrorCode.LIST_CONTAINS_NULL);
-		}
-
 		List<WashingMachine> foundWashingMachines = repository.findAllBySerialNumberIn(serialNumbers);
 		if (foundWashingMachines.isEmpty()) {
 			throw new CustomException(ErrorCode.SERIAL_NUMBERS_NOT_FOUND, serialNumbers);

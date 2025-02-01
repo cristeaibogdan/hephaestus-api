@@ -92,23 +92,6 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 	class MvcTest {
 
 		@Test
-		void should_ThrowCustomException_When_SerialNumbersContainNull() throws Exception {
-			// GIVEN
-			Set<String> request = new HashSet<>();
-			request.add(null);
-			request.add("serial1");
-			request.add("serial2");
-
-			// WHEN
-			ResultActions resultActions = performRequest(request);
-
-			// THEN
-			resultActions
-					.andExpect(status().isBadRequest())
-					.andExpect(content().string(not(containsString("Internal Translation Error"))));
-		}
-
-		@Test
 		void should_ThrowCustomException_When_SerialNumbersNotFound() throws Exception {
 			// GIVEN
 			// WHEN
