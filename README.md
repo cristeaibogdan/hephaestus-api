@@ -18,7 +18,7 @@ The project consists of two components:
 - Frontend built with Angular 
 - Backend developed using Java ( **you are here 📍** )
 
-**⚠️️ Backend is hosted on Azure with a burst configuration, which means it may temporarily shut down when idle. If the service doesn't respond immediately, try refreshing a few times to wake it up.**
+**⚠️️ Backend is hosted on Azure with a burst configuration, which means it may temporarily shut down when idle. Please wait for the initialization process to complete.**
 
 You can access the following services:
 
