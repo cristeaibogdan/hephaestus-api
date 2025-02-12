@@ -7,7 +7,7 @@ import org.personal.washingmachine.entity.embedded.VisibleSurfaceDamage;
 import org.springframework.stereotype.Component;
 
 @Component
-public class WashingMachineDetailMapper {
+public final class WashingMachineDetailMapper {
 
 	public GetWashingMachineDetailResponse toGetWashingMachineDetailResponse(WashingMachineDetail entity) {
 		return new GetWashingMachineDetailResponse(
