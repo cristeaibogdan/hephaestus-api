@@ -9,7 +9,7 @@ import org.personal.washingmachine.entity.User;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
 
-import org.personal.washingmachine.dto.UserMapper;
+import org.personal.washingmachine.mapper.UserMapper;
 
 @Service
 @RestController

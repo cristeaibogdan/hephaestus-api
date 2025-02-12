@@ -1,6 +1,9 @@
-package org.personal.washingmachine.dto;
+package org.personal.washingmachine.mapper;
 
 import lombok.RequiredArgsConstructor;
+import org.personal.washingmachine.dto.CreateWashingMachineRequest;
+import org.personal.washingmachine.dto.GetWashingMachineFullResponse;
+import org.personal.washingmachine.dto.GetWashingMachineSimpleResponse;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.springframework.stereotype.Component;
 

@@ -1,7 +1,8 @@
-package org.personal.washingmachine.dto;
+package org.personal.washingmachine.mapper;
 
 import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
+import org.personal.washingmachine.dto.GetWashingMachineImageResponse;
 import org.personal.washingmachine.entity.WashingMachineImage;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;

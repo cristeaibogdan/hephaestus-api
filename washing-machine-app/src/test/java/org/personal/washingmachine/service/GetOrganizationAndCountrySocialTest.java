@@ -3,10 +3,8 @@ package org.personal.washingmachine.service;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
-import org.personal.shared.exception.CustomException;
 import org.personal.washingmachine.dto.GetOrganizationAndCountryResponse;
-import org.personal.washingmachine.dto.UserMapper;
+import org.personal.washingmachine.mapper.UserMapper;
 import org.personal.washingmachine.repository.UserRepository;
 
 import java.util.stream.Stream;

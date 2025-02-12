@@ -1,5 +1,7 @@
-package org.personal.washingmachine.dto;
+package org.personal.washingmachine.mapper;
 
+import org.personal.washingmachine.dto.CreateUserRequest;
+import org.personal.washingmachine.dto.LoginUserResponse;
 import org.personal.washingmachine.entity.User;
 import org.springframework.stereotype.Component;
 

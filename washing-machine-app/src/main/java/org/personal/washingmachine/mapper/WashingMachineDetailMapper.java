@@ -1,5 +1,7 @@
-package org.personal.washingmachine.dto;
+package org.personal.washingmachine.mapper;
 
+import org.personal.washingmachine.dto.CreateWashingMachineDetailRequest;
+import org.personal.washingmachine.dto.GetWashingMachineDetailResponse;
 import org.personal.washingmachine.entity.WashingMachineDetail;
 import org.personal.washingmachine.entity.embedded.HiddenSurfaceDamage;
 import org.personal.washingmachine.entity.embedded.PackageDamage;

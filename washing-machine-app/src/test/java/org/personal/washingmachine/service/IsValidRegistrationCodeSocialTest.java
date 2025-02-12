@@ -2,7 +2,7 @@ package org.personal.washingmachine.service;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.personal.washingmachine.dto.UserMapper;
+import org.personal.washingmachine.mapper.UserMapper;
 import org.personal.washingmachine.repository.UserRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;

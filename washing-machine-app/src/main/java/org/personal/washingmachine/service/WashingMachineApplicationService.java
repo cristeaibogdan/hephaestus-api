@@ -10,6 +10,7 @@ import org.personal.washingmachine.dto.*;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineImage;
 import org.personal.washingmachine.enums.Recommendation;
+import org.personal.washingmachine.mapper.WashingMachineImageMapper;
 import org.personal.washingmachine.repository.WashingMachineRepository;
 import org.personal.washingmachine.service.utils.QueryDSLUtils;
 import org.personal.washingmachine.dto.GetWashingMachineReportResponse;
@@ -25,7 +26,7 @@ import java.time.format.DateTimeParseException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import org.personal.washingmachine.dto.WashingMachineMapper;
+import org.personal.washingmachine.mapper.WashingMachineMapper;
 import static org.personal.washingmachine.entity.QWashingMachine.washingMachine;
 
 @Service
