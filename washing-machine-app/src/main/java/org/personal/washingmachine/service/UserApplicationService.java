@@ -9,13 +9,14 @@ import org.personal.washingmachine.entity.User;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
 
-import static org.personal.washingmachine.dto.Mapper.UserMapper;
+import org.personal.washingmachine.dto.UserMapper;
 
 @Service
 @RestController
 @RequiredArgsConstructor
 public class UserApplicationService implements IUserApplicationService { // TODO: Replace with proper authentication
 	private final UserService service;
+	private final UserMapper userMapper;
 	private final RegistrationCodeContainer registrationCodeContainer = RegistrationCodeContainer.getInstance();
 
 	@Override
@@ -30,13 +31,13 @@ public class UserApplicationService implements IUserApplicationService { // TODO
 
 	@Override
 	public void register(CreateUserRequest createUserRequest) {
-		User user = UserMapper.toEntity(createUserRequest);
+		User user = userMapper.toEntity(createUserRequest);
 		service.register(user);
 	}
 
 	@Override
 	public LoginUserResponse login(LoginUserRequest loginUserRequest) {
 		User user = service.login(loginUserRequest.username(), loginUserRequest.password());
-		return UserMapper.toLoginUserResponse(user);
+		return userMapper.toLoginUserResponse(user);
 	}
 }

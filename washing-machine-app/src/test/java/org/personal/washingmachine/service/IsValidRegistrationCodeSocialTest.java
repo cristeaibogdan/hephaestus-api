@@ -2,6 +2,7 @@ package org.personal.washingmachine.service;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.personal.washingmachine.dto.UserMapper;
 import org.personal.washingmachine.repository.UserRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -10,7 +11,8 @@ import static org.mockito.Mockito.mock;
 class IsValidRegistrationCodeSocialTest {
 	UserRepository userRepositoryMock = mock(UserRepository.class);
 	UserService userService = new UserService(userRepositoryMock);
-	UserApplicationService underTest = new UserApplicationService(userService);
+	UserMapper userMapper = new UserMapper();
+	UserApplicationService underTest = new UserApplicationService(userService, userMapper);
 
 	@ParameterizedTest(name = "Registration code {0} is valid")
 	@ValueSource(strings = {

@@ -4,7 +4,6 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
-import org.personal.washingmachine.entity.User;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineDetail;
 import org.personal.washingmachine.entity.WashingMachineImage;
@@ -18,30 +17,6 @@ import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.NONE)
 public class Mapper {
-
-	public static class UserMapper {
-
-		public static LoginUserResponse toLoginUserResponse(User entity) {
-			return new LoginUserResponse(
-					entity.getCode(),
-					entity.getOrganization(),
-					entity.getCountry(),
-					entity.getEmail(),
-					entity.getUsername()
-			);
-		}
-
-		public static User toEntity(CreateUserRequest dto) {
-			return new User(
-					dto.code(),
-					dto.organization(),
-					dto.country(),
-					dto.email(),
-					dto.username(),
-					dto.password()
-			);
-		}
-	}
 
 	public static class WashingMachineImageMapper {
 

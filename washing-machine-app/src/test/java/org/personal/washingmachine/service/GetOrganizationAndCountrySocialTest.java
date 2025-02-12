@@ -6,6 +6,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.personal.shared.exception.CustomException;
 import org.personal.washingmachine.dto.GetOrganizationAndCountryResponse;
+import org.personal.washingmachine.dto.UserMapper;
 import org.personal.washingmachine.repository.UserRepository;
 
 import java.util.stream.Stream;
@@ -18,7 +19,8 @@ import static org.mockito.Mockito.mock;
 class GetOrganizationAndCountrySocialTest {
 	UserRepository userRepositoryMock = mock(UserRepository.class);
 	UserService userService = new UserService(userRepositoryMock);
-	UserApplicationService underTest = new UserApplicationService(userService);
+	UserMapper userMapper = new UserMapper();
+	UserApplicationService underTest = new UserApplicationService(userService, userMapper);
 
 	static Stream<Arguments> getOrganizationAndCountryTestCases() {
 		return Stream.of(

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.personal.washingmachine.dto.UserMapper;
 import org.personal.washingmachine.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -21,6 +22,7 @@ class IsValidRegistrationCodeMvcTest {
 	@Autowired MockMvc mockMvc;
 	@Autowired ObjectMapper jackson;
 
+	@MockBean UserMapper userMapper;
 	@MockBean UserService userService;
 
 	@ParameterizedTest
