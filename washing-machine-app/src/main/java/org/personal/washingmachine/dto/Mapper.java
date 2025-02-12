@@ -5,11 +5,7 @@ import lombok.NoArgsConstructor;
 import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
 import org.personal.washingmachine.entity.WashingMachine;
-import org.personal.washingmachine.entity.WashingMachineDetail;
 import org.personal.washingmachine.entity.WashingMachineImage;
-import org.personal.washingmachine.entity.embedded.HiddenSurfaceDamage;
-import org.personal.washingmachine.entity.embedded.PackageDamage;
-import org.personal.washingmachine.entity.embedded.VisibleSurfaceDamage;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -56,68 +52,6 @@ public class Mapper {
 		}
 	}
 
-	public static class WashingMachineDetailMapper {
-
-		public static GetWashingMachineDetailResponse toGetWashingMachineDetailResponse(WashingMachineDetail entity) {
-			return new GetWashingMachineDetailResponse(
-					entity.getPackageDamage().isApplicable(),
-					entity.getPackageDamage().isPackageDamaged(),
-					entity.getPackageDamage().isPackageDirty(),
-					entity.getPackageDamage().isPackageMaterialAvailable(),
-
-					entity.getVisibleSurfaceDamage().isApplicable(),
-					entity.getVisibleSurfaceDamage().hasScratches(),
-					entity.getVisibleSurfaceDamage().getVisibleSurfacesScratchesLength(),
-					entity.getVisibleSurfaceDamage().hasDents(),
-					entity.getVisibleSurfaceDamage().getVisibleSurfacesDentsDepth(),
-					entity.getVisibleSurfaceDamage().hasMinorDamage(),
-					entity.getVisibleSurfaceDamage().getVisibleSurfacesMinorDamage(),
-					entity.getVisibleSurfaceDamage().hasMajorDamage(),
-					entity.getVisibleSurfaceDamage().getVisibleSurfacesMajorDamage(),
-
-					entity.getHiddenSurfaceDamage().isApplicable(),
-					entity.getHiddenSurfaceDamage().hasScratches(),
-					entity.getHiddenSurfaceDamage().getHiddenSurfacesScratchesLength(),
-					entity.getHiddenSurfaceDamage().hasDents(),
-					entity.getHiddenSurfaceDamage().getHiddenSurfacesDentsDepth(),
-					entity.getHiddenSurfaceDamage().hasMinorDamage(),
-					entity.getHiddenSurfaceDamage().getHiddenSurfacesMinorDamage(),
-					entity.getHiddenSurfaceDamage().hasMajorDamage(),
-					entity.getHiddenSurfaceDamage().getHiddenSurfacesMajorDamage(),
-
-					entity.getPrice(),
-					entity.getRepairPrice()
-			);
-		}
-
-		public static WashingMachineDetail toEntity(CreateWashingMachineDetailRequest dto) {
-			return new WashingMachineDetail(
-					new PackageDamage(
-							dto.packageDamaged(),
-							dto.packageDirty(),
-							dto.packageMaterialAvailable()
-					),
-
-					new VisibleSurfaceDamage(
-							dto.visibleSurfacesScratchesLength(),
-							dto.visibleSurfacesDentsDepth(),
-							dto.visibleSurfacesMinorDamage(),
-							dto.visibleSurfacesMajorDamage()
-					),
-
-					new HiddenSurfaceDamage(
-							dto.hiddenSurfacesScratchesLength(),
-							dto.hiddenSurfacesDentsDepth(),
-							dto.hiddenSurfacesMinorDamage(),
-							dto.hiddenSurfacesMajorDamage()
-					),
-
-					dto.price(),
-					dto.repairPrice()
-			);
-		}
-	}
-
 	public static class WashingMachineMapper {
 
 		public static GetWashingMachineSimpleResponse toGetWashingMachineSimpleResponse(WashingMachine entity) {
@@ -148,7 +82,7 @@ public class Mapper {
 					entity.getRecommendation(),
 					entity.getCreatedAt(),
 
-					WashingMachineDetailMapper.toGetWashingMachineDetailResponse(entity.getWashingMachineDetail()),
+					new WashingMachineDetailMapper().toGetWashingMachineDetailResponse(entity.getWashingMachineDetail()),
 					WashingMachineImageMapper.toGetWashingMachineImageResponses(entity.getWashingMachineImages())
 			);
 		}
@@ -164,7 +98,7 @@ public class Mapper {
 					dto.model(),
 					dto.type(),
 					null, //TODO: What to do with this?
-					WashingMachineDetailMapper.toEntity(dto.createWashingMachineDetailRequest())
+					new WashingMachineDetailMapper().toEntity(dto.createWashingMachineDetailRequest())
 			);
 		}
 	}
