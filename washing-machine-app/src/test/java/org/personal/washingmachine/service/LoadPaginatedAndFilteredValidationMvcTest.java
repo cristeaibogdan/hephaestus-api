@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.personal.shared.clients.ProductClient;
 import org.personal.washingmachine.dto.SearchWashingMachineRequest;
 import org.personal.washingmachine.dto.WashingMachineImageMapper;
+import org.personal.washingmachine.dto.WashingMachineMapper;
 import org.personal.washingmachine.repository.WashingMachineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -29,6 +30,7 @@ class LoadPaginatedAndFilteredValidationMvcTest {
 	@MockBean WashingMachineDamageCalculator damageCalculator;
 	@MockBean WashingMachineReportGenerator reportGenerator;
 	@MockBean WashingMachineImageMapper washingMachineImageMapper;
+	@MockBean WashingMachineMapper washingMachineMapper;
 	@MockBean ProductClient productClient; //TODO: To be deleted
 
 	SearchWashingMachineRequest searchWashingMachineRequest = new SearchWashingMachineRequest(

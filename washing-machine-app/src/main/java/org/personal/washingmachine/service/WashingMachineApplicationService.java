@@ -25,7 +25,7 @@ import java.time.format.DateTimeParseException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static org.personal.washingmachine.dto.Mapper.WashingMachineMapper;
+import org.personal.washingmachine.dto.WashingMachineMapper;
 import static org.personal.washingmachine.entity.QWashingMachine.washingMachine;
 
 @Service
@@ -36,7 +36,9 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 	private final WashingMachineRepository repository;
 	private final WashingMachineDamageCalculator damageCalculator;
 	private final WashingMachineReportGenerator reportGenerator;
+
 	private final WashingMachineImageMapper washingMachineImageMapper;
+	private final WashingMachineMapper washingMachineMapper;
 
 	@Override
 	public Page<GetWashingMachineSimpleResponse> loadPaginatedAndFiltered(SearchWashingMachineRequest searchWashingMachineRequest) {
@@ -61,7 +63,7 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 
 		Page<WashingMachine> responsePage = repository.findAll(booleanBuilder, pageRequest);
 
-		return responsePage.map(wm -> WashingMachineMapper.toGetWashingMachineSimpleResponse(wm));
+		return responsePage.map(wm -> washingMachineMapper.toGetWashingMachineSimpleResponse(wm));
 	}
 
 	private Optional<LocalDate> parseToLocalDate(String dateString) {
@@ -87,13 +89,13 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 	@Override
 	public GetWashingMachineFullResponse load(String serialNumber) {
 		WashingMachine washingMachine = service.findBySerialNumber(serialNumber);
-		return WashingMachineMapper.toGetWashingMachineFullResponse(washingMachine);
+		return washingMachineMapper.toGetWashingMachineFullResponse(washingMachine);
 	}
 
 	@Override
 	public void save(CreateWashingMachineRequest createWashingMachineRequest, List<MultipartFile> imageFiles) {
 
-		WashingMachine washingMachine = WashingMachineMapper.toEntity(createWashingMachineRequest);
+		WashingMachine washingMachine = washingMachineMapper.toEntity(createWashingMachineRequest);
 
 		imageFiles.forEach(image -> {
 			WashingMachineImage washingMachineImage = washingMachineImageMapper.toEntity(image);
@@ -147,7 +149,7 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 
 	private Map<String, GetWashingMachineFullResponse> buildResponseMap(List<WashingMachine> foundWashingMachines, Set<String> serialNumbers) {
 		Map<String, GetWashingMachineFullResponse> result = foundWashingMachines.stream()
-				.map(wm -> WashingMachineMapper.toGetWashingMachineFullResponse(wm))
+				.map(wm -> washingMachineMapper.toGetWashingMachineFullResponse(wm))
 				.collect(Collectors.toMap(
 						wm -> wm.serialNumber(),
 						wm -> wm

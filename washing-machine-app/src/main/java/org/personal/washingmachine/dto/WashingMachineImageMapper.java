@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Component
-public class WashingMachineImageMapper {
+public final class WashingMachineImageMapper {
 
 	public List<GetWashingMachineImageResponse> toGetWashingMachineImageResponses(List<WashingMachineImage> entities) {
 		return entities.stream()
