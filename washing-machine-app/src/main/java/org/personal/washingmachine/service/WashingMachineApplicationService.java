@@ -25,7 +25,6 @@ import java.time.format.DateTimeParseException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static org.personal.washingmachine.dto.Mapper.*;
 import static org.personal.washingmachine.dto.Mapper.WashingMachineMapper;
 import static org.personal.washingmachine.entity.QWashingMachine.washingMachine;
 
@@ -37,6 +36,7 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 	private final WashingMachineRepository repository;
 	private final WashingMachineDamageCalculator damageCalculator;
 	private final WashingMachineReportGenerator reportGenerator;
+	private final WashingMachineImageMapper washingMachineImageMapper;
 
 	@Override
 	public Page<GetWashingMachineSimpleResponse> loadPaginatedAndFiltered(SearchWashingMachineRequest searchWashingMachineRequest) {
@@ -96,7 +96,7 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 		WashingMachine washingMachine = WashingMachineMapper.toEntity(createWashingMachineRequest);
 
 		imageFiles.forEach(image -> {
-			WashingMachineImage washingMachineImage = WashingMachineImageMapper.toEntity(image);
+			WashingMachineImage washingMachineImage = washingMachineImageMapper.toEntity(image);
 			washingMachine.addImage(washingMachineImage);
 		});
 

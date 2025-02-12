@@ -8,6 +8,7 @@ import org.personal.shared.clients.ProductClient;
 import org.personal.washingmachine.TestData;
 import org.personal.washingmachine.dto.CreateWashingMachineDetailRequest;
 import org.personal.washingmachine.dto.CreateWashingMachineRequest;
+import org.personal.washingmachine.dto.WashingMachineImageMapper;
 import org.personal.washingmachine.repository.WashingMachineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -35,6 +36,7 @@ class SaveValidationMvcTest {
 	@MockBean WashingMachineRepository repository;
 	@MockBean WashingMachineDamageCalculator damageCalculator;
 	@MockBean WashingMachineReportGenerator reportGenerator;
+	@MockBean WashingMachineImageMapper washingMachineImageMapper;
 	@MockBean ProductClient productClient; //TODO: To be deleted
 
 	static Stream<Arguments> getInvalidCreateWashingMachineRequests() {
