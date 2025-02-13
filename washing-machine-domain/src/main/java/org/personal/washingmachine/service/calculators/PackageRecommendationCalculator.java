@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 import static org.personal.washingmachine.enums.Recommendation.*;
 
-@Component
+@Component @Deprecated
 public class PackageRecommendationCalculator {
 
 	public Recommendation calculate(PackageDamage packageDamage) {

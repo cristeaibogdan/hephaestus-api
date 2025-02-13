@@ -1,22 +1,23 @@
 package org.personal.washingmachine.entity;
 
+import com.google.common.annotations.VisibleForTesting;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.personal.washingmachine.entity.embedded.PackageDamage;
 import org.personal.washingmachine.entity.embedded.HiddenSurfaceDamage;
 import org.personal.washingmachine.entity.embedded.VisibleSurfaceDamage;
+import org.personal.washingmachine.enums.Recommendation;
 
 
 import static lombok.AccessLevel.PROTECTED;
+import static org.personal.washingmachine.enums.Recommendation.*;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor(access = PROTECTED)
 @AllArgsConstructor
 @Entity
@@ -37,4 +38,18 @@ public class WashingMachineDetail extends BaseEntity {
 
     @Column(name = "repair_price")
     private int repairPrice;
+
+    @VisibleForTesting
+    Recommendation calculate() {
+
+        if (this.price == 0 || this.repairPrice == 0) {
+            return NONE;
+        }
+
+        boolean repairPriceExceedsHalfTheProductPrice = (this.repairPrice >= this.price * 0.5);
+
+        return repairPriceExceedsHalfTheProductPrice
+                ? DISASSEMBLE
+                : REPAIR;
+    }
 }
