@@ -6,11 +6,16 @@ import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.*;
+import org.personal.shared.exception.CustomException;
+import org.personal.shared.exception.ErrorCode;
 import org.personal.washingmachine.entity.embedded.PackageDamage;
 import org.personal.washingmachine.entity.embedded.HiddenSurfaceDamage;
 import org.personal.washingmachine.entity.embedded.VisibleSurfaceDamage;
 import org.personal.washingmachine.enums.Recommendation;
 
+
+import java.util.Arrays;
+import java.util.Collections;
 
 import static lombok.AccessLevel.PROTECTED;
 import static org.personal.washingmachine.enums.Recommendation.*;
@@ -38,6 +43,26 @@ public class WashingMachineDetail extends BaseEntity {
 
     @Column(name = "repair_price")
     private int repairPrice;
+
+    public Recommendation getRecommendation() {
+        Recommendation recommendationForPackage = packageDamage.calculate();
+        Recommendation recommendationForVisibleSurfaces = visibleSurfaceDamage.calculate();
+        Recommendation recommendationForHiddenSurfaces = hiddenSurfaceDamage.calculate();
+        Recommendation recommendationForPricing = calculate(); // TODO: Refactor for a better name
+
+        Recommendation result = Collections.max(Arrays.asList(
+                recommendationForPackage,
+                recommendationForVisibleSurfaces,
+                recommendationForHiddenSurfaces,
+                recommendationForPricing
+        ));
+
+        if (result == NONE) {
+            throw new CustomException("Invalid recommendation issued " + NONE, ErrorCode.GENERAL);
+        }
+
+        return result;
+    }
 
     @VisibleForTesting
     Recommendation calculate() {
