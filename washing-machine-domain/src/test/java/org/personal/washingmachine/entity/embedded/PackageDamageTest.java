@@ -1,4 +1,4 @@
-package org.personal.washingmachine.entity;
+package org.personal.washingmachine.entity.embedded;
 
 import org.junit.jupiter.api.Test;
 import org.personal.washingmachine.entity.embedded.PackageDamage;

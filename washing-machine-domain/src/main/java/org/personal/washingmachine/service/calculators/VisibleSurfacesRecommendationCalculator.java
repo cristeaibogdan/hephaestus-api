@@ -10,7 +10,7 @@ import java.util.Collections;
 
 import static org.personal.washingmachine.enums.Recommendation.*;
 
-@Component
+@Component @Deprecated
 public class VisibleSurfacesRecommendationCalculator {
 
 	private static final int VISIBLE_SURFACES_THRESHOLD = 5;
