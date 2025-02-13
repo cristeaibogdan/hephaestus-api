@@ -1,10 +1,17 @@
 package org.personal.washingmachine.entity.embedded;
 
+import com.google.common.annotations.VisibleForTesting;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.*;
+import org.personal.washingmachine.enums.Recommendation;
+
+import java.util.Arrays;
+import java.util.Collections;
 
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
+import static org.personal.washingmachine.enums.Recommendation.*;
+import static org.personal.washingmachine.enums.Recommendation.NONE;
 
 @Getter
 @Builder
@@ -12,6 +19,7 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Embeddable
 public class HiddenSurfaceDamage {
+	private static final int HIDDEN_SURFACES_THRESHOLD = 7;
 
 	@Column(name = "hidden_surfaces_scratches_length")
 	private double hiddenSurfacesScratchesLength;
@@ -58,5 +66,59 @@ public class HiddenSurfaceDamage {
 
 	public boolean hasMajorDamage() {
 		return isNotBlank(hiddenSurfacesMajorDamage);
+	}
+
+	public Recommendation calculate() {
+		if (isNotApplicable()) {
+			return NONE;
+		}
+
+		Recommendation recommendationForScratches = calculateForScratches();
+		Recommendation recommendationForDents = calculateForDents();
+		Recommendation recommendationForMinorDamage = calculateForMinorDamage();
+		Recommendation recommendationForMajorDamage = calculateForMajorDamage();
+
+		return Collections.max(Arrays.asList(
+				recommendationForScratches,
+				recommendationForDents,
+				recommendationForMinorDamage,
+				recommendationForMajorDamage
+		));
+	}
+
+	@VisibleForTesting
+	Recommendation calculateForScratches() {
+		if (hasNoScratches()) {
+			return NONE;
+		}
+
+		return (hiddenSurfacesScratchesLength < HIDDEN_SURFACES_THRESHOLD)
+				? RESALE
+				: OUTLET;
+	}
+
+	@VisibleForTesting
+	Recommendation calculateForDents() {
+		if (hasNoDents()) {
+			return NONE;
+		}
+
+		return (this.hiddenSurfacesDentsDepth < HIDDEN_SURFACES_THRESHOLD)
+				? RESALE
+				: OUTLET;
+	}
+
+	@VisibleForTesting
+	Recommendation calculateForMinorDamage() {
+		return hasMinorDamage()
+				? RESALE
+				: NONE;
+	}
+
+	@VisibleForTesting
+	Recommendation calculateForMajorDamage() {
+		return hasMajorDamage()
+				? OUTLET
+				: NONE;
 	}
 }
