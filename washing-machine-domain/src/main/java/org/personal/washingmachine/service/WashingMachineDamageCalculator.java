@@ -19,6 +19,7 @@ import static org.personal.washingmachine.enums.Recommendation.NONE;
 @Service
 @RequiredArgsConstructor
 public class WashingMachineDamageCalculator {
+	// TODO: Move inside embeded entities
 	private final PackageRecommendationCalculator packageRecommendationCalculator;
 	private final VisibleSurfacesRecommendationCalculator visibleSurfacesRecommendationCalculator;
 	private final HiddenSurfacesRecommendationCalculator hiddenSurfacesRecommendationCalculator;

@@ -3,6 +3,9 @@ package org.personal.washingmachine.entity.embedded;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.*;
+import org.personal.washingmachine.enums.Recommendation;
+
+import static org.personal.washingmachine.enums.Recommendation.*;
 
 @Getter
 @Builder
@@ -28,5 +31,15 @@ public class PackageDamage {
 
     public boolean isNotApplicable() {
         return !isApplicable();
+    }
+
+    public Recommendation calculate() {
+        if (isNotApplicable()) {
+            return NONE;
+        }
+
+        return this.packageMaterialAvailable
+                ? REPACKAGE
+                : RESALE;
     }
 }

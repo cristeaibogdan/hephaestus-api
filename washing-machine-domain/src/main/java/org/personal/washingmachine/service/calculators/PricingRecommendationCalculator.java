@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 import static org.personal.washingmachine.enums.Recommendation.*;
 
-@Component
+@Component @Deprecated
 public class PricingRecommendationCalculator {
 
 	public Recommendation calculate(int price, int repairPrice) {
