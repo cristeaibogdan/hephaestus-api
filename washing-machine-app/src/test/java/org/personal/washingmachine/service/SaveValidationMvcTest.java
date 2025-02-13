@@ -34,9 +34,9 @@ class SaveValidationMvcTest {
 
 	@Autowired MockMvc mockMvc;
 	@Autowired ObjectMapper jackson;
+
 	@MockBean WashingMachineService service;
 	@MockBean WashingMachineRepository repository;
-	@MockBean WashingMachineDamageCalculator damageCalculator;
 	@MockBean WashingMachineReportGenerator reportGenerator;
 	@MockBean ProductClient productClient; //TODO: To be deleted
 
@@ -110,20 +110,20 @@ class SaveValidationMvcTest {
 
 	static Stream<Arguments> getValidCreateWashingMachineDetailRequests() {
 		return Stream.of(
-				arguments(TestData.createWashingMachineDetailRequest().toBuilder().visibleSurfacesScratchesLength(0).build(), "visibleSurfacesScratchesLength", 0),
-				arguments(TestData.createWashingMachineDetailRequest().toBuilder().visibleSurfacesScratchesLength(10).build(), "visibleSurfacesScratchesLength", 10),
-				arguments(TestData.createWashingMachineDetailRequest().toBuilder().visibleSurfacesDentsDepth(0).build(), "visibleSurfacesDentsDepth", 0),
-				arguments(TestData.createWashingMachineDetailRequest().toBuilder().visibleSurfacesDentsDepth(10).build(), "visibleSurfacesDentsDepth", 10),
-				arguments(TestData.createWashingMachineDetailRequest().toBuilder().visibleSurfacesMinorDamage("B".repeat(200)).build(), "visibleSurfacesMinorDamage", "200 chars"),
-				arguments(TestData.createWashingMachineDetailRequest().toBuilder().visibleSurfacesMajorDamage("B".repeat(200)).build(), "visibleSurfacesMajorDamage", "200 chars"),
-				arguments(TestData.createWashingMachineDetailRequest().toBuilder().hiddenSurfacesScratchesLength(0).build(), "hiddenSurfacesScratchesLength", 0),
-				arguments(TestData.createWashingMachineDetailRequest().toBuilder().hiddenSurfacesScratchesLength(10).build(), "hiddenSurfacesScratchesLength", 10),
-				arguments(TestData.createWashingMachineDetailRequest().toBuilder().hiddenSurfacesDentsDepth(0).build(), "hiddenSurfacesDentsDepth", 0),
-				arguments(TestData.createWashingMachineDetailRequest().toBuilder().hiddenSurfacesDentsDepth(10).build(), "hiddenSurfacesDentsDepth", 10),
-				arguments(TestData.createWashingMachineDetailRequest().toBuilder().hiddenSurfacesMinorDamage("B".repeat(200)).build(), "hiddenSurfacesMinorDamage", "200 chars"),
-				arguments(TestData.createWashingMachineDetailRequest().toBuilder().hiddenSurfacesMajorDamage("B".repeat(200)).build(), "hiddenSurfacesMajorDamage", "200 chars"),
-				arguments(TestData.createWashingMachineDetailRequest().toBuilder().price(0).build(), "price", 0),
-				arguments(TestData.createWashingMachineDetailRequest().toBuilder().repairPrice(0).build(), "repairPrice", 0)
+				arguments(TestData.createWashingMachineDetailRequestWithValidRecommendation().toBuilder().visibleSurfacesScratchesLength(0).build(), "visibleSurfacesScratchesLength", 0),
+				arguments(TestData.createWashingMachineDetailRequestWithValidRecommendation().toBuilder().visibleSurfacesScratchesLength(10).build(), "visibleSurfacesScratchesLength", 10),
+				arguments(TestData.createWashingMachineDetailRequestWithValidRecommendation().toBuilder().visibleSurfacesDentsDepth(0).build(), "visibleSurfacesDentsDepth", 0),
+				arguments(TestData.createWashingMachineDetailRequestWithValidRecommendation().toBuilder().visibleSurfacesDentsDepth(10).build(), "visibleSurfacesDentsDepth", 10),
+				arguments(TestData.createWashingMachineDetailRequestWithValidRecommendation().toBuilder().visibleSurfacesMinorDamage("B".repeat(200)).build(), "visibleSurfacesMinorDamage", "200 chars"),
+				arguments(TestData.createWashingMachineDetailRequestWithValidRecommendation().toBuilder().visibleSurfacesMajorDamage("B".repeat(200)).build(), "visibleSurfacesMajorDamage", "200 chars"),
+				arguments(TestData.createWashingMachineDetailRequestWithValidRecommendation().toBuilder().hiddenSurfacesScratchesLength(0).build(), "hiddenSurfacesScratchesLength", 0),
+				arguments(TestData.createWashingMachineDetailRequestWithValidRecommendation().toBuilder().hiddenSurfacesScratchesLength(10).build(), "hiddenSurfacesScratchesLength", 10),
+				arguments(TestData.createWashingMachineDetailRequestWithValidRecommendation().toBuilder().hiddenSurfacesDentsDepth(0).build(), "hiddenSurfacesDentsDepth", 0),
+				arguments(TestData.createWashingMachineDetailRequestWithValidRecommendation().toBuilder().hiddenSurfacesDentsDepth(10).build(), "hiddenSurfacesDentsDepth", 10),
+				arguments(TestData.createWashingMachineDetailRequestWithValidRecommendation().toBuilder().hiddenSurfacesMinorDamage("B".repeat(200)).build(), "hiddenSurfacesMinorDamage", "200 chars"),
+				arguments(TestData.createWashingMachineDetailRequestWithValidRecommendation().toBuilder().hiddenSurfacesMajorDamage("B".repeat(200)).build(), "hiddenSurfacesMajorDamage", "200 chars"),
+				arguments(TestData.createWashingMachineDetailRequestWithValidRecommendation().toBuilder().price(0).build(), "price", 0),
+				arguments(TestData.createWashingMachineDetailRequestWithValidRecommendation().toBuilder().repairPrice(0).build(), "repairPrice", 0)
 		);
 	}
 

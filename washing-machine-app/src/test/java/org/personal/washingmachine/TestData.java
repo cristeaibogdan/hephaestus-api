@@ -34,6 +34,25 @@ public class TestData {
 		);
 	}
 
+	// TODO: Find a better way to avoid triggering Invalid recommendation exception from WashingMachineDetail
+	public static CreateWashingMachineDetailRequest createWashingMachineDetailRequestWithValidRecommendation() {
+		return new CreateWashingMachineDetailRequest(
+				true,
+				false,
+				false,
+				0,
+				0,
+				"",
+				"",
+				0,
+				0,
+				"",
+				"",
+				0,
+				0
+		);
+	}
+
 	public static CreateWashingMachineRequest createWashingMachineRequest() {
 		return new CreateWashingMachineRequest(
 				"Washing Machine",

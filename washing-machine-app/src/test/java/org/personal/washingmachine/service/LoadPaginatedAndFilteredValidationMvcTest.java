@@ -27,7 +27,6 @@ class LoadPaginatedAndFilteredValidationMvcTest {
 
 	@MockBean WashingMachineService service;
 	@MockBean WashingMachineRepository repository;
-	@MockBean WashingMachineDamageCalculator damageCalculator;
 	@MockBean WashingMachineReportGenerator reportGenerator;
 	@MockBean WashingMachineImageMapper washingMachineImageMapper;
 	@MockBean WashingMachineMapper washingMachineMapper;

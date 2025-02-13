@@ -35,7 +35,6 @@ import static org.personal.washingmachine.entity.QWashingMachine.washingMachine;
 public class WashingMachineApplicationService implements IWashingMachineApplicationService {
 	private final WashingMachineService service;
 	private final WashingMachineRepository repository;
-	private final WashingMachineDamageCalculator damageCalculator;
 	private final WashingMachineReportGenerator reportGenerator;
 
 	private final WashingMachineImageMapper washingMachineImageMapper;
@@ -103,7 +102,7 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 			washingMachine.addImage(washingMachineImage);
 		});
 
-		Recommendation recommendation = damageCalculator.getRecommendation(washingMachine.getWashingMachineDetail());
+		Recommendation recommendation = washingMachine.getWashingMachineDetail().getRecommendation();
 		washingMachine.setRecommendation(recommendation);
 
 		service.save(washingMachine);
