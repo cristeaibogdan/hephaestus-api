@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.personal.washingmachine.BaseIntegrationTest;
-import org.personal.washingmachine.TestData;
+import org.personal.washingmachine.UserTestData;
 import org.personal.washingmachine.dto.CreateUserRequest;
 import org.personal.washingmachine.entity.User;
 import org.personal.washingmachine.repository.UserRepository;
@@ -81,7 +81,7 @@ class RegisterIntegrationTest extends BaseIntegrationTest {
 			// GIVEN
 			// WHEN
 			ResultActions resultActions = performRequest(
-					TestData.createUserRequest()
+					UserTestData.createUserRequest()
 			);
 
 			// THEN
@@ -94,11 +94,11 @@ class RegisterIntegrationTest extends BaseIntegrationTest {
 		void should_ThrowCustomException_When_EmailAlreadyTaken() throws Exception {
 			// GIVEN
 			insertIntoDB(
-					TestData.createUser().setEmail("takenEmail@yahoo.com")
+					UserTestData.createUser().setEmail("takenEmail@yahoo.com")
 			);
 
 			// WHEN
-			ResultActions resultActions = performRequest(TestData.createUserRequest().toBuilder()
+			ResultActions resultActions = performRequest(UserTestData.createUserRequest().toBuilder()
 					.email("takenEmail@yahoo.com")
 					.build());
 
@@ -112,11 +112,11 @@ class RegisterIntegrationTest extends BaseIntegrationTest {
 		void should_ThrowCustomException_When_UsernameAlreadyTaken() throws Exception {
 			// GIVEN
 			insertIntoDB(
-					TestData.createUser().setEmail("someEmail@something.com").setUsername("Taken")
+					UserTestData.createUser().setEmail("someEmail@something.com").setUsername("Taken")
 			);
 
 			// WHEN
-			ResultActions resultActions = performRequest(TestData.createUserRequest().toBuilder()
+			ResultActions resultActions = performRequest(UserTestData.createUserRequest().toBuilder()
 					.username("Taken")
 					.build());
 
