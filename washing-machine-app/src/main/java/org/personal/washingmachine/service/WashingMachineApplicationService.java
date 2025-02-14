@@ -102,9 +102,6 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 			washingMachine.addImage(washingMachineImage);
 		});
 
-		Recommendation recommendation = washingMachine.getWashingMachineDetail().getRecommendation();
-		washingMachine.setRecommendation(recommendation);
-
 		service.save(washingMachine);
 	}
 

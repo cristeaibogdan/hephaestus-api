@@ -59,9 +59,8 @@ class LoadIntegrationTest extends BaseIntegrationTest {
 					"The only one in DB",
 					"modelA",
 					"TypeZ",
-					Recommendation.OUTLET,
 					new WashingMachineDetail(
-							new PackageDamage(false,false,false),
+							new PackageDamage(true,false,false),
 							new VisibleSurfaceDamage(
 									0,
 									0,
@@ -90,11 +89,11 @@ class LoadIntegrationTest extends BaseIntegrationTest {
 					"The only one in DB",
 					ReturnType.COMMERCIAL,
 					DamageType.IN_USE,
-					Recommendation.OUTLET,
+					Recommendation.RESALE,
 					LocalDateTime.now(),
 					new GetWashingMachineDetailResponse(
-							false,
-							false,
+							true,
+							true,
 							false,
 							false,
 							false,

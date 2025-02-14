@@ -16,6 +16,7 @@ import org.personal.washingmachine.enums.Recommendation;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import static lombok.AccessLevel.PROTECTED;
 import static org.personal.washingmachine.enums.Recommendation.*;
@@ -44,13 +45,21 @@ public class WashingMachineDetail extends BaseEntity {
     @Column(name = "repair_price")
     private int repairPrice;
 
+    public WashingMachineDetail(WashingMachineDetail washingMachineDetail) {
+        this.packageDamage = washingMachineDetail.getPackageDamage();
+        this.visibleSurfaceDamage = washingMachineDetail.getVisibleSurfaceDamage();
+        this.hiddenSurfaceDamage = washingMachineDetail.getHiddenSurfaceDamage();
+        this.price = washingMachineDetail.getPrice();
+        this.repairPrice = washingMachineDetail.getRepairPrice();
+    }
+
     public Recommendation getRecommendation() {
         Recommendation recommendationForPackage = packageDamage.calculate();
         Recommendation recommendationForVisibleSurfaces = visibleSurfaceDamage.calculate();
         Recommendation recommendationForHiddenSurfaces = hiddenSurfaceDamage.calculate();
         Recommendation recommendationForPricing = calculate(); // TODO: Refactor for a better name
 
-        Recommendation result = Collections.max(Arrays.asList(
+        Recommendation result = Collections.max(List.of(
                 recommendationForPackage,
                 recommendationForVisibleSurfaces,
                 recommendationForHiddenSurfaces,

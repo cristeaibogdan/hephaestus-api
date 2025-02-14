@@ -44,7 +44,8 @@ class GetRecommendationIntegrationTest extends BaseIntegrationTest {
 		void should_ReturnExpectedContent_When_SerialNumberFound() throws Exception {
 			// GIVEN
 			insertIntoDB(
-					TestData.createWashingMachine().setSerialNumber("I exist in DB").setRecommendation(Recommendation.OUTLET)
+					TestData.createWashingMachine().setSerialNumber("I exist in DB")
+							.setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.OUTLET))
 			);
 
 			// WHEN

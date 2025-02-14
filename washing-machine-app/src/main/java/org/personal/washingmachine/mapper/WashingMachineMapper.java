@@ -56,7 +56,6 @@ public final class WashingMachineMapper {
 				dto.serialNumber(),
 				dto.model(),
 				dto.type(),
-				null, //TODO: What to do with this?
 				washingMachineDetailMapper.toEntity(dto.createWashingMachineDetailRequest())
 		);
 	}

@@ -102,6 +102,43 @@ public class TestData {
 		);
 	}
 
+	public static WashingMachineDetail createWashingMachineDetailWithRecommendation(Recommendation expected) {
+		return switch (expected) {
+			case REPACKAGE -> createWashingMachineDetail()
+					.setPackageDamage(
+							new PackageDamage(
+									true,
+									false,
+									true
+							)
+					);
+			case RESALE -> createWashingMachineDetail()
+					.setPackageDamage(
+							new PackageDamage(
+									true,
+									false,
+									false
+							)
+					);
+			case OUTLET -> createWashingMachineDetail()
+					.setVisibleSurfaceDamage(
+							new VisibleSurfaceDamage(
+									0,
+									0,
+									"",
+									"Major Damage is present"
+							)
+					);
+			case REPAIR -> createWashingMachineDetail()
+					.setRepairPrice(100)
+					.setPrice(500);
+			case DISASSEMBLE -> createWashingMachineDetail()
+					.setRepairPrice(400)
+					.setPrice(500);
+			case NONE -> createWashingMachineDetail();
+		};
+	}
+
 	public static WashingMachine createWashingMachine() {
 		return new WashingMachine(
 				"Washing Machine",
@@ -112,10 +149,9 @@ public class TestData {
 				"test",
 				"modelOne",
 				"typeOne",
-				Recommendation.RESALE,
 				new WashingMachineDetail(
 						new PackageDamage(
-								false,
+								true, // To avoid Invalid recommendation issued NONE
 								false,
 								false),
 						new VisibleSurfaceDamage(

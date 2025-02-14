@@ -76,8 +76,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 							"serial10",
 							"modelOne",
 							"TypeOne",
-							Recommendation.DISASSEMBLE,
-							null
+							TestData.createWashingMachineDetailWithRecommendation(Recommendation.DISASSEMBLE)
 					)
 			);
 
@@ -329,16 +328,16 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 		void should_ReturnFilteredList_By_Recommendation(Recommendation recommendation) {
 			// GIVEN
 			insertIntoDB(
-					TestData.createWashingMachine().setSerialNumber("serial1").setRecommendation(Recommendation.RESALE),
-					TestData.createWashingMachine().setSerialNumber("serial2").setRecommendation(Recommendation.RESALE),
-					TestData.createWashingMachine().setSerialNumber("serial3").setRecommendation(Recommendation.DISASSEMBLE),
-					TestData.createWashingMachine().setSerialNumber("serial4").setRecommendation(Recommendation.DISASSEMBLE),
-					TestData.createWashingMachine().setSerialNumber("serial5").setRecommendation(Recommendation.OUTLET),
-					TestData.createWashingMachine().setSerialNumber("serial6").setRecommendation(Recommendation.OUTLET),
-					TestData.createWashingMachine().setSerialNumber("serial7").setRecommendation(Recommendation.REPAIR),
-					TestData.createWashingMachine().setSerialNumber("serial8").setRecommendation(Recommendation.REPAIR),
-					TestData.createWashingMachine().setSerialNumber("serial9").setRecommendation(Recommendation.REPACKAGE),
-					TestData.createWashingMachine().setSerialNumber("serial10").setRecommendation(Recommendation.REPACKAGE)
+					TestData.createWashingMachine().setSerialNumber("serial1").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.RESALE)),
+					TestData.createWashingMachine().setSerialNumber("serial2").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.RESALE)),
+					TestData.createWashingMachine().setSerialNumber("serial3").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.DISASSEMBLE)),
+					TestData.createWashingMachine().setSerialNumber("serial4").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.DISASSEMBLE)),
+					TestData.createWashingMachine().setSerialNumber("serial5").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.OUTLET)),
+					TestData.createWashingMachine().setSerialNumber("serial6").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.OUTLET)),
+					TestData.createWashingMachine().setSerialNumber("serial7").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.REPAIR)),
+					TestData.createWashingMachine().setSerialNumber("serial8").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.REPAIR)),
+					TestData.createWashingMachine().setSerialNumber("serial9").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.REPACKAGE)),
+					TestData.createWashingMachine().setSerialNumber("serial10").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.REPACKAGE))
 			);
 
 			// WHEN
