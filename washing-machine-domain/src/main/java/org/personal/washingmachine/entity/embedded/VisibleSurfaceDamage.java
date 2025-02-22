@@ -18,7 +18,7 @@ import static org.personal.washingmachine.enums.Recommendation.NONE;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Embeddable
-public class VisibleSurfaceDamage {
+public class VisibleSurfaceDamage implements Damage {
 	private static final int VISIBLE_SURFACES_THRESHOLD = 5;
 
 	@Column(name = "visible_surfaces_scratches_length")
@@ -33,20 +33,6 @@ public class VisibleSurfaceDamage {
 	@Column(name = "visible_surfaces_major_damage")
 	private String visibleSurfacesMajorDamage;
 
-	public boolean isApplicable() {
-		return hasScratches() ||
-				hasDents() ||
-				hasMinorDamage() ||
-				hasMajorDamage();
-	}
-
-	/**
-	 * <p> <b>In the context</b> of improving readability, </p>
-	 * <p> <b>facing</b> the concern that developers might overlook the exclamation mark (!) in conditions like <code>!isApplicable()</code>,</p>
-	 * <p> <b>we decided</b> to introduce this method </p>
-	 * <p> <b>to achieve</b> improved clarity in condition checks, </p>
-	 * <p> <b>accepting</b> that this introduces slightly more code. </p>
-	 */
 	public boolean isNotApplicable() {
 		return !isApplicable();
 	}
@@ -75,6 +61,15 @@ public class VisibleSurfaceDamage {
 		return isNotBlank(visibleSurfacesMajorDamage);
 	}
 
+	@Override
+	public boolean isApplicable() {
+		return hasScratches() ||
+				hasDents() ||
+				hasMinorDamage() ||
+				hasMajorDamage();
+	}
+
+	@Override
 	public Recommendation calculate() {
 		if (isNotApplicable()) {
 			return NONE;

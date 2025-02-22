@@ -40,7 +40,7 @@ public class WashingMachineDetail extends BaseEntity {
     private HiddenSurfaceDamage hiddenSurfaceDamage;
 
     @Column(name = "price")
-    private int price;
+    private int price; //TODO: Move both to an embedded class
 
     @Column(name = "repair_price")
     private int repairPrice;

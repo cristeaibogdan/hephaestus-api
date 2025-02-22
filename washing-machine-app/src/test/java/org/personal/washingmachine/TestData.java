@@ -79,7 +79,7 @@ public class TestData {
 		);
 	}
 
-	public static WashingMachineDetail createWashingMachineDetail() {
+	private static WashingMachineDetail createWashingMachineDetail() {
 		return new WashingMachineDetail(
 				new PackageDamage(
 						false,

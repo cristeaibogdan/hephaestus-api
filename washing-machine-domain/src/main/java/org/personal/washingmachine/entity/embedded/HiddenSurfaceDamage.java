@@ -18,7 +18,7 @@ import static org.personal.washingmachine.enums.Recommendation.NONE;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Embeddable
-public class HiddenSurfaceDamage {
+public class HiddenSurfaceDamage implements Damage {
 	private static final int HIDDEN_SURFACES_THRESHOLD = 7;
 
 	@Column(name = "hidden_surfaces_scratches_length")
@@ -32,17 +32,6 @@ public class HiddenSurfaceDamage {
 
 	@Column(name = "hidden_surfaces_major_damage")
 	private String hiddenSurfacesMajorDamage;
-
-	public boolean isApplicable() {
-		return hasScratches() ||
-				hasDents() ||
-				hasMinorDamage() ||
-				hasMajorDamage();
-	}
-
-	public boolean isNotApplicable() {
-		return !isApplicable();
-	}
 
 	public boolean hasScratches() {
 		return hiddenSurfacesScratchesLength > 0;
@@ -68,6 +57,15 @@ public class HiddenSurfaceDamage {
 		return isNotBlank(hiddenSurfacesMajorDamage);
 	}
 
+	@Override
+	public boolean isApplicable() {
+		return hasScratches() ||
+				hasDents() ||
+				hasMinorDamage() ||
+				hasMajorDamage();
+	}
+
+	@Override
 	public Recommendation calculate() {
 		if (isNotApplicable()) {
 			return NONE;
