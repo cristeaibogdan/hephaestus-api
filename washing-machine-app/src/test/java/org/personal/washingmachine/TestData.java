@@ -14,26 +14,7 @@ import org.personal.washingmachine.enums.ReturnType;
 
 public class TestData {
 
-	public static CreateWashingMachineDetailRequest createWashingMachineDetailRequest() {
-		return new CreateWashingMachineDetailRequest(
-				false,
-				false,
-				false,
-				0,
-				0,
-				"",
-				"",
-				0,
-				0,
-				"",
-				"",
-				0,
-				0
-		);
-	}
-
-	// TODO: Find a better way to avoid triggering Invalid recommendation exception from WashingMachineDetail
-	public static CreateWashingMachineDetailRequest createWashingMachineDetailRequestWithValidRecommendation() {
+	public static CreateWashingMachineDetailRequest createValidWashingMachineDetailRequest() {
 		return new CreateWashingMachineDetailRequest(
 				true,
 				false,
@@ -137,7 +118,7 @@ public class TestData {
 		};
 	}
 
-	public static WashingMachine createWashingMachine() {
+	public static WashingMachine createValidWashingMachine() {
 		return new WashingMachine(
 				"Washing Machine",
 				"WhirlPool",
