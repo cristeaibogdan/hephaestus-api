@@ -35,7 +35,7 @@ class IsSerialNumberInUseIntegrationTest extends BaseIntegrationTest {
 	@Test
 	void should_ReturnStatusOk_WhenSerialNumberFound() throws Exception {
 		// GIVEN
-		insertIntoDB(TestData.createValidWashingMachine().setSerialNumber("ABC-987"));
+		insertIntoDB(TestData.createValidWashingMachine("ABC-987"));
 
 		// WHEN
 		ResultActions resultActions = performRequest("ABC-987");

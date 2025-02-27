@@ -40,9 +40,9 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 		void should_ReturnDTOs_When_SerialNumbersFound() {
 			// GIVEN
 			insertIntoDB(
-					TestData.createValidWashingMachine().setSerialNumber("serial1"),
-					TestData.createValidWashingMachine().setSerialNumber("serial2"),
-					TestData.createValidWashingMachine().setSerialNumber("serial3")
+					TestData.createValidWashingMachine("serial1"),
+					TestData.createValidWashingMachine("serial2"),
+					TestData.createValidWashingMachine("serial3")
 			);
 
 			// WHEN
@@ -61,8 +61,8 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 		void should_ReturnNullDTOs_When_SerialNumbersNotFound() {
 			// GIVEN
 			insertIntoDB(
-					TestData.createValidWashingMachine().setSerialNumber("serial1"),
-					TestData.createValidWashingMachine().setSerialNumber("serial2")
+					TestData.createValidWashingMachine("serial1"),
+					TestData.createValidWashingMachine("serial2")
 			);
 
 			Map<String, GetWashingMachineFullResponse> notFoundMap = new HashMap<>();
@@ -111,8 +111,8 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 		void should_ReturnStatusOk_When_SerialNumbersFound() throws Exception {
 			// GIVEN
 			insertIntoDB(
-					TestData.createValidWashingMachine().setSerialNumber("serial4"),
-					TestData.createValidWashingMachine().setSerialNumber("serial5")
+					TestData.createValidWashingMachine("serial4"),
+					TestData.createValidWashingMachine("serial5")
 			);
 
 			// WHEN

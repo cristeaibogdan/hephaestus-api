@@ -118,14 +118,14 @@ public class TestData {
 		};
 	}
 
-	public static WashingMachine createValidWashingMachine() {
+	public static WashingMachine createValidWashingMachine(String serialNumber) {
 		return new WashingMachine(
 				"Washing Machine",
 				"WhirlPool",
 				DamageType.IN_USE,
 				ReturnType.SERVICE,
 				IdentificationMode.DATA_MATRIX,
-				"test",
+				serialNumber,
 				"modelOne",
 				"typeOne",
 				new WashingMachineDetail(
