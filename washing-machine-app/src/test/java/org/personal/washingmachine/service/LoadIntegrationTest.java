@@ -59,9 +59,8 @@ class LoadIntegrationTest extends BaseIntegrationTest {
 					"The only one in DB",
 					"modelA",
 					"TypeZ",
-					Recommendation.OUTLET,
 					new WashingMachineDetail(
-							new PackageDamage(false,false,false),
+							new PackageDamage(true,false,false),
 							new VisibleSurfaceDamage(
 									0,
 									0,
@@ -90,11 +89,11 @@ class LoadIntegrationTest extends BaseIntegrationTest {
 					"The only one in DB",
 					ReturnType.COMMERCIAL,
 					DamageType.IN_USE,
-					Recommendation.OUTLET,
+					Recommendation.RESALE,
 					LocalDateTime.now(),
 					new GetWashingMachineDetailResponse(
-							false,
-							false,
+							true,
+							true,
 							false,
 							false,
 							false,
@@ -136,7 +135,7 @@ class LoadIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnCurrentDateInCreatedAt() {
 			// GIVEN
-			insertIntoDB(TestData.createWashingMachine().setSerialNumber("current-date-test"));
+			insertIntoDB(TestData.createValidWashingMachine().setSerialNumber("current-date-test"));
 
 			// WHEN
 			GetWashingMachineFullResponse actual = underTest.load("current-date-test");
@@ -169,7 +168,7 @@ class LoadIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnStatusOk_When_SerialNumberExists() throws Exception {
 			// GIVEN
-			insertIntoDB(TestData.createWashingMachine().setSerialNumber("ok-status"));
+			insertIntoDB(TestData.createValidWashingMachine().setSerialNumber("ok-status"));
 
 			// WHEN
 			ResultActions resultActions = performRequest("ok-status");

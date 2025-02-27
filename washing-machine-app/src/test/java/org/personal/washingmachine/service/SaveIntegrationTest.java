@@ -137,7 +137,7 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 					TestData.createWashingMachineRequest().toBuilder()
 							.serialNumber("I'm ready to be saved in DB")
 							.createWashingMachineDetailRequest(
-									TestData.createWashingMachineDetailRequest().toBuilder()
+									TestData.createValidWashingMachineDetailRequest().toBuilder()
 											.packageDirty(true)
 											.build())
 							.build()
@@ -155,7 +155,7 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 			CreateWashingMachineRequest request = TestData.createWashingMachineRequest().toBuilder()
 					.serialNumber("I already exist in DB")
 					.createWashingMachineDetailRequest(
-							TestData.createWashingMachineDetailRequest().toBuilder()
+							TestData.createValidWashingMachineDetailRequest().toBuilder()
 									.packageDamaged(true)
 									.build())
 					.build();

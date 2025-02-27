@@ -1,30 +1,18 @@
-package org.personal.washingmachine.service;
+package org.personal.washingmachine.entity;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.personal.shared.exception.CustomException;
-import org.personal.washingmachine.entity.WashingMachineDetail;
 import org.personal.washingmachine.entity.embedded.HiddenSurfaceDamage;
 import org.personal.washingmachine.entity.embedded.PackageDamage;
 import org.personal.washingmachine.entity.embedded.VisibleSurfaceDamage;
 import org.personal.washingmachine.enums.Recommendation;
-import org.personal.washingmachine.service.calculators.HiddenSurfacesRecommendationCalculator;
-import org.personal.washingmachine.service.calculators.PackageRecommendationCalculator;
-import org.personal.washingmachine.service.calculators.PricingRecommendationCalculator;
-import org.personal.washingmachine.service.calculators.VisibleSurfacesRecommendationCalculator;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.personal.washingmachine.enums.Recommendation.*;
+import static org.personal.washingmachine.enums.Recommendation.REPACKAGE;
 
-class WashingMachineDamageCalculatorTest {
-
-	WashingMachineDamageCalculator underTest = new WashingMachineDamageCalculator(
-			new PackageRecommendationCalculator(),
-			new VisibleSurfacesRecommendationCalculator(),
-			new HiddenSurfacesRecommendationCalculator(),
-			new PricingRecommendationCalculator()
-	);
+class WashingMachineDetailTest {
 
 	@Nested
 	class testGetRecommendation {
@@ -32,7 +20,7 @@ class WashingMachineDamageCalculatorTest {
 		@Test
 		void should_ReturnREPACKAGE_When_PackageMaterialAvailableIsTrue() {
 			// GIVEN
-			WashingMachineDetail washingMachineDetail = new WashingMachineDetail(
+			WashingMachineDetail underTest = new WashingMachineDetail(
 				new PackageDamage(false, false, true),
 					new VisibleSurfaceDamage(
 							0,
@@ -51,7 +39,7 @@ class WashingMachineDamageCalculatorTest {
 			);
 
 			// WHEN
-			Recommendation actual = underTest.getRecommendation(washingMachineDetail);
+			Recommendation actual = underTest.getRecommendation();
 
 			// WHEN & THEN
 			assertThat(actual).isEqualTo(REPACKAGE);
@@ -60,7 +48,7 @@ class WashingMachineDamageCalculatorTest {
 		@Test
 		void should_ThrowCustomException_When_DtoHasNoApplicableDamage() {
 			// GIVEN
-			WashingMachineDetail washingMachineDetail = new WashingMachineDetail(
+			WashingMachineDetail underTest = new WashingMachineDetail(
 					new PackageDamage(false, false, false),
 					new VisibleSurfaceDamage(
 							0,
@@ -79,7 +67,7 @@ class WashingMachineDamageCalculatorTest {
 			);
 
 			// WHEN & THEN
-			assertThatThrownBy(() -> underTest.getRecommendation(washingMachineDetail))
+			assertThatThrownBy(() -> underTest.getRecommendation())
 					.isInstanceOf(CustomException.class);
 		}
 	}

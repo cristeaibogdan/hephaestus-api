@@ -1,17 +1,25 @@
 package org.personal.washingmachine.entity.embedded;
 
+import com.google.common.annotations.VisibleForTesting;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.*;
+import org.personal.washingmachine.enums.Recommendation;
+
+import java.util.Arrays;
+import java.util.Collections;
 
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
+import static org.personal.washingmachine.enums.Recommendation.*;
+import static org.personal.washingmachine.enums.Recommendation.NONE;
 
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Embeddable
-public class VisibleSurfaceDamage {
+public class VisibleSurfaceDamage implements Damage {
+	private static final int VISIBLE_SURFACES_THRESHOLD = 5;
 
 	@Column(name = "visible_surfaces_scratches_length")
 	private double visibleSurfacesScratchesLength;
@@ -25,20 +33,6 @@ public class VisibleSurfaceDamage {
 	@Column(name = "visible_surfaces_major_damage")
 	private String visibleSurfacesMajorDamage;
 
-	public boolean isApplicable() {
-		return hasScratches() ||
-				hasDents() ||
-				hasMinorDamage() ||
-				hasMajorDamage();
-	}
-
-	/**
-	 * <p> <b>In the context</b> of improving readability, </p>
-	 * <p> <b>facing</b> the concern that developers might overlook the exclamation mark (!) in conditions like <code>!isApplicable()</code>,</p>
-	 * <p> <b>we decided</b> to introduce this method </p>
-	 * <p> <b>to achieve</b> improved clarity in condition checks, </p>
-	 * <p> <b>accepting</b> that this introduces slightly more code. </p>
-	 */
 	public boolean isNotApplicable() {
 		return !isApplicable();
 	}
@@ -65,5 +59,68 @@ public class VisibleSurfaceDamage {
 
 	public boolean hasMajorDamage() {
 		return isNotBlank(visibleSurfacesMajorDamage);
+	}
+
+	@Override
+	public boolean isApplicable() {
+		return hasScratches() ||
+				hasDents() ||
+				hasMinorDamage() ||
+				hasMajorDamage();
+	}
+
+	@Override
+	public Recommendation calculate() {
+		if (isNotApplicable()) {
+			return NONE;
+		}
+
+		Recommendation recommendationForScratches = calculateForScratches();
+		Recommendation recommendationForDents = calculateForDents();
+		Recommendation recommendationForMinorDamage = calculateForMinorDamage();
+		Recommendation recommendationForMajorDamage = calculateForMajorDamage();
+
+		return Collections.max(Arrays.asList(
+				recommendationForScratches,
+				recommendationForDents,
+				recommendationForMinorDamage,
+				recommendationForMajorDamage
+		));
+	}
+
+	@VisibleForTesting
+	Recommendation calculateForScratches() {
+		if (hasNoScratches()) {
+			return NONE;
+		}
+
+		return (this.visibleSurfacesScratchesLength < VISIBLE_SURFACES_THRESHOLD)
+				? RESALE
+				: OUTLET;
+	}
+
+	@VisibleForTesting
+	Recommendation calculateForDents() {
+		if (hasNoDents()) {
+			return NONE;
+		}
+
+		return (this.visibleSurfacesDentsDepth < VISIBLE_SURFACES_THRESHOLD)
+				? RESALE
+				: OUTLET;
+	}
+
+	@VisibleForTesting
+	Recommendation calculateForMinorDamage() {
+		return hasMinorDamage()
+				? RESALE
+				: NONE;
+	}
+
+	@VisibleForTesting
+	Recommendation calculateForMajorDamage() {
+		return hasMajorDamage()
+				? OUTLET
+				: NONE;
 	}
 }

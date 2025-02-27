@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.personal.washingmachine.BaseIntegrationTest;
-import org.personal.washingmachine.TestData;
+import org.personal.washingmachine.UserTestData;
 import org.personal.washingmachine.dto.LoginUserRequest;
 import org.personal.washingmachine.dto.LoginUserResponse;
 import org.personal.washingmachine.entity.User;
@@ -87,7 +87,7 @@ class LoginIntegrationTest extends BaseIntegrationTest {
 		void should_ReturnStatusOk_When_UserFound() throws Exception {
 			// GIVEN
 			insertIntoDB(
-					TestData.createUser().setUsername("foundUsername").setPassword("foundPass")
+					UserTestData.createUser().setUsername("foundUsername").setPassword("foundPass")
 			);
 
 			// WHEN
@@ -105,7 +105,7 @@ class LoginIntegrationTest extends BaseIntegrationTest {
 		void should_ThrowCustomException_When_CredentialsAreInvalid() throws Exception {
 			// GIVEN
 			insertIntoDB(
-					TestData.createUser().setUsername("Johnny Cage").setPassword("qazwsx!")
+					UserTestData.createUser().setUsername("Johnny Cage").setPassword("qazwsx!")
 			);
 
 			// WHEN

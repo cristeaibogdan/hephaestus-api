@@ -1,9 +1,7 @@
 package org.personal.washingmachine;
 
-import org.personal.washingmachine.dto.CreateUserRequest;
 import org.personal.washingmachine.dto.CreateWashingMachineDetailRequest;
 import org.personal.washingmachine.dto.CreateWashingMachineRequest;
-import org.personal.washingmachine.entity.User;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineDetail;
 import org.personal.washingmachine.entity.embedded.HiddenSurfaceDamage;
@@ -16,9 +14,9 @@ import org.personal.washingmachine.enums.ReturnType;
 
 public class TestData {
 
-	public static CreateWashingMachineDetailRequest createWashingMachineDetailRequest() {
+	public static CreateWashingMachineDetailRequest createValidWashingMachineDetailRequest() {
 		return new CreateWashingMachineDetailRequest(
-				false,
+				true,
 				false,
 				false,
 				0,
@@ -62,7 +60,7 @@ public class TestData {
 		);
 	}
 
-	public static WashingMachineDetail createWashingMachineDetail() {
+	private static WashingMachineDetail createWashingMachineDetail() {
 		return new WashingMachineDetail(
 				new PackageDamage(
 						false,
@@ -83,7 +81,44 @@ public class TestData {
 		);
 	}
 
-	public static WashingMachine createWashingMachine() {
+	public static WashingMachineDetail createWashingMachineDetailWithRecommendation(Recommendation expected) {
+		return switch (expected) {
+			case REPACKAGE -> createWashingMachineDetail()
+					.setPackageDamage(
+							new PackageDamage(
+									true,
+									false,
+									true
+							)
+					);
+			case RESALE -> createWashingMachineDetail()
+					.setPackageDamage(
+							new PackageDamage(
+									true,
+									false,
+									false
+							)
+					);
+			case OUTLET -> createWashingMachineDetail()
+					.setVisibleSurfaceDamage(
+							new VisibleSurfaceDamage(
+									0,
+									0,
+									"",
+									"Major Damage is present"
+							)
+					);
+			case REPAIR -> createWashingMachineDetail()
+					.setRepairPrice(100)
+					.setPrice(500);
+			case DISASSEMBLE -> createWashingMachineDetail()
+					.setRepairPrice(400)
+					.setPrice(500);
+			case NONE -> createWashingMachineDetail();
+		};
+	}
+
+	public static WashingMachine createValidWashingMachine() {
 		return new WashingMachine(
 				"Washing Machine",
 				"WhirlPool",
@@ -93,10 +128,9 @@ public class TestData {
 				"test",
 				"modelOne",
 				"typeOne",
-				Recommendation.RESALE,
 				new WashingMachineDetail(
 						new PackageDamage(
-								false,
+								true, // To avoid Invalid recommendation issued NONE
 								false,
 								false),
 						new VisibleSurfaceDamage(
@@ -115,25 +149,4 @@ public class TestData {
 		);
 	}
 
-	public static User createUser() {
-		return new User(
-				"RX1001",
-				"Bosch",
-				"Poland",
-				"unique@email.com",
-				"unique_username",
-				"somePassword"
-		);
-	}
-
-	public static CreateUserRequest createUserRequest() {
-		return new CreateUserRequest(
-				"RX1001",
-				"Bosch",
-				"Poland",
-				"unique@email.com",
-				"unique_username",
-				"somePassword"
-		);
-	}
 }

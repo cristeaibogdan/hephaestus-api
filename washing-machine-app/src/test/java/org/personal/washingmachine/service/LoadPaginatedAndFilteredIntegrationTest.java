@@ -76,8 +76,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 							"serial10",
 							"modelOne",
 							"TypeOne",
-							Recommendation.DISASSEMBLE,
-							null
+							TestData.createWashingMachineDetailWithRecommendation(Recommendation.DISASSEMBLE)
 					)
 			);
 
@@ -115,9 +114,9 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 		void should_ReturnCorrectPageSize() {
 			// GIVEN
 			insertIntoDB(
-					TestData.createWashingMachine().setSerialNumber("serial1"),
-					TestData.createWashingMachine().setSerialNumber("serial2"),
-					TestData.createWashingMachine().setSerialNumber("serial3")
+					TestData.createValidWashingMachine().setSerialNumber("serial1"),
+					TestData.createValidWashingMachine().setSerialNumber("serial2"),
+					TestData.createValidWashingMachine().setSerialNumber("serial3")
 			);
 
 			// WHEN
@@ -138,10 +137,10 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 		void should_ReturnFilteredList_By_Manufacturer(String manufacturer) {
 			// GIVEN
 			insertIntoDB(
-					TestData.createWashingMachine().setSerialNumber("serial1").setManufacturer("Gorenje"),
-					TestData.createWashingMachine().setSerialNumber("serial2").setManufacturer("Gorenje"),
-					TestData.createWashingMachine().setSerialNumber("serial3").setManufacturer("WhirlPool"),
-					TestData.createWashingMachine().setSerialNumber("serial4").setManufacturer("WhirlPool")
+					TestData.createValidWashingMachine().setSerialNumber("serial1").setManufacturer("Gorenje"),
+					TestData.createValidWashingMachine().setSerialNumber("serial2").setManufacturer("Gorenje"),
+					TestData.createValidWashingMachine().setSerialNumber("serial3").setManufacturer("WhirlPool"),
+					TestData.createValidWashingMachine().setSerialNumber("serial4").setManufacturer("WhirlPool")
 			);
 
 			// WHEN
@@ -165,10 +164,10 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 		void should_ReturnFilteredList_By_DamageType(DamageType damageType) {
 			// GIVEN
 			insertIntoDB(
-					TestData.createWashingMachine().setSerialNumber("serialOne").setDamageType(DamageType.IN_TRANSIT),
-					TestData.createWashingMachine().setSerialNumber("serialTwo").setDamageType(DamageType.IN_TRANSIT),
-					TestData.createWashingMachine().setSerialNumber("serialThree").setDamageType(DamageType.IN_USE),
-					TestData.createWashingMachine().setSerialNumber("serialFour").setDamageType(DamageType.IN_USE)
+					TestData.createValidWashingMachine().setSerialNumber("serialOne").setDamageType(DamageType.IN_TRANSIT),
+					TestData.createValidWashingMachine().setSerialNumber("serialTwo").setDamageType(DamageType.IN_TRANSIT),
+					TestData.createValidWashingMachine().setSerialNumber("serialThree").setDamageType(DamageType.IN_USE),
+					TestData.createValidWashingMachine().setSerialNumber("serialFour").setDamageType(DamageType.IN_USE)
 			);
 
 			// WHEN
@@ -192,12 +191,12 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 		void should_ReturnFilteredList_By_ReturnType(ReturnType returnType) {
 			// GIVEN
 			insertIntoDB(
-					TestData.createWashingMachine().setSerialNumber("serial1").setReturnType(ReturnType.COMMERCIAL),
-					TestData.createWashingMachine().setSerialNumber("serial2").setReturnType(ReturnType.COMMERCIAL),
-					TestData.createWashingMachine().setSerialNumber("serial3").setReturnType(ReturnType.SERVICE),
-					TestData.createWashingMachine().setSerialNumber("serial4").setReturnType(ReturnType.SERVICE),
-					TestData.createWashingMachine().setSerialNumber("serial5").setReturnType(ReturnType.TRANSPORT),
-					TestData.createWashingMachine().setSerialNumber("serial6").setReturnType(ReturnType.TRANSPORT)
+					TestData.createValidWashingMachine().setSerialNumber("serial1").setReturnType(ReturnType.COMMERCIAL),
+					TestData.createValidWashingMachine().setSerialNumber("serial2").setReturnType(ReturnType.COMMERCIAL),
+					TestData.createValidWashingMachine().setSerialNumber("serial3").setReturnType(ReturnType.SERVICE),
+					TestData.createValidWashingMachine().setSerialNumber("serial4").setReturnType(ReturnType.SERVICE),
+					TestData.createValidWashingMachine().setSerialNumber("serial5").setReturnType(ReturnType.TRANSPORT),
+					TestData.createValidWashingMachine().setSerialNumber("serial6").setReturnType(ReturnType.TRANSPORT)
 			);
 
 			// WHEN
@@ -221,10 +220,10 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 		void should_ReturnFilteredList_By_IdentificationMode(IdentificationMode identificationMode) {
 			// GIVEN
 			insertIntoDB(
-					TestData.createWashingMachine().setSerialNumber("serial1").setIdentificationMode(IdentificationMode.QR_CODE),
-					TestData.createWashingMachine().setSerialNumber("serial2").setIdentificationMode(IdentificationMode.QR_CODE),
-					TestData.createWashingMachine().setSerialNumber("serial3").setIdentificationMode(IdentificationMode.DATA_MATRIX),
-					TestData.createWashingMachine().setSerialNumber("serial4").setIdentificationMode(IdentificationMode.DATA_MATRIX)
+					TestData.createValidWashingMachine().setSerialNumber("serial1").setIdentificationMode(IdentificationMode.QR_CODE),
+					TestData.createValidWashingMachine().setSerialNumber("serial2").setIdentificationMode(IdentificationMode.QR_CODE),
+					TestData.createValidWashingMachine().setSerialNumber("serial3").setIdentificationMode(IdentificationMode.DATA_MATRIX),
+					TestData.createValidWashingMachine().setSerialNumber("serial4").setIdentificationMode(IdentificationMode.DATA_MATRIX)
 			);
 
 			// WHEN
@@ -248,8 +247,8 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 		void should_ReturnFilteredList_By_SerialNumber(String serialNumber) {
 			// GIVEN
 			insertIntoDB(
-					TestData.createWashingMachine().setSerialNumber("serial1"),
-					TestData.createWashingMachine().setSerialNumber("serial2")
+					TestData.createValidWashingMachine().setSerialNumber("serial1"),
+					TestData.createValidWashingMachine().setSerialNumber("serial2")
 			);
 
 			// WHEN
@@ -273,11 +272,11 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 		void should_ReturnFilteredList_By_Model(String model) {
 			// GIVEN
 			insertIntoDB(
-					TestData.createWashingMachine().setSerialNumber("serial1").setModel("modelA"),
-					TestData.createWashingMachine().setSerialNumber("serial2").setModel("modelA"),
-					TestData.createWashingMachine().setSerialNumber("serial3").setModel("modelB"),
-					TestData.createWashingMachine().setSerialNumber("serial4").setModel("modelB"),
-					TestData.createWashingMachine().setSerialNumber("serial5").setModel("modelC")
+					TestData.createValidWashingMachine().setSerialNumber("serial1").setModel("modelA"),
+					TestData.createValidWashingMachine().setSerialNumber("serial2").setModel("modelA"),
+					TestData.createValidWashingMachine().setSerialNumber("serial3").setModel("modelB"),
+					TestData.createValidWashingMachine().setSerialNumber("serial4").setModel("modelB"),
+					TestData.createValidWashingMachine().setSerialNumber("serial5").setModel("modelC")
 			);
 
 			// WHEN
@@ -301,11 +300,11 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 		void should_ReturnFilteredList_By_Type(String type) {
 			// GIVEN
 			insertIntoDB(
-					TestData.createWashingMachine().setSerialNumber("serial1").setType("TypeY"),
-					TestData.createWashingMachine().setSerialNumber("serial2").setType("TypeY"),
-					TestData.createWashingMachine().setSerialNumber("serial3").setType("TypeZ"),
-					TestData.createWashingMachine().setSerialNumber("serial4").setType("TypeZ"),
-					TestData.createWashingMachine().setSerialNumber("serial5").setType("TypeF")
+					TestData.createValidWashingMachine().setSerialNumber("serial1").setType("TypeY"),
+					TestData.createValidWashingMachine().setSerialNumber("serial2").setType("TypeY"),
+					TestData.createValidWashingMachine().setSerialNumber("serial3").setType("TypeZ"),
+					TestData.createValidWashingMachine().setSerialNumber("serial4").setType("TypeZ"),
+					TestData.createValidWashingMachine().setSerialNumber("serial5").setType("TypeF")
 			);
 
 			// WHEN
@@ -329,16 +328,16 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 		void should_ReturnFilteredList_By_Recommendation(Recommendation recommendation) {
 			// GIVEN
 			insertIntoDB(
-					TestData.createWashingMachine().setSerialNumber("serial1").setRecommendation(Recommendation.RESALE),
-					TestData.createWashingMachine().setSerialNumber("serial2").setRecommendation(Recommendation.RESALE),
-					TestData.createWashingMachine().setSerialNumber("serial3").setRecommendation(Recommendation.DISASSEMBLE),
-					TestData.createWashingMachine().setSerialNumber("serial4").setRecommendation(Recommendation.DISASSEMBLE),
-					TestData.createWashingMachine().setSerialNumber("serial5").setRecommendation(Recommendation.OUTLET),
-					TestData.createWashingMachine().setSerialNumber("serial6").setRecommendation(Recommendation.OUTLET),
-					TestData.createWashingMachine().setSerialNumber("serial7").setRecommendation(Recommendation.REPAIR),
-					TestData.createWashingMachine().setSerialNumber("serial8").setRecommendation(Recommendation.REPAIR),
-					TestData.createWashingMachine().setSerialNumber("serial9").setRecommendation(Recommendation.REPACKAGE),
-					TestData.createWashingMachine().setSerialNumber("serial10").setRecommendation(Recommendation.REPACKAGE)
+					TestData.createValidWashingMachine().setSerialNumber("serial1").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.RESALE)),
+					TestData.createValidWashingMachine().setSerialNumber("serial2").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.RESALE)),
+					TestData.createValidWashingMachine().setSerialNumber("serial3").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.DISASSEMBLE)),
+					TestData.createValidWashingMachine().setSerialNumber("serial4").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.DISASSEMBLE)),
+					TestData.createValidWashingMachine().setSerialNumber("serial5").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.OUTLET)),
+					TestData.createValidWashingMachine().setSerialNumber("serial6").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.OUTLET)),
+					TestData.createValidWashingMachine().setSerialNumber("serial7").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.REPAIR)),
+					TestData.createValidWashingMachine().setSerialNumber("serial8").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.REPAIR)),
+					TestData.createValidWashingMachine().setSerialNumber("serial9").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.REPACKAGE)),
+					TestData.createValidWashingMachine().setSerialNumber("serial10").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.REPACKAGE))
 			);
 
 			// WHEN
@@ -361,9 +360,9 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 		void should_ReturnListWithDescendingDates() {
 			// GIVEN
 			insertIntoDB(
-					TestData.createWashingMachine().setSerialNumber("serial1"),
-					TestData.createWashingMachine().setSerialNumber("serial2"),
-					TestData.createWashingMachine().setSerialNumber("serial3")
+					TestData.createValidWashingMachine().setSerialNumber("serial1"),
+					TestData.createValidWashingMachine().setSerialNumber("serial2"),
+					TestData.createValidWashingMachine().setSerialNumber("serial3")
 			);
 
 			// WHEN
@@ -386,10 +385,10 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 		void should_ReturnFilteredList_By_ManufacturerAndReturnType() {
 			// GIVEN
 			insertIntoDB(
-					TestData.createWashingMachine().setSerialNumber("serial1").setManufacturer("WhirlPool").setReturnType(ReturnType.TRANSPORT),
-					TestData.createWashingMachine().setSerialNumber("serial2").setManufacturer("WhirlPool").setReturnType(ReturnType.TRANSPORT),
-					TestData.createWashingMachine().setSerialNumber("serial3").setManufacturer("WhirlPool").setReturnType(ReturnType.SERVICE),
-					TestData.createWashingMachine().setSerialNumber("serial4").setManufacturer("Bosch").setReturnType(ReturnType.COMMERCIAL)
+					TestData.createValidWashingMachine().setSerialNumber("serial1").setManufacturer("WhirlPool").setReturnType(ReturnType.TRANSPORT),
+					TestData.createValidWashingMachine().setSerialNumber("serial2").setManufacturer("WhirlPool").setReturnType(ReturnType.TRANSPORT),
+					TestData.createValidWashingMachine().setSerialNumber("serial3").setManufacturer("WhirlPool").setReturnType(ReturnType.SERVICE),
+					TestData.createValidWashingMachine().setSerialNumber("serial4").setManufacturer("Bosch").setReturnType(ReturnType.COMMERCIAL)
 			);
 
 			// WHEN
@@ -415,15 +414,15 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 		void should_ReturnFilteredList_By_IdentificationModeAndModelAndType() {
 			// GIVEN
 			insertIntoDB(
-					TestData.createWashingMachine().setSerialNumber("serial1")
+					TestData.createValidWashingMachine().setSerialNumber("serial1")
 							.setIdentificationMode(IdentificationMode.QR_CODE)
 							.setModel("modelC")
 							.setType("TypeX"),
-					TestData.createWashingMachine().setSerialNumber("serial2")
+					TestData.createValidWashingMachine().setSerialNumber("serial2")
 							.setIdentificationMode(IdentificationMode.QR_CODE)
 							.setModel("modelC_andMore")
 							.setType("TypeX_andMore"),
-					TestData.createWashingMachine().setSerialNumber("serial3")
+					TestData.createValidWashingMachine().setSerialNumber("serial3")
 							.setIdentificationMode(IdentificationMode.DATA_MATRIX)
 							.setModel("modelC")
 							.setType("TypeX")
@@ -478,7 +477,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 		void should_ReturnStatusOk_When_SerialNumberFound() throws Exception {
 			// GIVEN
 			insertIntoDB(
-					TestData.createWashingMachine().setSerialNumber("serial8")
+					TestData.createValidWashingMachine().setSerialNumber("serial8")
 			);
 
 			// WHEN

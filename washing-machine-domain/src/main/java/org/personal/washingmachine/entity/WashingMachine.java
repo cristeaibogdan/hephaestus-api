@@ -54,6 +54,7 @@ public class WashingMachine extends BaseEntity {
     @Column(name = "type")
     private String type;
 
+    @Setter(NONE)
     @Enumerated(EnumType.STRING)
     @Column(name = "recommendation")
     private Recommendation recommendation;
@@ -74,7 +75,7 @@ public class WashingMachine extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<WashingMachineImage> washingMachineImages = new ArrayList<>();
 
-    public WashingMachine(String category, String manufacturer, DamageType damageType, ReturnType returnType, IdentificationMode identificationMode, String serialNumber, String model, String type, Recommendation recommendation, WashingMachineDetail washingMachineDetail) {
+    public WashingMachine(String category, String manufacturer, DamageType damageType, ReturnType returnType, IdentificationMode identificationMode, String serialNumber, String model, String type, WashingMachineDetail washingMachineDetail) {
         this.category = category;
         this.manufacturer = manufacturer;
         this.damageType = damageType;
@@ -83,13 +84,25 @@ public class WashingMachine extends BaseEntity {
         this.serialNumber = serialNumber;
         this.model = model;
         this.type = type;
-        this.recommendation = recommendation;
         this.washingMachineDetail = washingMachineDetail;
+        this.recommendation = this.washingMachineDetail.getRecommendation();
     }
 
-    // TODO: Should return a copy
     public WashingMachineDetail getWashingMachineDetail() {
-        return washingMachineDetail;
+        return new WashingMachineDetail(this.washingMachineDetail);
+    }
+
+    /**
+     * <p> <b>In the context of</b> syncing WashingMachineDetail with Recommendation </p>
+     * <p> <b>facing</b> the need for custom setter logic </p>
+     * <p> <b>we decided</b> to implement a setter that updates the recommendation and supports fluent chaining (with lombok chaining) </p>
+     * <p> <b>to achieve</b> easier test instance creation, </p>
+     * <p> <b>accepting</b> that this custom approach may be unfamiliar to some developers. </p>
+     */
+    public WashingMachine setWashingMachineDetail(WashingMachineDetail washingMachineDetail) {
+        this.washingMachineDetail = washingMachineDetail;
+        this.recommendation = this.washingMachineDetail.getRecommendation();
+        return this;
     }
 
     public ImmutableList<WashingMachineImage> getWashingMachineImages() {

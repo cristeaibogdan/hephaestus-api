@@ -38,7 +38,8 @@ class GetReportIntegrationTest extends BaseIntegrationTest {
 
 	@Nested
 	class IntegrationTest {
-		@Test // TODO: Had to put it in an integration test dues to createdAt property. Reflection might be another option, via ReflectionTestUtils
+
+		@Test
 		void should_ReturnDTO_With_ValidProperties() {
 			// GIVEN
 			insertIntoDB(new WashingMachine(
@@ -50,8 +51,7 @@ class GetReportIntegrationTest extends BaseIntegrationTest {
 					"I will return a Report!",
 					"modelA",
 					"TypeZ",
-					Recommendation.OUTLET,
-					TestData.createWashingMachineDetail()
+					TestData.createWashingMachineDetailWithRecommendation(Recommendation.RESALE)
 			));
 
 			// WHEN
@@ -91,7 +91,7 @@ class GetReportIntegrationTest extends BaseIntegrationTest {
 		void should_ReturnStatusOk_When_SerialNumberFound() throws Exception {
 			// GIVEN
 			insertIntoDB(
-					TestData.createWashingMachine().setSerialNumber("I exist")
+					TestData.createValidWashingMachine().setSerialNumber("I exist")
 			);
 
 			// WHEN

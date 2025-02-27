@@ -28,7 +28,6 @@ class GetReportUselessMvcTest {
 
 	@MockBean WashingMachineService service;
 	@MockBean WashingMachineRepository repository;
-	@MockBean WashingMachineDamageCalculator damageCalculator;
 	@MockBean WashingMachineReportGenerator reportGenerator;
 	@MockBean ProductClient productClient; //TODO: To be deleted
 
