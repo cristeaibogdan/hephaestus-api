@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.personal.solarpanel.BaseIntegrationTest;
 import org.personal.solarpanel.dto.SaveSolarPanelDamageRequest;
 import org.personal.solarpanel.dto.SaveSolarPanelRequest;
+import org.personal.solarpanel.entity.SolarPanel;
 import org.personal.solarpanel.repository.SolarPanelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -35,7 +36,12 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 		underTest.save(request);
 
 		// THEN
-		repository.findBySerialNumber("AX-098-200")
+		SolarPanel actual = repository.findBySerialNumber("AX-098-200")
 				.orElseThrow();
+
+		assertThat(actual).satisfies(act -> {
+			// main fields
+			assertThat(act.getSerialNumber()).isEqualTo(request.serialNumber());
+		});
 	}
 }

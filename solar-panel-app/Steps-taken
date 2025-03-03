@@ -62,3 +62,13 @@ B. SaveIntegrationTest
                 repository.save(solarPanel);
             }
     28. TEST PASSES
+
+    29. In THEN part store store the response from the repository in SolarPanel actual
+    30. Write assertThat(actual).satisfies(act -> {
+              			// main fields
+              			assertThat(act.getSerialNumber()).isEqualTo(request.serialNumber());
+              		});
+    31. TEST FAILS as getSerialNumber() doesn't exist
+
+    32. Add @Getter to SolarPanel class
+    33. TEST PASSES
