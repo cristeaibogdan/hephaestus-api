@@ -1,7 +1,5 @@
-package org.personal.solarpanel.service;
+package org.personal.solarpanel.repository;
 
 public interface SolarPanelRepository {
-	void save(SolarPanel solarPanel);
-
 	void findBySerialNumber(String serialNumber);
 }
