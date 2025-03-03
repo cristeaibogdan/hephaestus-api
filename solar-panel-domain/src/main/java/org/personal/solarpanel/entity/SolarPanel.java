@@ -14,10 +14,26 @@ import static lombok.AccessLevel.*;
 @Table(schema = "public", name = "solar_panel")
 public class SolarPanel extends BaseEntity {
 
+	@Column(name = "category")
+	String category;
+
+	@Column(name = "manufacturer")
+	String manufacturer;
+
+	@Column(name = "model")
+	String model;
+
+	@Column(name = "type")
+	String type;
+
 	@Column(name = "serial_number")
 	String serialNumber;
 
-	public SolarPanel(String serialNumber) {
+	public SolarPanel(String category, String manufacturer, String model, String type, String serialNumber) {
+		this.category = category;
+		this.manufacturer = manufacturer;
+		this.model = model;
+		this.type = type;
 		this.serialNumber = serialNumber;
 	}
 }

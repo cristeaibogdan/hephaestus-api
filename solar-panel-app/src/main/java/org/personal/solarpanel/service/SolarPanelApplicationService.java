@@ -12,9 +12,13 @@ public class SolarPanelApplicationService {
 
 	private final SolarPanelRepository repository;
 
-	public void save(SaveSolarPanelRequest saveSolarPanelRequest) {
+	public void save(SaveSolarPanelRequest request) {
 		SolarPanel solarPanel = new SolarPanel(
-				saveSolarPanelRequest.serialNumber()
+				request.category(),
+				request.manufacturer(),
+				request.model(),
+				request.type(),
+				request.serialNumber()
 		);
 		repository.save(solarPanel);
 	}

@@ -72,3 +72,9 @@ B. SaveIntegrationTest
 
     32. Add @Getter to SolarPanel class
     33. TEST PASSES
+
+    34. In SolarPanel entity add all the other properties, except for SaveSolarPanelDamageRequest
+    35. Update the SolarPanel constructor
+    35. Update the constructor in SolarPanelApplicationService
+    36. Write assertions for the added properties in the test
+    37. TEST PASSES

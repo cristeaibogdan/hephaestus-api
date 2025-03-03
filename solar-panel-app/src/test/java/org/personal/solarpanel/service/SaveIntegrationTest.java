@@ -41,6 +41,10 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 
 		assertThat(actual).satisfies(act -> {
 			// main fields
+			assertThat(act.getCategory()).isEqualTo(request.category());
+			assertThat(act.getManufacturer()).isEqualTo(request.manufacturer());
+			assertThat(act.getModel()).isEqualTo(request.model());
+			assertThat(act.getType()).isEqualTo(request.type());
 			assertThat(act.getSerialNumber()).isEqualTo(request.serialNumber());
 		});
 	}
