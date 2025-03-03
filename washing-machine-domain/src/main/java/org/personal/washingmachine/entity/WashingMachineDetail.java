@@ -41,10 +41,12 @@ public class WashingMachineDetail extends BaseEntity {
     private CostAssessment costAssessment;
 
     public WashingMachineDetail(WashingMachineDetail washingMachineDetail) {
-        this.packageDamage = washingMachineDetail.getPackageDamage();
-        this.visibleSurfaceDamage = washingMachineDetail.getVisibleSurfaceDamage();
-        this.hiddenSurfaceDamage = washingMachineDetail.getHiddenSurfaceDamage();
-        this.costAssessment = washingMachineDetail.getCostAssessment();
+        this(
+            washingMachineDetail.getPackageDamage(),
+            washingMachineDetail.getVisibleSurfaceDamage(),
+            washingMachineDetail.getHiddenSurfaceDamage(),
+            washingMachineDetail.getCostAssessment()
+        );
     }
 
     public Recommendation getRecommendation() {
