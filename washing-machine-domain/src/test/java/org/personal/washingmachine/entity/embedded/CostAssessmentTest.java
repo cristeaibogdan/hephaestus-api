@@ -1,4 +1,4 @@
-package org.personal.washingmachine.entity;
+package org.personal.washingmachine.entity.embedded;
 
 import org.junit.jupiter.api.Test;
 import org.personal.washingmachine.enums.Recommendation;
@@ -6,11 +6,11 @@ import org.personal.washingmachine.enums.Recommendation;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.personal.washingmachine.enums.Recommendation.*;
 
-class PricingTest {
+class CostAssessmentTest {
 	@Test
 	void should_ReturnNONE_When_OneOfThePricesIsZero() {
 		// GIVEN
-		WashingMachineDetail underTest = WashingMachineDetail.builder()
+		CostAssessment underTest = CostAssessment.builder()
 				.price(0)
 				.repairPrice(0)
 				.build();
@@ -25,7 +25,7 @@ class PricingTest {
 	@Test
 	void should_ReturnDISASSEMBLE_When_RepairPriceIsEqualOrExceedsHalfOfPrice() {
 		// GIVEN
-		WashingMachineDetail underTest = WashingMachineDetail.builder()
+		CostAssessment underTest = CostAssessment.builder()
 				.price(50)
 				.repairPrice(100)
 				.build();
@@ -40,7 +40,7 @@ class PricingTest {
 	@Test
 	void should_ReturnREPAIR_When_RepairPriceIsBelowHalfOfPrice() {
 		// GIVEN
-		WashingMachineDetail underTest = WashingMachineDetail.builder()
+		CostAssessment underTest = CostAssessment.builder()
 				.price(100)
 				.repairPrice(40)
 				.build();

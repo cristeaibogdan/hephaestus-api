@@ -10,6 +10,7 @@ import org.personal.washingmachine.dto.GetWashingMachineImageResponse;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineDetail;
 import org.personal.washingmachine.entity.WashingMachineImage;
+import org.personal.washingmachine.entity.embedded.CostAssessment;
 import org.personal.washingmachine.entity.embedded.HiddenSurfaceDamage;
 import org.personal.washingmachine.entity.embedded.PackageDamage;
 import org.personal.washingmachine.entity.embedded.VisibleSurfaceDamage;
@@ -71,8 +72,7 @@ class LoadIntegrationTest extends BaseIntegrationTest {
 									0,
 									"",
 									""),
-							0,
-							0
+							new CostAssessment(0, 0)
 					)
 			);
 			washingMachine.addImage(

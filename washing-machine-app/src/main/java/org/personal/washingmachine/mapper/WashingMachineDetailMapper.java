@@ -3,6 +3,7 @@ package org.personal.washingmachine.mapper;
 import org.personal.washingmachine.dto.CreateWashingMachineDetailRequest;
 import org.personal.washingmachine.dto.GetWashingMachineDetailResponse;
 import org.personal.washingmachine.entity.WashingMachineDetail;
+import org.personal.washingmachine.entity.embedded.CostAssessment;
 import org.personal.washingmachine.entity.embedded.HiddenSurfaceDamage;
 import org.personal.washingmachine.entity.embedded.PackageDamage;
 import org.personal.washingmachine.entity.embedded.VisibleSurfaceDamage;
@@ -38,8 +39,8 @@ public final class WashingMachineDetailMapper {
 				entity.getHiddenSurfaceDamage().hasMajorDamage(),
 				entity.getHiddenSurfaceDamage().getHiddenSurfacesMajorDamage(),
 
-				entity.getPrice(),
-				entity.getRepairPrice()
+				entity.getCostAssessment().getPrice(),
+				entity.getCostAssessment().getRepairPrice()
 		);
 	}
 
@@ -62,8 +63,10 @@ public final class WashingMachineDetailMapper {
 						dto.hiddenSurfacesMinorDamage(),
 						dto.hiddenSurfacesMajorDamage()
 				),
-				dto.price(),
-				dto.repairPrice()
+				new CostAssessment(
+					dto.price(),
+					dto.repairPrice()
+				)
 		);
 	}
 }

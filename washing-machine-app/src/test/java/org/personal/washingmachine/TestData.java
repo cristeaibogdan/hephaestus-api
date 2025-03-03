@@ -4,6 +4,7 @@ import org.personal.washingmachine.dto.CreateWashingMachineDetailRequest;
 import org.personal.washingmachine.dto.CreateWashingMachineRequest;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineDetail;
+import org.personal.washingmachine.entity.embedded.CostAssessment;
 import org.personal.washingmachine.entity.embedded.HiddenSurfaceDamage;
 import org.personal.washingmachine.entity.embedded.PackageDamage;
 import org.personal.washingmachine.entity.embedded.VisibleSurfaceDamage;
@@ -76,8 +77,7 @@ public class TestData {
 						0,
 						"",
 						""),
-				0,
-				0
+				new CostAssessment(0, 0)
 		);
 	}
 
@@ -109,11 +109,19 @@ public class TestData {
 							)
 					);
 			case REPAIR -> createWashingMachineDetail()
-					.setRepairPrice(100)
-					.setPrice(500);
+					.setCostAssessment(
+							new CostAssessment(
+								500,
+								100
+							)
+					);
 			case DISASSEMBLE -> createWashingMachineDetail()
-					.setRepairPrice(400)
-					.setPrice(500);
+					.setCostAssessment(
+							new CostAssessment(
+									500,
+									400
+							)
+					);
 			case NONE -> createWashingMachineDetail();
 		};
 	}
@@ -143,8 +151,7 @@ public class TestData {
 								0,
 								"",
 								""),
-						0,
-						0
+						new CostAssessment(0, 0)
 				)
 		);
 	}

@@ -117,8 +117,8 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 				assertThat(act.getWashingMachineDetail().getHiddenSurfaceDamage().getHiddenSurfacesMajorDamage()).isEqualTo(request.createWashingMachineDetailRequest().hiddenSurfacesMajorDamage());
 
 				// pricing
-				assertThat(act.getWashingMachineDetail().getPrice()).isEqualTo(request.createWashingMachineDetailRequest().price());
-				assertThat(act.getWashingMachineDetail().getRepairPrice()).isEqualTo(request.createWashingMachineDetailRequest().repairPrice());
+				assertThat(act.getWashingMachineDetail().getCostAssessment().getPrice()).isEqualTo(request.createWashingMachineDetailRequest().price());
+				assertThat(act.getWashingMachineDetail().getCostAssessment().getRepairPrice()).isEqualTo(request.createWashingMachineDetailRequest().repairPrice());
 
 				// images
 				assertThat(act.getWashingMachineImages()).hasSize(1);

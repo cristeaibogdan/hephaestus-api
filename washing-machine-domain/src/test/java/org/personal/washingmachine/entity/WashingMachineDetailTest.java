@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.personal.shared.exception.CustomException;
 import org.personal.washingmachine.entity.embedded.HiddenSurfaceDamage;
 import org.personal.washingmachine.entity.embedded.PackageDamage;
+import org.personal.washingmachine.entity.embedded.CostAssessment;
 import org.personal.washingmachine.entity.embedded.VisibleSurfaceDamage;
 import org.personal.washingmachine.enums.Recommendation;
 
@@ -34,8 +35,7 @@ class WashingMachineDetailTest {
 							"",
 							""
 					),
-				0,
-				0
+				new CostAssessment(0, 0)
 			);
 
 			// WHEN
@@ -62,8 +62,7 @@ class WashingMachineDetailTest {
 							"",
 							""
 					),
-					0,
-					0
+					new CostAssessment(0, 0)
 			);
 
 			// WHEN & THEN

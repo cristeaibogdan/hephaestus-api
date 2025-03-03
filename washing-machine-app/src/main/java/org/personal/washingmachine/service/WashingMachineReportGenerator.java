@@ -1,7 +1,5 @@
 package org.personal.washingmachine.service;
 
-import com.google.common.base.CaseFormat;
-import com.google.common.base.Splitter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jasperreports.engine.*;
@@ -153,8 +151,8 @@ public class WashingMachineReportGenerator {
 		// *** Pricing
 		// ********************************
 
-		parameters.put("price", washingMachineDetail.getPrice());
-		parameters.put("repairPrice", washingMachineDetail.getRepairPrice());
+		parameters.put("price", washingMachineDetail.getCostAssessment().getPrice());
+		parameters.put("repairPrice", washingMachineDetail.getCostAssessment().getRepairPrice());
 
 		return parameters;
 	}
