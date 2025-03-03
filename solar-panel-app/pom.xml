@@ -60,6 +60,18 @@
             <artifactId>jasperreports-fonts</artifactId>
             <version>6.21.0</version>
         </dependency>
+
+        <!-- ***************************************** -->
+        <!-- *** TESTING -->
+        <!-- ***************************************** -->
+
+        <dependency>
+            <!-- JDBC driver proxy intercepting all SQL calls, see spy.properties too -->
+            <groupId>com.github.gavlyukovskiy</groupId>
+            <artifactId>p6spy-spring-boot-starter</artifactId>
+            <scope>test</scope>  <!-- Only active during tests -->
+            <version>1.9.0</version>
+        </dependency>
     </dependencies>
 
     <profiles>
