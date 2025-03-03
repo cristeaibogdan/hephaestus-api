@@ -16,8 +16,49 @@ B. SaveIntegrationTest
     3. In the WHEN part write: underTest.save(request);
     4. Test FAILS, as underTest does not exist.
 
-    5. Add @Autowired SolarPanelApplicationService underTest; to the test
+    5. Add @Autowired SolarPanelApplicationService underTest; to the test class
     6. Test FAILS, as save method does not exist.
 
     7. ALT+ENTER to create the method together with the input parameter.
     8. TEST PASSES.
+
+    9. In THEN part write: repository.findBySerialNumber("AX-098-200").orElseThrow();
+    10. TEST FAILS, as no repository exists in the test class
+
+    11. Add @Autowired SolarPanelRepository repository; to the test class
+    12. TEST FAILS, as no .findBySerialNumber method exists
+
+    13. ALT+ENTER to create the method together with the input parameter.
+    14. Create the SolarPanel class and annotate it with @Entity and @Table(schema = "public", name = "solar_panel")
+    15. Copy-paste the BaseEntity from the other module
+    16. Extend SolarPanel with BaseEntity
+    17. Import SolarPanel in the SolarPanelRepository
+    18. TEST FAILS, as it doesn't extend any repository
+
+    19. Modify interface SolarPanelRepository extends JpaRepository<SolarPanel, Long>
+    20. TEST FAILS, as no property serialNumber exists in SolarPanel entity
+
+    21. Add the following property in SolarPanel: @Column(name = "serial_number")
+                                                String serialNumber;
+    22. TEST FAILS, as no public.solar_panel relation exists
+
+    23. Add the following to application.properties:
+        spring.datasource.url=jdbc:postgresql://localhost:5432/solar_panel_db
+        spring.datasource.username=postgres
+        spring.datasource.password=postgres
+        spring.jpa.hibernate.ddl-auto=create-drop
+        spring.jpa.show-sql=true
+        spring.jpa.properties.hibernate.format_sql=true
+    *** Notice that the jpa.hibernate is set to create-drop ***
+    24. TEST FAILS, as nothing was saved in the database.
+
+    25. In SolarPanelApplicationService class, in the save method, add repository.save()
+    26. The save method requires a SolarPanel entity, create a constructor for SolarPanel, and set the implicit one to protected
+    27. In SolarPanelApplicationService class, before save, do a manual map:
+            public void save(SaveSolarPanelRequest saveSolarPanelRequest) {
+                SolarPanel solarPanel = new SolarPanel(
+                        saveSolarPanelRequest.serialNumber()
+                );
+                repository.save(solarPanel);
+            }
+    28. TEST PASSES

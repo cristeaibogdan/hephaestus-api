@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.personal.solarpanel.BaseIntegrationTest;
 import org.personal.solarpanel.dto.SaveSolarPanelDamageRequest;
 import org.personal.solarpanel.dto.SaveSolarPanelRequest;
+import org.personal.solarpanel.repository.SolarPanelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -11,6 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class SaveIntegrationTest extends BaseIntegrationTest {
 
 	@Autowired SolarPanelApplicationService underTest;
+	@Autowired SolarPanelRepository repository;
 
 	@Test
 	void should_saveRequest_With_AllPropertiesInDB() {
@@ -20,7 +22,7 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 				"Tesla",
 				"model1",
 				"type2",
-				"AXEAAD-0098-200",
+				"AX-098-200",
 				new SaveSolarPanelDamageRequest(
 						true,
 						false,
@@ -33,5 +35,7 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 		underTest.save(request);
 
 		// THEN
+		repository.findBySerialNumber("AX-098-200")
+				.orElseThrow();
 	}
 }
