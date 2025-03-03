@@ -78,3 +78,8 @@ B. SaveIntegrationTest
     35. Update the constructor in SolarPanelApplicationService
     36. Write assertions for the added properties in the test
     37. TEST PASSES
+
+    38. Create entity Damage with all the properties from the DTO
+    39. Add Damage property to SolarPanel
+    40. Add assertions for all the properties of Damage in the test method
+    41. TEST PASSES

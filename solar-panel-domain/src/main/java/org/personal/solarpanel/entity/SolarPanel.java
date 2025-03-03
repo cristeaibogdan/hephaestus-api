@@ -1,10 +1,9 @@
 package org.personal.solarpanel.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import static lombok.AccessLevel.*;
 
@@ -15,25 +14,35 @@ import static lombok.AccessLevel.*;
 public class SolarPanel extends BaseEntity {
 
 	@Column(name = "category")
-	String category;
+	private String category;
 
 	@Column(name = "manufacturer")
-	String manufacturer;
+	private String manufacturer;
 
 	@Column(name = "model")
-	String model;
+	private String model;
 
 	@Column(name = "type")
-	String type;
+	private String type;
 
 	@Column(name = "serial_number")
-	String serialNumber;
+	private String serialNumber;
 
-	public SolarPanel(String category, String manufacturer, String model, String type, String serialNumber) {
+	@Getter(NONE)
+	@JoinColumn(name = "damage_id")
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Damage damage;
+
+	public SolarPanel(String category, String manufacturer, String model, String type, String serialNumber, Damage damage) {
 		this.category = category;
 		this.manufacturer = manufacturer;
 		this.model = model;
 		this.type = type;
 		this.serialNumber = serialNumber;
+		this.damage = damage;
+	}
+
+	public Damage getDamage() {
+		return new Damage(this.damage);
 	}
 }

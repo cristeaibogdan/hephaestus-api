@@ -4,5 +4,6 @@ public record SaveSolarPanelDamageRequest(
 		boolean hotSpots,
 		boolean microCracks,
 		boolean snailTrails,
-		boolean brokenGlass
+		boolean brokenGlass,
+		String additionalDetails
 ) { }

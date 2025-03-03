@@ -64,7 +64,7 @@ public class WashingMachine extends BaseEntity {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-
+    @Setter(NONE) @Getter(NONE)
     @JoinColumn(name = "washing_machine_detail_id")
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private WashingMachineDetail washingMachineDetail;

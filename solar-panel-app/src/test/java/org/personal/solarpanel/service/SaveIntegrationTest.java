@@ -28,7 +28,8 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 						true,
 						false,
 						true,
-						false
+						false,
+						"blue paint was thrown on half the panel"
 				)
 		);
 
@@ -46,6 +47,13 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 			assertThat(act.getModel()).isEqualTo(request.model());
 			assertThat(act.getType()).isEqualTo(request.type());
 			assertThat(act.getSerialNumber()).isEqualTo(request.serialNumber());
+
+			// damage
+			assertThat(act.getDamage().isHotSpots()).isEqualTo(request.saveSolarPanelDamageRequest().hotSpots());
+			assertThat(act.getDamage().isMicroCracks()).isEqualTo(request.saveSolarPanelDamageRequest().microCracks());
+			assertThat(act.getDamage().isSnailTrails()).isEqualTo(request.saveSolarPanelDamageRequest().snailTrails());
+			assertThat(act.getDamage().isBrokenGlass()).isEqualTo(request.saveSolarPanelDamageRequest().brokenGlass());
+			assertThat(act.getDamage().getAdditionalDetails()).isEqualTo(request.saveSolarPanelDamageRequest().additionalDetails());
 		});
 	}
 }
