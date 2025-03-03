@@ -3,9 +3,21 @@ A. Setup
     2. Added mapper package with an empty class
     3. Moved dto to dto package
     4. Added spring-boot-starter-data-jpa to solar-panel-domain pom.xml
-    5. Added dummy test in saveIntegrationTest to make sure everything runs
-    6. Test failed
+    5. Added dummyTest in SaveIntegrationTest to make sure everything runs
+    6. Test FAILS
 
     7. Added postgresql driver to solar-panel-domain pom.xml
-    8. Test is GREEN.
+    8. Test PASSES.
 
+B. SaveIntegrationTest
+    0. Created the DTOs SaveSolarPanelRequest and SaveSolarPanelDamageRequest. The frontend part provides these.
+    1. Renamed dummyTest to should_saveRequest_With_AllPropertiesInDB
+    2. In the GIVEN part create a SaveSolarPanelRequest
+    3. In the WHEN part write: underTest.save(request);
+    4. Test FAILS, as underTest does not exist.
+
+    5. Add @Autowired SolarPanelApplicationService underTest; to the test
+    6. Test FAILS, as save method does not exist.
+
+    7. ALT+ENTER to create the method together with the input parameter.
+    8. TEST PASSES.
