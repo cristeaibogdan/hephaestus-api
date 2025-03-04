@@ -8,6 +8,8 @@ import org.personal.solarpanel.entity.SolarPanel;
 import org.personal.solarpanel.repository.SolarPanelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDate;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class SaveIntegrationTest extends BaseIntegrationTest {
@@ -16,7 +18,7 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 	@Autowired SolarPanelRepository repository;
 
 	@Test
-	void should_saveRequest_With_AllPropertiesInDB() {
+	void should_SaveRequest_With_AllPropertiesInDB() {
 		// GIVEN
 		SaveSolarPanelRequest request = new SaveSolarPanelRequest(
 				"Solar Panel",
@@ -35,11 +37,9 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 
 		// WHEN
 		underTest.save(request);
+		SolarPanel actual = repository.findBySerialNumber("AX-098-200").orElseThrow();
 
 		// THEN
-		SolarPanel actual = repository.findBySerialNumber("AX-098-200")
-				.orElseThrow();
-
 		assertThat(actual).satisfies(act -> {
 			// main fields
 			assertThat(act.getCategory()).isEqualTo(request.category());
@@ -55,5 +55,32 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 			assertThat(act.getDamage().isBrokenGlass()).isEqualTo(request.saveSolarPanelDamageRequest().brokenGlass());
 			assertThat(act.getDamage().getAdditionalDetails()).isEqualTo(request.saveSolarPanelDamageRequest().additionalDetails());
 		});
+	}
+
+	@Test
+	void should_ReturnCurrentDate_For_createdAtField() {
+		// GIVEN
+		SaveSolarPanelRequest request = new SaveSolarPanelRequest(
+				"Solar Panel",
+				"Tesla",
+				"model1",
+				"type2",
+				"date-test",
+				new SaveSolarPanelDamageRequest(
+						true,
+						false,
+						true,
+						false,
+						"blue paint was thrown on half the panel"
+				)
+		);
+
+		// WHEN
+		underTest.save(request);
+		SolarPanel actual = repository.findBySerialNumber("date-test").orElseThrow();
+
+		// THEN
+		assertThat(actual.getCreatedAt().toLocalDate())
+				.isEqualTo(LocalDate.now());
 	}
 }

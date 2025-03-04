@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 import static lombok.AccessLevel.*;
 
@@ -27,6 +30,11 @@ public class SolarPanel extends BaseEntity {
 
 	@Column(name = "serial_number")
 	private String serialNumber;
+
+	@Setter(NONE)
+	@CreationTimestamp
+	@Column(name = "created_at")
+	private LocalDateTime createdAt;
 
 	@Getter(NONE)
 	@JoinColumn(name = "damage_id")

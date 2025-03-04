@@ -22,7 +22,7 @@ B. SaveIntegrationTest
     7. ALT+ENTER to create the method together with the input parameter.
     8. TEST PASSES.
 
-    9. In THEN part write: repository.findBySerialNumber("AX-098-200").orElseThrow();
+    9. In WHEN part write: repository.findBySerialNumber("AX-098-200").orElseThrow();
     10. TEST FAILS, as no repository exists in the test class
 
     11. Add @Autowired SolarPanelRepository repository; to the test class
@@ -83,3 +83,15 @@ B. SaveIntegrationTest
     39. Add Damage property to SolarPanel
     40. Add assertions for all the properties of Damage in the test method
     41. TEST PASSES
+
+    ==== Add test to check if createdAt works as expected ====
+
+    1. Copy paste previous test and rename to should_ReturnCurrentDate_For_createdAtField
+    2. Delete the THEN part
+    3. Add @Setter(NONE)
+           	@CreationTimestamp
+           	@Column(name = "created_at")
+           	private LocalDateTime createdAt; to Solar Panel
+    4. Add assertThat(actual.getCreatedAt().toLocalDate())
+          				.isEqualTo(LocalDate.now()); in the THEN part
+    5. TEST PASSES
