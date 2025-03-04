@@ -129,8 +129,8 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// THEN
-			resultActions.andExpect(status().isCreated());
-//					.andExpect(content().string(emptyString()));
+			resultActions.andExpect(status().isCreated())
+					.andExpect(content().string(emptyString()));
 		}
 	}
 

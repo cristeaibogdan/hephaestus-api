@@ -135,3 +135,4 @@
 
     18. In ISolarPanelApplicationService add @ResponseStatus(HttpStatus.CREATED) to the save method
     19. TEST PASSES
+    20. Added .andExpect(content().string(emptyString())); to make sure nothing is returned in the body
