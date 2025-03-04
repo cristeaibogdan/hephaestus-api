@@ -95,3 +95,4 @@ B. SaveIntegrationTest
     4. Add assertThat(actual.getCreatedAt().toLocalDate())
           				.isEqualTo(LocalDate.now()); in the THEN part
     5. TEST PASSES
+    6. Group the 2 tests into a @Nested IntegrationTest inner class
