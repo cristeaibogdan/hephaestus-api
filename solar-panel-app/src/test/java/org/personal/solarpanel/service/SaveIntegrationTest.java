@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.emptyString;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -131,6 +131,42 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 			// THEN
 			resultActions.andExpect(status().isCreated())
 					.andExpect(content().string(emptyString()));
+		}
+
+		@Test
+		void should_ThrowCustomException_When_SerialNumberAlreadyTaken() throws Exception {
+			// GIVEN
+			SaveSolarPanelRequest request = new SaveSolarPanelRequest(
+					"Solar Panel",
+					"Tesla",
+					"model1",
+					"type2",
+					"duplicated serialNumber",
+					new SaveSolarPanelDamageRequest(
+							true,
+							false,
+							true,
+							false,
+							"blue paint was thrown on half the panel"
+					)
+			);
+
+			mockMvc.perform(
+					post("/v1/solar-panels/save")
+							.content(jackson.writeValueAsString(request))
+							.contentType(MediaType.APPLICATION_JSON)
+			);
+
+			// WHEN
+			ResultActions resultActions = mockMvc.perform(
+					post("/v1/solar-panels/save")
+							.content(jackson.writeValueAsString(request))
+							.contentType(MediaType.APPLICATION_JSON)
+			);
+
+			// THEN
+			resultActions.andExpect(status().isConflict())
+					.andExpect(content().string(not(containsString("Internal Translation Error"))));
 		}
 	}
 

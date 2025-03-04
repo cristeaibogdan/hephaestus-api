@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface SolarPanelRepository extends JpaRepository<SolarPanel, Long> {
 	Optional<SolarPanel> findBySerialNumber(String serialNumber);
+	boolean existsBySerialNumber(String serialNumber);
 }

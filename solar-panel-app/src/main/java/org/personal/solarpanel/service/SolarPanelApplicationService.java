@@ -1,6 +1,8 @@
 package org.personal.solarpanel.service;
 
 import lombok.RequiredArgsConstructor;
+import org.personal.shared.exception.CustomException;
+import org.personal.shared.exception.ErrorCode;
 import org.personal.solarpanel.dto.SaveSolarPanelRequest;
 import org.personal.solarpanel.entity.Damage;
 import org.personal.solarpanel.entity.SolarPanel;
@@ -31,6 +33,12 @@ public class SolarPanelApplicationService implements ISolarPanelApplicationServi
 						request.saveSolarPanelDamageRequest().additionalDetails()
 				)
 		);
+
+		boolean existingSerialNumber = repository.existsBySerialNumber(solarPanel.getSerialNumber());
+		if (existingSerialNumber) {
+			throw new CustomException(ErrorCode.SERIAL_NUMBER_ALREADY_TAKEN);
+		}
+
 		repository.save(solarPanel);
 	}
 }

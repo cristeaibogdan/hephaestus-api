@@ -136,3 +136,20 @@
     18. In ISolarPanelApplicationService add @ResponseStatus(HttpStatus.CREATED) to the save method
     19. TEST PASSES
     20. Added .andExpect(content().string(emptyString())); to make sure nothing is returned in the body
+
+    ==== Add should_ThrowCustomException_When_SerialNumberAlreadyTaken mvc test ====
+
+    1. Create should_ThrowCustomException_When_SerialNumberAlreadyTaken test under MvcTest
+    2. Copy-paste SaveSolarPanelRequest from another test in the GIVEN part
+    3. Copy-paste the WHEN part from the previous test
+    4. Copy-paste the perform again in the GIVEN part, we want to already have the request in the database
+    5. In THEN write resultActions.andExpect(status().isConflict());
+    6. TEST FAILS, as status 201 is returned, instead of 409.
+
+    7. In SolarPanelApplicationService check if the serialNUmber already exists, and if so throw a CustomException
+    8. TEST PASSES
+
+    9. Added .andExpect(content().string(not(containsString("Internal Translation Error")))); to account for missing error code translation
+    10. TEST PASSES
+
+    ==== Add validation tests ====
