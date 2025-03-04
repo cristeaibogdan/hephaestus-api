@@ -6,13 +6,16 @@ import org.personal.solarpanel.entity.Damage;
 import org.personal.solarpanel.entity.SolarPanel;
 import org.personal.solarpanel.repository.SolarPanelRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RestController;
 
 @Service
+@RestController
 @RequiredArgsConstructor
-public class SolarPanelApplicationService {
+public class SolarPanelApplicationService implements ISolarPanelApplicationService {
 
 	private final SolarPanelRepository repository;
 
+	@Override
 	public void save(SaveSolarPanelRequest request) {
 		SolarPanel solarPanel = new SolarPanel(
 				request.category(),

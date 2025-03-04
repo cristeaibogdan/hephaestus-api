@@ -1,5 +1,7 @@
 package org.personal.solarpanel.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.personal.solarpanel.BaseIntegrationTest;
@@ -8,15 +10,25 @@ import org.personal.solarpanel.dto.SaveSolarPanelRequest;
 import org.personal.solarpanel.entity.SolarPanel;
 import org.personal.solarpanel.repository.SolarPanelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 
 import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.emptyString;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class SaveIntegrationTest extends BaseIntegrationTest {
 
 	@Autowired SolarPanelApplicationService underTest;
 	@Autowired SolarPanelRepository repository;
+
+	@Autowired MockMvc mockMvc;
+	@Autowired ObjectMapper jackson;
 
 	@Nested
 	class IntegrationTest {
@@ -85,6 +97,40 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 			// THEN
 			assertThat(actual.getCreatedAt().toLocalDate())
 					.isEqualTo(LocalDate.now());
+		}
+	}
+
+	@Nested
+	class MvcTest {
+
+		@Test
+		void should_ReturnStatusCreated_When_DTOSaved() throws Exception {
+			// GIVEN
+			SaveSolarPanelRequest request = new SaveSolarPanelRequest(
+					"Solar Panel",
+					"Tesla",
+					"model1",
+					"type2",
+					"status-test",
+					new SaveSolarPanelDamageRequest(
+							true,
+							false,
+							true,
+							false,
+							"blue paint was thrown on half the panel"
+					)
+			);
+
+			// WHEN
+			ResultActions resultActions = mockMvc.perform(
+					post("/v1/solar-panels/save")
+							.content(jackson.writeValueAsString(request))
+							.contentType(MediaType.APPLICATION_JSON)
+			);
+
+			// THEN
+			resultActions.andExpect(status().isCreated());
+//					.andExpect(content().string(emptyString()));
 		}
 	}
 
