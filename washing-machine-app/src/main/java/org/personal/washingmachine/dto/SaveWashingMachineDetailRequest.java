@@ -4,7 +4,7 @@ import jakarta.validation.constraints.*;
 import lombok.Builder;
 
 @Builder(toBuilder = true)
-public record CreateWashingMachineDetailRequest(
+public record SaveWashingMachineDetailRequest(
 		// PACKAGE
 		boolean packageDamaged,
 		boolean packageDirty,

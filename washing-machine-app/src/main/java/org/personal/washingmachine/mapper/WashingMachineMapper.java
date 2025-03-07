@@ -1,7 +1,7 @@
 package org.personal.washingmachine.mapper;
 
 import lombok.RequiredArgsConstructor;
-import org.personal.washingmachine.dto.CreateWashingMachineRequest;
+import org.personal.washingmachine.dto.SaveWashingMachineRequest;
 import org.personal.washingmachine.dto.GetWashingMachineFullResponse;
 import org.personal.washingmachine.dto.GetWashingMachineSimpleResponse;
 import org.personal.washingmachine.entity.WashingMachine;
@@ -46,7 +46,7 @@ public final class WashingMachineMapper {
 		);
 	}
 
-	public WashingMachine toEntity(CreateWashingMachineRequest dto) {
+	public WashingMachine toEntity(SaveWashingMachineRequest dto) {
 		return new WashingMachine(
 				dto.category(),
 				dto.manufacturer(),
@@ -56,7 +56,7 @@ public final class WashingMachineMapper {
 				dto.serialNumber(),
 				dto.model(),
 				dto.type(),
-				washingMachineDetailMapper.toEntity(dto.createWashingMachineDetailRequest())
+				washingMachineDetailMapper.toEntity(dto.saveWashingMachineDetailRequest())
 		);
 	}
 }

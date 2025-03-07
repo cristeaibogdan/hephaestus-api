@@ -42,24 +42,24 @@ class SaveValidationMvcTest {
 
 	static Stream<Arguments> getInvalidCreateWashingMachineRequests() {
 		return Stream.of(
-				arguments(TestData.createWashingMachineRequest().toBuilder().category(null).build(), "category", null),
-				arguments(TestData.createWashingMachineRequest().toBuilder().category("  ").build(), "category", " (blank string) "),
-				arguments(TestData.createWashingMachineRequest().toBuilder().identificationMode(null).build(), "identificationMode", null),
-				arguments(TestData.createWashingMachineRequest().toBuilder().manufacturer(null).build(), "manufacturer", null),
-				arguments(TestData.createWashingMachineRequest().toBuilder().manufacturer("  ").build(), "manufacturer", " (blank string) "),
-				arguments(TestData.createWashingMachineRequest().toBuilder().model(null).build(), "model", null),
-				arguments(TestData.createWashingMachineRequest().toBuilder().type(null).build(), "type", null),
-				arguments(TestData.createWashingMachineRequest().toBuilder().serialNumber(null).build(), "serialNumber", null),
-				arguments(TestData.createWashingMachineRequest().toBuilder().serialNumber("  ").build(), "serialNumber", " (blank string) "),
-				arguments(TestData.createWashingMachineRequest().toBuilder().returnType(null).build(), "returnType", null),
-				arguments(TestData.createWashingMachineRequest().toBuilder().damageType(null).build(), "damageType", null),
-				arguments(TestData.createWashingMachineRequest().toBuilder().createWashingMachineDetailRequest(null).build(), "createWashingMachineDetailRequest", null)
+				arguments(TestData.createSaveWashingMachineRequest().toBuilder().category(null).build(), "category", null),
+				arguments(TestData.createSaveWashingMachineRequest().toBuilder().category("  ").build(), "category", " (blank string) "),
+				arguments(TestData.createSaveWashingMachineRequest().toBuilder().identificationMode(null).build(), "identificationMode", null),
+				arguments(TestData.createSaveWashingMachineRequest().toBuilder().manufacturer(null).build(), "manufacturer", null),
+				arguments(TestData.createSaveWashingMachineRequest().toBuilder().manufacturer("  ").build(), "manufacturer", " (blank string) "),
+				arguments(TestData.createSaveWashingMachineRequest().toBuilder().model(null).build(), "model", null),
+				arguments(TestData.createSaveWashingMachineRequest().toBuilder().type(null).build(), "type", null),
+				arguments(TestData.createSaveWashingMachineRequest().toBuilder().serialNumber(null).build(), "serialNumber", null),
+				arguments(TestData.createSaveWashingMachineRequest().toBuilder().serialNumber("  ").build(), "serialNumber", " (blank string) "),
+				arguments(TestData.createSaveWashingMachineRequest().toBuilder().returnType(null).build(), "returnType", null),
+				arguments(TestData.createSaveWashingMachineRequest().toBuilder().damageType(null).build(), "damageType", null),
+				arguments(TestData.createSaveWashingMachineRequest().toBuilder().saveWashingMachineDetailRequest(null).build(), "saveWashingMachineDetailRequest", null)
 		);
 	}
 
 	@ParameterizedTest(name = "Validation fails for property {1}, with value {2}")
 	@MethodSource("getInvalidCreateWashingMachineRequests")
-	void should_ThrowValidationException_When_ProvidedInvalidCreateWashingMachineRequest(CreateWashingMachineRequest request, String propertyName, Object invalidValue) throws Exception {
+	void should_ThrowValidationException_When_ProvidedInvalidCreateWashingMachineRequest(SaveWashingMachineRequest request, String propertyName, Object invalidValue) throws Exception {
 		// GIVEN
 		// WHEN
 		ResultActions resultActions = performRequest(request);
@@ -72,32 +72,32 @@ class SaveValidationMvcTest {
 
 	static Stream<Arguments> getInvalidCreateWashingMachineDetailRequests() {
 		return Stream.of(
-				arguments(TestData.createValidWashingMachineDetailRequest().toBuilder().visibleSurfacesScratchesLength(-1).build(), "visibleSurfacesScratchesLength", -1),
-				arguments(TestData.createValidWashingMachineDetailRequest().toBuilder().visibleSurfacesScratchesLength(11).build(), "visibleSurfacesScratchesLength", 11),
-				arguments(TestData.createValidWashingMachineDetailRequest().toBuilder().visibleSurfacesDentsDepth(-1).build(), "visibleSurfacesDentsDepth", -1),
-				arguments(TestData.createValidWashingMachineDetailRequest().toBuilder().visibleSurfacesDentsDepth(11).build(), "visibleSurfacesDentsDepth", 11),
-				arguments(TestData.createValidWashingMachineDetailRequest().toBuilder().visibleSurfacesMinorDamage(null).build(), "visibleSurfacesMinorDamage", null),
-				arguments(TestData.createValidWashingMachineDetailRequest().toBuilder().visibleSurfacesMinorDamage("A".repeat(201)).build(), "visibleSurfacesMinorDamage", "201 chars"),
-				arguments(TestData.createValidWashingMachineDetailRequest().toBuilder().visibleSurfacesMajorDamage(null).build(), "visibleSurfacesMajorDamage", null),
-				arguments(TestData.createValidWashingMachineDetailRequest().toBuilder().visibleSurfacesMajorDamage("A".repeat(201)).build(), "visibleSurfacesMajorDamage", "201 chars"),
-				arguments(TestData.createValidWashingMachineDetailRequest().toBuilder().hiddenSurfacesScratchesLength(-1).build(), "hiddenSurfacesScratchesLength", -1),
-				arguments(TestData.createValidWashingMachineDetailRequest().toBuilder().hiddenSurfacesScratchesLength(11).build(), "hiddenSurfacesScratchesLength", 11),
-				arguments(TestData.createValidWashingMachineDetailRequest().toBuilder().hiddenSurfacesDentsDepth(-1).build(), "hiddenSurfacesDentsDepth", -1),
-				arguments(TestData.createValidWashingMachineDetailRequest().toBuilder().hiddenSurfacesDentsDepth(11).build(), "hiddenSurfacesDentsDepth", 11),
-				arguments(TestData.createValidWashingMachineDetailRequest().toBuilder().hiddenSurfacesMinorDamage(null).build(), "hiddenSurfacesMinorDamage", null),
-				arguments(TestData.createValidWashingMachineDetailRequest().toBuilder().hiddenSurfacesMinorDamage("A".repeat(201)).build(), "hiddenSurfacesMinorDamage", "201 chars"),
-				arguments(TestData.createValidWashingMachineDetailRequest().toBuilder().hiddenSurfacesMajorDamage(null).build(), "hiddenSurfacesMajorDamage", null),
-				arguments(TestData.createValidWashingMachineDetailRequest().toBuilder().hiddenSurfacesMajorDamage("A".repeat(201)).build(), "hiddenSurfacesMajorDamage", "201 chars"),
-				arguments(TestData.createValidWashingMachineDetailRequest().toBuilder().price(-1).build(), "price", -1),
-				arguments(TestData.createValidWashingMachineDetailRequest().toBuilder().repairPrice(-1).build(), "repairPrice", -1)
+				arguments(TestData.createValidSaveWashingMachineDetailRequest().toBuilder().visibleSurfacesScratchesLength(-1).build(), "visibleSurfacesScratchesLength", -1),
+				arguments(TestData.createValidSaveWashingMachineDetailRequest().toBuilder().visibleSurfacesScratchesLength(11).build(), "visibleSurfacesScratchesLength", 11),
+				arguments(TestData.createValidSaveWashingMachineDetailRequest().toBuilder().visibleSurfacesDentsDepth(-1).build(), "visibleSurfacesDentsDepth", -1),
+				arguments(TestData.createValidSaveWashingMachineDetailRequest().toBuilder().visibleSurfacesDentsDepth(11).build(), "visibleSurfacesDentsDepth", 11),
+				arguments(TestData.createValidSaveWashingMachineDetailRequest().toBuilder().visibleSurfacesMinorDamage(null).build(), "visibleSurfacesMinorDamage", null),
+				arguments(TestData.createValidSaveWashingMachineDetailRequest().toBuilder().visibleSurfacesMinorDamage("A".repeat(201)).build(), "visibleSurfacesMinorDamage", "201 chars"),
+				arguments(TestData.createValidSaveWashingMachineDetailRequest().toBuilder().visibleSurfacesMajorDamage(null).build(), "visibleSurfacesMajorDamage", null),
+				arguments(TestData.createValidSaveWashingMachineDetailRequest().toBuilder().visibleSurfacesMajorDamage("A".repeat(201)).build(), "visibleSurfacesMajorDamage", "201 chars"),
+				arguments(TestData.createValidSaveWashingMachineDetailRequest().toBuilder().hiddenSurfacesScratchesLength(-1).build(), "hiddenSurfacesScratchesLength", -1),
+				arguments(TestData.createValidSaveWashingMachineDetailRequest().toBuilder().hiddenSurfacesScratchesLength(11).build(), "hiddenSurfacesScratchesLength", 11),
+				arguments(TestData.createValidSaveWashingMachineDetailRequest().toBuilder().hiddenSurfacesDentsDepth(-1).build(), "hiddenSurfacesDentsDepth", -1),
+				arguments(TestData.createValidSaveWashingMachineDetailRequest().toBuilder().hiddenSurfacesDentsDepth(11).build(), "hiddenSurfacesDentsDepth", 11),
+				arguments(TestData.createValidSaveWashingMachineDetailRequest().toBuilder().hiddenSurfacesMinorDamage(null).build(), "hiddenSurfacesMinorDamage", null),
+				arguments(TestData.createValidSaveWashingMachineDetailRequest().toBuilder().hiddenSurfacesMinorDamage("A".repeat(201)).build(), "hiddenSurfacesMinorDamage", "201 chars"),
+				arguments(TestData.createValidSaveWashingMachineDetailRequest().toBuilder().hiddenSurfacesMajorDamage(null).build(), "hiddenSurfacesMajorDamage", null),
+				arguments(TestData.createValidSaveWashingMachineDetailRequest().toBuilder().hiddenSurfacesMajorDamage("A".repeat(201)).build(), "hiddenSurfacesMajorDamage", "201 chars"),
+				arguments(TestData.createValidSaveWashingMachineDetailRequest().toBuilder().price(-1).build(), "price", -1),
+				arguments(TestData.createValidSaveWashingMachineDetailRequest().toBuilder().repairPrice(-1).build(), "repairPrice", -1)
 		);
 	}
 
 	@ParameterizedTest(name = "Validation fails for property {1}, with value {2}")
 	@MethodSource("getInvalidCreateWashingMachineDetailRequests")
-	void should_ThrowValidationException_When_ProvidedInvalidCreateWashingMachineDetailRequest(CreateWashingMachineDetailRequest dto, String propertyName, Object invalidValue) throws Exception {
+	void should_ThrowValidationException_When_ProvidedInvalidCreateWashingMachineDetailRequest(SaveWashingMachineDetailRequest dto, String propertyName, Object invalidValue) throws Exception {
 		// GIVEN
-		CreateWashingMachineRequest request = TestData.createWashingMachineRequest().toBuilder().createWashingMachineDetailRequest(dto).build();
+		SaveWashingMachineRequest request = TestData.createSaveWashingMachineRequest().toBuilder().saveWashingMachineDetailRequest(dto).build();
 
 		// WHEN
 		ResultActions resultActions = performRequest(request);
@@ -110,28 +110,28 @@ class SaveValidationMvcTest {
 
 	static Stream<Arguments> getValidCreateWashingMachineDetailRequests() {
 		return Stream.of(
-				arguments(TestData.createValidWashingMachineDetailRequest().toBuilder().visibleSurfacesScratchesLength(0).build(), "visibleSurfacesScratchesLength", 0),
-				arguments(TestData.createValidWashingMachineDetailRequest().toBuilder().visibleSurfacesScratchesLength(10).build(), "visibleSurfacesScratchesLength", 10),
-				arguments(TestData.createValidWashingMachineDetailRequest().toBuilder().visibleSurfacesDentsDepth(0).build(), "visibleSurfacesDentsDepth", 0),
-				arguments(TestData.createValidWashingMachineDetailRequest().toBuilder().visibleSurfacesDentsDepth(10).build(), "visibleSurfacesDentsDepth", 10),
-				arguments(TestData.createValidWashingMachineDetailRequest().toBuilder().visibleSurfacesMinorDamage("B".repeat(200)).build(), "visibleSurfacesMinorDamage", "200 chars"),
-				arguments(TestData.createValidWashingMachineDetailRequest().toBuilder().visibleSurfacesMajorDamage("B".repeat(200)).build(), "visibleSurfacesMajorDamage", "200 chars"),
-				arguments(TestData.createValidWashingMachineDetailRequest().toBuilder().hiddenSurfacesScratchesLength(0).build(), "hiddenSurfacesScratchesLength", 0),
-				arguments(TestData.createValidWashingMachineDetailRequest().toBuilder().hiddenSurfacesScratchesLength(10).build(), "hiddenSurfacesScratchesLength", 10),
-				arguments(TestData.createValidWashingMachineDetailRequest().toBuilder().hiddenSurfacesDentsDepth(0).build(), "hiddenSurfacesDentsDepth", 0),
-				arguments(TestData.createValidWashingMachineDetailRequest().toBuilder().hiddenSurfacesDentsDepth(10).build(), "hiddenSurfacesDentsDepth", 10),
-				arguments(TestData.createValidWashingMachineDetailRequest().toBuilder().hiddenSurfacesMinorDamage("B".repeat(200)).build(), "hiddenSurfacesMinorDamage", "200 chars"),
-				arguments(TestData.createValidWashingMachineDetailRequest().toBuilder().hiddenSurfacesMajorDamage("B".repeat(200)).build(), "hiddenSurfacesMajorDamage", "200 chars"),
-				arguments(TestData.createValidWashingMachineDetailRequest().toBuilder().price(0).build(), "price", 0),
-				arguments(TestData.createValidWashingMachineDetailRequest().toBuilder().repairPrice(0).build(), "repairPrice", 0)
+				arguments(TestData.createValidSaveWashingMachineDetailRequest().toBuilder().visibleSurfacesScratchesLength(0).build(), "visibleSurfacesScratchesLength", 0),
+				arguments(TestData.createValidSaveWashingMachineDetailRequest().toBuilder().visibleSurfacesScratchesLength(10).build(), "visibleSurfacesScratchesLength", 10),
+				arguments(TestData.createValidSaveWashingMachineDetailRequest().toBuilder().visibleSurfacesDentsDepth(0).build(), "visibleSurfacesDentsDepth", 0),
+				arguments(TestData.createValidSaveWashingMachineDetailRequest().toBuilder().visibleSurfacesDentsDepth(10).build(), "visibleSurfacesDentsDepth", 10),
+				arguments(TestData.createValidSaveWashingMachineDetailRequest().toBuilder().visibleSurfacesMinorDamage("B".repeat(200)).build(), "visibleSurfacesMinorDamage", "200 chars"),
+				arguments(TestData.createValidSaveWashingMachineDetailRequest().toBuilder().visibleSurfacesMajorDamage("B".repeat(200)).build(), "visibleSurfacesMajorDamage", "200 chars"),
+				arguments(TestData.createValidSaveWashingMachineDetailRequest().toBuilder().hiddenSurfacesScratchesLength(0).build(), "hiddenSurfacesScratchesLength", 0),
+				arguments(TestData.createValidSaveWashingMachineDetailRequest().toBuilder().hiddenSurfacesScratchesLength(10).build(), "hiddenSurfacesScratchesLength", 10),
+				arguments(TestData.createValidSaveWashingMachineDetailRequest().toBuilder().hiddenSurfacesDentsDepth(0).build(), "hiddenSurfacesDentsDepth", 0),
+				arguments(TestData.createValidSaveWashingMachineDetailRequest().toBuilder().hiddenSurfacesDentsDepth(10).build(), "hiddenSurfacesDentsDepth", 10),
+				arguments(TestData.createValidSaveWashingMachineDetailRequest().toBuilder().hiddenSurfacesMinorDamage("B".repeat(200)).build(), "hiddenSurfacesMinorDamage", "200 chars"),
+				arguments(TestData.createValidSaveWashingMachineDetailRequest().toBuilder().hiddenSurfacesMajorDamage("B".repeat(200)).build(), "hiddenSurfacesMajorDamage", "200 chars"),
+				arguments(TestData.createValidSaveWashingMachineDetailRequest().toBuilder().price(0).build(), "price", 0),
+				arguments(TestData.createValidSaveWashingMachineDetailRequest().toBuilder().repairPrice(0).build(), "repairPrice", 0)
 		);
 	}
 
 	@ParameterizedTest(name = "Validation passes for property {1}, with value {2}")
 	@MethodSource("getValidCreateWashingMachineDetailRequests")
-	void should_PassValidation_When_ProvidedValidCreateWashingMachineDetailRequest(CreateWashingMachineDetailRequest dto, String propertyName, Object validValue) throws Exception {
+	void should_PassValidation_When_ProvidedValidCreateWashingMachineDetailRequest(SaveWashingMachineDetailRequest dto, String propertyName, Object validValue) throws Exception {
 		// GIVEN
-		CreateWashingMachineRequest request = TestData.createWashingMachineRequest().toBuilder().createWashingMachineDetailRequest(dto).build();
+		SaveWashingMachineRequest request = TestData.createSaveWashingMachineRequest().toBuilder().saveWashingMachineDetailRequest(dto).build();
 
 		// WHEN
 		ResultActions resultActions = performRequest(request);
@@ -140,12 +140,12 @@ class SaveValidationMvcTest {
 		resultActions.andExpect(status().isCreated());
 	}
 
-	private ResultActions performRequest(CreateWashingMachineRequest request) throws Exception {
+	private ResultActions performRequest(SaveWashingMachineRequest request) throws Exception {
 		String jsonRequest = jackson.writeValueAsString(request);
 		return mockMvc.perform(
 				multipart("/api/v1/washing-machines/save")
 						.file(new MockMultipartFile( // avoids error Content-Type 'application/octet-stream' is not supported
-								"createWashingMachineRequest",
+								"saveWashingMachineRequest",
 								"I_Don't_Matter",
 								MediaType.APPLICATION_JSON_VALUE,
 								jsonRequest.getBytes())

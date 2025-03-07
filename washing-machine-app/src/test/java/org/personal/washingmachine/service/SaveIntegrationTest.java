@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.personal.washingmachine.BaseIntegrationTest;
 import org.personal.washingmachine.TestData;
-import org.personal.washingmachine.dto.CreateWashingMachineDetailRequest;
-import org.personal.washingmachine.dto.CreateWashingMachineRequest;
+import org.personal.washingmachine.dto.SaveWashingMachineDetailRequest;
+import org.personal.washingmachine.dto.SaveWashingMachineRequest;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.enums.DamageType;
 import org.personal.washingmachine.enums.IdentificationMode;
@@ -53,7 +53,7 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_saveRequest_With_AllPropertiesInDB() {
 			// GIVEN
-			CreateWashingMachineRequest request = new CreateWashingMachineRequest(
+			SaveWashingMachineRequest request = new SaveWashingMachineRequest(
 					"Washing Machine",
 					IdentificationMode.DATA_MATRIX,
 					"WhirlPool",
@@ -62,7 +62,7 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 					"I'm saved",
 					ReturnType.SERVICE,
 					DamageType.IN_USE,
-					new CreateWashingMachineDetailRequest(
+					new SaveWashingMachineDetailRequest(
 							true,
 							false,
 							true,
@@ -100,25 +100,25 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 				assertThat(act.getCreatedAt().toLocalDate()).isEqualTo(LocalDate.now());
 
 				// package
-				assertThat(act.getWashingMachineDetail().getPackageDamage().isPackageDamaged()).isEqualTo(request.createWashingMachineDetailRequest().packageDamaged());
-				assertThat(act.getWashingMachineDetail().getPackageDamage().isPackageDirty()).isEqualTo(request.createWashingMachineDetailRequest().packageDirty());
-				assertThat(act.getWashingMachineDetail().getPackageDamage().isPackageMaterialAvailable()).isEqualTo(request.createWashingMachineDetailRequest().packageMaterialAvailable());
+				assertThat(act.getWashingMachineDetail().getPackageDamage().isPackageDamaged()).isEqualTo(request.saveWashingMachineDetailRequest().packageDamaged());
+				assertThat(act.getWashingMachineDetail().getPackageDamage().isPackageDirty()).isEqualTo(request.saveWashingMachineDetailRequest().packageDirty());
+				assertThat(act.getWashingMachineDetail().getPackageDamage().isPackageMaterialAvailable()).isEqualTo(request.saveWashingMachineDetailRequest().packageMaterialAvailable());
 
 				// visible surfaces
-				assertThat(act.getWashingMachineDetail().getVisibleSurfaceDamage().getVisibleSurfacesScratchesLength()).isEqualTo(request.createWashingMachineDetailRequest().visibleSurfacesScratchesLength());
-				assertThat(act.getWashingMachineDetail().getVisibleSurfaceDamage().getVisibleSurfacesDentsDepth()).isEqualTo(request.createWashingMachineDetailRequest().visibleSurfacesDentsDepth());
-				assertThat(act.getWashingMachineDetail().getVisibleSurfaceDamage().getVisibleSurfacesMinorDamage()).isEqualTo(request.createWashingMachineDetailRequest().visibleSurfacesMinorDamage());
-				assertThat(act.getWashingMachineDetail().getVisibleSurfaceDamage().getVisibleSurfacesMajorDamage()).isEqualTo(request.createWashingMachineDetailRequest().visibleSurfacesMajorDamage());
+				assertThat(act.getWashingMachineDetail().getVisibleSurfaceDamage().getVisibleSurfacesScratchesLength()).isEqualTo(request.saveWashingMachineDetailRequest().visibleSurfacesScratchesLength());
+				assertThat(act.getWashingMachineDetail().getVisibleSurfaceDamage().getVisibleSurfacesDentsDepth()).isEqualTo(request.saveWashingMachineDetailRequest().visibleSurfacesDentsDepth());
+				assertThat(act.getWashingMachineDetail().getVisibleSurfaceDamage().getVisibleSurfacesMinorDamage()).isEqualTo(request.saveWashingMachineDetailRequest().visibleSurfacesMinorDamage());
+				assertThat(act.getWashingMachineDetail().getVisibleSurfaceDamage().getVisibleSurfacesMajorDamage()).isEqualTo(request.saveWashingMachineDetailRequest().visibleSurfacesMajorDamage());
 
 				// hidden surfaces
-				assertThat(act.getWashingMachineDetail().getHiddenSurfaceDamage().getHiddenSurfacesScratchesLength()).isEqualTo(request.createWashingMachineDetailRequest().hiddenSurfacesScratchesLength());
-				assertThat(act.getWashingMachineDetail().getHiddenSurfaceDamage().getHiddenSurfacesDentsDepth()).isEqualTo(request.createWashingMachineDetailRequest().hiddenSurfacesDentsDepth());
-				assertThat(act.getWashingMachineDetail().getHiddenSurfaceDamage().getHiddenSurfacesMinorDamage()).isEqualTo(request.createWashingMachineDetailRequest().hiddenSurfacesMinorDamage());
-				assertThat(act.getWashingMachineDetail().getHiddenSurfaceDamage().getHiddenSurfacesMajorDamage()).isEqualTo(request.createWashingMachineDetailRequest().hiddenSurfacesMajorDamage());
+				assertThat(act.getWashingMachineDetail().getHiddenSurfaceDamage().getHiddenSurfacesScratchesLength()).isEqualTo(request.saveWashingMachineDetailRequest().hiddenSurfacesScratchesLength());
+				assertThat(act.getWashingMachineDetail().getHiddenSurfaceDamage().getHiddenSurfacesDentsDepth()).isEqualTo(request.saveWashingMachineDetailRequest().hiddenSurfacesDentsDepth());
+				assertThat(act.getWashingMachineDetail().getHiddenSurfaceDamage().getHiddenSurfacesMinorDamage()).isEqualTo(request.saveWashingMachineDetailRequest().hiddenSurfacesMinorDamage());
+				assertThat(act.getWashingMachineDetail().getHiddenSurfaceDamage().getHiddenSurfacesMajorDamage()).isEqualTo(request.saveWashingMachineDetailRequest().hiddenSurfacesMajorDamage());
 
 				// pricing
-				assertThat(act.getWashingMachineDetail().getCostAssessment().getPrice()).isEqualTo(request.createWashingMachineDetailRequest().price());
-				assertThat(act.getWashingMachineDetail().getCostAssessment().getRepairPrice()).isEqualTo(request.createWashingMachineDetailRequest().repairPrice());
+				assertThat(act.getWashingMachineDetail().getCostAssessment().getPrice()).isEqualTo(request.saveWashingMachineDetailRequest().price());
+				assertThat(act.getWashingMachineDetail().getCostAssessment().getRepairPrice()).isEqualTo(request.saveWashingMachineDetailRequest().repairPrice());
 
 				// images
 				assertThat(act.getWashingMachineImages()).hasSize(1);
@@ -134,10 +134,10 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 			// GIVEN
 			// WHEN
 			ResultActions resultActions = performRequest(
-					TestData.createWashingMachineRequest().toBuilder()
+					TestData.createSaveWashingMachineRequest().toBuilder()
 							.serialNumber("I'm ready to be saved in DB")
-							.createWashingMachineDetailRequest(
-									TestData.createValidWashingMachineDetailRequest().toBuilder()
+							.saveWashingMachineDetailRequest(
+									TestData.createValidSaveWashingMachineDetailRequest().toBuilder()
 											.packageDirty(true)
 											.build())
 							.build()
@@ -152,10 +152,10 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ThrowCustomException_When_SerialNumberAlreadyTaken() throws Exception {
 			// GIVEN
-			CreateWashingMachineRequest request = TestData.createWashingMachineRequest().toBuilder()
+			SaveWashingMachineRequest request = TestData.createSaveWashingMachineRequest().toBuilder()
 					.serialNumber("I already exist in DB")
-					.createWashingMachineDetailRequest(
-							TestData.createValidWashingMachineDetailRequest().toBuilder()
+					.saveWashingMachineDetailRequest(
+							TestData.createValidSaveWashingMachineDetailRequest().toBuilder()
 									.packageDamaged(true)
 									.build())
 					.build();
@@ -171,12 +171,12 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 					.andExpect(content().string(not(containsString("Internal Translation Error"))));
 		}
 
-		private ResultActions performRequest(CreateWashingMachineRequest request) throws Exception {
+		private ResultActions performRequest(SaveWashingMachineRequest request) throws Exception {
 			String jsonRequest = jackson.writeValueAsString(request);
 			return mockMvc.perform(
 					multipart("/api/v1/washing-machines/save")
 							.file(new MockMultipartFile( // avoids error Content-Type 'application/octet-stream' is not supported
-									"createWashingMachineRequest",
+									"saveWashingMachineRequest",
 									"I_Don't_Matter",
 									MediaType.APPLICATION_JSON_VALUE,
 									jsonRequest.getBytes())

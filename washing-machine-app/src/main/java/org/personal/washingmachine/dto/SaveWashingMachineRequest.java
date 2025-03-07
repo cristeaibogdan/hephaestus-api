@@ -9,7 +9,7 @@ import org.personal.washingmachine.enums.IdentificationMode;
 import org.personal.washingmachine.enums.ReturnType;
 
 @Builder(toBuilder = true)
-public record CreateWashingMachineRequest(
+public record SaveWashingMachineRequest(
 		@NotBlank(message = "{FIELD_NOT_BLANK}")
 		String category,
 		@NotNull(message = "{FIELD_NOT_NULL}")
@@ -30,5 +30,5 @@ public record CreateWashingMachineRequest(
 		DamageType damageType,
 
 		@Valid @NotNull(message = "{FIELD_NOT_NULL}")
-		CreateWashingMachineDetailRequest createWashingMachineDetailRequest
+		SaveWashingMachineDetailRequest saveWashingMachineDetailRequest
 ) { }

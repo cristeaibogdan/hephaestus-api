@@ -1,6 +1,6 @@
 package org.personal.washingmachine.mapper;
 
-import org.personal.washingmachine.dto.CreateWashingMachineDetailRequest;
+import org.personal.washingmachine.dto.SaveWashingMachineDetailRequest;
 import org.personal.washingmachine.dto.GetWashingMachineDetailResponse;
 import org.personal.washingmachine.entity.WashingMachineDetail;
 import org.personal.washingmachine.entity.embedded.CostAssessment;
@@ -44,7 +44,7 @@ public final class WashingMachineDetailMapper {
 		);
 	}
 
-	public WashingMachineDetail toEntity(CreateWashingMachineDetailRequest dto) {
+	public WashingMachineDetail toEntity(SaveWashingMachineDetailRequest dto) {
 		return new WashingMachineDetail(
 				new PackageDamage(
 						dto.packageDamaged(),
