@@ -41,20 +41,6 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 	@Autowired WashingMachineApplicationService underTest;
 	@Autowired WashingMachineRepository repository;
 
-	SearchWashingMachineRequest searchWashingMachineRequest = new SearchWashingMachineRequest(
-			0,
-			2,
-			null,
-			null,
-			null,
-			null,
-			null,
-			null,
-			null,
-			null,
-			null
-	);
-
 	@BeforeEach
 	void checkNoDataInDB() {
 		assertThat(repository.count()).isZero();
@@ -96,7 +82,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 
 			// WHEN
 			Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(
-					searchWashingMachineRequest.toBuilder()
+					TestData.createSearchWashingMachineRequest().toBuilder()
 							.pageIndex(0)
 							.pageSize(1)
 							.serialNumber("serial10")
@@ -121,7 +107,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 
 			// WHEN
 			Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(
-					searchWashingMachineRequest.toBuilder()
+					TestData.createSearchWashingMachineRequest().toBuilder()
 							.pageIndex(0)
 							.pageSize(3)
 							.build()
@@ -145,7 +131,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 
 			// WHEN
 			Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(
-					searchWashingMachineRequest.toBuilder()
+					TestData.createSearchWashingMachineRequest().toBuilder()
 							.pageIndex(0)
 							.pageSize(4)
 							.manufacturer(manufacturer)
@@ -172,7 +158,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 
 			// WHEN
 			Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(
-					searchWashingMachineRequest.toBuilder()
+					TestData.createSearchWashingMachineRequest().toBuilder()
 							.pageIndex(0)
 							.pageSize(4)
 							.damageType(damageType)
@@ -201,7 +187,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 
 			// WHEN
 			Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(
-					searchWashingMachineRequest.toBuilder()
+					TestData.createSearchWashingMachineRequest().toBuilder()
 							.pageIndex(0)
 							.pageSize(6)
 							.returnType(returnType)
@@ -228,7 +214,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 
 			// WHEN
 			Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(
-					searchWashingMachineRequest.toBuilder()
+					TestData.createSearchWashingMachineRequest().toBuilder()
 							.pageIndex(0)
 							.pageSize(4)
 							.identificationMode(identificationMode)
@@ -253,7 +239,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 
 			// WHEN
 			Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(
-					searchWashingMachineRequest.toBuilder()
+					TestData.createSearchWashingMachineRequest().toBuilder()
 							.pageIndex(0)
 							.pageSize(4)
 							.serialNumber(serialNumber)
@@ -281,7 +267,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 
 			// WHEN
 			Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(
-					searchWashingMachineRequest.toBuilder()
+					TestData.createSearchWashingMachineRequest().toBuilder()
 							.pageIndex(0)
 							.pageSize(5)
 							.model(model)
@@ -309,7 +295,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 
 			// WHEN
 			Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(
-					searchWashingMachineRequest.toBuilder()
+					TestData.createSearchWashingMachineRequest().toBuilder()
 							.pageIndex(0)
 							.pageSize(5)
 							.type(type)
@@ -342,7 +328,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 
 			// WHEN
 			Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(
-					searchWashingMachineRequest.toBuilder()
+					TestData.createSearchWashingMachineRequest().toBuilder()
 							.pageIndex(0)
 							.pageSize(10)
 							.recommendation(recommendation)
@@ -367,7 +353,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 
 			// WHEN
 			Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(
-					searchWashingMachineRequest.toBuilder()
+					TestData.createSearchWashingMachineRequest().toBuilder()
 							.pageIndex(0)
 							.pageSize(5)
 							.build()
@@ -393,7 +379,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 
 			// WHEN
 			Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(
-					searchWashingMachineRequest.toBuilder()
+					TestData.createSearchWashingMachineRequest().toBuilder()
 							.pageIndex(0)
 							.pageSize(4)
 							.manufacturer("WhirL")
@@ -430,7 +416,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 
 			// WHEN
 			Page<GetWashingMachineSimpleResponse> actual = underTest.loadPaginatedAndFiltered(
-					searchWashingMachineRequest.toBuilder()
+					TestData.createSearchWashingMachineRequest().toBuilder()
 							.pageIndex(0)
 							.pageSize(3)
 							.identificationMode(IdentificationMode.QR_CODE)
@@ -462,7 +448,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 			// GIVEN
 			// WHEN
 			ResultActions resultActions = performRequest(
-					searchWashingMachineRequest.toBuilder()
+					TestData.createSearchWashingMachineRequest().toBuilder()
 							.createdAt("invalid date")
 							.build()
 			);
@@ -482,7 +468,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 
 			// WHEN
 			ResultActions resultActions = performRequest(
-					searchWashingMachineRequest.toBuilder()
+					TestData.createSearchWashingMachineRequest().toBuilder()
 							.pageIndex(0)
 							.pageSize(1)
 							.serialNumber("serial8")

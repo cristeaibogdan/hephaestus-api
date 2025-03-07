@@ -3,6 +3,7 @@ package org.personal.washingmachine.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.personal.shared.clients.ProductClient;
+import org.personal.washingmachine.TestData;
 import org.personal.washingmachine.dto.SearchWashingMachineRequest;
 import org.personal.washingmachine.mapper.WashingMachineImageMapper;
 import org.personal.washingmachine.mapper.WashingMachineMapper;
@@ -32,26 +33,12 @@ class LoadPaginatedAndFilteredValidationMvcTest {
 	@MockBean WashingMachineMapper washingMachineMapper;
 	@MockBean ProductClient productClient; //TODO: To be deleted
 
-	SearchWashingMachineRequest searchWashingMachineRequest = new SearchWashingMachineRequest(
-			0,
-			2,
-			null,
-			null,
-			null,
-			null,
-			null,
-			null,
-			null,
-			null,
-			null
-	);
-
 	@Test
 	void should_ThrowValidationException_When_PageIndexIsNegative() throws Exception {
 		// GIVEN
 		// WHEN
 		ResultActions resultActions = performRequest(
-				searchWashingMachineRequest.toBuilder()
+				TestData.createSearchWashingMachineRequest().toBuilder()
 						.pageIndex(-1)
 						.pageSize(1)
 						.build()
@@ -69,7 +56,7 @@ class LoadPaginatedAndFilteredValidationMvcTest {
 		// GIVEN
 		// WHEN
 		ResultActions resultActions = performRequest(
-				searchWashingMachineRequest.toBuilder()
+				TestData.createSearchWashingMachineRequest().toBuilder()
 						.pageIndex(0)
 						.pageSize(0)
 						.build()

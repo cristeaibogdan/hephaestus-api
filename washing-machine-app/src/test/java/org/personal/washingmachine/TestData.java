@@ -2,6 +2,7 @@ package org.personal.washingmachine;
 
 import org.personal.washingmachine.dto.SaveWashingMachineDetailRequest;
 import org.personal.washingmachine.dto.SaveWashingMachineRequest;
+import org.personal.washingmachine.dto.SearchWashingMachineRequest;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineDetail;
 import org.personal.washingmachine.entity.embedded.CostAssessment;
@@ -59,6 +60,22 @@ public class TestData {
 						0,
 						0
 				)
+		);
+	}
+
+	public static SearchWashingMachineRequest createSearchWashingMachineRequest() {
+		return new SearchWashingMachineRequest(
+				0,
+				2,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null
 		);
 	}
 
