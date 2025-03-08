@@ -1,10 +1,10 @@
 package org.personal.solarpanel.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.personal.solarpanel.BaseIntegrationTest;
+import org.personal.solarpanel.TestData;
 import org.personal.solarpanel.dto.SaveSolarPanelDamageRequest;
 import org.personal.solarpanel.dto.SaveSolarPanelRequest;
 import org.personal.solarpanel.entity.SolarPanel;
@@ -75,20 +75,9 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnCurrentDate_For_createdAtField() {
 			// GIVEN
-			SaveSolarPanelRequest request = new SaveSolarPanelRequest(
-					"Solar Panel",
-					"Tesla",
-					"model1",
-					"type2",
-					"date-test",
-					new SaveSolarPanelDamageRequest(
-							true,
-							false,
-							true,
-							false,
-							"blue paint was thrown on half the panel"
-					)
-			);
+			SaveSolarPanelRequest request = TestData.createSaveSolarPanelRequest().toBuilder()
+					.serialNumber("date-test")
+					.build();
 
 			// WHEN
 			underTest.save(request);
@@ -106,27 +95,10 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnStatusCreated_When_DTOSaved() throws Exception {
 			// GIVEN
-			SaveSolarPanelRequest request = new SaveSolarPanelRequest(
-					"Solar Panel",
-					"Tesla",
-					"model1",
-					"type2",
-					"status-test",
-					new SaveSolarPanelDamageRequest(
-							true,
-							false,
-							true,
-							false,
-							"blue paint was thrown on half the panel"
-					)
-			);
+			SaveSolarPanelRequest request = TestData.createSaveSolarPanelRequest();
 
 			// WHEN
-			ResultActions resultActions = mockMvc.perform(
-					post("/v1/solar-panels/save")
-							.content(jackson.writeValueAsString(request))
-							.contentType(MediaType.APPLICATION_JSON)
-			);
+			ResultActions resultActions = performRequest(request);
 
 			// THEN
 			resultActions.andExpect(status().isCreated())
@@ -136,38 +108,27 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ThrowCustomException_When_SerialNumberAlreadyTaken() throws Exception {
 			// GIVEN
-			SaveSolarPanelRequest request = new SaveSolarPanelRequest(
-					"Solar Panel",
-					"Tesla",
-					"model1",
-					"type2",
-					"duplicated serialNumber",
-					new SaveSolarPanelDamageRequest(
-							true,
-							false,
-							true,
-							false,
-							"blue paint was thrown on half the panel"
-					)
-			);
+			SaveSolarPanelRequest request = TestData.createSaveSolarPanelRequest().toBuilder()
+					.serialNumber("duplicated serialNumber")
+					.build();
 
-			mockMvc.perform(
-					post("/v1/solar-panels/save")
-							.content(jackson.writeValueAsString(request))
-							.contentType(MediaType.APPLICATION_JSON)
-			);
+			performRequest(request);
 
 			// WHEN
-			ResultActions resultActions = mockMvc.perform(
-					post("/v1/solar-panels/save")
-							.content(jackson.writeValueAsString(request))
-							.contentType(MediaType.APPLICATION_JSON)
-			);
+			ResultActions resultActions = performRequest(request);
 
 			// THEN
 			resultActions.andExpect(status().isConflict())
 					.andExpect(content().string(not(containsString("Internal Translation Error"))));
 		}
+	}
+
+	private ResultActions performRequest(SaveSolarPanelRequest request) throws Exception {
+		return mockMvc.perform(
+				post("/v1/solar-panels/save")
+						.content(jackson.writeValueAsString(request))
+						.contentType(MediaType.APPLICATION_JSON)
+		);
 	}
 
 }
