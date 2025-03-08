@@ -5,7 +5,7 @@ import org.personal.solarpanel.dto.SaveSolarPanelRequest;
 
 public class TestData {
 
-	public static SaveSolarPanelRequest createSaveSolarPanelRequest() {
+	public static SaveSolarPanelRequest createValidSaveSolarPanelRequest() {
 		return new SaveSolarPanelRequest(
 				"Solar Panel",
 				"defaultManufacturer",
@@ -13,7 +13,7 @@ public class TestData {
 				"defaultType",
 				"defaultSeriaL",
 				new SaveSolarPanelDamageRequest(
-						false,
+						true, // so no recommendation exception is thrown
 						false,
 						false,
 						false,

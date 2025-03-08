@@ -75,7 +75,7 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnCurrentDate_For_createdAtField() {
 			// GIVEN
-			SaveSolarPanelRequest request = TestData.createSaveSolarPanelRequest().toBuilder()
+			SaveSolarPanelRequest request = TestData.createValidSaveSolarPanelRequest().toBuilder()
 					.serialNumber("date-test")
 					.build();
 
@@ -95,7 +95,7 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnStatusCreated_When_DTOSaved() throws Exception {
 			// GIVEN
-			SaveSolarPanelRequest request = TestData.createSaveSolarPanelRequest();
+			SaveSolarPanelRequest request = TestData.createValidSaveSolarPanelRequest();
 
 			// WHEN
 			ResultActions resultActions = performRequest(request);
@@ -108,7 +108,7 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ThrowCustomException_When_SerialNumberAlreadyTaken() throws Exception {
 			// GIVEN
-			SaveSolarPanelRequest request = TestData.createSaveSolarPanelRequest().toBuilder()
+			SaveSolarPanelRequest request = TestData.createValidSaveSolarPanelRequest().toBuilder()
 					.serialNumber("duplicated serialNumber")
 					.build();
 

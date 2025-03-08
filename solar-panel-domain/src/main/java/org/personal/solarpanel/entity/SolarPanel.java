@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.personal.solarpanel.enums.Recommendation;
 
 import java.time.LocalDateTime;
 
@@ -36,7 +37,11 @@ public class SolarPanel extends BaseEntity {
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
 
-	@Getter(NONE)
+	@Setter(NONE)
+	@Column(name = "recommendation")
+	private Recommendation recommendation;
+
+	@Getter(NONE) @Setter(NONE)
 	@JoinColumn(name = "damage_id")
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Damage damage;
@@ -48,9 +53,15 @@ public class SolarPanel extends BaseEntity {
 		this.type = type;
 		this.serialNumber = serialNumber;
 		this.damage = damage;
+		this.recommendation = this.damage.calculate();
 	}
 
 	public Damage getDamage() {
 		return new Damage(this.damage);
+	}
+
+	public void setDamage(Damage damage) {
+		this.damage = new Damage(damage);
+		this.recommendation = this.damage.calculate();
 	}
 }

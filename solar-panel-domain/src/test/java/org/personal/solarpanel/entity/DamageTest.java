@@ -26,7 +26,7 @@ class DamageTest {
 	}
 
 	@Test
-	void should_ReturnRepair_When_OneDamageFlagsIsTrue() {
+	void should_ReturnRepair_When_OneDamageFlagIsTrue() {
 		// GIVEN
 		Damage damage = new Damage(
 				true,

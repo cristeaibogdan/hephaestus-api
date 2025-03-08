@@ -92,3 +92,59 @@ D. Business rule changed:
         default -> throw new CustomException("Invalid recommendation issued", ErrorCode.GENERAL);
     6. ALL TESTS PASS
     7. Remove NONE from the recommendation enum
+
+E. Create another field in SolarPanel called Recommendation which will be assigned based on Damage.calculate()
+
+    1. Create SolarPanelTest class
+    2. Create test should_ReturnRecommendationRepair_When_OneDamageFlagIsTrue
+    3. Create an instance of SolarPanel in GIVEN with one boolean from Damage set to true
+    4. In WHEN type solarPanel.getRecommendation()
+    5. TEST FAILS as no method exists
+
+    6. Create property recommendation on SolarPanel:
+        	@Setter(NONE)
+        	@Column(name = "recommendation")
+        	private Recommendation recommendation;
+    7. TEST PASSES
+
+    8. Extract getRecommendation into a local variable called actual
+    9. In THEN part write: assertThat(actual).isEqualTo(Recommendation.REPAIR);
+    10. TEST FAILS as it returns null
+
+    11. In SolarPanel constructor add: this.recommendation = this.damage.calculate();
+    12. TEST PASSES
+
+    13. Copy previous test and rename to should_ReturnRecommendationDispose_When_AllDamageFlagsAreTrue
+    14. Change THEN to Recommendation.DISPOSE
+    15. TEST PASSES
+
+    16. Copy previous test and rename to should_ReturnRecommendationRecycle_When_DamageIsModifiedWithSetter
+    17. In GIVEN leave only one flag to true
+    18. In WHEN write:
+		solarPanel.setDamage(new Damage(
+				true,
+				true,
+				true,
+				false,
+				""
+		));
+    19. TEST FAILS, as no setDamage exists
+    20. ALT + ENTER to create the method in SolarPanel. Also add @Setter(NONE) on Damage
+    21. In THEN change Recommendation.RECYCLE
+    22. TEST FAILS, as the setter method doesn't do anything.
+    23. In SolarPanel modify the set to create a defensive copy first:
+        public void setDamage(Damage damage) {
+            this.damage = new Damage(damage);
+        }
+    24. In SolarPanel modify the set to also update the recommendation field:
+        	public void setDamage(Damage damage) {
+        		this.damage = new Damage(damage);
+        		this.recommendation = this.damage.calculate();
+        	}
+    25. ALL UNIT TESTS PASS
+
+    26. However, since we introduced a Exception in Damage, all our integration tests now fail.
+    In order to fix, we need to go to TestData and change to true one boolean flag,
+    and also rename the method to createValidSaveSolarPanelRequest
+    27. ALL TESTS PASS
+
