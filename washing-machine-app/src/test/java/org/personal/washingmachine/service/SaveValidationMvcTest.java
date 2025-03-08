@@ -40,26 +40,23 @@ class SaveValidationMvcTest {
 	@MockBean WashingMachineReportGenerator reportGenerator;
 	@MockBean ProductClient productClient; //TODO: To be deleted
 
-	static Stream<Arguments> getInvalidCreateWashingMachineRequests() {
+	static Stream<Arguments> getInvalidCreateWashingMachineRequestsWithNullValues() {
 		return Stream.of(
-				arguments(TestData.createSaveWashingMachineRequest().toBuilder().category(null).build(), "category", null),
-				arguments(TestData.createSaveWashingMachineRequest().toBuilder().category("  ").build(), "category", " (blank string) "),
-				arguments(TestData.createSaveWashingMachineRequest().toBuilder().identificationMode(null).build(), "identificationMode", null),
-				arguments(TestData.createSaveWashingMachineRequest().toBuilder().manufacturer(null).build(), "manufacturer", null),
-				arguments(TestData.createSaveWashingMachineRequest().toBuilder().manufacturer("  ").build(), "manufacturer", " (blank string) "),
-				arguments(TestData.createSaveWashingMachineRequest().toBuilder().model(null).build(), "model", null),
-				arguments(TestData.createSaveWashingMachineRequest().toBuilder().type(null).build(), "type", null),
-				arguments(TestData.createSaveWashingMachineRequest().toBuilder().serialNumber(null).build(), "serialNumber", null),
-				arguments(TestData.createSaveWashingMachineRequest().toBuilder().serialNumber("  ").build(), "serialNumber", " (blank string) "),
-				arguments(TestData.createSaveWashingMachineRequest().toBuilder().returnType(null).build(), "returnType", null),
-				arguments(TestData.createSaveWashingMachineRequest().toBuilder().damageType(null).build(), "damageType", null),
-				arguments(TestData.createSaveWashingMachineRequest().toBuilder().saveWashingMachineDetailRequest(null).build(), "saveWashingMachineDetailRequest", null)
+				arguments(TestData.createSaveWashingMachineRequest().toBuilder().category(null).build(), "category"),
+				arguments(TestData.createSaveWashingMachineRequest().toBuilder().identificationMode(null).build(), "identificationMode"),
+				arguments(TestData.createSaveWashingMachineRequest().toBuilder().manufacturer(null).build(), "manufacturer"),
+				arguments(TestData.createSaveWashingMachineRequest().toBuilder().model(null).build(), "model"),
+				arguments(TestData.createSaveWashingMachineRequest().toBuilder().type(null).build(), "type"),
+				arguments(TestData.createSaveWashingMachineRequest().toBuilder().serialNumber(null).build(), "serialNumber"),
+				arguments(TestData.createSaveWashingMachineRequest().toBuilder().returnType(null).build(), "returnType"),
+				arguments(TestData.createSaveWashingMachineRequest().toBuilder().damageType(null).build(), "damageType"),
+				arguments(TestData.createSaveWashingMachineRequest().toBuilder().saveWashingMachineDetailRequest(null).build(), "saveWashingMachineDetailRequest")
 		);
 	}
 
-	@ParameterizedTest(name = "Validation fails for property {1}, with value {2}")
-	@MethodSource("getInvalidCreateWashingMachineRequests")
-	void should_ThrowValidationException_When_ProvidedInvalidCreateWashingMachineRequest(SaveWashingMachineRequest request, String propertyName, Object invalidValue) throws Exception {
+	@ParameterizedTest(name = "Validation fails for property {1}, with value null")
+	@MethodSource("getInvalidCreateWashingMachineRequestsWithNullValues")
+	void should_ThrowValidationException_When_SaveWashingMachineRequestPropertyIsNull(SaveWashingMachineRequest request, String propertyName) throws Exception {
 		// GIVEN
 		// WHEN
 		ResultActions resultActions = performRequest(request);
@@ -69,6 +66,28 @@ class SaveValidationMvcTest {
 				.andExpect(status().isBadRequest())
 				.andExpect(content().string(containsString(propertyName)));
 	}
+
+	static Stream<Arguments> getInvalidCreateWashingMachineRequestsWithBlankValues() {
+		return Stream.of(
+				arguments(TestData.createSaveWashingMachineRequest().toBuilder().category("  ").build(), "category"),
+				arguments(TestData.createSaveWashingMachineRequest().toBuilder().manufacturer("  ").build(), "manufacturer"),
+				arguments(TestData.createSaveWashingMachineRequest().toBuilder().serialNumber("  ").build(), "serialNumber")
+		);
+	}
+
+	@ParameterizedTest(name = "Validation fails for property {1}, with value (blank string)")
+	@MethodSource("getInvalidCreateWashingMachineRequestsWithBlankValues")
+	void should_ThrowValidationException_When_SaveWashingMachineRequestPropertyIsBlank(SaveWashingMachineRequest request, String propertyName) throws Exception {
+		// GIVEN
+		// WHEN
+		ResultActions resultActions = performRequest(request);
+
+		// THEN
+		resultActions
+				.andExpect(status().isBadRequest())
+				.andExpect(content().string(containsString(propertyName)));
+	}
+
 
 	static Stream<Arguments> getInvalidCreateWashingMachineDetailRequests() {
 		return Stream.of(
