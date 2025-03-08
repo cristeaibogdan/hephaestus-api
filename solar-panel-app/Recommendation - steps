@@ -78,3 +78,17 @@ C. Refactor logic
         		return result;
         	}
     5. ALL TEST PASS
+
+D. Business rule changed:
+    There should be no NONE recommendation, an exception should be thrown.
+    1. Rename test should_ReturnNone_When_NoDamage to should_ThrowException_When_NoDamage
+    2. Delete WHEN and THEN
+    3. In THEN write:
+        assertThatThrownBy(() -> damage.calculate())
+        				.isInstanceOf(CustomException.class);
+    4. TEST FAILS, as nothing is thrown, the code return Recommendation.NONE
+
+    5. In Damage.getRecommendation replace default case with:
+        default -> throw new CustomException("Invalid recommendation issued", ErrorCode.GENERAL);
+    6. ALL TESTS PASS
+    7. Remove NONE from the recommendation enum

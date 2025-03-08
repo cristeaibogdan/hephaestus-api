@@ -8,7 +8,6 @@ package org.personal.solarpanel.enums;
  */
 
 public enum Recommendation {
-	NONE,
 	REPAIR,
 	RECYCLE,
 	DISPOSE

@@ -6,6 +6,8 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.personal.shared.exception.CustomException;
+import org.personal.shared.exception.ErrorCode;
 import org.personal.solarpanel.enums.Recommendation;
 
 import static lombok.AccessLevel.PROTECTED;
@@ -69,7 +71,7 @@ public class Damage extends BaseEntity {
 			case 1, 2 -> Recommendation.REPAIR;
 			case 3 -> Recommendation.RECYCLE;
 			case 4 -> Recommendation.DISPOSE;
-			default -> Recommendation.NONE;
+			default -> throw new CustomException("Invalid recommendation issued", ErrorCode.GENERAL);
 		};
 	}
 }

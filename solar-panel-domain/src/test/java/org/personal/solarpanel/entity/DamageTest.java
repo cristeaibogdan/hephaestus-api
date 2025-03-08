@@ -1,14 +1,16 @@
 package org.personal.solarpanel.entity;
 
 import org.junit.jupiter.api.Test;
+import org.personal.shared.exception.CustomException;
 import org.personal.solarpanel.enums.Recommendation;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class DamageTest {
 
 	@Test
-	void should_ReturnNone_When_NoDamage() {
+	void should_ThrowException_When_NoDamage() {
 		// GIVEN
 		Damage damage = new Damage(
 				false,
@@ -18,10 +20,9 @@ class DamageTest {
 				""
 		);
 		// WHEN
-		Recommendation actual = damage.calculate();
-
 		// THEN
-		assertThat(actual).isEqualTo(Recommendation.NONE);
+		assertThatThrownBy(() -> damage.calculate())
+				.isInstanceOf(CustomException.class);
 	}
 
 	@Test
