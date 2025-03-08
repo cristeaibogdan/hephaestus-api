@@ -6,6 +6,7 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.personal.solarpanel.enums.Recommendation;
 
 import static lombok.AccessLevel.PROTECTED;
 
@@ -47,5 +48,28 @@ public class Damage extends BaseEntity {
 				damage.brokenGlass,
 				damage.additionalDetails
 		);
+	}
+
+	public Recommendation calculate() {
+		int count = countFlags();
+		return getRecommendation(count);
+	}
+
+	private int countFlags(){
+		int result = 0;
+		if (this.hotSpots) { result++; }
+		if (this.microCracks) { result++; }
+		if (this.snailTrails) { result++; }
+		if (this.brokenGlass) { result++; }
+		return result;
+	}
+
+	private Recommendation getRecommendation(int count) {
+		return switch (count) {
+			case 1, 2 -> Recommendation.REPAIR;
+			case 3 -> Recommendation.RECYCLE;
+			case 4 -> Recommendation.DISPOSE;
+			default -> Recommendation.NONE;
+		};
 	}
 }

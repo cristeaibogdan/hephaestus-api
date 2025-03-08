@@ -1,0 +1,80 @@
+Create a method that returns a recommendation based on the properties of the Damage class:
+
+NONE => if all booleans are false and details are ""
+REPAIR => one or two booleans are true
+RECYCLE => three booleans are true
+DISPOSE => all booleans are true
+
+A. Setup
+    1. Copy-paste recommendation enum from washing-machine-app module
+    2. Leave only the following values = NONE, REPAIR, RECYCLE, DISPOSE
+
+B. Tests
+    1. Create DamageTest class in solar-panel-domain module
+    2. Create method should_ReturnNone_When_NoDamage()
+    3. In GIVEN instantiate Damage with all args constructor and set false and empty string for properties
+    4. In WHEN part write damage.calculate();
+    5. TEST FAILS as the method does not exist;
+    6. ALT + ENTER to create the method.
+    7. TEST PASSES
+
+    8. Store the method's return in a Recommendation => Recommendation actual = damage.calculate();
+    9. TEST FAILS as the method currently returns void
+    10. ALT + ENTER to change the return type
+    11. TEST PASSES
+
+    13. In THEN write assertThat(actual).isEqualTo(Recommendation.NONE);
+    14. TEST FAILS as the method returns null
+    15. In Damage.calculate() change the return type from null to Recommendation.NONE
+    16. TEST PASSES
+
+    17. Copy paste previous test and rename to should_ReturnRepair_When_OneDamageFlagsIsTrue
+    18. In GIVEN set hotSpots to true
+    19. In THEN change the equal part to Recommendation.REPAIR
+    20. TEST FAILS, as the damage.calculate() method always returns Recommendation.NONE
+    21. In calculate() count the booleans, and if the total number of true is 1 return Recommendation.REPAIR
+    22. TEST PASSES
+
+    23. Copy paste previous test and rename to should_ReturnRepair_When_TwoDamageFlagsAreTrue
+    24. In GIVEN set hotSpots and microCracks to true
+    25. TEST FAILS, as recommendation is NONE
+    26. Add another if statement where count == 2 returns REPAIR
+    27. TEST PASSES
+
+    28. Copy paste previous test and rename to should_ReturnRecycle_When_ThreeDamageFlagsAreTrue
+    29. In GIVEN set hotSpots, microCracks and snailTrails to true
+    30. In THEN change Recommendation to RECYCLE
+    31. TEST FAILS, as the returned recommendation is NONE
+    32. Open Damage.calculate() and add another if == 3 and return RECYCLE
+    33. TEST PASSES
+
+    34. Copy paste previous test and rename to should_ReturnDispose_When_AllDamageFlagsAreTrue
+    35. In GIVEN set all booleans to true
+    36. In THEN change Recommendation to DISPOSE
+    37. TEST FAILS, as the returned recommendation is NONE
+    38. Open Damage.calculate() and add another if == 4 and return DISPOSE
+    39. TEST PASSES
+
+C. Refactor logic
+    1. In Damage.calculate() extract all the ifs and the recommendation into a switch method
+    2. The following method is the result:
+        	private Recommendation getRecommendation(int count) {
+        		return switch (count) {
+        			case 1, 2 -> Recommendation.REPAIR;
+        			case 3 -> Recommendation.RECYCLE;
+        			case 4 -> Recommendation.DISPOSE;
+        			default -> Recommendation.NONE;
+        		};
+        	}
+    3. ALL TEST PASS
+
+    4. Extract all the if's to a separate method that counts the booleans:
+        	private int countFlags(){
+        		int result = 0;
+        		if (this.hotSpots) { result++; }
+        		if (this.microCracks) { result++; }
+        		if (this.snailTrails) { result++; }
+        		if (this.brokenGlass) { result++; }
+        		return result;
+        	}
+    5. ALL TEST PASS
