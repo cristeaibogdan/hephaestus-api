@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
 import org.personal.solarpanel.dto.SaveSolarPanelRequest;
-import org.personal.solarpanel.entity.Damage;
 import org.personal.solarpanel.entity.SolarPanel;
+import org.personal.solarpanel.mapper.SolarPanelMapper;
 import org.personal.solarpanel.repository.SolarPanelRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,23 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class SolarPanelApplicationService implements ISolarPanelApplicationService {
 
 	private final SolarPanelRepository repository;
+	private final SolarPanelMapper mapper;
 
 	@Override
 	public void save(SaveSolarPanelRequest request) {
-		SolarPanel solarPanel = new SolarPanel(
-				request.category(),
-				request.manufacturer(),
-				request.model(),
-				request.type(),
-				request.serialNumber(),
-				new Damage(
-						request.saveSolarPanelDamageRequest().hotSpots(),
-						request.saveSolarPanelDamageRequest().microCracks(),
-						request.saveSolarPanelDamageRequest().snailTrails(),
-						request.saveSolarPanelDamageRequest().brokenGlass(),
-						request.saveSolarPanelDamageRequest().additionalDetails()
-				)
-		);
+		SolarPanel solarPanel = mapper.toEntity(request);
 
 		boolean existingSerialNumber = repository.existsBySerialNumber(solarPanel.getSerialNumber());
 		if (existingSerialNumber) {
@@ -41,4 +29,5 @@ public class SolarPanelApplicationService implements ISolarPanelApplicationServi
 
 		repository.save(solarPanel);
 	}
+
 }
