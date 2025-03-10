@@ -60,8 +60,9 @@ public class SolarPanel extends BaseEntity {
 		return new Damage(this.damage);
 	}
 
-	public void setDamage(Damage damage) {
+	public SolarPanel setDamage(Damage damage) {
 		this.damage = new Damage(damage);
 		this.recommendation = this.damage.calculate();
+		return this;
 	}
 }

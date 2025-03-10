@@ -148,3 +148,33 @@ E. Create another field in SolarPanel called Recommendation which will be assign
     and also rename the method to createValidSaveSolarPanelRequest
     27. ALL TESTS PASS
 
+F. Refactor to make tests clearer
+
+    1. Create property:
+        	private Damage validDamage = new Damage(
+        			true,
+        			false,
+        			false,
+        			false,
+        			""
+        	);
+    2. Create property:
+        	private SolarPanel validSolarPanel = new SolarPanel(
+        			"Solar Panel",
+        			"Manufacturer",
+        			"model1",
+        			"type1",
+        			"serialNumber",
+        			this.validDamage
+        	);
+    3. In every test, create a SolarPanel and modify only the property needed for that test:
+        Examples:
+            a) 	SolarPanel solarPanel = validSolarPanel.setDamage(
+                        validDamage.setHotSpots(true)
+                );
+            b) 	SolarPanel solarPanel = validSolarPanel.setDamage(
+               			validDamage.setHotSpots(true)
+                                .setBrokenGlass(true)
+                                .setMicroCracks(true)
+                                .setSnailTrails(true)
+                );
