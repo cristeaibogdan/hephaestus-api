@@ -31,8 +31,9 @@ public class SolarPanelApplicationService implements ISolarPanelApplicationServi
 		repository.save(solarPanel);
 	}
 
+	@Override
 	public Recommendation getRecommendation(String serialNumber) {
 		return repository.getRecommendation(serialNumber)
-				.orElseThrow();
+				.orElseThrow(() -> new CustomException(ErrorCode.SERIAL_NUMBER_NOT_FOUND, serialNumber));
 	}
 }

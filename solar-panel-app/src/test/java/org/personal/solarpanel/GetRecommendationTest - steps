@@ -92,3 +92,44 @@
     2. Add @EnumSource(Recommendation.class) on the test
     3. Add parameter Recommendation expected and replace in GIVEN and THEN
     4. TEST PASSES
+
+==== Add MvcTest as a nested class ====
+
+    0. Move the test into a nested IntegrationTest class
+    1. Create another nested MvcTest class
+    2. Create method inside should_ReturnStatusOk_When_SerialNumberFound
+    3. In GIVEN type: insertIntoDB(TestData.createValidSolarPanel("status OK"));
+    4. Add @Autowired MockMvc mockMvc;
+           	@Autowired ObjectMapper jackson;
+    5. Create method performRequest:
+    	private ResultActions performRequest(String serialNumber) throws Exception {
+    		return mockMvc.perform(
+    				get("/v1/solar-panels/{serialNumber}/recommendation", serialNumber)
+    		);
+    	}
+    6. Store the result in a variable
+    7. In THEN assert status and empty content:
+        resultActions
+                .andExpect(status().isOk()));
+    8. TEST FAILS, as no such endpoint is found
+
+    9. In ISolarPanelApplicationService copy the method definition and add @GetMapping
+        	@GetMapping("/{serialNumber}/recommendation")
+        	Recommendation getRecommendation(@PathVariable String serialNumber);
+    10. TEST PASSES
+
+==== Add another MvcTest ====
+
+   1. Create a method inside nested MvcTest class and name it should_ThrowException_When_SerialNumberNotFound
+   2. Copy paste the content from the previous test
+   3. Remove GIVEN part
+   4. In WHEN change the serialNumber to "not found"
+   5. in THEN add the following assertions:
+        resultActions
+                .andExpect(status().isNotFound())
+                .andExpect(content().string(not(containsString("Internal Translation Error"))));
+   6. TEST FAILS as the status is 500, we just used orElseThrow()
+   7. In getRecommendation replace orElseThrow() with:
+        .orElseThrow(() -> new CustomException(ErrorCode.SERIAL_NUMBER_NOT_FOUND, serialNumber));
+   8. Add @Override to getRecommendation
+   9. TEST PASSES
