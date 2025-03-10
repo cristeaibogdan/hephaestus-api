@@ -2,6 +2,9 @@ package org.personal.solarpanel;
 
 import org.personal.solarpanel.dto.SaveSolarPanelDamageRequest;
 import org.personal.solarpanel.dto.SaveSolarPanelRequest;
+import org.personal.solarpanel.entity.Damage;
+import org.personal.solarpanel.entity.SolarPanel;
+import org.personal.solarpanel.enums.Recommendation;
 
 public class TestData {
 
@@ -20,5 +23,48 @@ public class TestData {
 						"blue paint was thrown on half the panel"
 				)
 		);
+	}
+
+	public static SolarPanel createValidSolarPanel(String serialNumber) {
+		return new SolarPanel(
+				"Solar Panel",
+				"Manufacturer",
+				"model",
+				"type",
+				serialNumber,
+				new Damage(
+						true, // to avoid recommendation exception
+						false,
+						false,
+						false,
+						""
+				)
+		);
+	}
+
+	private static Damage createDamage() {
+		return new Damage(
+				false,
+				false,
+				false,
+				false,
+				""
+		);
+	}
+
+	public static Damage createDamageWithRecommendation(Recommendation expected) {
+		return switch (expected) {
+			case REPAIR -> createDamage()
+					.setHotSpots(true);
+			case RECYCLE -> createDamage()
+					.setHotSpots(true)
+					.setSnailTrails(true)
+					.setMicroCracks(true);
+			case DISPOSE -> createDamage()
+					.setHotSpots(true)
+					.setSnailTrails(true)
+					.setMicroCracks(true)
+					.setBrokenGlass(true);
+		};
 	}
 }

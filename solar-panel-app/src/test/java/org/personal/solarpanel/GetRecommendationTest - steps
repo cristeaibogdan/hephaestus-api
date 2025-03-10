@@ -1,0 +1,89 @@
+******************************************************************
+*** A. Setup
+******************************************************************
+    1. Create GetRecommendationIntegrationTest
+    2. Extend it with SaveIntegrationTest - steps
+    3. Add properties:
+        @Autowired SolarPanelApplicationService underTest;
+        @Autowired SolarPanelRepository repository;
+
+******************************************************************
+*** B. GetRecommendationIntegrationTest
+******************************************************************
+    1. Create test method should_ReturnRecommendation_When_SerialNumberFound
+    2. In GIVEN create a valid SolarPanel - has true for Damage.hotSpots property, so no exception is thrown
+    3. In GIVEN store the SolarPanel and save it to the repository. A record in the DB is needed for the test.
+    4. In WHEN type: underTest.getRecommendation("serialNumber");
+    5. TEST FAILS as no method exists
+    6. ALT+ENTER to create the method
+
+    7. In WHEN store the result in a variable called actual
+    8. TEST FAILS as the method returns void
+    9. ALT+ENTER to convert the method return to Recommendation
+    10. TEST PASSES
+
+    11. In THEN write: assertThat(actual).isEqualTo(Recommendation.REPAIR);
+    12. TEST FAILS as the method returns null
+    13. In SolarPanelApplicationService write the logic to access the repository:
+            return repository.getRecommendation(serialNumber);
+    14. ALT+ENTER to create the method in the repository
+    15. Change the return type in the repository to Optional<Recommendation>
+    16. Change the SolarPanelApplicationService.getRecommendation logic to:
+            return repository.getRecommendation(serialNumber)
+                            .orElseThrow();
+    17. TEST FAILS as Spring Data JPA can not return directly the enum Recommendation
+    18. In SolarPanelRepository for getRecommendation write the following Query:
+        @Query("""
+            SELECT sp.recommendation
+            FROM SolarPanel sp
+            WHERE sp.serialNumber = ?1
+            """)
+        Optional<Recommendation> getRecommendation(String serialNumber);
+    19. TEST PASSES
+
+==== Refactor to improve code readability ====
+
+    1. Extract SolarPanel creation into TestData
+    2. In GIVEN use TestData.createValidSolarPanel("serialNumber");
+    3. TEST PASSES
+
+    Looking at the test, you can't really see what recommendation it will issue.
+    Let's create some helper method in TestData to improve test visibility.
+
+    1. Create a private method to instantiate Damage, all values should be default
+    2. Create the following public method:
+        public static Damage createDamageWithRecommendation(Recommendation expected) {
+            return switch (expected) {
+                case REPAIR -> createDamage()
+                        .setHotSpots(true);
+                case RECYCLE -> createDamage()
+                        .setHotSpots(true)
+                        .setSnailTrails(true)
+                        .setMicroCracks(true);
+                case DISPOSE -> createDamage()
+                        .setHotSpots(true)
+                        .setSnailTrails(true)
+                        .setMicroCracks(true)
+                        .setBrokenGlass(true);
+            };
+        }
+    3. In GetRecommendationIntegrationTest use the method to generate a Damage with Recommendation.Repair:
+        SolarPanel solarPanel = TestData.createValidSolarPanel("serialNumber")
+                .setDamage(
+                        TestData.createDamageWithRecommendation(Recommendation.REPAIR)
+                );
+    4. TEST PASSES
+
+    5. Create a private method in the test class that automatically saves to database:
+    	private void insertIntoDB(SolarPanel... solarPanels){
+    		repository.saveAll(List.of(solarPanels));
+    	}
+    6. In GIVEN modify to insert the solar panel directly through the method:
+        insertIntoDB(TestData.createValidSolarPanel("serialNumber")
+                .setDamage(
+                        TestData.createDamageWithRecommendation(Recommendation.REPAIR)
+                )
+        );
+    7. TEST PASSES
+
+==== Refactor test for every Recommendation ====

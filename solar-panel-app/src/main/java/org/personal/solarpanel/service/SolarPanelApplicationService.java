@@ -5,6 +5,7 @@ import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
 import org.personal.solarpanel.dto.SaveSolarPanelRequest;
 import org.personal.solarpanel.entity.SolarPanel;
+import org.personal.solarpanel.enums.Recommendation;
 import org.personal.solarpanel.mapper.SolarPanelMapper;
 import org.personal.solarpanel.repository.SolarPanelRepository;
 import org.springframework.stereotype.Service;
@@ -30,4 +31,8 @@ public class SolarPanelApplicationService implements ISolarPanelApplicationServi
 		repository.save(solarPanel);
 	}
 
+	public Recommendation getRecommendation(String serialNumber) {
+		return repository.getRecommendation(serialNumber)
+				.orElseThrow();
+	}
 }
