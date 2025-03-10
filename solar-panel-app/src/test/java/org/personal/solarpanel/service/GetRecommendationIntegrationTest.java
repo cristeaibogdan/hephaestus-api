@@ -1,9 +1,10 @@
 package org.personal.solarpanel.service;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.personal.solarpanel.BaseIntegrationTest;
 import org.personal.solarpanel.TestData;
-import org.personal.solarpanel.entity.Damage;
 import org.personal.solarpanel.entity.SolarPanel;
 import org.personal.solarpanel.enums.Recommendation;
 import org.personal.solarpanel.repository.SolarPanelRepository;
@@ -18,12 +19,13 @@ class GetRecommendationIntegrationTest extends BaseIntegrationTest {
 	@Autowired SolarPanelApplicationService underTest;
 	@Autowired SolarPanelRepository repository;
 
-	@Test
-	void should_ReturnRecommendation_When_SerialNumberFound() {
+	@ParameterizedTest(name = "Should return recommendation = {0}")
+	@EnumSource(Recommendation.class)
+	void should_ReturnRecommendation_When_SerialNumberFound(Recommendation expected) {
 		// GIVEN
 		insertIntoDB(TestData.createValidSolarPanel("serialNumber")
 				.setDamage(
-						TestData.createDamageWithRecommendation(Recommendation.REPAIR)
+						TestData.createDamageWithRecommendation(expected)
 				)
 		);
 
@@ -31,7 +33,7 @@ class GetRecommendationIntegrationTest extends BaseIntegrationTest {
 		Recommendation actual = underTest.getRecommendation("serialNumber");
 
 		// THEN
-		assertThat(actual).isEqualTo(Recommendation.REPAIR);
+		assertThat(actual).isEqualTo(expected);
 	}
 
 	private void insertIntoDB(SolarPanel... solarPanels){

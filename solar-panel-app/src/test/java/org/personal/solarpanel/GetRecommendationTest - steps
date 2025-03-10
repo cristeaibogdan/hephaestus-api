@@ -87,3 +87,8 @@
     7. TEST PASSES
 
 ==== Refactor test for every Recommendation ====
+
+    1. Add @ParameterizedTest(name = "Should return recommendation = {0}") on the test
+    2. Add @EnumSource(Recommendation.class) on the test
+    3. Add parameter Recommendation expected and replace in GIVEN and THEN
+    4. TEST PASSES
