@@ -133,3 +133,7 @@
         .orElseThrow(() -> new CustomException(ErrorCode.SERIAL_NUMBER_NOT_FOUND, serialNumber));
    8. Add @Override to getRecommendation
    9. TEST PASSES
+
+==== Refactor move ====
+
+    1. Move createValidSolarPanelWithRecommendation from TestData to GetRecommendationIntegrationTest since it is the only class that uses it.

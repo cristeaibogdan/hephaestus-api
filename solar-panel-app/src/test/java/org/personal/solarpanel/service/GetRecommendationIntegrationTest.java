@@ -7,6 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.personal.solarpanel.BaseIntegrationTest;
 import org.personal.solarpanel.TestData;
+import org.personal.solarpanel.entity.Damage;
 import org.personal.solarpanel.entity.SolarPanel;
 import org.personal.solarpanel.enums.Recommendation;
 import org.personal.solarpanel.repository.SolarPanelRepository;
@@ -37,10 +38,8 @@ class GetRecommendationIntegrationTest extends BaseIntegrationTest {
 		@EnumSource(Recommendation.class)
 		void should_ReturnRecommendation_When_SerialNumberFound(Recommendation expected) {
 			// GIVEN
-			insertIntoDB(TestData.createValidSolarPanel("serialNumber")
-					.setDamage(
-							TestData.createDamageWithRecommendation(expected)
-					)
+			insertIntoDB(
+					createValidSolarPanelWithRecommendation("serialNumber", expected)
 			);
 
 			// WHEN
@@ -89,5 +88,42 @@ class GetRecommendationIntegrationTest extends BaseIntegrationTest {
 
 	private void insertIntoDB(SolarPanel... solarPanels){
 		repository.saveAll(List.of(solarPanels));
+	}
+
+	private SolarPanel createValidSolarPanelWithRecommendation(String serialNumber, Recommendation expected) {
+		return new SolarPanel(
+				"Solar Panel",
+				"Manufacturer",
+				"model",
+				"type",
+				serialNumber,
+				createDamageWithRecommendation(expected)
+		);
+	}
+
+	private Damage createDamage() {
+		return new Damage(
+				false,
+				false,
+				false,
+				false,
+				""
+		);
+	}
+
+	private Damage createDamageWithRecommendation(Recommendation expected) {
+		return switch (expected) {
+			case REPAIR -> createDamage()
+					.setHotSpots(true);
+			case RECYCLE -> createDamage()
+					.setHotSpots(true)
+					.setSnailTrails(true)
+					.setMicroCracks(true);
+			case DISPOSE -> createDamage()
+					.setHotSpots(true)
+					.setSnailTrails(true)
+					.setMicroCracks(true)
+					.setBrokenGlass(true);
+		};
 	}
 }
