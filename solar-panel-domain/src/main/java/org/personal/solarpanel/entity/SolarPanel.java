@@ -38,6 +38,7 @@ public class SolarPanel extends BaseEntity {
 	private LocalDateTime createdAt;
 
 	@Setter(NONE)
+	@Enumerated(EnumType.STRING)
 	@Column(name = "recommendation")
 	private Recommendation recommendation;
 
