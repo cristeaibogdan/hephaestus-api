@@ -27,23 +27,23 @@
         <!-- *** TRACEABILITY BETWEEN MICROSERVICES -->
         <!-- ***************************************** -->
 
-        <!--        <dependency>-->
-        <!--            &lt;!&ndash; Support for app monitoring, including metrics, health checks and so on &ndash;&gt;-->
-        <!--            <groupId>org.springframework.boot</groupId>-->
-        <!--            <artifactId>spring-boot-starter-actuator</artifactId>-->
-        <!--        </dependency>-->
+        <dependency>
+            <!-- Support for app monitoring, including metrics, health checks and so on -->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
 
-        <!--        <dependency>-->
-        <!--            &lt;!&ndash; Collect and record traces using OpenTelemetry APIs &ndash;&gt;-->
-        <!--            <groupId>io.micrometer</groupId>-->
-        <!--            <artifactId>micrometer-tracing-bridge-otel</artifactId>-->
-        <!--        </dependency>-->
+        <dependency>
+            <!-- Collect and record traces using OpenTelemetry APIs -->
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-tracing-bridge-otel</artifactId>
+        </dependency>
 
-        <!--        <dependency>-->
-        <!--            &lt;!&ndash; Export traces to Zipkin &ndash;&gt;-->
-        <!--            <groupId>io.opentelemetry</groupId>-->
-        <!--            <artifactId>opentelemetry-exporter-zipkin</artifactId>-->
-        <!--        </dependency>-->
+        <dependency>
+            <!-- Export traces to Zipkin -->
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-exporter-zipkin</artifactId>
+        </dependency>
 
         <!-- ***************************************** -->
         <!-- *** REPORTS -->
@@ -59,6 +59,16 @@
             <groupId>net.sf.jasperreports</groupId>
             <artifactId>jasperreports-fonts</artifactId>
             <version>6.21.0</version>
+        </dependency>
+
+        <!-- ***************************************** -->
+        <!-- *** OPENAPI -->
+        <!-- ***************************************** -->
+
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
+            <version>2.6.0</version>
         </dependency>
 
         <!-- ***************************************** -->

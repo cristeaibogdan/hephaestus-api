@@ -18,6 +18,13 @@ spring:
           filters:
             - RewritePath=/v3/api-docs/washing-machine, /v3/api-docs  # Forward to actual OpenAPI docs path
 
+        - id: solar-panel
+          uri: http://localhost:8084
+          predicates:
+            - Path=/v1/solar-panels/**, /v3/api-docs/solar-panel
+          filters:
+            - RewritePath=/v3/api-docs/solar-panel, /v3/api-docs  # Forward to actual OpenAPI docs path
+
         - id: product
           uri: http://localhost:8081
           predicates:
@@ -53,6 +60,9 @@ springdoc:
     urls:
       - name: washing-machine
         url: /v3/api-docs/washing-machine
+
+      - name: solar-panel
+        url: /v3/api-docs/solar-panel
 
       - name: product
         url: /v3/api-docs/product
