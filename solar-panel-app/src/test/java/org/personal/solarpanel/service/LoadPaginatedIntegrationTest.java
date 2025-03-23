@@ -94,8 +94,8 @@ class LoadPaginatedIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// THEN
-			assertThat(actual.getNumber()).isEqualTo(0);
-			assertThat(actual.getContent()).size().isEqualTo(3);
+			assertThat(actual.getNumber()).isZero();
+			assertThat(actual.getSize()).isEqualTo(3);
 		}
 	}
 

@@ -97,7 +97,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 		}
 
 		@Test
-		void should_ReturnCorrectPageSize() {
+		void should_ReturnCorrectPageIndexAndSize() {
 			// GIVEN
 			saveIntoDB(
 					TestData.createValidWashingMachine("serial1"),
@@ -114,8 +114,8 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// THEN
-			assertThat(actual.getSize())
-					.isEqualTo(3);
+			assertThat(actual.getNumber()).isZero();
+			assertThat(actual.getSize()).isEqualTo(3);
 		}
 
 		@ParameterizedTest
