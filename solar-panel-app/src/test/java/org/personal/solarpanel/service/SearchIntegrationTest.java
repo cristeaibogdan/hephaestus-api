@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class LoadPaginatedIntegrationTest extends BaseIntegrationTest {
+class SearchIntegrationTest extends BaseIntegrationTest {
 
 	@Autowired SolarPanelApplicationService underTest;
 	@Autowired SolarPanelRepository repository;
@@ -71,7 +71,7 @@ class LoadPaginatedIntegrationTest extends BaseIntegrationTest {
 			));
 
 			// WHEN
-			Page<SearchSolarPanelResponse> actual = underTest.loadPaginated(
+			Page<SearchSolarPanelResponse> actual = underTest.search(
 					TestData.createSearchSolarPanelRequest().toBuilder()
 							.pageIndex(0)
 							.pageSize(2)
@@ -95,7 +95,7 @@ class LoadPaginatedIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchSolarPanelResponse> actual = underTest.loadPaginated(
+			Page<SearchSolarPanelResponse> actual = underTest.search(
 					TestData.createSearchSolarPanelRequest().toBuilder()
 							.pageIndex(0)
 							.pageSize(3)
@@ -117,7 +117,7 @@ class LoadPaginatedIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchSolarPanelResponse> actual = underTest.loadPaginated(
+			Page<SearchSolarPanelResponse> actual = underTest.search(
 					TestData.createSearchSolarPanelRequest().toBuilder()
 							.pageIndex(0)
 							.pageSize(5)
@@ -144,7 +144,7 @@ class LoadPaginatedIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchSolarPanelResponse> actual = underTest.loadPaginated(
+			Page<SearchSolarPanelResponse> actual = underTest.search(
 					TestData.createSearchSolarPanelRequest().toBuilder()
 							.pageIndex(0)
 							.pageSize(4)
@@ -172,7 +172,7 @@ class LoadPaginatedIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchSolarPanelResponse> actual = underTest.loadPaginated(
+			Page<SearchSolarPanelResponse> actual = underTest.search(
 					TestData.createSearchSolarPanelRequest().toBuilder()
 							.pageIndex(0)
 							.pageSize(4)
@@ -200,7 +200,7 @@ class LoadPaginatedIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchSolarPanelResponse> actual = underTest.loadPaginated(
+			Page<SearchSolarPanelResponse> actual = underTest.search(
 					TestData.createSearchSolarPanelRequest().toBuilder()
 							.pageIndex(0)
 							.pageSize(4)

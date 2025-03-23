@@ -18,5 +18,5 @@ public interface ISolarPanelApplicationService {
 	Recommendation getRecommendation(@PathVariable String serialNumber);
 
 	@PostMapping
-	Page<SearchSolarPanelResponse> loadPaginated(@RequestBody SearchSolarPanelRequest searchSolarPanelRequest);
+	Page<SearchSolarPanelResponse> search(@RequestBody SearchSolarPanelRequest searchSolarPanelRequest);
 }

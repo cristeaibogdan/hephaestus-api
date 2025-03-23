@@ -52,7 +52,7 @@ public class SolarPanelApplicationService implements ISolarPanelApplicationServi
 	}
 
 	@Override
-	public Page<SearchSolarPanelResponse> loadPaginated(SearchSolarPanelRequest request) {
+	public Page<SearchSolarPanelResponse> search(SearchSolarPanelRequest request) {
 		PageRequest pageRequest = PageRequest.of(
 				request.pageIndex(),
 				request.pageSize(),
