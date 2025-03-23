@@ -15,6 +15,7 @@ import org.personal.solarpanel.repository.SolarPanelRepository;
 import org.personal.solarpanel.service.utils.QueryDSLUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -54,7 +55,8 @@ public class SolarPanelApplicationService implements ISolarPanelApplicationServi
 	public Page<SearchSolarPanelResponse> loadPaginated(SearchSolarPanelRequest request) {
 		PageRequest pageRequest = PageRequest.of(
 				request.pageIndex(),
-				request.pageSize()
+				request.pageSize(),
+				Sort.by(solarPanel.createdAt.getMetadata().getName()).descending()
 		);
 
 		BooleanBuilder booleanBuilder = new BooleanBuilder()

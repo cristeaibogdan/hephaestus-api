@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -104,6 +105,31 @@ class LoadPaginatedIntegrationTest extends BaseIntegrationTest {
 			// THEN
 			assertThat(actual.getNumber()).isZero();
 			assertThat(actual.getSize()).isEqualTo(3);
+		}
+
+		@Test
+		void should_ReturnListWithDescendingDates() {
+			// GIVEN
+			saveIntoDB(
+					TestData.createValidSolarPanel("serial1"),
+					TestData.createValidSolarPanel("serial2"),
+					TestData.createValidSolarPanel("serial3")
+			);
+
+			// WHEN
+			Page<SearchSolarPanelResponse> actual = underTest.loadPaginated(
+					TestData.createSearchSolarPanelRequest().toBuilder()
+							.pageIndex(0)
+							.pageSize(5)
+							.build()
+			);
+
+			// THEN
+			assertThat(actual.getContent())
+					.hasSize(3)
+					.extracting(wm -> wm.createdAt())
+					.doesNotContainNull()
+					.isSortedAccordingTo(Comparator.reverseOrder()); // Check descending order
 		}
 
 		@ParameterizedTest
