@@ -33,11 +33,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class SearchIntegrationTest extends BaseIntegrationTest {
 
-	@Autowired SolarPanelApplicationService underTest;
-	@Autowired SolarPanelRepository repository;
+	@Autowired
+	SolarPanelApplicationService underTest;
+	@Autowired
+	SolarPanelRepository repository;
 
-	@Autowired MockMvc mockMvc;
-	@Autowired ObjectMapper jackson;
+	@Autowired
+	MockMvc mockMvc;
+	@Autowired
+	ObjectMapper jackson;
 
 	@Nested
 	class IntegrationTest {
@@ -215,78 +219,103 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 					.extracting(wm -> wm.type())
 					.contains(type);
 		}
-	}
 
-	@ParameterizedTest
-	@EnumSource(value = Recommendation.class)
-	void should_ReturnFilteredList_By_Recommendation(Recommendation recommendation) {
-		// GIVEN
-		saveIntoDB(
-				TestData.createValidSolarPanel("serial1").setDamage(TestData.createDamageWithRecommendation(Recommendation.REPAIR)),
-				TestData.createValidSolarPanel("serial2").setDamage(TestData.createDamageWithRecommendation(Recommendation.REPAIR)),
-				TestData.createValidSolarPanel("serial3").setDamage(TestData.createDamageWithRecommendation(Recommendation.DISPOSE)),
-				TestData.createValidSolarPanel("serial4").setDamage(TestData.createDamageWithRecommendation(Recommendation.DISPOSE)),
-				TestData.createValidSolarPanel("serial5").setDamage(TestData.createDamageWithRecommendation(Recommendation.RECYCLE)),
-				TestData.createValidSolarPanel("serial6").setDamage(TestData.createDamageWithRecommendation(Recommendation.RECYCLE))
-		);
-
-		// WHEN
-		Page<SearchSolarPanelResponse> actual = underTest.search(
-				TestData.createSearchSolarPanelRequest().toBuilder()
-						.pageIndex(0)
-						.pageSize(6)
-						.recommendation(recommendation)
-						.build()
-		);
-
-		// THEN
-		assertThat(actual.getContent())
-				.hasSize(2)
-				.extracting(wm -> wm.recommendation())
-				.contains(recommendation);
-	}
-
-	@Nested
-	class MvcTest {
-		@Test
-		void should_ReturnStatusOk_When_EntitiesInDB() throws Exception {
+		@ParameterizedTest
+		@ValueSource(strings = {"serial1", "serial2"})
+		void should_ReturnFilteredList_By_SerialNumber(String serialNumber) {
 			// GIVEN
 			saveIntoDB(
 					TestData.createValidSolarPanel("serial1"),
-					TestData.createValidSolarPanel("serial2")
+					TestData.createValidSolarPanel("serial2"),
+					TestData.createValidSolarPanel("serial3")
 			);
 
 			// WHEN
-			ResultActions resultActions = performRequest(
+			Page<SearchSolarPanelResponse> actual = underTest.search(
 					TestData.createSearchSolarPanelRequest().toBuilder()
 							.pageIndex(0)
-							.pageSize(2)
+							.pageSize(3)
+							.serialNumber(serialNumber)
 							.build()
 			);
 
 			// THEN
-			resultActions
-					.andExpect(status().isOk())
-					.andExpect(content().string(not(emptyString())));
+			assertThat(actual.getContent())
+					.hasSize(1)
+					.extracting(wm -> wm.serialNumber())
+					.contains(serialNumber);
 		}
 
-		@Test
-		void should_ReturnStatusOk_When_NoEntitiesInDB() throws Exception {
+		@ParameterizedTest
+		@EnumSource(value = Recommendation.class)
+		void should_ReturnFilteredList_By_Recommendation(Recommendation recommendation) {
 			// GIVEN
+			saveIntoDB(
+					TestData.createValidSolarPanel("serial1").setDamage(TestData.createDamageWithRecommendation(Recommendation.REPAIR)),
+					TestData.createValidSolarPanel("serial2").setDamage(TestData.createDamageWithRecommendation(Recommendation.REPAIR)),
+					TestData.createValidSolarPanel("serial3").setDamage(TestData.createDamageWithRecommendation(Recommendation.DISPOSE)),
+					TestData.createValidSolarPanel("serial4").setDamage(TestData.createDamageWithRecommendation(Recommendation.DISPOSE)),
+					TestData.createValidSolarPanel("serial5").setDamage(TestData.createDamageWithRecommendation(Recommendation.RECYCLE)),
+					TestData.createValidSolarPanel("serial6").setDamage(TestData.createDamageWithRecommendation(Recommendation.RECYCLE))
+			);
+
 			// WHEN
-			ResultActions resultActions = performRequest(
+			Page<SearchSolarPanelResponse> actual = underTest.search(
 					TestData.createSearchSolarPanelRequest().toBuilder()
 							.pageIndex(0)
-							.pageSize(2)
+							.pageSize(6)
+							.recommendation(recommendation)
 							.build()
 			);
 
 			// THEN
-			resultActions
-					.andExpect(status().isOk())
-					.andExpect(content().string(not(emptyString())));
+			assertThat(actual.getContent())
+					.hasSize(2)
+					.extracting(wm -> wm.recommendation())
+					.contains(recommendation);
 		}
 
+		@Nested
+		class MvcTest {
+			@Test
+			void should_ReturnStatusOk_When_EntitiesInDB() throws Exception {
+				// GIVEN
+				saveIntoDB(
+						TestData.createValidSolarPanel("serial1"),
+						TestData.createValidSolarPanel("serial2")
+				);
+
+				// WHEN
+				ResultActions resultActions = performRequest(
+						TestData.createSearchSolarPanelRequest().toBuilder()
+								.pageIndex(0)
+								.pageSize(2)
+								.build()
+				);
+
+				// THEN
+				resultActions
+						.andExpect(status().isOk())
+						.andExpect(content().string(not(emptyString())));
+			}
+
+			@Test
+			void should_ReturnStatusOk_When_NoEntitiesInDB() throws Exception {
+				// GIVEN
+				// WHEN
+				ResultActions resultActions = performRequest(
+						TestData.createSearchSolarPanelRequest().toBuilder()
+								.pageIndex(0)
+								.pageSize(2)
+								.build()
+				);
+
+				// THEN
+				resultActions
+						.andExpect(status().isOk())
+						.andExpect(content().string(not(emptyString())));
+			}
+		}
 	}
 
 	private void saveIntoDB(SolarPanel... solarPanels) {
@@ -300,3 +329,4 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 						.contentType(MediaType.APPLICATION_JSON));
 	}
 }
+
