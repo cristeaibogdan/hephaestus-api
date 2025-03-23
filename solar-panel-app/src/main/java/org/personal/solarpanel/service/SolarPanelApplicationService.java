@@ -62,10 +62,10 @@ public class SolarPanelApplicationService implements ISolarPanelApplicationServi
 		BooleanBuilder booleanBuilder = new BooleanBuilder()
 				.and(QueryDSLUtils.addStringLikeCondition(solarPanel.manufacturer, request.manufacturer()))
 				.and(QueryDSLUtils.addStringLikeCondition(solarPanel.model, request.model()))
-				.and(QueryDSLUtils.addStringLikeCondition(solarPanel.type, request.type()));
+				.and(QueryDSLUtils.addStringLikeCondition(solarPanel.type, request.type()))
 //				.and(QueryDSLUtils.addStringLikeCondition(solarPanel.serialNumber, request.serialNumber()))
 //
-//				.and(QueryDSLUtils.addEnumEqualCondition(solarPanel.recommendation, request.recommendation()))
+				.and(QueryDSLUtils.addEnumEqualCondition(solarPanel.recommendation, request.recommendation()));
 //
 //				.and(QueryDSLUtils.addTimestampEqualCondition(solarPanel.createdAt, parseToLocalDate(request.createdAt())));
 

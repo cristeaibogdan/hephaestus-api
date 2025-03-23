@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.personal.solarpanel.BaseIntegrationTest;
 import org.personal.solarpanel.TestData;
@@ -216,6 +217,35 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 		}
 	}
 
+	@ParameterizedTest
+	@EnumSource(value = Recommendation.class)
+	void should_ReturnFilteredList_By_Recommendation(Recommendation recommendation) {
+		// GIVEN
+		saveIntoDB(
+				TestData.createValidSolarPanel("serial1").setDamage(TestData.createDamageWithRecommendation(Recommendation.REPAIR)),
+				TestData.createValidSolarPanel("serial2").setDamage(TestData.createDamageWithRecommendation(Recommendation.REPAIR)),
+				TestData.createValidSolarPanel("serial3").setDamage(TestData.createDamageWithRecommendation(Recommendation.DISPOSE)),
+				TestData.createValidSolarPanel("serial4").setDamage(TestData.createDamageWithRecommendation(Recommendation.DISPOSE)),
+				TestData.createValidSolarPanel("serial5").setDamage(TestData.createDamageWithRecommendation(Recommendation.RECYCLE)),
+				TestData.createValidSolarPanel("serial6").setDamage(TestData.createDamageWithRecommendation(Recommendation.RECYCLE))
+		);
+
+		// WHEN
+		Page<SearchSolarPanelResponse> actual = underTest.search(
+				TestData.createSearchSolarPanelRequest().toBuilder()
+						.pageIndex(0)
+						.pageSize(6)
+						.recommendation(recommendation)
+						.build()
+		);
+
+		// THEN
+		assertThat(actual.getContent())
+				.hasSize(2)
+				.extracting(wm -> wm.recommendation())
+				.contains(recommendation);
+	}
+
 	@Nested
 	class MvcTest {
 		@Test
@@ -256,6 +286,7 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 					.andExpect(status().isOk())
 					.andExpect(content().string(not(emptyString())));
 		}
+
 	}
 
 	private void saveIntoDB(SolarPanel... solarPanels) {
