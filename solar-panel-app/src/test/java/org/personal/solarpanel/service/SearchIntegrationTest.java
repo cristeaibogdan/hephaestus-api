@@ -25,8 +25,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.emptyString;
-import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -314,6 +313,22 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 				resultActions
 						.andExpect(status().isOk())
 						.andExpect(content().string(not(emptyString())));
+			}
+
+			@Test
+			void should_ThrowCustomException_When_InvalidDate() throws Exception {
+				// GIVEN
+				// WHEN
+				ResultActions resultActions = performRequest(
+						TestData.createSearchSolarPanelRequest().toBuilder()
+								.createdAt("invalid date")
+								.build()
+				);
+
+				// THEN
+				resultActions
+						.andExpect(status().isBadRequest())
+						.andExpect(content().string(not(containsString("Internal Translation Error"))));
 			}
 		}
 	}

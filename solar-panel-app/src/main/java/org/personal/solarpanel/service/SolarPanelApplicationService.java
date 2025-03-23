@@ -65,12 +65,11 @@ public class SolarPanelApplicationService implements ISolarPanelApplicationServi
 				.and(QueryDSLUtils.addStringLikeCondition(solarPanel.type, request.type()))
 				.and(QueryDSLUtils.addStringLikeCondition(solarPanel.serialNumber, request.serialNumber()))
 
-				.and(QueryDSLUtils.addEnumEqualCondition(solarPanel.recommendation, request.recommendation()));
-//
-//				.and(QueryDSLUtils.addTimestampEqualCondition(solarPanel.createdAt, parseToLocalDate(request.createdAt())));
+				.and(QueryDSLUtils.addEnumEqualCondition(solarPanel.recommendation, request.recommendation()))
+
+				.and(QueryDSLUtils.addTimestampEqualCondition(solarPanel.createdAt, parseToLocalDate(request.createdAt())));
 
 		Page<SolarPanel> responsePage = repository.findAll(booleanBuilder, pageRequest);
-
 
 		return responsePage.map(solarPanel -> mapper.toSearchSolarPanelResponse(solarPanel));
 	}
