@@ -131,7 +131,7 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 			// THEN
 			assertThat(actual.getContent())
 					.hasSize(3)
-					.extracting(wm -> wm.createdAt())
+					.extracting(sp -> sp.createdAt())
 					.doesNotContainNull()
 					.isSortedAccordingTo(Comparator.reverseOrder()); // Check descending order
 		}
@@ -159,7 +159,7 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 			// THEN
 			assertThat(actual.getContent())
 					.hasSize(2)
-					.extracting(wm -> wm.manufacturer())
+					.extracting(sp -> sp.manufacturer())
 					.contains(manufacturer);
 		}
 
@@ -187,7 +187,7 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 			// THEN
 			assertThat(actual.getContent())
 					.hasSize(2)
-					.extracting(wm -> wm.model())
+					.extracting(sp -> sp.model())
 					.contains(model);
 		}
 
@@ -215,7 +215,7 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 			// THEN
 			assertThat(actual.getContent())
 					.hasSize(2)
-					.extracting(wm -> wm.type())
+					.extracting(sp -> sp.type())
 					.contains(type);
 		}
 
@@ -241,7 +241,7 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 			// THEN
 			assertThat(actual.getContent())
 					.hasSize(1)
-					.extracting(wm -> wm.serialNumber())
+					.extracting(sp -> sp.serialNumber())
 					.contains(serialNumber);
 		}
 
@@ -270,8 +270,38 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 			// THEN
 			assertThat(actual.getContent())
 					.hasSize(2)
-					.extracting(wm -> wm.recommendation())
+					.extracting(sp -> sp.recommendation())
 					.contains(recommendation);
+		}
+
+		@Test
+		void should_ReturnFilteredList_By_ManufacturerAndType() {
+			// GIVEN
+			saveIntoDB(
+					TestData.createValidSolarPanel("serial1").setManufacturer("Tesla").setType("TypeY"),
+					TestData.createValidSolarPanel("serial2").setManufacturer("Tesla").setType("TypeY"),
+					TestData.createValidSolarPanel("serial3").setManufacturer("Tesla").setType("TypeZ"),
+					TestData.createValidSolarPanel("serial4").setManufacturer("Huawei").setType("TypeZ"),
+					TestData.createValidSolarPanel("serial4").setManufacturer("Tesla").setType("TypeWHY")
+			);
+
+			// WHEN
+			Page<SearchSolarPanelResponse> actual = underTest.search(
+					TestData.createSearchSolarPanelRequest().toBuilder()
+							.pageIndex(0)
+							.pageSize(5)
+							.manufacturer("Tesla")
+							.type("TypeY")
+							.build()
+			);
+
+			// THEN
+			assertThat(actual.getContent())
+					.hasSize(2)
+					.allSatisfy(sp -> {
+						assertThat(sp.manufacturer()).containsIgnoringCase("Tesla");
+						assertThat(sp.type()).containsIgnoringCase("TypeY");
+					});
 		}
 
 		@Nested
