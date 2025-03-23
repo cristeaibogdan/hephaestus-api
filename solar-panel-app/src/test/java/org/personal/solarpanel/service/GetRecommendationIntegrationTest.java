@@ -38,7 +38,7 @@ class GetRecommendationIntegrationTest extends BaseIntegrationTest {
 		@EnumSource(Recommendation.class)
 		void should_ReturnRecommendation_When_SerialNumberFound(Recommendation expected) {
 			// GIVEN
-			insertIntoDB(
+			saveToDB(
 					createValidSolarPanelWithRecommendation("serialNumber", expected)
 			);
 
@@ -56,7 +56,7 @@ class GetRecommendationIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnStatusOk_When_SerialNumberFound() throws Exception {
 			// GIVEN
-			insertIntoDB(TestData.createValidSolarPanel("status OK"));
+			saveToDB(TestData.createValidSolarPanel("status OK"));
 
 			// WHEN
 			ResultActions resultActions = performRequest("status OK");
@@ -86,7 +86,7 @@ class GetRecommendationIntegrationTest extends BaseIntegrationTest {
 		);
 	}
 
-	private void insertIntoDB(SolarPanel... solarPanels){
+	private void saveToDB(SolarPanel... solarPanels){
 		repository.saveAll(List.of(solarPanels));
 	}
 

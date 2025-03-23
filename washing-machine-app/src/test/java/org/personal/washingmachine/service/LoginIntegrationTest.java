@@ -42,7 +42,7 @@ class LoginIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnDTO_With_AllPropertiesFromDB() {
 			// GIVEN
-			insertIntoDB(
+			saveToDB(
 					new User(
 							"RX1001",
 							"Bosch",
@@ -76,7 +76,7 @@ class LoginIntegrationTest extends BaseIntegrationTest {
 		}
 	}
 
-	private void insertIntoDB(User... users) {
+	private void saveToDB(User... users) {
 		repository.saveAll(List.of(users));
 	}
 
@@ -86,7 +86,7 @@ class LoginIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnStatusOk_When_UserFound() throws Exception {
 			// GIVEN
-			insertIntoDB(
+			saveToDB(
 					UserTestData.createUser().setUsername("foundUsername").setPassword("foundPass")
 			);
 
@@ -104,7 +104,7 @@ class LoginIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ThrowCustomException_When_CredentialsAreInvalid() throws Exception {
 			// GIVEN
-			insertIntoDB(
+			saveToDB(
 					UserTestData.createUser().setUsername("Johnny Cage").setPassword("qazwsx!")
 			);
 

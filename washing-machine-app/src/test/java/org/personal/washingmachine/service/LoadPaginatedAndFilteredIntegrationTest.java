@@ -52,7 +52,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnDTO_With_CorrectProperties() {
 			// GIVEN
-			saveIntoDB(
+			saveToDB(
 					new WashingMachine(
 							"Washing Machine",
 							"WhirlPool",
@@ -99,7 +99,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnCorrectPageIndexAndSize() {
 			// GIVEN
-			saveIntoDB(
+			saveToDB(
 					TestData.createValidWashingMachine("serial1"),
 					TestData.createValidWashingMachine("serial2"),
 					TestData.createValidWashingMachine("serial3")
@@ -122,7 +122,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 		@ValueSource(strings = {"Gorenje", "WhirlPool"})
 		void should_ReturnFilteredList_By_Manufacturer(String manufacturer) {
 			// GIVEN
-			saveIntoDB(
+			saveToDB(
 					TestData.createValidWashingMachine("serial1").setManufacturer("Gorenje"),
 					TestData.createValidWashingMachine("serial2").setManufacturer("Gorenje"),
 					TestData.createValidWashingMachine("serial3").setManufacturer("WhirlPool"),
@@ -149,7 +149,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 		@EnumSource(DamageType.class)
 		void should_ReturnFilteredList_By_DamageType(DamageType damageType) {
 			// GIVEN
-			saveIntoDB(
+			saveToDB(
 					TestData.createValidWashingMachine("serialOne").setDamageType(DamageType.IN_TRANSIT),
 					TestData.createValidWashingMachine("serialTwo").setDamageType(DamageType.IN_TRANSIT),
 					TestData.createValidWashingMachine("serialThree").setDamageType(DamageType.IN_USE),
@@ -176,7 +176,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 		@EnumSource(ReturnType.class)
 		void should_ReturnFilteredList_By_ReturnType(ReturnType returnType) {
 			// GIVEN
-			saveIntoDB(
+			saveToDB(
 					TestData.createValidWashingMachine("serial1").setReturnType(ReturnType.COMMERCIAL),
 					TestData.createValidWashingMachine("serial2").setReturnType(ReturnType.COMMERCIAL),
 					TestData.createValidWashingMachine("serial3").setReturnType(ReturnType.SERVICE),
@@ -205,7 +205,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 		@EnumSource(IdentificationMode.class)
 		void should_ReturnFilteredList_By_IdentificationMode(IdentificationMode identificationMode) {
 			// GIVEN
-			saveIntoDB(
+			saveToDB(
 					TestData.createValidWashingMachine("serial1").setIdentificationMode(IdentificationMode.QR_CODE),
 					TestData.createValidWashingMachine("serial2").setIdentificationMode(IdentificationMode.QR_CODE),
 					TestData.createValidWashingMachine("serial3").setIdentificationMode(IdentificationMode.DATA_MATRIX),
@@ -232,7 +232,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 		@ValueSource(strings = {"serial1", "serial2"})
 		void should_ReturnFilteredList_By_SerialNumber(String serialNumber) {
 			// GIVEN
-			saveIntoDB(
+			saveToDB(
 					TestData.createValidWashingMachine("serial1"),
 					TestData.createValidWashingMachine("serial2")
 			);
@@ -257,7 +257,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 		@ValueSource(strings = {"modelA", "modelB"})
 		void should_ReturnFilteredList_By_Model(String model) {
 			// GIVEN
-			saveIntoDB(
+			saveToDB(
 					TestData.createValidWashingMachine("serial1").setModel("modelA"),
 					TestData.createValidWashingMachine("serial2").setModel("modelA"),
 					TestData.createValidWashingMachine("serial3").setModel("modelB"),
@@ -285,7 +285,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 		@ValueSource(strings = {"TypeY", "TypeZ"})
 		void should_ReturnFilteredList_By_Type(String type) {
 			// GIVEN
-			saveIntoDB(
+			saveToDB(
 					TestData.createValidWashingMachine("serial1").setType("TypeY"),
 					TestData.createValidWashingMachine("serial2").setType("TypeY"),
 					TestData.createValidWashingMachine("serial3").setType("TypeZ"),
@@ -313,7 +313,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 		@EnumSource(value = Recommendation.class, mode = EnumSource.Mode.EXCLUDE, names = "NONE")
 		void should_ReturnFilteredList_By_Recommendation(Recommendation recommendation) {
 			// GIVEN
-			saveIntoDB(
+			saveToDB(
 					TestData.createValidWashingMachine("serial1").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.RESALE)),
 					TestData.createValidWashingMachine("serial2").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.RESALE)),
 					TestData.createValidWashingMachine("serial3").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.DISASSEMBLE)),
@@ -345,7 +345,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnListWithDescendingDates() {
 			// GIVEN
-			saveIntoDB(
+			saveToDB(
 					TestData.createValidWashingMachine("serial1"),
 					TestData.createValidWashingMachine("serial2"),
 					TestData.createValidWashingMachine("serial3")
@@ -370,7 +370,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnFilteredList_By_ManufacturerAndReturnType() {
 			// GIVEN
-			saveIntoDB(
+			saveToDB(
 					TestData.createValidWashingMachine("serial1").setManufacturer("WhirlPool").setReturnType(ReturnType.TRANSPORT),
 					TestData.createValidWashingMachine("serial2").setManufacturer("WhirlPool").setReturnType(ReturnType.TRANSPORT),
 					TestData.createValidWashingMachine("serial3").setManufacturer("WhirlPool").setReturnType(ReturnType.SERVICE),
@@ -399,7 +399,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnFilteredList_By_IdentificationModeAndModelAndType() {
 			// GIVEN
-			saveIntoDB(
+			saveToDB(
 					TestData.createValidWashingMachine("serial1")
 							.setIdentificationMode(IdentificationMode.QR_CODE)
 							.setModel("modelC")
@@ -436,7 +436,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 		}
 	}
 
-	private void saveIntoDB(WashingMachine... washingMachines) {
+	private void saveToDB(WashingMachine... washingMachines) {
 		repository.saveAll(List.of(washingMachines));
 	}
 
@@ -462,7 +462,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnStatusOk_When_SerialNumberFound() throws Exception {
 			// GIVEN
-			saveIntoDB(
+			saveToDB(
 					TestData.createValidWashingMachine("serial8")
 			);
 

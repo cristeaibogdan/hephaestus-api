@@ -39,7 +39,7 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnDTOs_When_SerialNumbersFound() {
 			// GIVEN
-			insertIntoDB(
+			saveToDB(
 					TestData.createValidWashingMachine("serial1"),
 					TestData.createValidWashingMachine("serial2"),
 					TestData.createValidWashingMachine("serial3")
@@ -60,7 +60,7 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnNullDTOs_When_SerialNumbersNotFound() {
 			// GIVEN
-			insertIntoDB(
+			saveToDB(
 					TestData.createValidWashingMachine("serial1"),
 					TestData.createValidWashingMachine("serial2")
 			);
@@ -84,7 +84,7 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 		}
 	}
 
-	private void insertIntoDB(WashingMachine... washingMachines) {
+	private void saveToDB(WashingMachine... washingMachines) {
 		repository.saveAll(List.of(washingMachines));
 	}
 
@@ -110,7 +110,7 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnStatusOk_When_SerialNumbersFound() throws Exception {
 			// GIVEN
-			insertIntoDB(
+			saveToDB(
 					TestData.createValidWashingMachine("serial4"),
 					TestData.createValidWashingMachine("serial5")
 			);

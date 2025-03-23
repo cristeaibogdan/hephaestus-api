@@ -47,7 +47,7 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnDTO_With_CorrectProperties() {
 			// GIVEN
-			saveIntoDB(
+			saveToDB(
 					new SolarPanel(
 							"Solar Panel",
 							"manufacturer",
@@ -92,7 +92,7 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnCorrectPageIndexAndSize() {
 			// GIVEN
-			saveIntoDB(
+			saveToDB(
 					TestData.createValidSolarPanel("serial1"),
 					TestData.createValidSolarPanel("serial2"),
 					TestData.createValidSolarPanel("serial3")
@@ -114,7 +114,7 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnListWithDescendingDates() {
 			// GIVEN
-			saveIntoDB(
+			saveToDB(
 					TestData.createValidSolarPanel("serial1"),
 					TestData.createValidSolarPanel("serial2"),
 					TestData.createValidSolarPanel("serial3")
@@ -140,7 +140,7 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 		@ValueSource(strings = {"Tesla", "Huawei"})
 		void should_ReturnFilteredList_By_Manufacturer(String manufacturer) {
 			// GIVEN
-			saveIntoDB(
+			saveToDB(
 					TestData.createValidSolarPanel("serial1").setManufacturer("Tesla"),
 					TestData.createValidSolarPanel("serial2").setManufacturer("Tesla"),
 					TestData.createValidSolarPanel("serial3").setManufacturer("Huawei"),
@@ -167,7 +167,7 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 		@ValueSource(strings = {"ModelA", "ModelB"})
 		void should_ReturnFilteredList_By_Model(String model) {
 			// GIVEN
-			saveIntoDB(
+			saveToDB(
 					TestData.createValidSolarPanel("serial1").setModel("ModelA"),
 					TestData.createValidSolarPanel("serial2").setModel("ModelA"),
 					TestData.createValidSolarPanel("serial3").setModel("ModelB"),
@@ -195,7 +195,7 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 		@ValueSource(strings = {"TypeY", "TypeZ"})
 		void should_ReturnFilteredList_By_Type(String type) {
 			// GIVEN
-			saveIntoDB(
+			saveToDB(
 					TestData.createValidSolarPanel("serial1").setType("TypeY"),
 					TestData.createValidSolarPanel("serial2").setType("TypeY"),
 					TestData.createValidSolarPanel("serial3").setType("TypeZ"),
@@ -223,7 +223,7 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 		@ValueSource(strings = {"serial1", "serial2"})
 		void should_ReturnFilteredList_By_SerialNumber(String serialNumber) {
 			// GIVEN
-			saveIntoDB(
+			saveToDB(
 					TestData.createValidSolarPanel("serial1"),
 					TestData.createValidSolarPanel("serial2"),
 					TestData.createValidSolarPanel("serial3")
@@ -249,7 +249,7 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 		@EnumSource(value = Recommendation.class)
 		void should_ReturnFilteredList_By_Recommendation(Recommendation recommendation) {
 			// GIVEN
-			saveIntoDB(
+			saveToDB(
 					TestData.createValidSolarPanel("serial1").setDamage(TestData.createDamageWithRecommendation(Recommendation.REPAIR)),
 					TestData.createValidSolarPanel("serial2").setDamage(TestData.createDamageWithRecommendation(Recommendation.REPAIR)),
 					TestData.createValidSolarPanel("serial3").setDamage(TestData.createDamageWithRecommendation(Recommendation.DISPOSE)),
@@ -277,7 +277,7 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnFilteredList_By_ManufacturerAndType() {
 			// GIVEN
-			saveIntoDB(
+			saveToDB(
 					TestData.createValidSolarPanel("serial1").setManufacturer("Tesla").setType("TypeY"),
 					TestData.createValidSolarPanel("serial2").setManufacturer("Tesla").setType("TypeY"),
 					TestData.createValidSolarPanel("serial3").setManufacturer("Tesla").setType("TypeZ"),
@@ -309,7 +309,7 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 			@Test
 			void should_ReturnStatusOk_When_EntitiesInDB() throws Exception {
 				// GIVEN
-				saveIntoDB(
+				saveToDB(
 						TestData.createValidSolarPanel("serial1"),
 						TestData.createValidSolarPanel("serial2")
 				);
@@ -363,7 +363,7 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 		}
 	}
 
-	private void saveIntoDB(SolarPanel... solarPanels) {
+	private void saveToDB(SolarPanel... solarPanels) {
 		repository.saveAll(List.of(solarPanels));
 	}
 

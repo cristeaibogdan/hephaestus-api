@@ -78,7 +78,7 @@ class LoadIntegrationTest extends BaseIntegrationTest {
 			washingMachine.addImage(
 					new WashingMachineImage("some random prefix", new byte[0])
 			);
-			insertIntoDB(washingMachine);
+			saveToDB(washingMachine);
 
 			GetWashingMachineFullResponse expected = new GetWashingMachineFullResponse(
 					"Washing Machine",
@@ -135,7 +135,7 @@ class LoadIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnCurrentDateInCreatedAt() {
 			// GIVEN
-			insertIntoDB(TestData.createValidWashingMachine("current-date-test"));
+			saveToDB(TestData.createValidWashingMachine("current-date-test"));
 
 			// WHEN
 			GetWashingMachineFullResponse actual = underTest.load("current-date-test");
@@ -146,7 +146,7 @@ class LoadIntegrationTest extends BaseIntegrationTest {
 		}
 	}
 
-	private void insertIntoDB(WashingMachine... washingMachines) {
+	private void saveToDB(WashingMachine... washingMachines) {
 		repository.saveAll(List.of(washingMachines));
 	}
 
@@ -168,7 +168,7 @@ class LoadIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnStatusOk_When_SerialNumberExists() throws Exception {
 			// GIVEN
-			insertIntoDB(TestData.createValidWashingMachine("ok-status"));
+			saveToDB(TestData.createValidWashingMachine("ok-status"));
 
 			// WHEN
 			ResultActions resultActions = performRequest("ok-status");

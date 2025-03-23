@@ -33,7 +33,7 @@ class GetRecommendationIntegrationTest extends BaseIntegrationTest {
 		assertThat(repository.count()).isZero();
 	}
 
-	private void insertIntoDB(WashingMachine... washingMachines) {
+	private void saveToDB(WashingMachine... washingMachines) {
 		repository.saveAll(List.of(washingMachines));
 	}
 
@@ -43,7 +43,7 @@ class GetRecommendationIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnExpectedContent_When_SerialNumberFound() throws Exception {
 			// GIVEN
-			insertIntoDB(
+			saveToDB(
 					TestData.createValidWashingMachine("I exist in DB")
 							.setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.OUTLET))
 			);

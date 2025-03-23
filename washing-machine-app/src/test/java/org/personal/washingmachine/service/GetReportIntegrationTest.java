@@ -42,7 +42,7 @@ class GetReportIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnDTO_With_ValidProperties() {
 			// GIVEN
-			insertIntoDB(new WashingMachine(
+			saveToDB(new WashingMachine(
 					"Washing Machine",
 					"Gorenje",
 					DamageType.IN_USE,
@@ -68,7 +68,7 @@ class GetReportIntegrationTest extends BaseIntegrationTest {
 		}
 	}
 
-	private void insertIntoDB(WashingMachine... washingMachines) {
+	private void saveToDB(WashingMachine... washingMachines) {
 		repository.saveAll(List.of(washingMachines));
 	}
 
@@ -90,7 +90,7 @@ class GetReportIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnStatusOk_When_SerialNumberFound() throws Exception {
 			// GIVEN
-			insertIntoDB(
+			saveToDB(
 					TestData.createValidWashingMachine("I exist")
 			);
 

@@ -69,7 +69,7 @@ class RegisterIntegrationTest extends BaseIntegrationTest {
 		}
 	}
 
-	private void insertIntoDB(User... users) {
+	private void saveToDB(User... users) {
 		repository.saveAll(List.of(users));
 	}
 
@@ -93,7 +93,7 @@ class RegisterIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ThrowCustomException_When_EmailAlreadyTaken() throws Exception {
 			// GIVEN
-			insertIntoDB(
+			saveToDB(
 					UserTestData.createUser().setEmail("takenEmail@yahoo.com")
 			);
 
@@ -111,7 +111,7 @@ class RegisterIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ThrowCustomException_When_UsernameAlreadyTaken() throws Exception {
 			// GIVEN
-			insertIntoDB(
+			saveToDB(
 					UserTestData.createUser().setEmail("someEmail@something.com").setUsername("Taken")
 			);
 
