@@ -158,6 +158,62 @@ class LoadPaginatedIntegrationTest extends BaseIntegrationTest {
 					.extracting(wm -> wm.manufacturer())
 					.contains(manufacturer);
 		}
+
+		@ParameterizedTest
+		@ValueSource(strings = {"ModelA", "ModelB"})
+		void should_ReturnFilteredList_By_Model(String model) {
+			// GIVEN
+			saveIntoDB(
+					TestData.createValidSolarPanel("serial1").setModel("ModelA"),
+					TestData.createValidSolarPanel("serial2").setModel("ModelA"),
+					TestData.createValidSolarPanel("serial3").setModel("ModelB"),
+					TestData.createValidSolarPanel("serial4").setModel("ModelB"),
+					TestData.createValidSolarPanel("serial4").setModel("ModelC")
+			);
+
+			// WHEN
+			Page<SearchSolarPanelResponse> actual = underTest.loadPaginated(
+					TestData.createSearchSolarPanelRequest().toBuilder()
+							.pageIndex(0)
+							.pageSize(4)
+							.model(model)
+							.build()
+			);
+
+			// THEN
+			assertThat(actual.getContent())
+					.hasSize(2)
+					.extracting(wm -> wm.model())
+					.contains(model);
+		}
+
+		@ParameterizedTest
+		@ValueSource(strings = {"TypeY", "TypeZ"})
+		void should_ReturnFilteredList_By_Type(String type) {
+			// GIVEN
+			saveIntoDB(
+					TestData.createValidSolarPanel("serial1").setType("TypeY"),
+					TestData.createValidSolarPanel("serial2").setType("TypeY"),
+					TestData.createValidSolarPanel("serial3").setType("TypeZ"),
+					TestData.createValidSolarPanel("serial4").setType("TypeZ"),
+					TestData.createValidSolarPanel("serial4").setType("TypeWHY")
+			);
+
+			// WHEN
+			Page<SearchSolarPanelResponse> actual = underTest.loadPaginated(
+					TestData.createSearchSolarPanelRequest().toBuilder()
+							.pageIndex(0)
+							.pageSize(4)
+							.type(type)
+							.build()
+			);
+
+			// THEN
+			assertThat(actual.getContent())
+					.hasSize(2)
+					.extracting(wm -> wm.type())
+					.contains(type);
+		}
 	}
 
 	@Nested
