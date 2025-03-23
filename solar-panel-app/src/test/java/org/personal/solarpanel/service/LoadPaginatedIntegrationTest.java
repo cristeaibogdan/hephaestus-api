@@ -3,6 +3,8 @@ package org.personal.solarpanel.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.personal.solarpanel.BaseIntegrationTest;
 import org.personal.solarpanel.TestData;
 import org.personal.solarpanel.dto.SearchSolarPanelRequest;
@@ -40,7 +42,7 @@ class LoadPaginatedIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnDTO_With_CorrectProperties() {
 			// GIVEN
-			insertIntoDB(
+			saveIntoDB(
 					new SolarPanel(
 							"Solar Panel",
 							"manufacturer",
@@ -69,7 +71,10 @@ class LoadPaginatedIntegrationTest extends BaseIntegrationTest {
 
 			// WHEN
 			Page<SearchSolarPanelResponse> actual = underTest.loadPaginated(
-					new SearchSolarPanelRequest(0, 2)
+					TestData.createSearchSolarPanelRequest().toBuilder()
+							.pageIndex(0)
+							.pageSize(2)
+							.build()
 			);
 
 			// THEN
@@ -82,7 +87,7 @@ class LoadPaginatedIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnCorrectPageIndexAndSize() {
 			// GIVEN
-			insertIntoDB(
+			saveIntoDB(
 					TestData.createValidSolarPanel("serial1"),
 					TestData.createValidSolarPanel("serial2"),
 					TestData.createValidSolarPanel("serial3")
@@ -90,12 +95,42 @@ class LoadPaginatedIntegrationTest extends BaseIntegrationTest {
 
 			// WHEN
 			Page<SearchSolarPanelResponse> actual = underTest.loadPaginated(
-					new SearchSolarPanelRequest(0, 3)
+					TestData.createSearchSolarPanelRequest().toBuilder()
+							.pageIndex(0)
+							.pageSize(3)
+							.build()
 			);
 
 			// THEN
 			assertThat(actual.getNumber()).isZero();
 			assertThat(actual.getSize()).isEqualTo(3);
+		}
+
+		@ParameterizedTest
+		@ValueSource(strings = {"Tesla", "Huawei"})
+		void should_ReturnFilteredList_By_Manufacturer(String manufacturer) {
+			// GIVEN
+			saveIntoDB(
+					TestData.createValidSolarPanel("serial1").setManufacturer("Tesla"),
+					TestData.createValidSolarPanel("serial2").setManufacturer("Tesla"),
+					TestData.createValidSolarPanel("serial3").setManufacturer("Huawei"),
+					TestData.createValidSolarPanel("serial4").setManufacturer("Huawei")
+			);
+
+			// WHEN
+			Page<SearchSolarPanelResponse> actual = underTest.loadPaginated(
+					TestData.createSearchSolarPanelRequest().toBuilder()
+							.pageIndex(0)
+							.pageSize(4)
+							.manufacturer(manufacturer)
+							.build()
+			);
+
+			// THEN
+			assertThat(actual.getContent())
+					.hasSize(2)
+					.extracting(wm -> wm.manufacturer())
+					.contains(manufacturer);
 		}
 	}
 
@@ -104,14 +139,17 @@ class LoadPaginatedIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnStatusOk_When_EntitiesInDB() throws Exception {
 			// GIVEN
-			insertIntoDB(
+			saveIntoDB(
 					TestData.createValidSolarPanel("serial1"),
 					TestData.createValidSolarPanel("serial2")
 			);
 
 			// WHEN
 			ResultActions resultActions = performRequest(
-					new SearchSolarPanelRequest(0, 2)
+					TestData.createSearchSolarPanelRequest().toBuilder()
+							.pageIndex(0)
+							.pageSize(2)
+							.build()
 			);
 
 			// THEN
@@ -125,7 +163,10 @@ class LoadPaginatedIntegrationTest extends BaseIntegrationTest {
 			// GIVEN
 			// WHEN
 			ResultActions resultActions = performRequest(
-					new SearchSolarPanelRequest(0, 2)
+					TestData.createSearchSolarPanelRequest().toBuilder()
+							.pageIndex(0)
+							.pageSize(2)
+							.build()
 			);
 
 			// THEN
@@ -135,7 +176,7 @@ class LoadPaginatedIntegrationTest extends BaseIntegrationTest {
 		}
 	}
 
-	private void insertIntoDB(SolarPanel... solarPanels) {
+	private void saveIntoDB(SolarPanel... solarPanels) {
 		repository.saveAll(List.of(solarPanels));
 	}
 

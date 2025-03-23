@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 
 import static lombok.AccessLevel.*;
 
-@Getter
+@Getter @Setter
 @NoArgsConstructor(access = PROTECTED)
 @Entity
 @Table(schema = "public", name = "solar_panel")

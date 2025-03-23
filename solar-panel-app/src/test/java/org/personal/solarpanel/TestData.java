@@ -2,6 +2,7 @@ package org.personal.solarpanel;
 
 import org.personal.solarpanel.dto.SaveSolarPanelDamageRequest;
 import org.personal.solarpanel.dto.SaveSolarPanelRequest;
+import org.personal.solarpanel.dto.SearchSolarPanelRequest;
 import org.personal.solarpanel.entity.Damage;
 import org.personal.solarpanel.entity.SolarPanel;
 
@@ -38,6 +39,19 @@ public class TestData {
 						false,
 						""
 				)
+		);
+	}
+
+	public static SearchSolarPanelRequest createSearchSolarPanelRequest() {
+		return new SearchSolarPanelRequest(
+				0,
+				2,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null
 		);
 	}
 }
