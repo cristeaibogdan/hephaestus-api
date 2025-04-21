@@ -62,29 +62,31 @@ public class SolarPanelApplicationService implements ISolarPanelApplicationServi
 				sort
 		);
 
-		BooleanBuilder booleanBuilder = new BooleanBuilder()
+		BooleanBuilder searchFilters = new BooleanBuilder()
 				.and(QueryDSLUtils.addStringLikeCondition(solarPanel.manufacturer, request.manufacturer()))
 				.and(QueryDSLUtils.addStringLikeCondition(solarPanel.model, request.model()))
 				.and(QueryDSLUtils.addStringLikeCondition(solarPanel.type, request.type()))
 				.and(QueryDSLUtils.addStringLikeCondition(solarPanel.serialNumber, request.serialNumber()))
-
 				.and(QueryDSLUtils.addEnumEqualCondition(solarPanel.recommendation, request.recommendation()))
-
 				.and(QueryDSLUtils.addTimestampEqualCondition(solarPanel.createdAt, parseToLocalDate(request.createdAt())));
 
-		Page<SolarPanel> responsePage = repository.findAll(booleanBuilder, pageRequest);
+		Page<SolarPanel> responsePage = repository.findAll(searchFilters, pageRequest);
 
 		return responsePage.map(solarPanel -> mapper.toSearchSolarPanelResponse(solarPanel));
 	}
 
 	private Sort buildSort(String sortByField, String sortDirection) {
-		if(sortByField != null && !sortByField.isBlank()) {
+		if(sortByField == null || sortByField.isBlank()) {
 			return Sort.by(
-					Sort.Direction.fromString(sortDirection),
-					sortByField
+					Sort.Direction.DESC,
+					solarPanel.createdAt.getMetadata().getName()
 			);
 		}
-		return Sort.by(solarPanel.createdAt.getMetadata().getName()).descending();
+
+		return Sort.by(
+				Sort.Direction.fromString(sortDirection),
+				sortByField
+		);
 	}
 
 	private Optional<LocalDate> parseToLocalDate(String dateString) { //TODO: Duplicated code.
