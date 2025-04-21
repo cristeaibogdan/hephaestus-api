@@ -77,7 +77,7 @@ public class SolarPanelApplicationService implements ISolarPanelApplicationServi
 		return responsePage.map(solarPanel -> mapper.toSearchSolarPanelResponse(solarPanel));
 	}
 
-	private static Sort buildSort(String sortByField, String sortDirection) {
+	private Sort buildSort(String sortByField, String sortDirection) {
 		if(sortByField != null && !sortByField.isBlank()) {
 			return Sort.by(
 					Sort.Direction.fromString(sortDirection),
