@@ -134,6 +134,38 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 					.isSortedAccordingTo(Comparator.reverseOrder()); // Check descending order
 		}
 
+		/*
+			Due to how AngularMaterial table works, it is possible to send:
+			sortByField: "serialNumber"
+			sortDirection: ""
+		 */
+		@Test
+		void should_ReturnSortedListBy_AscendingSerialNumber_When_SortDirectionIsEmpty() {
+			// GIVEN
+			saveToDB(
+					TestData.createValidSolarPanel("serial1"),
+					TestData.createValidSolarPanel("serial2"),
+					TestData.createValidSolarPanel("serial3")
+			);
+
+			// WHEN
+			Page<SearchSolarPanelResponse> actual = underTest.search(
+					TestData.createSearchSolarPanelRequest().toBuilder()
+							.pageIndex(0)
+							.pageSize(3)
+							.sortByField("serialNumber")
+							.sortDirection("")
+							.build()
+			);
+
+			// THEN
+			assertThat(actual.getContent())
+					.hasSize(3)
+					.extracting(solarPanel -> solarPanel.serialNumber())
+					.doesNotContainNull()
+					.isSortedAccordingTo(Comparator.naturalOrder());
+		}
+
 		@Test
 		void should_ReturnSortedListBy_DescendingDates_When_SortFieldDoesNotMatchAnyProperty() {
 			// GIVEN

@@ -79,7 +79,7 @@ public class SolarPanelApplicationService implements ISolarPanelApplicationServi
 			return Sort.by(Sort.Direction.DESC, solarPanel.createdAt.getMetadata().getName());
 		}
 
-		Sort.Direction direction = (sortDirection == null)
+		Sort.Direction direction = (sortDirection == null || sortDirection.isBlank())
 				? Sort.Direction.ASC
 				: Sort.Direction.fromString(sortDirection);
 
