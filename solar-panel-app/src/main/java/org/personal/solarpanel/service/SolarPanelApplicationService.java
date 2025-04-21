@@ -76,17 +76,25 @@ public class SolarPanelApplicationService implements ISolarPanelApplicationServi
 	}
 
 	private Sort buildSort(String sortByField, String sortDirection) {
-		if(sortByField == null || sortByField.isBlank()) {
-			return Sort.by(
-					Sort.Direction.DESC,
-					solarPanel.createdAt.getMetadata().getName()
-			);
+
+		if (sortByField == null) {
+			return Sort.by(Sort.Direction.DESC, solarPanel.createdAt.getMetadata().getName());
 		}
 
-		return Sort.by(
-				Sort.Direction.fromString(sortDirection),
-				sortByField
-		);
+		Sort.Direction direction = (sortDirection == null)
+				? Sort.Direction.ASC
+				: Sort.Direction.fromString(sortDirection);
+
+		return switch (sortByField) {
+			case "manufacturer" -> Sort.by(direction, solarPanel.manufacturer.getMetadata().getName());
+			case "model" -> Sort.by(direction, solarPanel.model.getMetadata().getName());
+			case "type" -> Sort.by(direction, solarPanel.type.getMetadata().getName());
+			case "serialNumber" -> Sort.by(direction, solarPanel.serialNumber.getMetadata().getName());
+			case "recommendation" -> Sort.by(direction, solarPanel.recommendation.getMetadata().getName());
+			case "createdAt" -> Sort.by(direction, solarPanel.createdAt.getMetadata().getName());
+
+			default -> Sort.by(Sort.Direction.DESC, solarPanel.createdAt.getMetadata().getName());
+		};
 	}
 
 	private Optional<LocalDate> parseToLocalDate(String dateString) { //TODO: Duplicated code.

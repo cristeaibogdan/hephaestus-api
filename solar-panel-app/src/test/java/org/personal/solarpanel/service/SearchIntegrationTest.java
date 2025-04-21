@@ -32,15 +32,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class SearchIntegrationTest extends BaseIntegrationTest {
 
-	@Autowired
-	SolarPanelApplicationService underTest;
-	@Autowired
-	SolarPanelRepository repository;
+	@Autowired SolarPanelApplicationService underTest;
+	@Autowired SolarPanelRepository repository;
 
-	@Autowired
-	MockMvc mockMvc;
-	@Autowired
-	ObjectMapper jackson;
+	@Autowired MockMvc mockMvc;
+	@Autowired ObjectMapper jackson;
 
 	@Nested
 	class IntegrationTest {
@@ -163,6 +159,33 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 					.hasSize(4)
 					.extracting(solarPanel -> solarPanel.manufacturer())
 					.isSortedAccordingTo(Comparator.naturalOrder());
+		}
+
+		@Test
+		void should_ReturnListWithDescendingDates_WhenSortFieldDoesNotMatchAnyProperty() {
+			// GIVEN
+			saveToDB(
+					TestData.createValidSolarPanel("serial1"),
+					TestData.createValidSolarPanel("serial2"),
+					TestData.createValidSolarPanel("serial3"),
+					TestData.createValidSolarPanel("serial4")
+			);
+
+			// WHEN
+			Page<SearchSolarPanelResponse> actual = underTest.search(
+					TestData.createSearchSolarPanelRequest().toBuilder()
+							.pageIndex(0)
+							.pageSize(4)
+							.sortByField("some gibberish")
+							.build()
+			);
+
+			// THEN
+			assertThat(actual.getContent())
+					.hasSize(4)
+					.extracting(solarPanel -> solarPanel.createdAt())
+					.doesNotContainNull()
+					.isSortedAccordingTo(Comparator.reverseOrder()); // Check descending order
 		}
 
 		@ParameterizedTest
