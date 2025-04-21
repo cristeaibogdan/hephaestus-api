@@ -332,63 +332,63 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 						assertThat(sp.type()).containsIgnoringCase("TypeY");
 					});
 		}
+	}
 
-		@Nested
-		class MvcTest {
-			@Test
-			void should_ReturnStatusOk_When_EntitiesInDB() throws Exception {
-				// GIVEN
-				saveToDB(
-						TestData.createValidSolarPanel("serial1"),
-						TestData.createValidSolarPanel("serial2")
-				);
+	@Nested
+	class MvcTest {
+		@Test
+		void should_ReturnStatusOk_When_EntitiesInDB() throws Exception {
+			// GIVEN
+			saveToDB(
+					TestData.createValidSolarPanel("serial1"),
+					TestData.createValidSolarPanel("serial2")
+			);
 
-				// WHEN
-				ResultActions resultActions = performRequest(
-						TestData.createSearchSolarPanelRequest().toBuilder()
-								.pageIndex(0)
-								.pageSize(2)
-								.build()
-				);
+			// WHEN
+			ResultActions resultActions = performRequest(
+					TestData.createSearchSolarPanelRequest().toBuilder()
+							.pageIndex(0)
+							.pageSize(2)
+							.build()
+			);
 
-				// THEN
-				resultActions
-						.andExpect(status().isOk())
-						.andExpect(content().string(not(emptyString())));
-			}
+			// THEN
+			resultActions
+					.andExpect(status().isOk())
+					.andExpect(content().string(not(emptyString())));
+		}
 
-			@Test
-			void should_ReturnStatusOk_When_NoEntitiesInDB() throws Exception {
-				// GIVEN
-				// WHEN
-				ResultActions resultActions = performRequest(
-						TestData.createSearchSolarPanelRequest().toBuilder()
-								.pageIndex(0)
-								.pageSize(2)
-								.build()
-				);
+		@Test
+		void should_ReturnStatusOk_When_NoEntitiesInDB() throws Exception {
+			// GIVEN
+			// WHEN
+			ResultActions resultActions = performRequest(
+					TestData.createSearchSolarPanelRequest().toBuilder()
+							.pageIndex(0)
+							.pageSize(2)
+							.build()
+			);
 
-				// THEN
-				resultActions
-						.andExpect(status().isOk())
-						.andExpect(content().string(not(emptyString())));
-			}
+			// THEN
+			resultActions
+					.andExpect(status().isOk())
+					.andExpect(content().string(not(emptyString())));
+		}
 
-			@Test
-			void should_ThrowCustomException_When_InvalidDate() throws Exception {
-				// GIVEN
-				// WHEN
-				ResultActions resultActions = performRequest(
-						TestData.createSearchSolarPanelRequest().toBuilder()
-								.createdAt("invalid date")
-								.build()
-				);
+		@Test
+		void should_ThrowCustomException_When_InvalidDate() throws Exception {
+			// GIVEN
+			// WHEN
+			ResultActions resultActions = performRequest(
+					TestData.createSearchSolarPanelRequest().toBuilder()
+							.createdAt("invalid date")
+							.build()
+			);
 
-				// THEN
-				resultActions
-						.andExpect(status().isBadRequest())
-						.andExpect(content().string(not(containsString("Internal Translation Error"))));
-			}
+			// THEN
+			resultActions
+					.andExpect(status().isBadRequest())
+					.andExpect(content().string(not(containsString("Internal Translation Error"))));
 		}
 	}
 
