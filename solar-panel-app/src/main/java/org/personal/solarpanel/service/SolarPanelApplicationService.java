@@ -53,10 +53,13 @@ public class SolarPanelApplicationService implements ISolarPanelApplicationServi
 
 	@Override
 	public Page<SearchSolarPanelResponse> search(SearchSolarPanelRequest request) {
+
+		Sort sort = buildSort(request.sortByField(), request.sortDirection());
+
 		PageRequest pageRequest = PageRequest.of(
 				request.pageIndex(),
 				request.pageSize(),
-				Sort.by(solarPanel.createdAt.getMetadata().getName()).descending()
+				sort
 		);
 
 		BooleanBuilder booleanBuilder = new BooleanBuilder()
@@ -72,6 +75,16 @@ public class SolarPanelApplicationService implements ISolarPanelApplicationServi
 		Page<SolarPanel> responsePage = repository.findAll(booleanBuilder, pageRequest);
 
 		return responsePage.map(solarPanel -> mapper.toSearchSolarPanelResponse(solarPanel));
+	}
+
+	private static Sort buildSort(String sortByField, String sortDirection) {
+		if(sortByField != null && !sortByField.isBlank()) {
+			return Sort.by(
+					Sort.Direction.fromString(sortDirection),
+					sortByField
+			);
+		}
+		return Sort.by(solarPanel.createdAt.getMetadata().getName()).descending();
 	}
 
 	private Optional<LocalDate> parseToLocalDate(String dateString) { //TODO: Duplicated code.

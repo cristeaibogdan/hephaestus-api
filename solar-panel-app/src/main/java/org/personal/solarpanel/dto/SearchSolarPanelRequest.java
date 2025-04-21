@@ -8,6 +8,9 @@ public record SearchSolarPanelRequest(
 		int pageIndex,
 		int pageSize,
 
+		String sortByField,
+		String sortDirection,
+
 		String manufacturer,
 		String model,
 		String type,
