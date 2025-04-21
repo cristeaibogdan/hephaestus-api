@@ -188,6 +188,141 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 					.isSortedAccordingTo(Comparator.naturalOrder());
 		}
 
+		@Test
+		void should_ReturnSortedListBy_DescendingModel() {
+			// GIVEN
+			saveToDB(
+					TestData.createValidSolarPanel("serial1").setModel("A"),
+					TestData.createValidSolarPanel("serial2").setModel("B"),
+					TestData.createValidSolarPanel("serial3").setModel("C"),
+					TestData.createValidSolarPanel("serial4").setModel("F")
+			);
+
+			// WHEN
+			Page<SearchSolarPanelResponse> actual = underTest.search(
+					TestData.createSearchSolarPanelRequest().toBuilder()
+							.pageIndex(0)
+							.pageSize(4)
+							.sortByField("model")
+							.sortDirection("desc")
+							.build()
+			);
+
+			// THEN
+			assertThat(actual.getContent())
+					.hasSize(4)
+					.extracting(solarPanel -> solarPanel.model())
+					.isSortedAccordingTo(Comparator.reverseOrder());
+		}
+
+		@Test
+		void should_ReturnSortedListBy_AscendingType() {
+			// GIVEN
+			saveToDB(
+					TestData.createValidSolarPanel("serial1").setType("A"),
+					TestData.createValidSolarPanel("serial2").setType("B"),
+					TestData.createValidSolarPanel("serial3").setType("C"),
+					TestData.createValidSolarPanel("serial4").setType("F")
+			);
+
+			// WHEN
+			Page<SearchSolarPanelResponse> actual = underTest.search(
+					TestData.createSearchSolarPanelRequest().toBuilder()
+							.pageIndex(0)
+							.pageSize(4)
+							.sortByField("type")
+							.sortDirection("asc")
+							.build()
+			);
+
+			// THEN
+			assertThat(actual.getContent())
+					.hasSize(4)
+					.extracting(solarPanel -> solarPanel.type())
+					.isSortedAccordingTo(Comparator.naturalOrder());
+		}
+
+		@Test
+		void should_ReturnSortedListBy_AscendingSerialNumber() {
+			// GIVEN
+			saveToDB(
+					TestData.createValidSolarPanel("serial1"),
+					TestData.createValidSolarPanel("serial2"),
+					TestData.createValidSolarPanel("serial3"),
+					TestData.createValidSolarPanel("serial4")
+			);
+
+			// WHEN
+			Page<SearchSolarPanelResponse> actual = underTest.search(
+					TestData.createSearchSolarPanelRequest().toBuilder()
+							.pageIndex(0)
+							.pageSize(4)
+							.sortByField("serialNumber")
+							.sortDirection("asc")
+							.build()
+			);
+
+			// THEN
+			assertThat(actual.getContent())
+					.hasSize(4)
+					.extracting(solarPanel -> solarPanel.serialNumber())
+					.isSortedAccordingTo(Comparator.naturalOrder());
+		}
+
+		@Test
+		void should_ReturnSortedListBy_AscendingRecommendation() {
+			// GIVEN
+			saveToDB(
+					TestData.createValidSolarPanel("serial1").setDamage(TestData.createDamageWithRecommendation(Recommendation.REPAIR)),
+					TestData.createValidSolarPanel("serial2").setDamage(TestData.createDamageWithRecommendation(Recommendation.DISPOSE)),
+					TestData.createValidSolarPanel("serial3").setDamage(TestData.createDamageWithRecommendation(Recommendation.RECYCLE)),
+					TestData.createValidSolarPanel("serial4").setDamage(TestData.createDamageWithRecommendation(Recommendation.REPAIR))
+			);
+
+			// WHEN
+			Page<SearchSolarPanelResponse> actual = underTest.search(
+					TestData.createSearchSolarPanelRequest().toBuilder()
+							.pageIndex(0)
+							.pageSize(4)
+							.sortByField("recommendation")
+							.sortDirection("asc")
+							.build()
+			);
+
+			// THEN
+			assertThat(actual.getContent())
+					.hasSize(4)
+					.extracting(solarPanel -> solarPanel.recommendation())
+					.isSortedAccordingTo(Comparator.comparing(Recommendation::name));
+		}
+
+		@Test
+		void should_ReturnSortedListBy_AscendingDate() {
+			// GIVEN
+			saveToDB(
+					TestData.createValidSolarPanel("serial1"),
+					TestData.createValidSolarPanel("serial2"),
+					TestData.createValidSolarPanel("serial3"),
+					TestData.createValidSolarPanel("serial4")
+			);
+
+			// WHEN
+			Page<SearchSolarPanelResponse> actual = underTest.search(
+					TestData.createSearchSolarPanelRequest().toBuilder()
+							.pageIndex(0)
+							.pageSize(4)
+							.sortByField("createdAt")
+							.sortDirection("asc")
+							.build()
+			);
+
+			// THEN
+			assertThat(actual.getContent())
+					.hasSize(4)
+					.extracting(solarPanel -> solarPanel.serialNumber())
+					.isSortedAccordingTo(Comparator.naturalOrder());
+		}
+
 		@ParameterizedTest
 		@ValueSource(strings = {"Tesla", "Huawei"})
 		void should_ReturnFilteredList_By_Manufacturer(String manufacturer) {
