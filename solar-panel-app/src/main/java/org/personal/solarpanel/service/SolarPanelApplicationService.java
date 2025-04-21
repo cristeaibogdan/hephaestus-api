@@ -75,13 +75,11 @@ public class SolarPanelApplicationService implements ISolarPanelApplicationServi
 
 	private Sort buildSort(String sortByField, String sortDirection) {
 
-		if (sortByField == null) {
+		if (sortByField == null || sortDirection == null || sortDirection.isBlank()) {
 			return Sort.by(Sort.Direction.DESC, solarPanel.createdAt.getMetadata().getName());
 		}
 
-		Sort.Direction direction = (sortDirection == null || sortDirection.isBlank())
-				? Sort.Direction.ASC
-				: Sort.Direction.fromString(sortDirection);
+		Sort.Direction direction = Sort.Direction.fromString(sortDirection);
 
 		return switch (sortByField) {
 			case "manufacturer" -> Sort.by(direction, solarPanel.manufacturer.getMetadata().getName());

@@ -108,7 +108,7 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 		}
 
 		@Test
-		void should_ReturnSortedListBy_DescendingDates_When_SortAndDirectionAreNull() {
+		void should_ReturnSortedListBy_DescendingDates_When_SortIsNull() {
 			// GIVEN
 			saveToDB(
 					TestData.createValidSolarPanel("serial1"),
@@ -122,6 +122,32 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 							.pageIndex(0)
 							.pageSize(3)
 							.sortByField(null)
+							.build()
+			);
+
+			// THEN
+			assertThat(actual.getContent())
+					.hasSize(3)
+					.extracting(solarPanel -> solarPanel.createdAt())
+					.doesNotContainNull()
+					.isSortedAccordingTo(Comparator.reverseOrder()); // Check descending order
+		}
+
+		@Test
+		void should_ReturnSortedListBy_DescendingDates_When_SortDirectionIsNull() {
+			// GIVEN
+			saveToDB(
+					TestData.createValidSolarPanel("serial1"),
+					TestData.createValidSolarPanel("serial2"),
+					TestData.createValidSolarPanel("serial3")
+			);
+
+			// WHEN
+			Page<SearchSolarPanelResponse> actual = underTest.search(
+					TestData.createSearchSolarPanelRequest().toBuilder()
+							.pageIndex(0)
+							.pageSize(3)
+							.sortByField("Needed to pass the first check in if()")
 							.sortDirection(null)
 							.build()
 			);
@@ -140,7 +166,7 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 			sortDirection: ""
 		 */
 		@Test
-		void should_ReturnSortedListBy_AscendingSerialNumber_When_SortDirectionIsEmpty() {
+		void should_ReturnSortedListBy_DescendingDates_When_SortDirectionIsEmpty() {
 			// GIVEN
 			saveToDB(
 					TestData.createValidSolarPanel("serial1"),
@@ -161,9 +187,9 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 			// THEN
 			assertThat(actual.getContent())
 					.hasSize(3)
-					.extracting(solarPanel -> solarPanel.serialNumber())
+					.extracting(solarPanel -> solarPanel.createdAt())
 					.doesNotContainNull()
-					.isSortedAccordingTo(Comparator.naturalOrder());
+					.isSortedAccordingTo(Comparator.reverseOrder()); // Check descending order
 		}
 
 		@Test
@@ -182,6 +208,7 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 							.pageIndex(0)
 							.pageSize(4)
 							.sortByField("some gibberish")
+							.sortDirection("desc")
 							.build()
 			);
 
