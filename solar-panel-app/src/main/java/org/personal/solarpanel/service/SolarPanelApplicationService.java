@@ -54,12 +54,10 @@ public class SolarPanelApplicationService implements ISolarPanelApplicationServi
 	@Override
 	public Page<SearchSolarPanelResponse> search(SearchSolarPanelRequest request) {
 
-		Sort sort = buildSort(request.sortByField(), request.sortDirection());
-
 		PageRequest pageRequest = PageRequest.of(
 				request.pageIndex(),
 				request.pageSize(),
-				sort
+				buildSort(request.sortByField(), request.sortDirection())
 		);
 
 		BooleanBuilder searchFilters = new BooleanBuilder()

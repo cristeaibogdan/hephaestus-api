@@ -108,7 +108,7 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 		}
 
 		@Test
-		void should_ReturnListWithDescendingDates_WhenSortAndDirectionAreNull() {
+		void should_ReturnSortedListBy_DescendingDates_When_SortAndDirectionAreNull() {
 			// GIVEN
 			saveToDB(
 					TestData.createValidSolarPanel("serial1"),
@@ -135,34 +135,7 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 		}
 
 		@Test
-		void should_ReturnListWithAscendingManufacturer() {
-			// GIVEN
-			saveToDB(
-					TestData.createValidSolarPanel("serial1").setManufacturer("A"),
-					TestData.createValidSolarPanel("serial2").setManufacturer("B"),
-					TestData.createValidSolarPanel("serial3").setManufacturer("C"),
-					TestData.createValidSolarPanel("serial4").setManufacturer("F")
-			);
-
-			// WHEN
-			Page<SearchSolarPanelResponse> actual = underTest.search(
-					TestData.createSearchSolarPanelRequest().toBuilder()
-							.pageIndex(0)
-							.pageSize(4)
-							.sortByField("manufacturer")
-							.sortDirection("asc")
-							.build()
-			);
-
-			// THEN
-			assertThat(actual.getContent())
-					.hasSize(4)
-					.extracting(solarPanel -> solarPanel.manufacturer())
-					.isSortedAccordingTo(Comparator.naturalOrder());
-		}
-
-		@Test
-		void should_ReturnListWithDescendingDates_WhenSortFieldDoesNotMatchAnyProperty() {
+		void should_ReturnSortedListBy_DescendingDates_When_SortFieldDoesNotMatchAnyProperty() {
 			// GIVEN
 			saveToDB(
 					TestData.createValidSolarPanel("serial1"),
@@ -186,6 +159,33 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 					.extracting(solarPanel -> solarPanel.createdAt())
 					.doesNotContainNull()
 					.isSortedAccordingTo(Comparator.reverseOrder()); // Check descending order
+		}
+
+		@Test
+		void should_ReturnSortedListBy_AscendingManufacturer() {
+			// GIVEN
+			saveToDB(
+					TestData.createValidSolarPanel("serial1").setManufacturer("A"),
+					TestData.createValidSolarPanel("serial2").setManufacturer("B"),
+					TestData.createValidSolarPanel("serial3").setManufacturer("C"),
+					TestData.createValidSolarPanel("serial4").setManufacturer("F")
+			);
+
+			// WHEN
+			Page<SearchSolarPanelResponse> actual = underTest.search(
+					TestData.createSearchSolarPanelRequest().toBuilder()
+							.pageIndex(0)
+							.pageSize(4)
+							.sortByField("manufacturer")
+							.sortDirection("asc")
+							.build()
+			);
+
+			// THEN
+			assertThat(actual.getContent())
+					.hasSize(4)
+					.extracting(solarPanel -> solarPanel.manufacturer())
+					.isSortedAccordingTo(Comparator.naturalOrder());
 		}
 
 		@ParameterizedTest
