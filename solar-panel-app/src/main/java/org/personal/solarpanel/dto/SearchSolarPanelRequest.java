@@ -1,6 +1,7 @@
 package org.personal.solarpanel.dto;
 
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Pattern;
 import lombok.Builder;
 import org.personal.solarpanel.enums.Recommendation;
 
@@ -12,6 +13,7 @@ public record SearchSolarPanelRequest(
 		int pageSize,
 
 		String sortByField,
+		@Pattern(regexp = "^(asc|desc)?$", message = "Sort direction must be 'asc', 'desc', or empty")
 		String sortDirection,
 
 		String manufacturer,
