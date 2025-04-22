@@ -70,7 +70,7 @@ public class SolarPanelApplicationService implements ISolarPanelApplicationServi
 
 		Page<SolarPanel> responsePage = repository.findAll(searchFilters, pageRequest);
 
-		return responsePage.map(solarPanel -> mapper.toSearchSolarPanelResponse(solarPanel));
+		return null;
 	}
 
 	private Sort buildSort(String sortByField, String sortDirection) {

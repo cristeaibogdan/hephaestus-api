@@ -1,5 +1,6 @@
 package org.personal.solarpanel.service;
 
+import jakarta.validation.Valid;
 import org.personal.solarpanel.dto.SaveSolarPanelRequest;
 import org.personal.solarpanel.dto.SearchSolarPanelRequest;
 import org.personal.solarpanel.dto.SearchSolarPanelResponse;
@@ -18,5 +19,5 @@ public interface ISolarPanelApplicationService {
 	Recommendation getRecommendation(@PathVariable String serialNumber);
 
 	@PostMapping
-	Page<SearchSolarPanelResponse> search(@RequestBody SearchSolarPanelRequest searchSolarPanelRequest);
+	Page<SearchSolarPanelResponse> search(@Valid @RequestBody SearchSolarPanelRequest request);
 }
