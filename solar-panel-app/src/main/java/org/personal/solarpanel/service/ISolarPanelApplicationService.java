@@ -1,6 +1,8 @@
 package org.personal.solarpanel.service;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import org.personal.solarpanel.dto.GetSolarPanelFullResponse;
 import org.personal.solarpanel.dto.SaveSolarPanelRequest;
 import org.personal.solarpanel.dto.SearchSolarPanelRequest;
@@ -26,5 +28,9 @@ public interface ISolarPanelApplicationService {
 	Page<SearchSolarPanelResponse> search(@Valid @RequestBody SearchSolarPanelRequest request);
 
 	@PostMapping("/many")
-	Map<String, GetSolarPanelFullResponse> loadMany(@RequestBody Set<String> serialNumbers);
+	Map<String, GetSolarPanelFullResponse> loadMany(
+			@RequestBody
+			@NotEmpty(message = "{LIST_NOT_EMPTY}")
+			Set<@NotBlank(message = "{FIELD_NOT_BLANK}") String> serialNumbers
+	);
 }

@@ -71,7 +71,7 @@ class SearchValidationMvcTest {
 				.andExpect(content().string(containsString("pageSize")));
 	}
 
-	@ParameterizedTest(name = "Sort direction: {0} is invalid")
+	@ParameterizedTest(name = "Invalid sort direction: {0}")
 	@ValueSource(strings = {"some gibberish", " sa", "ASC", "DESC"})
 	void should_ThrowValidationException_When_SortDirectionInvalid(String sortDirection) throws Exception {
 		// GIVEN
@@ -91,7 +91,7 @@ class SearchValidationMvcTest {
 				.andExpect(content().string(containsString("sortDirection")));
 	}
 
-	@ParameterizedTest(name = "Sort direction: {0} is invalid")
+	@ParameterizedTest(name = "Valid sort direction: {0}")
 	@ValueSource(strings = {"asc", "desc", ""})
 	void should_ReturnStatusOk_When_SortDirectionValid(String sortDirection) throws Exception {
 		// GIVEN
