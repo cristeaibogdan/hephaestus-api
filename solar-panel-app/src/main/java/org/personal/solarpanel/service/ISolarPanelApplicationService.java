@@ -25,5 +25,6 @@ public interface ISolarPanelApplicationService {
 	@PostMapping
 	Page<SearchSolarPanelResponse> search(@Valid @RequestBody SearchSolarPanelRequest request);
 
-	Map<String, GetSolarPanelFullResponse> loadMany(Set<String> serialNumbers);
+	@PostMapping("/many")
+	Map<String, GetSolarPanelFullResponse> loadMany(@RequestBody Set<String> serialNumbers);
 }

@@ -112,6 +112,9 @@ public class SolarPanelApplicationService implements ISolarPanelApplicationServi
 	public Map<String, GetSolarPanelFullResponse> loadMany(Set<String> serialNumbers) {
 
 		List<SolarPanel> solarPanels = repository.findAllBySerialNumberIn(serialNumbers);
+		if(solarPanels.isEmpty()) {
+			throw new CustomException(ErrorCode.SERIAL_NUMBERS_NOT_FOUND, serialNumbers);
+		}
 
 		return buildResponseMap(solarPanels, serialNumbers);
 	}
