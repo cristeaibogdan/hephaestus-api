@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
+import org.personal.solarpanel.dto.GetSolarPanelFullResponse;
 import org.personal.solarpanel.dto.SaveSolarPanelRequest;
 import org.personal.solarpanel.dto.SearchSolarPanelRequest;
 import org.personal.solarpanel.dto.SearchSolarPanelResponse;
@@ -21,7 +22,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.personal.solarpanel.entity.QSolarPanel.solarPanel;
 
@@ -71,6 +76,26 @@ public class SolarPanelApplicationService implements ISolarPanelApplicationServi
 		Page<SolarPanel> responsePage = repository.findAll(searchFilters, pageRequest);
 
 		return responsePage.map(solarPanel -> mapper.toSearchSolarPanelResponse(solarPanel));
+	}
+
+	@Override
+	public Map<String, GetSolarPanelFullResponse> loadMany(Set<String> serialNumbers) {
+
+		List<SolarPanel> solarPanels = repository.findAllBySerialNumberIn(serialNumbers);
+
+		return buildResponseMap(solarPanels, serialNumbers);
+	}
+
+	private Map<String, GetSolarPanelFullResponse> buildResponseMap(List<SolarPanel> solarPanels, Set<String> serialNumbers) {
+		Map<String, GetSolarPanelFullResponse> result = solarPanels.stream()
+				.map(solarpanel -> mapper.toGetSolarPanelFullResponse(solarpanel))
+				.collect(Collectors.toMap(
+						getSolarPanelFullResponse -> getSolarPanelFullResponse.serialNumber(),
+						getSolarPanelFullResponse -> getSolarPanelFullResponse
+				));
+
+		serialNumbers.forEach(serialNumber -> result.putIfAbsent(serialNumber, null));
+		return result;
 	}
 
 	private Sort buildSort(String sortByField, String sortDirection) {

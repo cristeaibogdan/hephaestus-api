@@ -1,6 +1,7 @@
 package org.personal.solarpanel.service;
 
 import jakarta.validation.Valid;
+import org.personal.solarpanel.dto.GetSolarPanelFullResponse;
 import org.personal.solarpanel.dto.SaveSolarPanelRequest;
 import org.personal.solarpanel.dto.SearchSolarPanelRequest;
 import org.personal.solarpanel.dto.SearchSolarPanelResponse;
@@ -8,6 +9,9 @@ import org.personal.solarpanel.enums.Recommendation;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
+import java.util.Set;
 
 @RequestMapping("/v1/solar-panels")
 public interface ISolarPanelApplicationService {
@@ -20,4 +24,6 @@ public interface ISolarPanelApplicationService {
 
 	@PostMapping
 	Page<SearchSolarPanelResponse> search(@Valid @RequestBody SearchSolarPanelRequest request);
+
+	Map<String, GetSolarPanelFullResponse> loadMany(Set<String> serialNumbers);
 }
