@@ -78,24 +78,14 @@ public class SolarPanelApplicationService implements ISolarPanelApplicationServi
 		return responsePage.map(solarPanel -> mapper.toSearchSolarPanelResponse(solarPanel));
 	}
 
-	@Override
-	public Map<String, GetSolarPanelFullResponse> loadMany(Set<String> serialNumbers) {
-
-		List<SolarPanel> solarPanels = repository.findAllBySerialNumberIn(serialNumbers);
-
-		return buildResponseMap(solarPanels, serialNumbers);
-	}
-
-	private Map<String, GetSolarPanelFullResponse> buildResponseMap(List<SolarPanel> solarPanels, Set<String> serialNumbers) {
-		Map<String, GetSolarPanelFullResponse> result = solarPanels.stream()
-				.map(solarpanel -> mapper.toGetSolarPanelFullResponse(solarpanel))
-				.collect(Collectors.toMap(
-						getSolarPanelFullResponse -> getSolarPanelFullResponse.serialNumber(),
-						getSolarPanelFullResponse -> getSolarPanelFullResponse
-				));
-
-		serialNumbers.forEach(serialNumber -> result.putIfAbsent(serialNumber, null));
-		return result;
+	private Optional<LocalDate> parseToLocalDate(String dateString) { //TODO: Duplicated code.
+		try {
+			return Optional.ofNullable(dateString)
+					.filter(s -> StringUtils.isNotBlank(s))
+					.map(s -> LocalDate.parse(s.trim()));
+		} catch (DateTimeParseException e) {
+			throw new CustomException("Invalid date provided", ErrorCode.INVALID_DATE, e);
+		}
 	}
 
 	private Sort buildSort(String sortByField, String sortDirection) {
@@ -118,13 +108,23 @@ public class SolarPanelApplicationService implements ISolarPanelApplicationServi
 		};
 	}
 
-	private Optional<LocalDate> parseToLocalDate(String dateString) { //TODO: Duplicated code.
-		try {
-			return Optional.ofNullable(dateString)
-					.filter(s -> StringUtils.isNotBlank(s))
-					.map(s -> LocalDate.parse(s.trim()));
-		} catch (DateTimeParseException e) {
-			throw new CustomException("Invalid date provided", ErrorCode.INVALID_DATE, e);
-		}
+	@Override
+	public Map<String, GetSolarPanelFullResponse> loadMany(Set<String> serialNumbers) {
+
+		List<SolarPanel> solarPanels = repository.findAllBySerialNumberIn(serialNumbers);
+
+		return buildResponseMap(solarPanels, serialNumbers);
+	}
+
+	private Map<String, GetSolarPanelFullResponse> buildResponseMap(List<SolarPanel> solarPanels, Set<String> serialNumbers) {
+		Map<String, GetSolarPanelFullResponse> result = solarPanels.stream()
+				.map(solarpanel -> mapper.toGetSolarPanelFullResponse(solarpanel))
+				.collect(Collectors.toMap(
+						getSolarPanelFullResponse -> getSolarPanelFullResponse.serialNumber(),
+						getSolarPanelFullResponse -> getSolarPanelFullResponse
+				));
+
+		serialNumbers.forEach(serialNumber -> result.putIfAbsent(serialNumber, null));
+		return result;
 	}
 }
