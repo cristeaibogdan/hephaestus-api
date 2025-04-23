@@ -1,6 +1,7 @@
 package org.personal.solarpanel.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -37,6 +38,11 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 
 	@Autowired MockMvc mockMvc;
 	@Autowired ObjectMapper jackson;
+
+	@BeforeEach
+	void checkInitialDataInDB() {
+		assertThat(repository.count()).isZero();
+	}
 
 	@Nested
 	class IntegrationTest {
