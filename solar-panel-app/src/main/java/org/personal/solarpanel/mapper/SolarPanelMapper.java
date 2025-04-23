@@ -47,7 +47,14 @@ public class SolarPanelMapper {
 				entity.getType(),
 				entity.getSerialNumber(),
 				entity.getCreatedAt(),
-				entity.getRecommendation()
+				entity.getRecommendation(),
+				new GetSolarPanelFullResponse.DamageResponse(
+						entity.getDamage().isHotSpots(),
+						entity.getDamage().isMicroCracks(),
+						entity.getDamage().isSnailTrails(),
+						entity.getDamage().isBrokenGlass(),
+						entity.getDamage().getAdditionalDetails()
+				)
 		);
 	}
 }

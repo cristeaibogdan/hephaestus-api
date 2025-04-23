@@ -6,10 +6,13 @@ import org.junit.jupiter.api.Test;
 import org.personal.solarpanel.BaseIntegrationTest;
 import org.personal.solarpanel.TestData;
 import org.personal.solarpanel.dto.GetSolarPanelFullResponse;
+import org.personal.solarpanel.entity.Damage;
 import org.personal.solarpanel.entity.SolarPanel;
+import org.personal.solarpanel.enums.Recommendation;
 import org.personal.solarpanel.repository.SolarPanelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -30,6 +33,53 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 
 	@Nested
 	class IntegrationTest {
+		@Test
+		void should_ReturnDTO_With_CorrectProperties() {
+			// GIVEN
+			saveToDB(
+					new SolarPanel(
+							"Solar Panel",
+							"Manufacturer",
+							"model",
+							"type",
+							"serial1",
+							new Damage(
+									true, // to avoid recommendation exception
+									false,
+									false,
+									false,
+									"some description"
+							)
+					)
+			);
+
+			GetSolarPanelFullResponse expected = new GetSolarPanelFullResponse(
+					"Solar Panel",
+					"Manufacturer",
+					"model",
+					"type",
+					"serial1",
+					LocalDateTime.now(),
+					Recommendation.REPAIR,
+					new GetSolarPanelFullResponse.DamageResponse(
+							true,
+							false,
+							false,
+							false,
+							"some description"
+					)
+			);
+
+			// WHEN
+			Map<String, GetSolarPanelFullResponse> actual = underTest.loadMany(Set.of("serial1"));
+
+			// THEN
+			assertThat(actual.get("serial1"))
+					.usingRecursiveComparison()
+					.ignoringFields("createdAt")
+					.isEqualTo(expected);
+		}
+
 		@Test
 		void should_ReturnDTOs_When_SerialNumbersFound() {
 			// GIVEN

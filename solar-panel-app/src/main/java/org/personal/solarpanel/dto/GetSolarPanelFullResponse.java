@@ -11,5 +11,15 @@ public record GetSolarPanelFullResponse(
 		String type,
 		String serialNumber,
 		LocalDateTime createdAt,
-		Recommendation recommendation
-) {}
+		Recommendation recommendation,
+
+		DamageResponse damage
+) {
+	public record DamageResponse(
+			boolean hotSpots,
+			boolean microCracks,
+			boolean snailTrails,
+			boolean brokenGlass,
+			String additionalDetails
+	) {}
+}
