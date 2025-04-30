@@ -44,7 +44,7 @@ public class SolarPanel extends BaseEntity {
 
 	@Getter(NONE) @Setter(NONE)
 	@JoinColumn(name = "damage_id")
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.ALL)
 	private Damage damage;
 
 	public SolarPanel(String category, String manufacturer, String model, String type, String serialNumber, Damage damage) {

@@ -44,11 +44,11 @@ public class Damage extends BaseEntity {
 
 	public Damage(Damage damage) {
 		this(
-				damage.hotSpots,
-				damage.microCracks,
-				damage.snailTrails,
-				damage.brokenGlass,
-				damage.additionalDetails
+				damage.isHotSpots(),
+				damage.isMicroCracks(),
+				damage.isSnailTrails(),
+				damage.isBrokenGlass(),
+				damage.getAdditionalDetails()
 		);
 	}
 

@@ -66,7 +66,7 @@ public class WashingMachine extends BaseEntity {
 
     @Setter(NONE) @Getter(NONE)
     @JoinColumn(name = "washing_machine_detail_id")
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL)
     private WashingMachineDetail washingMachineDetail;
 
     // TODO: Consider adding nonNull argument in constructor argument.
