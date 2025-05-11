@@ -7,7 +7,7 @@ import org.personal.washingmachine.enums.ReturnType;
 
 import java.time.LocalDateTime;
 
-public record GetWashingMachineSimpleResponse(
+public record SearchWashingMachineResponse(
         String category,
 
         String manufacturer,

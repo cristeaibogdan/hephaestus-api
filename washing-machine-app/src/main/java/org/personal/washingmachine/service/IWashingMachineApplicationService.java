@@ -19,7 +19,7 @@ import java.util.Set;
 @RequestMapping("/api/v1/washing-machines")
 public interface IWashingMachineApplicationService {
 	@PostMapping
-	Page<GetWashingMachineSimpleResponse> loadPaginatedAndFiltered(@Valid @RequestBody SearchWashingMachineRequest searchWashingMachineRequest);
+	Page<SearchWashingMachineResponse> loadPaginatedAndFiltered(@Valid @RequestBody SearchWashingMachineRequest searchWashingMachineRequest);
 
 	@GetMapping("/{serialNumber}")
 	GetWashingMachineFullResponse load(@PathVariable String serialNumber);

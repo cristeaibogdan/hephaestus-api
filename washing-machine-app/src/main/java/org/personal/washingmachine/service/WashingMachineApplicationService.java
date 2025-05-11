@@ -41,7 +41,7 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 	private final WashingMachineMapper washingMachineMapper;
 
 	@Override
-	public Page<GetWashingMachineSimpleResponse> loadPaginatedAndFiltered(SearchWashingMachineRequest searchWashingMachineRequest) {
+	public Page<SearchWashingMachineResponse> loadPaginatedAndFiltered(SearchWashingMachineRequest searchWashingMachineRequest) {
 		PageRequest pageRequest = PageRequest.of(
 				searchWashingMachineRequest.pageIndex(),
 				searchWashingMachineRequest.pageSize(),
@@ -63,7 +63,7 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 
 		Page<WashingMachine> responsePage = repository.findAll(booleanBuilder, pageRequest);
 
-		return responsePage.map(wm -> washingMachineMapper.toGetWashingMachineSimpleResponse(wm));
+		return responsePage.map(wm -> washingMachineMapper.toSearchWashingMachineResponse(wm));
 	}
 
 	private Optional<LocalDate> parseToLocalDate(String dateString) {

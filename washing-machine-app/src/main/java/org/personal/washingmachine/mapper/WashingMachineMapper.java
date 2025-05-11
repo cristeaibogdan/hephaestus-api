@@ -3,37 +3,20 @@ package org.personal.washingmachine.mapper;
 import lombok.RequiredArgsConstructor;
 import org.personal.washingmachine.dto.CreateWashingMachineRequest;
 import org.personal.washingmachine.dto.GetWashingMachineFullResponse;
-import org.personal.washingmachine.dto.GetWashingMachineSimpleResponse;
+import org.personal.washingmachine.dto.SearchWashingMachineResponse;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineDetail;
-import org.personal.washingmachine.entity.WashingMachineImage;
 import org.personal.washingmachine.entity.embedded.CostAssessment;
 import org.personal.washingmachine.entity.embedded.HiddenSurfaceDamage;
 import org.personal.washingmachine.entity.embedded.PackageDamage;
 import org.personal.washingmachine.entity.embedded.VisibleSurfaceDamage;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
 @RequiredArgsConstructor
 public final class WashingMachineMapper {
-	private final WashingMachineImageMapper washingMachineImageMapper;
 
-	public GetWashingMachineSimpleResponse toGetWashingMachineSimpleResponse(WashingMachine entity) {
-		return new GetWashingMachineSimpleResponse(
-				entity.getCategory(),
-				entity.getManufacturer(),
-				entity.getIdentificationMode(),
-				entity.getModel(),
-				entity.getType(),
-				entity.getSerialNumber(),
-				entity.getReturnType(),
-				entity.getDamageType(),
-				entity.getRecommendation(),
-				entity.getCreatedAt()
-		);
-	}
+	private final WashingMachineImageMapper washingMachineImageMapper;
 
 	public GetWashingMachineFullResponse toGetWashingMachineFullResponse(WashingMachine entity) {
 		return new GetWashingMachineFullResponse(
@@ -78,6 +61,21 @@ public final class WashingMachineMapper {
 						entity.getWashingMachineDetail().getCostAssessment().getRepairPrice()
 				),
 				washingMachineImageMapper.toGetWashingMachineImageResponses(entity.getWashingMachineImages())
+		);
+	}
+
+	public SearchWashingMachineResponse toSearchWashingMachineResponse(WashingMachine entity) {
+		return new SearchWashingMachineResponse(
+				entity.getCategory(),
+				entity.getManufacturer(),
+				entity.getIdentificationMode(),
+				entity.getModel(),
+				entity.getType(),
+				entity.getSerialNumber(),
+				entity.getReturnType(),
+				entity.getDamageType(),
+				entity.getRecommendation(),
+				entity.getCreatedAt()
 		);
 	}
 
