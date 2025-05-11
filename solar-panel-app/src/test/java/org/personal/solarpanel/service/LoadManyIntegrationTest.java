@@ -71,7 +71,7 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 					"serial1",
 					LocalDateTime.now(),
 					Recommendation.REPAIR,
-					new GetSolarPanelFullResponse.DamageResponse(
+					new GetSolarPanelFullResponse.Damage(
 							true,
 							false,
 							false,

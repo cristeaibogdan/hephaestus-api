@@ -13,9 +13,9 @@ public record GetSolarPanelFullResponse(
 		LocalDateTime createdAt,
 		Recommendation recommendation,
 
-		DamageResponse damage
+		Damage damage
 ) {
-	public record DamageResponse(
+	public record Damage(
 			boolean hotSpots,
 			boolean microCracks,
 			boolean snailTrails,
