@@ -55,7 +55,7 @@ class SaveValidationMvcTest {
 
 	@ParameterizedTest(name = "Validation fails for property {1}, with value null")
 	@MethodSource("getInvalidCreateWashingMachineRequestsWithNullValues")
-	void should_ThrowValidationException_When_SaveWashingMachineRequestPropertyIsNull(SaveWashingMachineRequest request, String propertyName) throws Exception {
+	void should_ThrowValidationException_When_SaveWashingMachineRequestPropertyIsNull(CreateWashingMachineRequest request, String propertyName) throws Exception {
 		// GIVEN
 		// WHEN
 		ResultActions resultActions = performRequest(request);
@@ -76,7 +76,7 @@ class SaveValidationMvcTest {
 
 	@ParameterizedTest(name = "Validation fails for property {1}, with value (blank string)")
 	@MethodSource("getInvalidCreateWashingMachineRequestsWithBlankValues")
-	void should_ThrowValidationException_When_SaveWashingMachineRequestPropertyIsBlank(SaveWashingMachineRequest request, String propertyName) throws Exception {
+	void should_ThrowValidationException_When_SaveWashingMachineRequestPropertyIsBlank(CreateWashingMachineRequest request, String propertyName) throws Exception {
 		// GIVEN
 		// WHEN
 		ResultActions resultActions = performRequest(request);
@@ -113,9 +113,9 @@ class SaveValidationMvcTest {
 
 	@ParameterizedTest(name = "Validation fails for property {1}, with value {2}")
 	@MethodSource("getInvalidCreateWashingMachineDetailRequests")
-	void should_ThrowValidationException_When_ProvidedInvalidCreateWashingMachineDetailRequest(SaveWashingMachineRequest.WashingMachineDetail dto, String propertyName, Object invalidValue) throws Exception {
+	void should_ThrowValidationException_When_ProvidedInvalidCreateWashingMachineDetailRequest(CreateWashingMachineRequest.WashingMachineDetail dto, String propertyName, Object invalidValue) throws Exception {
 		// GIVEN
-		SaveWashingMachineRequest request = TestData.createSaveWashingMachineRequest().toBuilder().washingMachineDetail(dto).build();
+		CreateWashingMachineRequest request = TestData.createSaveWashingMachineRequest().toBuilder().washingMachineDetail(dto).build();
 
 		// WHEN
 		ResultActions resultActions = performRequest(request);
@@ -147,9 +147,9 @@ class SaveValidationMvcTest {
 
 	@ParameterizedTest(name = "Validation passes for property {1}, with value {2}")
 	@MethodSource("getValidCreateWashingMachineDetailRequests")
-	void should_PassValidation_When_ProvidedValidCreateWashingMachineDetailRequest(SaveWashingMachineRequest.WashingMachineDetail dto, String propertyName, Object validValue) throws Exception {
+	void should_PassValidation_When_ProvidedValidCreateWashingMachineDetailRequest(CreateWashingMachineRequest.WashingMachineDetail dto, String propertyName, Object validValue) throws Exception {
 		// GIVEN
-		SaveWashingMachineRequest request = TestData.createSaveWashingMachineRequest().toBuilder().washingMachineDetail(dto).build();
+		CreateWashingMachineRequest request = TestData.createSaveWashingMachineRequest().toBuilder().washingMachineDetail(dto).build();
 
 		// WHEN
 		ResultActions resultActions = performRequest(request);
@@ -158,7 +158,7 @@ class SaveValidationMvcTest {
 		resultActions.andExpect(status().isCreated());
 	}
 
-	private ResultActions performRequest(SaveWashingMachineRequest request) throws Exception {
+	private ResultActions performRequest(CreateWashingMachineRequest request) throws Exception {
 		String jsonRequest = jackson.writeValueAsString(request);
 		return mockMvc.perform(
 				multipart("/api/v1/washing-machines/save")

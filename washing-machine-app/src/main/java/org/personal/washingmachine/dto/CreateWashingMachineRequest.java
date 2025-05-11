@@ -8,7 +8,7 @@ import org.personal.washingmachine.enums.IdentificationMode;
 import org.personal.washingmachine.enums.ReturnType;
 
 @Builder(toBuilder = true)
-public record SaveWashingMachineRequest(
+public record CreateWashingMachineRequest(
 		@NotBlank(message = "{FIELD_NOT_BLANK}")
 		String category,
 		@NotNull(message = "{FIELD_NOT_NULL}")

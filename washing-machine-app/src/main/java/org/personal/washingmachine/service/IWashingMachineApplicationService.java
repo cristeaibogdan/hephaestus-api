@@ -33,7 +33,7 @@ public interface IWashingMachineApplicationService {
 
 	@PostMapping(value = "/save", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
-	void save(@Valid @RequestPart SaveWashingMachineRequest saveWashingMachineRequest,
+	void save(@Valid @RequestPart CreateWashingMachineRequest createWashingMachineRequest,
 			  @RequestPart List<MultipartFile> imageFiles);
 
 	@GetMapping("/{serialNumber}/recommendation")

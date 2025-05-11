@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.personal.washingmachine.BaseIntegrationTest;
 import org.personal.washingmachine.TestData;
-import org.personal.washingmachine.dto.SaveWashingMachineRequest;
+import org.personal.washingmachine.dto.CreateWashingMachineRequest;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.enums.DamageType;
 import org.personal.washingmachine.enums.IdentificationMode;
@@ -52,7 +52,7 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_saveRequest_With_AllPropertiesInDB() {
 			// GIVEN
-			SaveWashingMachineRequest request = new SaveWashingMachineRequest(
+			CreateWashingMachineRequest request = new CreateWashingMachineRequest(
 					"Washing Machine",
 					IdentificationMode.DATA_MATRIX,
 					"WhirlPool",
@@ -61,7 +61,7 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 					"I'm saved",
 					ReturnType.SERVICE,
 					DamageType.IN_USE,
-					new SaveWashingMachineRequest.WashingMachineDetail(
+					new CreateWashingMachineRequest.WashingMachineDetail(
 							true,
 							false,
 							true,
@@ -151,7 +151,7 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ThrowCustomException_When_SerialNumberAlreadyTaken() throws Exception {
 			// GIVEN
-			SaveWashingMachineRequest request = TestData.createSaveWashingMachineRequest().toBuilder()
+			CreateWashingMachineRequest request = TestData.createSaveWashingMachineRequest().toBuilder()
 					.serialNumber("I already exist in DB")
 					.washingMachineDetail(
 							TestData.createValidSaveWashingMachineDetailRequest().toBuilder()
@@ -170,7 +170,7 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 					.andExpect(content().string(not(containsString("Internal Translation Error"))));
 		}
 
-		private ResultActions performRequest(SaveWashingMachineRequest request) throws Exception {
+		private ResultActions performRequest(CreateWashingMachineRequest request) throws Exception {
 			String jsonRequest = jackson.writeValueAsString(request);
 			return mockMvc.perform(
 					multipart("/api/v1/washing-machines/save")
