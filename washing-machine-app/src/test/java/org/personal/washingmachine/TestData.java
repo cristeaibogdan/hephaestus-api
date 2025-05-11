@@ -1,6 +1,5 @@
 package org.personal.washingmachine;
 
-import org.personal.washingmachine.dto.SaveWashingMachineDetailRequest;
 import org.personal.washingmachine.dto.SaveWashingMachineRequest;
 import org.personal.washingmachine.dto.SearchWashingMachineRequest;
 import org.personal.washingmachine.entity.WashingMachine;
@@ -17,8 +16,8 @@ import org.personal.washingmachine.enums.ReturnType;
 public class TestData {
 
 	//TODO: Refactor SaveValidationMvcTest and either delete this method or refactor it
-	public static SaveWashingMachineDetailRequest createValidSaveWashingMachineDetailRequest() {
-		return new SaveWashingMachineDetailRequest(
+	public static SaveWashingMachineRequest.WashingMachineDetail createValidSaveWashingMachineDetailRequest() {
+		return new SaveWashingMachineRequest.WashingMachineDetail(
 				true,
 				false,
 				false,
@@ -45,7 +44,7 @@ public class TestData {
 				"serialNumber",
 				ReturnType.SERVICE,
 				DamageType.IN_USE,
-				new SaveWashingMachineDetailRequest(
+				new SaveWashingMachineRequest.WashingMachineDetail(
 						false,
 						false,
 						false,

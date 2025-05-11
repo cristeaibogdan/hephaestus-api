@@ -7,7 +7,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.personal.shared.clients.ProductClient;
 import org.personal.washingmachine.TestData;
 import org.personal.washingmachine.dto.*;
-import org.personal.washingmachine.mapper.WashingMachineDetailMapper;
 import org.personal.washingmachine.mapper.WashingMachineImageMapper;
 import org.personal.washingmachine.mapper.WashingMachineMapper;
 import org.personal.washingmachine.repository.WashingMachineRepository;
@@ -29,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(WashingMachineApplicationService.class)
-@Import({WashingMachineImageMapper.class, WashingMachineDetailMapper.class, WashingMachineMapper.class})
+@Import({WashingMachineImageMapper.class, WashingMachineMapper.class})
 class SaveValidationMvcTest {
 
 	@Autowired MockMvc mockMvc;
@@ -50,7 +49,7 @@ class SaveValidationMvcTest {
 				arguments(TestData.createSaveWashingMachineRequest().toBuilder().serialNumber(null).build(), "serialNumber"),
 				arguments(TestData.createSaveWashingMachineRequest().toBuilder().returnType(null).build(), "returnType"),
 				arguments(TestData.createSaveWashingMachineRequest().toBuilder().damageType(null).build(), "damageType"),
-				arguments(TestData.createSaveWashingMachineRequest().toBuilder().saveWashingMachineDetailRequest(null).build(), "saveWashingMachineDetailRequest")
+				arguments(TestData.createSaveWashingMachineRequest().toBuilder().washingMachineDetail(null).build(), "washingMachineDetail")
 		);
 	}
 
@@ -114,9 +113,9 @@ class SaveValidationMvcTest {
 
 	@ParameterizedTest(name = "Validation fails for property {1}, with value {2}")
 	@MethodSource("getInvalidCreateWashingMachineDetailRequests")
-	void should_ThrowValidationException_When_ProvidedInvalidCreateWashingMachineDetailRequest(SaveWashingMachineDetailRequest dto, String propertyName, Object invalidValue) throws Exception {
+	void should_ThrowValidationException_When_ProvidedInvalidCreateWashingMachineDetailRequest(SaveWashingMachineRequest.WashingMachineDetail dto, String propertyName, Object invalidValue) throws Exception {
 		// GIVEN
-		SaveWashingMachineRequest request = TestData.createSaveWashingMachineRequest().toBuilder().saveWashingMachineDetailRequest(dto).build();
+		SaveWashingMachineRequest request = TestData.createSaveWashingMachineRequest().toBuilder().washingMachineDetail(dto).build();
 
 		// WHEN
 		ResultActions resultActions = performRequest(request);
@@ -148,9 +147,9 @@ class SaveValidationMvcTest {
 
 	@ParameterizedTest(name = "Validation passes for property {1}, with value {2}")
 	@MethodSource("getValidCreateWashingMachineDetailRequests")
-	void should_PassValidation_When_ProvidedValidCreateWashingMachineDetailRequest(SaveWashingMachineDetailRequest dto, String propertyName, Object validValue) throws Exception {
+	void should_PassValidation_When_ProvidedValidCreateWashingMachineDetailRequest(SaveWashingMachineRequest.WashingMachineDetail dto, String propertyName, Object validValue) throws Exception {
 		// GIVEN
-		SaveWashingMachineRequest request = TestData.createSaveWashingMachineRequest().toBuilder().saveWashingMachineDetailRequest(dto).build();
+		SaveWashingMachineRequest request = TestData.createSaveWashingMachineRequest().toBuilder().washingMachineDetail(dto).build();
 
 		// WHEN
 		ResultActions resultActions = performRequest(request);
