@@ -24,6 +24,54 @@ public record GetWashingMachineFullResponse(
 		Recommendation recommendation,
 		LocalDateTime createdAt,
 
-        GetWashingMachineDetailResponse washingMachineDetail,
+        WashingMachineDetail washingMachineDetail,
         List<GetWashingMachineImageResponse> washingMachineImages
-) {}
+) {
+	public record WashingMachineDetail(
+			// PACKAGE
+			boolean applicablePackageDamage,
+
+			boolean packageDamaged,
+			boolean packageDirty,
+			boolean packageMaterialAvailable,
+
+			// VISIBLE SURFACES
+			boolean applicableVisibleSurfacesDamage,
+
+			boolean visibleSurfacesHasScratches,
+			double visibleSurfacesScratchesLength,
+
+			boolean visibleSurfacesHasDents,
+			double visibleSurfacesDentsDepth,
+
+			boolean visibleSurfacesHasMinorDamage,
+			String visibleSurfacesMinorDamage,
+
+			boolean visibleSurfacesHasMajorDamage,
+			String visibleSurfacesMajorDamage,
+
+			// HIDDEN SURFACES
+			boolean applicableHiddenSurfacesDamage,
+
+			boolean hiddenSurfacesHasScratches,
+			double hiddenSurfacesScratchesLength,
+
+			boolean hiddenSurfacesHasDents,
+			double hiddenSurfacesDentsDepth,
+
+			boolean hiddenSurfacesHasMinorDamage,
+			String hiddenSurfacesMinorDamage,
+
+			boolean hiddenSurfacesHasMajorDamage,
+			String hiddenSurfacesMajorDamage,
+
+			// PRICING
+			int price,
+			int repairPrice
+	) {}
+
+	public record GetWashingMachineImageResponse(
+			String imagePrefix,
+			byte[] image
+	) { }
+}

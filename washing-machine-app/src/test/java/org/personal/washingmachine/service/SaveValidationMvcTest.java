@@ -163,7 +163,7 @@ class SaveValidationMvcTest {
 		return mockMvc.perform(
 				multipart("/api/v1/washing-machines/save")
 						.file(new MockMultipartFile( // avoids error Content-Type 'application/octet-stream' is not supported
-								"saveWashingMachineRequest",
+								"createWashingMachineRequest",
 								"I_Don't_Matter",
 								MediaType.APPLICATION_JSON_VALUE,
 								jsonRequest.getBytes())

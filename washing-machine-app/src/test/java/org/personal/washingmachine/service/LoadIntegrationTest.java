@@ -4,9 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
 import org.personal.washingmachine.BaseIntegrationTest;
 import org.personal.washingmachine.TestData;
-import org.personal.washingmachine.dto.GetWashingMachineDetailResponse;
 import org.personal.washingmachine.dto.GetWashingMachineFullResponse;
-import org.personal.washingmachine.dto.GetWashingMachineImageResponse;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineDetail;
 import org.personal.washingmachine.entity.WashingMachineImage;
@@ -91,7 +89,7 @@ class LoadIntegrationTest extends BaseIntegrationTest {
 					DamageType.IN_USE,
 					Recommendation.RESALE,
 					LocalDateTime.now(),
-					new GetWashingMachineDetailResponse(
+					new GetWashingMachineFullResponse.WashingMachineDetail(
 							true,
 							true,
 							false,
@@ -117,7 +115,7 @@ class LoadIntegrationTest extends BaseIntegrationTest {
 							0,
 							0
 					),
-					List.of(new GetWashingMachineImageResponse(
+					List.of(new GetWashingMachineFullResponse.GetWashingMachineImageResponse(
 							"some random prefix",
 							new byte[0]
 					))
