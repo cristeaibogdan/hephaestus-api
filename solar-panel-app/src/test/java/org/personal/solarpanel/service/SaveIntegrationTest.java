@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.personal.solarpanel.BaseIntegrationTest;
 import org.personal.solarpanel.TestData;
-import org.personal.solarpanel.dto.SaveSolarPanelDamageRequest;
 import org.personal.solarpanel.dto.SaveSolarPanelRequest;
 import org.personal.solarpanel.entity.SolarPanel;
 import org.personal.solarpanel.repository.SolarPanelRepository;
@@ -47,7 +46,7 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 					"model1",
 					"type2",
 					"AX-098-200",
-					new SaveSolarPanelDamageRequest(
+					new SaveSolarPanelRequest.Damage(
 							true,
 							false,
 							true,
@@ -70,11 +69,11 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 				assertThat(act.getSerialNumber()).isEqualTo(request.serialNumber());
 
 				// damage
-				assertThat(act.getDamage().isHotSpots()).isEqualTo(request.saveSolarPanelDamageRequest().hotSpots());
-				assertThat(act.getDamage().isMicroCracks()).isEqualTo(request.saveSolarPanelDamageRequest().microCracks());
-				assertThat(act.getDamage().isSnailTrails()).isEqualTo(request.saveSolarPanelDamageRequest().snailTrails());
-				assertThat(act.getDamage().isBrokenGlass()).isEqualTo(request.saveSolarPanelDamageRequest().brokenGlass());
-				assertThat(act.getDamage().getAdditionalDetails()).isEqualTo(request.saveSolarPanelDamageRequest().additionalDetails());
+				assertThat(act.getDamage().isHotSpots()).isEqualTo(request.damage().hotSpots());
+				assertThat(act.getDamage().isMicroCracks()).isEqualTo(request.damage().microCracks());
+				assertThat(act.getDamage().isSnailTrails()).isEqualTo(request.damage().snailTrails());
+				assertThat(act.getDamage().isBrokenGlass()).isEqualTo(request.damage().brokenGlass());
+				assertThat(act.getDamage().getAdditionalDetails()).isEqualTo(request.damage().additionalDetails());
 			});
 		}
 

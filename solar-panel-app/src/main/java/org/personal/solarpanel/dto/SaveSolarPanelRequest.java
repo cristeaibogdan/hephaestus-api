@@ -10,5 +10,13 @@ public record SaveSolarPanelRequest(
 		String type,
 		String serialNumber,
 
-		SaveSolarPanelDamageRequest saveSolarPanelDamageRequest
-) { }
+		Damage damage
+) {
+	public record Damage(
+			boolean hotSpots,
+			boolean microCracks,
+			boolean snailTrails,
+			boolean brokenGlass,
+			String additionalDetails
+	) { }
+}

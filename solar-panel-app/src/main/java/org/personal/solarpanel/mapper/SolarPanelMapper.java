@@ -18,11 +18,11 @@ public class SolarPanelMapper {
 				dto.type(),
 				dto.serialNumber(),
 				new Damage(
-						dto.saveSolarPanelDamageRequest().hotSpots(),
-						dto.saveSolarPanelDamageRequest().microCracks(),
-						dto.saveSolarPanelDamageRequest().snailTrails(),
-						dto.saveSolarPanelDamageRequest().brokenGlass(),
-						dto.saveSolarPanelDamageRequest().additionalDetails()
+						dto.damage().hotSpots(),
+						dto.damage().microCracks(),
+						dto.damage().snailTrails(),
+						dto.damage().brokenGlass(),
+						dto.damage().additionalDetails()
 				)
 		);
 	}

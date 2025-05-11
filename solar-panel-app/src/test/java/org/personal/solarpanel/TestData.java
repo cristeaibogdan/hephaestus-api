@@ -1,6 +1,5 @@
 package org.personal.solarpanel;
 
-import org.personal.solarpanel.dto.SaveSolarPanelDamageRequest;
 import org.personal.solarpanel.dto.SaveSolarPanelRequest;
 import org.personal.solarpanel.dto.SearchSolarPanelRequest;
 import org.personal.solarpanel.entity.Damage;
@@ -16,7 +15,7 @@ public class TestData {
 				"defaultModel",
 				"defaultType",
 				"defaultSeriaL",
-				new SaveSolarPanelDamageRequest(
+				new SaveSolarPanelRequest.Damage(
 						true, // so no recommendation exception is thrown
 						false,
 						false,
