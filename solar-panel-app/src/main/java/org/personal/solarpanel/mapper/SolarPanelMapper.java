@@ -1,7 +1,7 @@
 package org.personal.solarpanel.mapper;
 
 import org.personal.solarpanel.dto.GetSolarPanelFullResponse;
-import org.personal.solarpanel.dto.SaveSolarPanelRequest;
+import org.personal.solarpanel.dto.CreateSolarPanelRequest;
 import org.personal.solarpanel.dto.SearchSolarPanelResponse;
 import org.personal.solarpanel.entity.Damage;
 import org.personal.solarpanel.entity.SolarPanel;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class SolarPanelMapper {
 
-	public SolarPanel toEntity(SaveSolarPanelRequest dto) {
+	public SolarPanel toEntity(CreateSolarPanelRequest dto) {
 		return new SolarPanel(
 				dto.category(),
 				dto.manufacturer(),

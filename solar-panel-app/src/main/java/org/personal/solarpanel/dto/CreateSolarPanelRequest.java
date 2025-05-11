@@ -3,7 +3,7 @@ package org.personal.solarpanel.dto;
 import lombok.Builder;
 
 @Builder(toBuilder = true)
-public record SaveSolarPanelRequest(
+public record CreateSolarPanelRequest(
 		String category,
 		String manufacturer,
 		String model,

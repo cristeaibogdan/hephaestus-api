@@ -1,6 +1,6 @@
 package org.personal.solarpanel;
 
-import org.personal.solarpanel.dto.SaveSolarPanelRequest;
+import org.personal.solarpanel.dto.CreateSolarPanelRequest;
 import org.personal.solarpanel.dto.SearchSolarPanelRequest;
 import org.personal.solarpanel.entity.Damage;
 import org.personal.solarpanel.entity.SolarPanel;
@@ -8,14 +8,14 @@ import org.personal.solarpanel.enums.Recommendation;
 
 public class TestData {
 
-	public static SaveSolarPanelRequest createValidSaveSolarPanelRequest() {
-		return new SaveSolarPanelRequest(
+	public static CreateSolarPanelRequest createValidSaveSolarPanelRequest() {
+		return new CreateSolarPanelRequest(
 				"Solar Panel",
 				"defaultManufacturer",
 				"defaultModel",
 				"defaultType",
 				"defaultSeriaL",
-				new SaveSolarPanelRequest.Damage(
+				new CreateSolarPanelRequest.Damage(
 						true, // so no recommendation exception is thrown
 						false,
 						false,

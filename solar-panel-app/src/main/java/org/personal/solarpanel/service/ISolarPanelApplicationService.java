@@ -4,7 +4,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import org.personal.solarpanel.dto.GetSolarPanelFullResponse;
-import org.personal.solarpanel.dto.SaveSolarPanelRequest;
+import org.personal.solarpanel.dto.CreateSolarPanelRequest;
 import org.personal.solarpanel.dto.SearchSolarPanelRequest;
 import org.personal.solarpanel.dto.SearchSolarPanelResponse;
 import org.personal.solarpanel.enums.Recommendation;
@@ -19,7 +19,7 @@ import java.util.Set;
 public interface ISolarPanelApplicationService {
 	@PostMapping("/save")
 	@ResponseStatus(HttpStatus.CREATED)
-	void save(@RequestBody SaveSolarPanelRequest request);
+	void save(@RequestBody CreateSolarPanelRequest request);
 
 	@GetMapping("/{serialNumber}/recommendation")
 	Recommendation getRecommendation(@PathVariable String serialNumber);

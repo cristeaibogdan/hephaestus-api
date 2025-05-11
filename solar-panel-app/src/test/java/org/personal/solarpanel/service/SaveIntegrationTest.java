@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.personal.solarpanel.BaseIntegrationTest;
 import org.personal.solarpanel.TestData;
-import org.personal.solarpanel.dto.SaveSolarPanelRequest;
+import org.personal.solarpanel.dto.CreateSolarPanelRequest;
 import org.personal.solarpanel.entity.SolarPanel;
 import org.personal.solarpanel.repository.SolarPanelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,13 +40,13 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_SaveRequest_With_AllPropertiesInDB() {
 			// GIVEN
-			SaveSolarPanelRequest request = new SaveSolarPanelRequest(
+			CreateSolarPanelRequest request = new CreateSolarPanelRequest(
 					"Solar Panel",
 					"Tesla",
 					"model1",
 					"type2",
 					"AX-098-200",
-					new SaveSolarPanelRequest.Damage(
+					new CreateSolarPanelRequest.Damage(
 							true,
 							false,
 							true,
@@ -80,7 +80,7 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnCurrentDate_For_createdAtField() {
 			// GIVEN
-			SaveSolarPanelRequest request = TestData.createValidSaveSolarPanelRequest().toBuilder()
+			CreateSolarPanelRequest request = TestData.createValidSaveSolarPanelRequest().toBuilder()
 					.serialNumber("date-test")
 					.build();
 
@@ -100,7 +100,7 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnStatusCreated_When_DTOSaved() throws Exception {
 			// GIVEN
-			SaveSolarPanelRequest request = TestData.createValidSaveSolarPanelRequest();
+			CreateSolarPanelRequest request = TestData.createValidSaveSolarPanelRequest();
 
 			// WHEN
 			ResultActions resultActions = performRequest(request);
@@ -113,7 +113,7 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ThrowCustomException_When_SerialNumberAlreadyTaken() throws Exception {
 			// GIVEN
-			SaveSolarPanelRequest request = TestData.createValidSaveSolarPanelRequest().toBuilder()
+			CreateSolarPanelRequest request = TestData.createValidSaveSolarPanelRequest().toBuilder()
 					.serialNumber("duplicated serialNumber")
 					.build();
 
@@ -128,7 +128,7 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 		}
 	}
 
-	private ResultActions performRequest(SaveSolarPanelRequest request) throws Exception {
+	private ResultActions performRequest(CreateSolarPanelRequest request) throws Exception {
 		return mockMvc.perform(
 				post("/v1/solar-panels/save")
 						.content(jackson.writeValueAsString(request))

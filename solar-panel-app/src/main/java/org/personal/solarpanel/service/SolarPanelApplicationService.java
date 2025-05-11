@@ -6,7 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
 import org.personal.solarpanel.dto.GetSolarPanelFullResponse;
-import org.personal.solarpanel.dto.SaveSolarPanelRequest;
+import org.personal.solarpanel.dto.CreateSolarPanelRequest;
 import org.personal.solarpanel.dto.SearchSolarPanelRequest;
 import org.personal.solarpanel.dto.SearchSolarPanelResponse;
 import org.personal.solarpanel.entity.SolarPanel;
@@ -39,7 +39,7 @@ public class SolarPanelApplicationService implements ISolarPanelApplicationServi
 	private final SolarPanelMapper mapper;
 
 	@Override
-	public void save(SaveSolarPanelRequest request) {
+	public void save(CreateSolarPanelRequest request) {
 		SolarPanel solarPanel = mapper.toEntity(request);
 
 		boolean existingSerialNumber = repository.existsBySerialNumber(solarPanel.getSerialNumber());
