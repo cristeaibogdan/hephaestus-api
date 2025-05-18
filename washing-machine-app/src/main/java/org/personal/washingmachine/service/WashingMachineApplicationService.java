@@ -42,12 +42,14 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 
 	@Override
 	public Page<SearchWashingMachineResponse> loadPaginatedAndFiltered(SearchWashingMachineRequest searchWashingMachineRequest) {
+
 		PageRequest pageRequest = PageRequest.of(
 				searchWashingMachineRequest.pageIndex(),
 				searchWashingMachineRequest.pageSize(),
-				Sort.by(washingMachine.createdAt.getMetadata().getName()).descending());
+				Sort.by(washingMachine.createdAt.getMetadata().getName()).descending()
+		);
 
-		BooleanBuilder booleanBuilder = new BooleanBuilder()
+		BooleanBuilder searchFilters = new BooleanBuilder()
 				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.identificationMode, searchWashingMachineRequest.identificationMode()))
 				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.manufacturer, searchWashingMachineRequest.manufacturer()))
 
@@ -61,7 +63,7 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 
 				.and(QueryDSLUtils.addTimestampEqualCondition(washingMachine.createdAt, parseToLocalDate(searchWashingMachineRequest.createdAt())));
 
-		Page<WashingMachine> responsePage = repository.findAll(booleanBuilder, pageRequest);
+		Page<WashingMachine> responsePage = repository.findAll(searchFilters, pageRequest);
 
 		return responsePage.map(wm -> washingMachineMapper.toSearchWashingMachineResponse(wm));
 	}
