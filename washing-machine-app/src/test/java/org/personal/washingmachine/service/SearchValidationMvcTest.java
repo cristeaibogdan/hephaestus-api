@@ -1,7 +1,10 @@
 package org.personal.washingmachine.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.querydsl.core.BooleanBuilder;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.personal.shared.clients.ProductClient;
 import org.personal.washingmachine.TestData;
 import org.personal.washingmachine.dto.SearchWashingMachineRequest;
@@ -11,17 +14,21 @@ import org.personal.washingmachine.repository.WashingMachineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import static org.hamcrest.Matchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(WashingMachineApplicationService.class)
-class LoadPaginatedAndFilteredValidationMvcTest {
+class SearchValidationMvcTest {
 
 	@Autowired MockMvc mockMvc;
 	@Autowired ObjectMapper jackson;
@@ -67,6 +74,46 @@ class LoadPaginatedAndFilteredValidationMvcTest {
 				.andExpect(status().isBadRequest())
 				.andExpect(content().string(not(containsString("{"))))
 				.andExpect(content().string(containsString("pageSize")));
+	}
+
+	@ParameterizedTest(name = "Invalid sort direction: {0}")
+	@ValueSource(strings = {"some gibberish", " sa", "ASC", "DESC", "   "})
+	void should_ThrowValidationException_When_SortDirectionInvalid(String sortDirection) throws Exception {
+		// GIVEN
+		// WHEN
+		ResultActions resultActions = performRequest(
+				TestData.createSearchWashingMachineRequest().toBuilder()
+						.pageIndex(0)
+						.pageSize(1)
+						.sortDirection(sortDirection)
+						.build()
+		);
+
+		// THEN
+		resultActions
+				.andExpect(status().isBadRequest())
+				.andExpect(content().string(not(containsString("{"))))
+				.andExpect(content().string(containsString("sortDirection")));
+	}
+
+	@ParameterizedTest(name = "Valid sort direction: {0}")
+	@ValueSource(strings = {"asc", "desc", ""})
+	void should_ReturnStatusOk_When_SortDirectionValid(String sortDirection) throws Exception {
+		// GIVEN
+		given(repository.findAll(any(BooleanBuilder.class), any(Pageable.class)))
+				.willReturn(Page.empty());
+
+		// WHEN
+		ResultActions resultActions = performRequest(
+				TestData.createSearchWashingMachineRequest().toBuilder()
+						.pageIndex(0)
+						.pageSize(1)
+						.sortDirection(sortDirection)
+						.build()
+		);
+
+		// THEN
+		resultActions.andExpect(status().isOk());
 	}
 
 	private ResultActions performRequest(SearchWashingMachineRequest request) throws Exception {

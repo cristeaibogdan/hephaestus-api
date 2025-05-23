@@ -1,6 +1,7 @@
 package org.personal.washingmachine.dto;
 
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Pattern;
 import lombok.Builder;
 import org.personal.washingmachine.enums.DamageType;
 import org.personal.washingmachine.enums.IdentificationMode;
@@ -13,6 +14,10 @@ public record SearchWashingMachineRequest(
 		int pageIndex,
 		@Min(value = 1, message = "{NUMERIC_MINIMUM_VALUE}")
 		int pageSize,
+
+		String sortByField,
+		@Pattern(regexp = "^(asc|desc)?$", message = "Sort direction must be 'asc', 'desc', or empty")
+		String sortDirection,
 
 		IdentificationMode identificationMode,
 		String manufacturer,

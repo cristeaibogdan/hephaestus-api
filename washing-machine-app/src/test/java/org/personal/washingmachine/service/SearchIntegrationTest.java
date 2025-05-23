@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
+class SearchIntegrationTest extends BaseIntegrationTest {
 
 	@Autowired MockMvc mockMvc;
 	@Autowired ObjectMapper jackson;
@@ -81,7 +81,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchWashingMachineResponse> actual = underTest.loadPaginatedAndFiltered(
+			Page<SearchWashingMachineResponse> actual = underTest.search(
 					TestData.createSearchWashingMachineRequest().toBuilder()
 							.pageIndex(0)
 							.pageSize(1)
@@ -106,7 +106,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchWashingMachineResponse> actual = underTest.loadPaginatedAndFiltered(
+			Page<SearchWashingMachineResponse> actual = underTest.search(
 					TestData.createSearchWashingMachineRequest().toBuilder()
 							.pageIndex(0)
 							.pageSize(3)
@@ -116,6 +116,59 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 			// THEN
 			assertThat(actual.getNumber()).isZero();
 			assertThat(actual.getSize()).isEqualTo(3);
+		}
+
+		@Test
+		void should_ReturnSortedListBy_DescendingDates_When_SortByFieldIsNull() {
+			// GIVEN
+			saveToDB(
+					TestData.createValidWashingMachine("serial1"),
+					TestData.createValidWashingMachine("serial2"),
+					TestData.createValidWashingMachine("serial3")
+			);
+
+			// WHEN
+			Page<SearchWashingMachineResponse> actual = underTest.search(
+					TestData.createSearchWashingMachineRequest().toBuilder()
+							.pageIndex(0)
+							.pageSize(3)
+							.sortByField(null)
+							.build()
+			);
+
+			// THEN
+			assertThat(actual.getContent())
+					.hasSize(3)
+					.extracting(washingMachine -> washingMachine.createdAt())
+					.doesNotContainNull()
+					.isSortedAccordingTo(Comparator.reverseOrder());
+		}
+
+		@Test
+		void should_ReturnSortedListBy_DescendingDates_When_SortDirectionIsNull() {
+			// GIVEN
+			saveToDB(
+					TestData.createValidWashingMachine("serial1"),
+					TestData.createValidWashingMachine("serial2"),
+					TestData.createValidWashingMachine("serial3")
+			);
+
+			// WHEN
+			Page<SearchWashingMachineResponse> actual = underTest.search(
+					TestData.createSearchWashingMachineRequest().toBuilder()
+							.pageIndex(0)
+							.pageSize(3)
+							.sortByField("Needed to pass the first check in if()")
+							.sortDirection(null)
+							.build()
+			);
+
+			// THEN
+			assertThat(actual.getContent())
+					.hasSize(3)
+					.extracting(washingMachine -> washingMachine.createdAt())
+					.doesNotContainNull()
+					.isSortedAccordingTo(Comparator.reverseOrder()); // Check descending order
 		}
 
 		@ParameterizedTest
@@ -130,7 +183,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchWashingMachineResponse> actual = underTest.loadPaginatedAndFiltered(
+			Page<SearchWashingMachineResponse> actual = underTest.search(
 					TestData.createSearchWashingMachineRequest().toBuilder()
 							.pageIndex(0)
 							.pageSize(4)
@@ -145,6 +198,228 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 					.contains(manufacturer);
 		}
 
+		/*
+			Due to how AngularMaterial table works, it is possible to send:
+			sortByField: "serialNumber"
+			sortDirection: ""
+		 */
+		@Test
+		void should_ReturnSortedListBy_DescendingDates_When_SortDirectionIsEmpty() {
+			// GIVEN
+			saveToDB(
+					TestData.createValidWashingMachine("serial1"),
+					TestData.createValidWashingMachine("serial2"),
+					TestData.createValidWashingMachine("serial3")
+			);
+
+			// WHEN
+			Page<SearchWashingMachineResponse> actual = underTest.search(
+					TestData.createSearchWashingMachineRequest().toBuilder()
+							.pageIndex(0)
+							.pageSize(3)
+							.sortByField("serialNumber")
+							.sortDirection("")
+							.build()
+			);
+
+			// THEN
+			assertThat(actual.getContent())
+					.hasSize(3)
+					.extracting(washingMachine -> washingMachine.createdAt())
+					.doesNotContainNull()
+					.isSortedAccordingTo(Comparator.reverseOrder()); // Check descending order
+		}
+
+		@Test
+		void should_ReturnSortedListBy_DescendingDates_When_SortFieldDoesNotMatchAnyProperty() {
+			// GIVEN
+			saveToDB(
+					TestData.createValidWashingMachine("serial1"),
+					TestData.createValidWashingMachine("serial2"),
+					TestData.createValidWashingMachine("serial3"),
+					TestData.createValidWashingMachine("serial4")
+			);
+
+			// WHEN
+			Page<SearchWashingMachineResponse> actual = underTest.search(
+					TestData.createSearchWashingMachineRequest().toBuilder()
+							.pageIndex(0)
+							.pageSize(4)
+							.sortByField("some gibberish")
+							.sortDirection("desc")
+							.build()
+			);
+
+			// THEN
+			assertThat(actual.getContent())
+					.hasSize(4)
+					.extracting(washingMachine -> washingMachine.createdAt())
+					.doesNotContainNull()
+					.isSortedAccordingTo(Comparator.reverseOrder()); // Check descending order
+		}
+
+		@Test
+		void should_ReturnSortedListBy_AscendingManufacturer() {
+			// GIVEN
+			saveToDB(
+					TestData.createValidWashingMachine("serial1").setManufacturer("A"),
+					TestData.createValidWashingMachine("serial2").setManufacturer("B"),
+					TestData.createValidWashingMachine("serial3").setManufacturer("C"),
+					TestData.createValidWashingMachine("serial4").setManufacturer("F")
+			);
+
+			// WHEN
+			Page<SearchWashingMachineResponse> actual = underTest.search(
+					TestData.createSearchWashingMachineRequest().toBuilder()
+							.pageIndex(0)
+							.pageSize(4)
+							.sortByField("manufacturer")
+							.sortDirection("asc")
+							.build()
+			);
+
+			// THEN
+			assertThat(actual.getContent())
+					.hasSize(4)
+					.extracting(washingMachine -> washingMachine.manufacturer())
+					.isSortedAccordingTo(Comparator.naturalOrder());
+		}
+
+		@Test
+		void should_ReturnSortedListBy_DescendingModel() {
+			// GIVEN
+			saveToDB(
+					TestData.createValidWashingMachine("serial1").setModel("A"),
+					TestData.createValidWashingMachine("serial2").setModel("B"),
+					TestData.createValidWashingMachine("serial3").setModel("C"),
+					TestData.createValidWashingMachine("serial4").setModel("F")
+			);
+
+			// WHEN
+			Page<SearchWashingMachineResponse> actual = underTest.search(
+					TestData.createSearchWashingMachineRequest().toBuilder()
+							.pageIndex(0)
+							.pageSize(4)
+							.sortByField("model")
+							.sortDirection("desc")
+							.build()
+			);
+
+			// THEN
+			assertThat(actual.getContent())
+					.hasSize(4)
+					.extracting(washingMachine -> washingMachine.model())
+					.isSortedAccordingTo(Comparator.reverseOrder());
+		}
+
+		@Test
+		void should_ReturnSortedListBy_AscendingType() {
+			// GIVEN
+			saveToDB(
+					TestData.createValidWashingMachine("serial1").setType("A"),
+					TestData.createValidWashingMachine("serial2").setType("B"),
+					TestData.createValidWashingMachine("serial3").setType("C"),
+					TestData.createValidWashingMachine("serial4").setType("F")
+			);
+
+			// WHEN
+			Page<SearchWashingMachineResponse> actual = underTest.search(
+					TestData.createSearchWashingMachineRequest().toBuilder()
+							.pageIndex(0)
+							.pageSize(4)
+							.sortByField("type")
+							.sortDirection("asc")
+							.build()
+			);
+
+			// THEN
+			assertThat(actual.getContent())
+					.hasSize(4)
+					.extracting(washingMachine -> washingMachine.type())
+					.isSortedAccordingTo(Comparator.naturalOrder());
+		}
+
+		@Test
+		void should_ReturnSortedListBy_AscendingSerialNumber() {
+			// GIVEN
+			saveToDB(
+					TestData.createValidWashingMachine("serial1"),
+					TestData.createValidWashingMachine("serial2"),
+					TestData.createValidWashingMachine("serial3"),
+					TestData.createValidWashingMachine("serial4")
+			);
+
+			// WHEN
+			Page<SearchWashingMachineResponse> actual = underTest.search(
+					TestData.createSearchWashingMachineRequest().toBuilder()
+							.pageIndex(0)
+							.pageSize(4)
+							.sortByField("serialNumber")
+							.sortDirection("asc")
+							.build()
+			);
+
+			// THEN
+			assertThat(actual.getContent())
+					.hasSize(4)
+					.extracting(washingMachine -> washingMachine.serialNumber())
+					.isSortedAccordingTo(Comparator.naturalOrder());
+		}
+
+		@Test
+		void should_ReturnSortedListBy_AscendingRecommendation() {
+			// GIVEN
+			saveToDB(
+					TestData.createValidWashingMachine("serial1").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.REPAIR)),
+					TestData.createValidWashingMachine("serial2").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.RESALE)),
+					TestData.createValidWashingMachine("serial3").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.OUTLET)),
+					TestData.createValidWashingMachine("serial4").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.REPAIR))
+			);
+
+			// WHEN
+			Page<SearchWashingMachineResponse> actual = underTest.search(
+					TestData.createSearchWashingMachineRequest().toBuilder()
+							.pageIndex(0)
+							.pageSize(4)
+							.sortByField("recommendation")
+							.sortDirection("asc")
+							.build()
+			);
+
+			// THEN
+			assertThat(actual.getContent())
+					.hasSize(4)
+					.extracting(washingMachine -> washingMachine.recommendation())
+					.isSortedAccordingTo(Comparator.comparing(Recommendation::name));
+		}
+
+		@Test
+		void should_ReturnSortedListBy_AscendingDate() {
+			// GIVEN
+			saveToDB(
+					TestData.createValidWashingMachine("serial1"),
+					TestData.createValidWashingMachine("serial2"),
+					TestData.createValidWashingMachine("serial3"),
+					TestData.createValidWashingMachine("serial4")
+			);
+
+			// WHEN
+			Page<SearchWashingMachineResponse> actual = underTest.search(
+					TestData.createSearchWashingMachineRequest().toBuilder()
+							.pageIndex(0)
+							.pageSize(4)
+							.sortByField("createdAt")
+							.sortDirection("asc")
+							.build()
+			);
+
+			// THEN
+			assertThat(actual.getContent())
+					.hasSize(4)
+					.extracting(washingMachine -> washingMachine.serialNumber())
+					.isSortedAccordingTo(Comparator.naturalOrder());
+		}
+
 		@ParameterizedTest
 		@EnumSource(DamageType.class)
 		void should_ReturnFilteredList_By_DamageType(DamageType damageType) {
@@ -157,7 +432,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchWashingMachineResponse> actual = underTest.loadPaginatedAndFiltered(
+			Page<SearchWashingMachineResponse> actual = underTest.search(
 					TestData.createSearchWashingMachineRequest().toBuilder()
 							.pageIndex(0)
 							.pageSize(4)
@@ -186,7 +461,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchWashingMachineResponse> actual = underTest.loadPaginatedAndFiltered(
+			Page<SearchWashingMachineResponse> actual = underTest.search(
 					TestData.createSearchWashingMachineRequest().toBuilder()
 							.pageIndex(0)
 							.pageSize(6)
@@ -213,7 +488,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchWashingMachineResponse> actual = underTest.loadPaginatedAndFiltered(
+			Page<SearchWashingMachineResponse> actual = underTest.search(
 					TestData.createSearchWashingMachineRequest().toBuilder()
 							.pageIndex(0)
 							.pageSize(4)
@@ -238,7 +513,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchWashingMachineResponse> actual = underTest.loadPaginatedAndFiltered(
+			Page<SearchWashingMachineResponse> actual = underTest.search(
 					TestData.createSearchWashingMachineRequest().toBuilder()
 							.pageIndex(0)
 							.pageSize(4)
@@ -266,7 +541,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchWashingMachineResponse> actual = underTest.loadPaginatedAndFiltered(
+			Page<SearchWashingMachineResponse> actual = underTest.search(
 					TestData.createSearchWashingMachineRequest().toBuilder()
 							.pageIndex(0)
 							.pageSize(5)
@@ -294,7 +569,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchWashingMachineResponse> actual = underTest.loadPaginatedAndFiltered(
+			Page<SearchWashingMachineResponse> actual = underTest.search(
 					TestData.createSearchWashingMachineRequest().toBuilder()
 							.pageIndex(0)
 							.pageSize(5)
@@ -327,7 +602,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchWashingMachineResponse> actual = underTest.loadPaginatedAndFiltered(
+			Page<SearchWashingMachineResponse> actual = underTest.search(
 					TestData.createSearchWashingMachineRequest().toBuilder()
 							.pageIndex(0)
 							.pageSize(10)
@@ -343,31 +618,6 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 		}
 
 		@Test
-		void should_ReturnListWithDescendingDates() {
-			// GIVEN
-			saveToDB(
-					TestData.createValidWashingMachine("serial1"),
-					TestData.createValidWashingMachine("serial2"),
-					TestData.createValidWashingMachine("serial3")
-			);
-
-			// WHEN
-			Page<SearchWashingMachineResponse> actual = underTest.loadPaginatedAndFiltered(
-					TestData.createSearchWashingMachineRequest().toBuilder()
-							.pageIndex(0)
-							.pageSize(5)
-							.build()
-			);
-
-			// THEN
-			assertThat(actual.getContent())
-					.hasSize(3)
-					.extracting(wm -> wm.createdAt())
-					.doesNotContainNull()
-					.isSortedAccordingTo(Comparator.reverseOrder()); // Check descending order
-		}
-
-		@Test
 		void should_ReturnFilteredList_By_ManufacturerAndReturnType() {
 			// GIVEN
 			saveToDB(
@@ -378,7 +628,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchWashingMachineResponse> actual = underTest.loadPaginatedAndFiltered(
+			Page<SearchWashingMachineResponse> actual = underTest.search(
 					TestData.createSearchWashingMachineRequest().toBuilder()
 							.pageIndex(0)
 							.pageSize(4)
@@ -415,7 +665,7 @@ class LoadPaginatedAndFilteredIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchWashingMachineResponse> actual = underTest.loadPaginatedAndFiltered(
+			Page<SearchWashingMachineResponse> actual = underTest.search(
 					TestData.createSearchWashingMachineRequest().toBuilder()
 							.pageIndex(0)
 							.pageSize(3)

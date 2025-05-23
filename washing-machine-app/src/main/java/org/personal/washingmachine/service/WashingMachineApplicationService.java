@@ -41,27 +41,27 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 	private final WashingMachineMapper washingMachineMapper;
 
 	@Override
-	public Page<SearchWashingMachineResponse> loadPaginatedAndFiltered(SearchWashingMachineRequest searchWashingMachineRequest) {
+	public Page<SearchWashingMachineResponse> search(SearchWashingMachineRequest request) {
 
 		PageRequest pageRequest = PageRequest.of(
-				searchWashingMachineRequest.pageIndex(),
-				searchWashingMachineRequest.pageSize(),
-				Sort.by(washingMachine.createdAt.getMetadata().getName()).descending()
+				request.pageIndex(),
+				request.pageSize(),
+				buildSort(request.sortByField(), request.sortDirection())
 		);
 
 		BooleanBuilder searchFilters = new BooleanBuilder()
-				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.identificationMode, searchWashingMachineRequest.identificationMode()))
-				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.manufacturer, searchWashingMachineRequest.manufacturer()))
+				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.identificationMode, request.identificationMode()))
+				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.manufacturer, request.manufacturer()))
 
-				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.model, searchWashingMachineRequest.model()))
-				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.type, searchWashingMachineRequest.type()))
-				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.serialNumber, searchWashingMachineRequest.serialNumber()))
+				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.model, request.model()))
+				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.type, request.type()))
+				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.serialNumber, request.serialNumber()))
 
-				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.returnType, searchWashingMachineRequest.returnType()))
-				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.damageType, searchWashingMachineRequest.damageType()))
-				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.recommendation, searchWashingMachineRequest.recommendation()))
+				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.returnType, request.returnType()))
+				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.damageType, request.damageType()))
+				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.recommendation, request.recommendation()))
 
-				.and(QueryDSLUtils.addTimestampEqualCondition(washingMachine.createdAt, parseToLocalDate(searchWashingMachineRequest.createdAt())));
+				.and(QueryDSLUtils.addTimestampEqualCondition(washingMachine.createdAt, parseToLocalDate(request.createdAt())));
 
 		Page<WashingMachine> responsePage = repository.findAll(searchFilters, pageRequest);
 
@@ -76,6 +76,30 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 		} catch (DateTimeParseException e) {
 			throw new CustomException("Invalid date provided", ErrorCode.INVALID_DATE, e);
 		}
+	}
+
+	private Sort buildSort(String sortByField, String sortDirection) {
+
+		if (sortByField == null || sortDirection == null || sortDirection.isBlank()) {
+			return buildDefaultSortByCreatedAtDesc();
+		}
+
+		Sort.Direction direction = Sort.Direction.fromString(sortDirection);
+
+		return switch (sortByField) {
+			case "manufacturer" -> Sort.by(direction, washingMachine.manufacturer.getMetadata().getName());
+			case "model" -> Sort.by(direction, washingMachine.model.getMetadata().getName());
+			case "type" -> Sort.by(direction, washingMachine.type.getMetadata().getName());
+			case "serialNumber" -> Sort.by(direction, washingMachine.serialNumber.getMetadata().getName());
+			case "recommendation" -> Sort.by(direction, washingMachine.recommendation.getMetadata().getName());
+			case "createdAt" -> Sort.by(direction, washingMachine.createdAt.getMetadata().getName());
+
+			default -> buildDefaultSortByCreatedAtDesc();
+		};
+	}
+
+	private Sort buildDefaultSortByCreatedAtDesc() {
+		return Sort.by(Sort.Direction.DESC, washingMachine.createdAt.getMetadata().getName());
 	}
 
 	/**
