@@ -46,7 +46,7 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 		PageRequest pageRequest = PageRequest.of(
 				request.pageIndex(),
 				request.pageSize(),
-				Sort.by(washingMachine.createdAt.getMetadata().getName()).descending()
+				buildSort(request.sortByField(), request.sortDirection())
 		);
 
 		BooleanBuilder searchFilters = new BooleanBuilder()
@@ -76,6 +76,30 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 		} catch (DateTimeParseException e) {
 			throw new CustomException("Invalid date provided", ErrorCode.INVALID_DATE, e);
 		}
+	}
+
+	private Sort buildSort(String sortByField, String sortDirection) {
+
+		if (sortByField == null || sortDirection == null || sortDirection.isBlank()) {
+			return buildDefaultSortByCreatedAtDesc();
+		}
+
+		Sort.Direction direction = Sort.Direction.fromString(sortDirection);
+
+		return switch (sortByField) {
+			case "manufacturer" -> Sort.by(direction, washingMachine.manufacturer.getMetadata().getName());
+			case "model" -> Sort.by(direction, washingMachine.model.getMetadata().getName());
+			case "type" -> Sort.by(direction, washingMachine.type.getMetadata().getName());
+			case "serialNumber" -> Sort.by(direction, washingMachine.serialNumber.getMetadata().getName());
+			case "recommendation" -> Sort.by(direction, washingMachine.recommendation.getMetadata().getName());
+			case "createdAt" -> Sort.by(direction, washingMachine.createdAt.getMetadata().getName());
+
+			default -> buildDefaultSortByCreatedAtDesc();
+		};
+	}
+
+	private Sort buildDefaultSortByCreatedAtDesc() {
+		return Sort.by(Sort.Direction.DESC, washingMachine.createdAt.getMetadata().getName());
 	}
 
 	/**
