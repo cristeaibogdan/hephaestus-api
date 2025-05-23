@@ -91,7 +91,7 @@ public class SolarPanelApplicationService implements ISolarPanelApplicationServi
 	private Sort buildSort(String sortByField, String sortDirection) {
 
 		if (sortByField == null || sortDirection == null || sortDirection.isBlank()) {
-			return Sort.by(Sort.Direction.DESC, solarPanel.createdAt.getMetadata().getName());
+			return buildDefaultSortByCreatedAtDesc();
 		}
 
 		Sort.Direction direction = Sort.Direction.fromString(sortDirection);
@@ -104,8 +104,12 @@ public class SolarPanelApplicationService implements ISolarPanelApplicationServi
 			case "recommendation" -> Sort.by(direction, solarPanel.recommendation.getMetadata().getName());
 			case "createdAt" -> Sort.by(direction, solarPanel.createdAt.getMetadata().getName());
 
-			default -> Sort.by(Sort.Direction.DESC, solarPanel.createdAt.getMetadata().getName());
+			default -> buildDefaultSortByCreatedAtDesc();
 		};
+	}
+
+	private Sort buildDefaultSortByCreatedAtDesc() {
+		return Sort.by(Sort.Direction.DESC, solarPanel.createdAt.getMetadata().getName());
 	}
 
 	@Override
