@@ -36,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Deprecated
 @Disabled
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class LoadPaginatedAndFilteredIntegrationTest_OLD extends BaseIntegrationTest {
+class SearchIntegrationTest_OLD extends BaseIntegrationTest {
 
 	@Autowired MockMvc mockMvc;
 	@Autowired ObjectMapper jackson;
@@ -91,7 +91,7 @@ class LoadPaginatedAndFilteredIntegrationTest_OLD extends BaseIntegrationTest {
 		);
 
 		// WHEN
-		Page<SearchWashingMachineResponse> actual = underTest.loadPaginatedAndFiltered(
+		Page<SearchWashingMachineResponse> actual = underTest.search(
 				TestData.createSearchWashingMachineRequest().toBuilder()
 						.pageIndex(0)
 						.pageSize(1)
@@ -110,7 +110,7 @@ class LoadPaginatedAndFilteredIntegrationTest_OLD extends BaseIntegrationTest {
 	void should_ReturnTenWashingMachines() {
 		// GIVEN
 		// WHEN
-		Page<SearchWashingMachineResponse> actual = underTest.loadPaginatedAndFiltered(
+		Page<SearchWashingMachineResponse> actual = underTest.search(
 				TestData.createSearchWashingMachineRequest().toBuilder()
 						.pageIndex(0)
 						.pageSize(10)
@@ -127,7 +127,7 @@ class LoadPaginatedAndFilteredIntegrationTest_OLD extends BaseIntegrationTest {
 	void should_ReturnFilteredList_By_Manufacturer(String manufacturer) {
 		// GIVEN
 		// WHEN
-		Page<SearchWashingMachineResponse> actual = underTest.loadPaginatedAndFiltered(
+		Page<SearchWashingMachineResponse> actual = underTest.search(
 				TestData.createSearchWashingMachineRequest().toBuilder()
 						.pageSize(10)
 						.manufacturer(manufacturer)
@@ -146,7 +146,7 @@ class LoadPaginatedAndFilteredIntegrationTest_OLD extends BaseIntegrationTest {
 	void should_ReturnFilteredList_By_DamageType(DamageType damageType) {
 		// GIVEN
 		// WHEN
-		Page<SearchWashingMachineResponse> actual = underTest.loadPaginatedAndFiltered(
+		Page<SearchWashingMachineResponse> actual = underTest.search(
 				TestData.createSearchWashingMachineRequest().toBuilder()
 						.pageSize(10)
 						.damageType(damageType)
@@ -165,7 +165,7 @@ class LoadPaginatedAndFilteredIntegrationTest_OLD extends BaseIntegrationTest {
 	void should_ReturnFilteredList_By_ReturnType(ReturnType returnType) {
 		// GIVEN
 		// WHEN
-		Page<SearchWashingMachineResponse> actual = underTest.loadPaginatedAndFiltered(
+		Page<SearchWashingMachineResponse> actual = underTest.search(
 				TestData.createSearchWashingMachineRequest().toBuilder()
 						.pageSize(10)
 						.returnType(returnType)
@@ -184,7 +184,7 @@ class LoadPaginatedAndFilteredIntegrationTest_OLD extends BaseIntegrationTest {
 	void should_ReturnFilteredList_By_IdentificationMode(IdentificationMode identificationMode) {
 		// GIVEN
 		// WHEN
-		Page<SearchWashingMachineResponse> actual = underTest.loadPaginatedAndFiltered(
+		Page<SearchWashingMachineResponse> actual = underTest.search(
 				TestData.createSearchWashingMachineRequest().toBuilder()
 						.pageSize(10)
 						.identificationMode(identificationMode)
@@ -203,7 +203,7 @@ class LoadPaginatedAndFilteredIntegrationTest_OLD extends BaseIntegrationTest {
 	void should_ReturnFilteredList_By_SerialNumber(String serialNumber) {
 		// GIVEN
 		// WHEN
-		Page<SearchWashingMachineResponse> actual = underTest.loadPaginatedAndFiltered(
+		Page<SearchWashingMachineResponse> actual = underTest.search(
 				TestData.createSearchWashingMachineRequest().toBuilder()
 						.pageSize(10)
 						.serialNumber(serialNumber)
@@ -222,7 +222,7 @@ class LoadPaginatedAndFilteredIntegrationTest_OLD extends BaseIntegrationTest {
 	void should_ReturnFilteredList_By_Model(String model) {
 		// GIVEN
 		// WHEN
-		Page<SearchWashingMachineResponse> actual = underTest.loadPaginatedAndFiltered(
+		Page<SearchWashingMachineResponse> actual = underTest.search(
 				TestData.createSearchWashingMachineRequest().toBuilder()
 						.pageSize(10)
 						.model(model)
@@ -241,7 +241,7 @@ class LoadPaginatedAndFilteredIntegrationTest_OLD extends BaseIntegrationTest {
 	void should_ReturnFilteredList_By_Type(String type) {
 		// GIVEN
 		// WHEN
-		Page<SearchWashingMachineResponse> actual = underTest.loadPaginatedAndFiltered(
+		Page<SearchWashingMachineResponse> actual = underTest.search(
 				TestData.createSearchWashingMachineRequest().toBuilder()
 						.pageSize(10)
 						.type(type)
@@ -260,7 +260,7 @@ class LoadPaginatedAndFilteredIntegrationTest_OLD extends BaseIntegrationTest {
 	void should_ReturnFilteredList_By_Recommendation(Recommendation recommendation) {
 		// GIVEN
 		// WHEN
-		Page<SearchWashingMachineResponse> actual = underTest.loadPaginatedAndFiltered(
+		Page<SearchWashingMachineResponse> actual = underTest.search(
 				TestData.createSearchWashingMachineRequest().toBuilder()
 						.pageSize(10)
 						.recommendation(recommendation)
@@ -278,7 +278,7 @@ class LoadPaginatedAndFilteredIntegrationTest_OLD extends BaseIntegrationTest {
 	void should_ReturnListWithDescendingDates() {
 		// GIVEN
 		// WHEN
-		Page<SearchWashingMachineResponse> actual = underTest.loadPaginatedAndFiltered(
+		Page<SearchWashingMachineResponse> actual = underTest.search(
 				TestData.createSearchWashingMachineRequest().toBuilder()
 						.pageSize(10)
 						.build()
@@ -296,7 +296,7 @@ class LoadPaginatedAndFilteredIntegrationTest_OLD extends BaseIntegrationTest {
 	void should_ReturnFilteredList_By_ManufacturerAndReturnType() {
 		// GIVEN
 		// WHEN
-		Page<SearchWashingMachineResponse> actual = underTest.loadPaginatedAndFiltered(
+		Page<SearchWashingMachineResponse> actual = underTest.search(
 				TestData.createSearchWashingMachineRequest().toBuilder()
 						.pageSize(10)
 						.manufacturer("WhirL")
@@ -317,7 +317,7 @@ class LoadPaginatedAndFilteredIntegrationTest_OLD extends BaseIntegrationTest {
 	void should_ReturnFilteredList_By_IdentificationModeAndModelAndType() {
 		// GIVEN
 		// WHEN
-		Page<SearchWashingMachineResponse> actual = underTest.loadPaginatedAndFiltered(
+		Page<SearchWashingMachineResponse> actual = underTest.search(
 				TestData.createSearchWashingMachineRequest().toBuilder()
 						.pageSize(10)
 						.identificationMode(IdentificationMode.QR_CODE)
