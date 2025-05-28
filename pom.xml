@@ -23,8 +23,12 @@
 
     <properties>
         <java.version>17</java.version>
+        <openapi.version>2.6.0</openapi.version>
+        <querydsl.version>5.1.0</querydsl.version>
         <spring-cloud.version>2023.0.2</spring-cloud.version>
+        <jasper.reports.version>6.21.0</jasper.reports.version>
         <excluded-tests.group>slow</excluded-tests.group>
+        <opentelemetry.version>1.37.0</opentelemetry.version>
     </properties>
 
     <parent>
@@ -33,14 +37,141 @@
         <version>3.3.2</version>
     </parent>
 
-    <dependencyManagement>
+    <dependencyManagement> <!-- Handles all dependency versions across all modules -->
         <dependencies>
+            <!-- ***************************************** -->
+            <!-- *** CONFLICT RESOLUTIONS -->
+            <!-- ***************************************** -->
+                <!-- TODO: Resolve conflicts and add comments to each-->
+<!--            <dependency>-->
+<!--                <groupId>io.opentelemetry</groupId>-->
+<!--                <artifactId>opentelemetry-exporter-zipkin</artifactId>-->
+<!--                <version>${opentelemetry.version}</version>-->
+<!--                <exclusions>                    -->
+<!--                    <exclusion>-->
+<!--                        <groupId>org.jetbrains</groupId>-->
+<!--                        <artifactId>annotations</artifactId>-->
+<!--                    </exclusion>-->
+<!--                </exclusions>-->
+<!--            </dependency>-->
+
+<!--            <dependency>-->
+<!--                <groupId>io.opentelemetry</groupId>-->
+<!--                <artifactId>opentelemetry-sdk</artifactId>-->
+<!--                <version>${opentelemetry.version}</version>-->
+<!--                <exclusions>                    -->
+<!--                    <exclusion>-->
+<!--                        <groupId>io.opentelemetry</groupId>-->
+<!--                        <artifactId>opentelemetry-api-incubator</artifactId>-->
+<!--                    </exclusion>-->
+<!--                </exclusions>-->
+<!--            </dependency>-->
+
+<!--            <dependency>-->
+<!--                <groupId>commons-digester</groupId>-->
+<!--                <artifactId>commons-digester</artifactId>-->
+<!--                <version>2.1</version>-->
+<!--                <exclusions>                    -->
+<!--                    <exclusion>-->
+<!--                        <groupId>commons-beanutils</groupId>-->
+<!--                        <artifactId>commons-beanutils</artifactId>-->
+<!--                    </exclusion>-->
+<!--                </exclusions>-->
+<!--            </dependency>-->
+<!--            -->
+<!--            <dependency>-->
+<!--                <groupId>net.sf.jasperreports</groupId>-->
+<!--                <artifactId>jasperreports</artifactId>-->
+<!--                <version>6.21.0</version>-->
+<!--                <exclusions>-->
+<!--                    <exclusion>-->
+<!--                        <groupId>commons-logging</groupId>-->
+<!--                        <artifactId>commons-logging</artifactId>-->
+<!--                    </exclusion>-->
+<!--                </exclusions>-->
+<!--            </dependency>-->
+
+            <!-- ***************************************** -->
+            <!-- *** REPORTS -->
+            <!-- ***************************************** -->
+
+            <dependency>
+                <groupId>net.sf.jasperreports</groupId>
+                <artifactId>jasperreports</artifactId>
+                <version>${jasper.reports.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.sf.jasperreports</groupId>
+                <artifactId>jasperreports-fonts</artifactId>
+                <version>${jasper.reports.version}</version>
+            </dependency>
+
+            <!-- ***************************************** -->
+            <!-- *** CLOUD -->
+            <!-- ***************************************** -->
+
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
                 <version>${spring-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <!-- ***************************************** -->
+            <!-- *** UTILITY -->
+            <!-- ***************************************** -->
+
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>33.2.1-jre</version>
+            </dependency>
+
+            <!-- ***************************************** -->
+            <!-- *** DATABASE -->
+            <!-- ***************************************** -->
+
+            <dependency>
+                <groupId>com.querydsl</groupId>
+                <artifactId>querydsl-jpa</artifactId>
+                <version>${querydsl.version}</version>
+                <classifier>jakarta</classifier> <!-- Required for JPA annotation processing with Jakarta; must be set in both parent and module -->
+            </dependency>
+
+            <dependency>
+                <groupId>com.querydsl</groupId>
+                <artifactId>querydsl-apt</artifactId>
+                <version>${querydsl.version}</version>
+                <classifier>jakarta</classifier> <!-- Required for JPA annotation processing with Jakarta; must be set in both parent and module -->
+            </dependency>
+
+            <!-- ***************************************** -->
+            <!-- *** OPENAPI -->
+            <!-- ***************************************** -->
+
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
+                <version>${openapi.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
+                <version>${openapi.version}</version>
+            </dependency>
+
+            <!-- ***************************************** -->
+            <!-- *** TESTING -->
+            <!-- ***************************************** -->
+
+            <dependency>
+                <groupId>com.github.gavlyukovskiy</groupId>
+                <artifactId>p6spy-spring-boot-starter</artifactId>
+                <version>1.9.0</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -94,7 +225,6 @@
             <!-- PostgreSQLContainer, ... -->
             <groupId>org.testcontainers</groupId>
             <artifactId>postgresql</artifactId>
-            <version>1.19.8</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -133,7 +263,6 @@
                     <!-- During GitHub actions this is set to (none), meaning all tests are included and ran -->
                     <excludedGroups>${excluded-tests.group}</excludedGroups>
                 </configuration>
-                <version>3.2.5</version>
             </plugin>
         </plugins>
     </build>
