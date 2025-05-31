@@ -42,54 +42,64 @@
             <!-- ***************************************** -->
             <!-- *** CONFLICT RESOLUTIONS -->
             <!-- ***************************************** -->
-                <!-- TODO: Resolve conflicts and add comments to each-->
-<!--            <dependency>-->
-<!--                <groupId>io.opentelemetry</groupId>-->
-<!--                <artifactId>opentelemetry-exporter-zipkin</artifactId>-->
-<!--                <version>${opentelemetry.version}</version>-->
-<!--                <exclusions>                    -->
-<!--                    <exclusion>-->
-<!--                        <groupId>org.jetbrains</groupId>-->
-<!--                        <artifactId>annotations</artifactId>-->
-<!--                    </exclusion>-->
-<!--                </exclusions>-->
-<!--            </dependency>-->
 
-<!--            <dependency>-->
-<!--                <groupId>io.opentelemetry</groupId>-->
-<!--                <artifactId>opentelemetry-sdk</artifactId>-->
-<!--                <version>${opentelemetry.version}</version>-->
-<!--                <exclusions>                    -->
-<!--                    <exclusion>-->
-<!--                        <groupId>io.opentelemetry</groupId>-->
-<!--                        <artifactId>opentelemetry-api-incubator</artifactId>-->
-<!--                    </exclusion>-->
-<!--                </exclusions>-->
-<!--            </dependency>-->
+            <dependency>
+                <groupId>io.opentelemetry</groupId>
+                <artifactId>opentelemetry-exporter-zipkin</artifactId>
+                <version>${opentelemetry.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <!-- Prevents conflict between:
+                        annotations:13.0 (from opentelemetry-exporter-zipkin)
+                        and annotations:17.0.0 (from spring-boot-testcontainers) -->
+                        <groupId>org.jetbrains</groupId>
+                        <artifactId>annotations</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
 
-<!--            <dependency>-->
-<!--                <groupId>commons-digester</groupId>-->
-<!--                <artifactId>commons-digester</artifactId>-->
-<!--                <version>2.1</version>-->
-<!--                <exclusions>                    -->
-<!--                    <exclusion>-->
-<!--                        <groupId>commons-beanutils</groupId>-->
-<!--                        <artifactId>commons-beanutils</artifactId>-->
-<!--                    </exclusion>-->
-<!--                </exclusions>-->
-<!--            </dependency>-->
-<!--            -->
-<!--            <dependency>-->
-<!--                <groupId>net.sf.jasperreports</groupId>-->
-<!--                <artifactId>jasperreports</artifactId>-->
-<!--                <version>6.21.0</version>-->
-<!--                <exclusions>-->
-<!--                    <exclusion>-->
-<!--                        <groupId>commons-logging</groupId>-->
-<!--                        <artifactId>commons-logging</artifactId>-->
-<!--                    </exclusion>-->
-<!--                </exclusions>-->
-<!--            </dependency>-->
+            <dependency>
+                <groupId>io.opentelemetry</groupId>
+                <artifactId>opentelemetry-sdk</artifactId>
+                <version>${opentelemetry.version}</version>
+                <exclusions>
+                    <!-- Prevents conflict between:
+                    opentelemetry-api-incubator:1.39.0-alpha (from micrometer-tracing-bridge-otel)
+                    and opentelemetry-api-incubator:1.37.0-alpha (from open-telemetry-sdk) -->
+                    <exclusion>
+                        <groupId>io.opentelemetry</groupId>
+                        <artifactId>opentelemetry-api-incubator</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-digester</groupId>
+                <artifactId>commons-digester</artifactId>
+                <version>2.1</version>
+                <exclusions>
+                    <exclusion> <!-- Prevents conflict with commons-beanutils:1.9.4 (used by JasperReports) -->
+                        <groupId>commons-beanutils</groupId>
+                        <artifactId>commons-beanutils</artifactId>
+                    </exclusion>
+                    <exclusion> <!-- Prevents conflict with commons-logging:1.2 (used by JasperReports) -->
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>1.9.4</version>
+                <exclusions>
+                    <exclusion> <!-- Prevents conflict with commons-logging:1.2 (used by JasperReports) -->
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
 
             <!-- ***************************************** -->
             <!-- *** REPORTS -->
@@ -99,6 +109,15 @@
                 <groupId>net.sf.jasperreports</groupId>
                 <artifactId>jasperreports</artifactId>
                 <version>${jasper.reports.version}</version>
+                <exclusions>
+                    <!-- Prevents conflict between:
+                   ecj:3.26.0 (from querydsl-apt)
+                   and ecj:3.21.0 (from jasperreports) -->
+                    <exclusion>
+                        <groupId>org.eclipse.jdt</groupId>
+                        <artifactId>ecj</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <dependency>
