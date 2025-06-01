@@ -17,12 +17,11 @@ class VisibleSurfaceDamageTest {
 		@Test
 		void should_ReturnNONE_When_ValuesAreDefault() {
 			// GIVEN
-			VisibleSurfaceDamage underTest = VisibleSurfaceDamage.builder()
-					.visibleSurfacesScratchesLength(0)
-					.visibleSurfacesDentsDepth(0)
-					.visibleSurfacesMinorDamage("")
-					.visibleSurfacesMajorDamage("")
-					.build();
+			VisibleSurfaceDamage underTest = new VisibleSurfaceDamage()
+					.withVisibleSurfacesScratchesLength(0)
+					.withVisibleSurfacesDentsDepth(0)
+					.withVisibleSurfacesMinorDamage("")
+					.withVisibleSurfacesMajorDamage("");
 
 			// WHEN
 			Recommendation actual = underTest.calculate();
@@ -34,9 +33,8 @@ class VisibleSurfaceDamageTest {
 		@Test
 		void should_ReturnRESALE_When_MajorDamageIsSpecified() {
 			// GIVEN
-			VisibleSurfaceDamage underTest = VisibleSurfaceDamage.builder()
-					.visibleSurfacesMajorDamage("I'm the tested property")
-					.build();
+			VisibleSurfaceDamage underTest = new VisibleSurfaceDamage()
+					.withVisibleSurfacesMajorDamage("I'm the tested property");
 
 			// WHEN
 			Recommendation actual = underTest.calculate();
@@ -52,9 +50,8 @@ class VisibleSurfaceDamageTest {
 		@Test
 		void should_ReturnNONE_When_VisibleSurfacesScratchesLengthIsZero() {
 			// GIVEN
-			VisibleSurfaceDamage underTest = VisibleSurfaceDamage.builder()
-					.visibleSurfacesScratchesLength(0)
-					.build();
+			VisibleSurfaceDamage underTest = new VisibleSurfaceDamage()
+					.withVisibleSurfacesScratchesLength(0);
 
 			// WHEN
 			Recommendation actual = underTest.calculateForScratches();
@@ -67,9 +64,8 @@ class VisibleSurfaceDamageTest {
 		@ValueSource(doubles = {0.5, 1, 4, 4.5})
 		void should_ReturnRESALE_When_ScratchesAreUnder5cm(double scratchValue) {
 			// GIVEN
-			VisibleSurfaceDamage underTest = VisibleSurfaceDamage.builder()
-					.visibleSurfacesScratchesLength(scratchValue)
-					.build();
+			VisibleSurfaceDamage underTest = new VisibleSurfaceDamage()
+					.withVisibleSurfacesScratchesLength(scratchValue);
 
 			// WHEN
 			Recommendation actual = underTest.calculateForScratches();
@@ -82,9 +78,8 @@ class VisibleSurfaceDamageTest {
 		@ValueSource(doubles = {5, 5.5, 10})
 		void should_ReturnOUTLET_When_ScratchesAreEqualOrOver5cm(double scratchValue) {
 			// GIVEN
-			VisibleSurfaceDamage underTest = VisibleSurfaceDamage.builder()
-					.visibleSurfacesScratchesLength(scratchValue)
-					.build();
+			VisibleSurfaceDamage underTest = new VisibleSurfaceDamage()
+					.withVisibleSurfacesScratchesLength(scratchValue);
 
 			// WHEN
 			Recommendation actual = underTest.calculateForScratches();
@@ -100,9 +95,8 @@ class VisibleSurfaceDamageTest {
 		@Test
 		void should_ReturnNONE_When_VisibleSurfacesDentsIsZero() {
 			// GIVEN
-			VisibleSurfaceDamage underTest = VisibleSurfaceDamage.builder()
-					.visibleSurfacesDentsDepth(0)
-					.build();
+			VisibleSurfaceDamage underTest = new VisibleSurfaceDamage()
+					.withVisibleSurfacesDentsDepth(0);
 
 			// WHEN
 			Recommendation actual = underTest.calculateForDents();
@@ -115,9 +109,8 @@ class VisibleSurfaceDamageTest {
 		@ValueSource(doubles = {0.5, 1, 4, 4.5})
 		void should_ReturnRESALE_When_DentsAreUnder5cm(double dentDepth) {
 			// GIVEN
-			VisibleSurfaceDamage underTest = VisibleSurfaceDamage.builder()
-					.visibleSurfacesDentsDepth(dentDepth)
-					.build();
+			VisibleSurfaceDamage underTest = new VisibleSurfaceDamage()
+					.withVisibleSurfacesDentsDepth(dentDepth);
 
 			// WHEN
 			Recommendation actual = underTest.calculateForDents();
@@ -130,9 +123,8 @@ class VisibleSurfaceDamageTest {
 		@ValueSource(doubles = {5, 5.5, 10})
 		void should_ReturnOUTLET_When_DentsAreEqualOrOver5cm(double dentDepth) {
 			// GIVEN
-			VisibleSurfaceDamage underTest = VisibleSurfaceDamage.builder()
-					.visibleSurfacesDentsDepth(dentDepth)
-					.build();
+			VisibleSurfaceDamage underTest = new VisibleSurfaceDamage()
+					.withVisibleSurfacesDentsDepth(dentDepth);
 
 			// WHEN
 			Recommendation actual = underTest.calculateForDents();
@@ -148,9 +140,8 @@ class VisibleSurfaceDamageTest {
 		@Test
 		void should_ReturnRESALE_When_VisibleSurfacesHasMinorDamageSpecified() {
 			// GIVEN
-			VisibleSurfaceDamage underTest = VisibleSurfaceDamage.builder()
-					.visibleSurfacesMinorDamage("I'm the tested property")
-					.build();
+			VisibleSurfaceDamage underTest = new VisibleSurfaceDamage()
+					.withVisibleSurfacesMinorDamage("I'm the tested property");
 
 			// WHEN
 			Recommendation actual = underTest.calculateForMinorDamage();
@@ -162,9 +153,8 @@ class VisibleSurfaceDamageTest {
 		@Test
 		void should_ReturnNONE_When_VisibleSurfacesHasMinorDamageUnspecified() {
 			// GIVEN
-			VisibleSurfaceDamage underTest = VisibleSurfaceDamage.builder()
-					.visibleSurfacesMinorDamage("")
-					.build();
+			VisibleSurfaceDamage underTest = new VisibleSurfaceDamage()
+					.withVisibleSurfacesMinorDamage("");
 
 			// WHEN
 			Recommendation actual = underTest.calculateForMinorDamage();
@@ -180,9 +170,8 @@ class VisibleSurfaceDamageTest {
 		@Test
 		void should_ReturnOUTLET_When_VisibleSurfacesHasMajorDamageIsSpecified() {
 			// GIVEN
-			VisibleSurfaceDamage underTest = VisibleSurfaceDamage.builder()
-					.visibleSurfacesMajorDamage("I'm the tested property")
-					.build();
+			VisibleSurfaceDamage underTest = new VisibleSurfaceDamage()
+					.withVisibleSurfacesMajorDamage("I'm the tested property");
 
 			// WHEN
 			Recommendation actual = underTest.calculateForMajorDamage();
@@ -194,9 +183,8 @@ class VisibleSurfaceDamageTest {
 		@Test
 		void should_ReturnNONE_When_VisibleSurfacesMajorDamageIsUnspecified() {
 			// GIVEN
-			VisibleSurfaceDamage underTest = VisibleSurfaceDamage.builder()
-					.visibleSurfacesMajorDamage("")
-					.build();
+			VisibleSurfaceDamage underTest = new VisibleSurfaceDamage()
+					.withVisibleSurfacesMajorDamage("");
 
 			// WHEN
 			Recommendation actual = underTest.calculateForMajorDamage();

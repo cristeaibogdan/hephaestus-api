@@ -8,7 +8,7 @@ import org.personal.washingmachine.enums.Recommendation;
 import static org.personal.washingmachine.enums.Recommendation.*;
 
 @Getter
-@Builder
+@With
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Embeddable

@@ -12,11 +12,10 @@ class PackageDamageTest {
 	@Test
 	void should_ReturnNONE_When_AllValuesAreFalse() {
 		// GIVEN
-		PackageDamage underTest = PackageDamage.builder()
-				.packageDamaged(false)
-				.packageDirty(false)
-				.packageMaterialAvailable(false)
-				.build();
+		PackageDamage underTest = new PackageDamage()
+				.withPackageDamaged(false)
+				.withPackageDirty(false)
+				.withPackageMaterialAvailable(false);
 
 		// WHEN
 		Recommendation actual = underTest.calculate();
@@ -28,9 +27,8 @@ class PackageDamageTest {
 	@Test
 	void should_ReturnREPACKAGE_When_PackageMaterialAvailableIsTrue() {
 		// GIVEN
-		PackageDamage underTest = PackageDamage.builder()
-				.packageMaterialAvailable(true)
-				.build();
+		PackageDamage underTest = new PackageDamage()
+				.withPackageMaterialAvailable(true);
 
 		// WHEN
 		Recommendation actual = underTest.calculate();
@@ -42,10 +40,9 @@ class PackageDamageTest {
 	@Test
 	void should_ReturnRESALE_When_PackageMaterialAvailableIsFalse() {
 		// GIVEN
-		PackageDamage underTest = PackageDamage.builder()
-				.packageDamaged(true)
-				.packageMaterialAvailable(false)
-				.build();
+		PackageDamage underTest = new PackageDamage()
+				.withPackageDamaged(true)
+				.withPackageMaterialAvailable(false);
 
 		// WHEN
 		Recommendation actual = underTest.calculate();

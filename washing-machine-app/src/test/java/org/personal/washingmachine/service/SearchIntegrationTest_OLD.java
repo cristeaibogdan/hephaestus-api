@@ -92,11 +92,10 @@ class SearchIntegrationTest_OLD extends BaseIntegrationTest {
 
 		// WHEN
 		Page<SearchWashingMachineResponse> actual = underTest.search(
-				TestData.createSearchWashingMachineRequest().toBuilder()
-						.pageIndex(0)
-						.pageSize(1)
-						.serialNumber("serial10")
-						.build()
+				TestData.createSearchWashingMachineRequest()
+						.withPageIndex(0)
+						.withPageSize(1)
+						.withSerialNumber("serial10")
 		);
 
 		// THEN
@@ -111,10 +110,9 @@ class SearchIntegrationTest_OLD extends BaseIntegrationTest {
 		// GIVEN
 		// WHEN
 		Page<SearchWashingMachineResponse> actual = underTest.search(
-				TestData.createSearchWashingMachineRequest().toBuilder()
-						.pageIndex(0)
-						.pageSize(10)
-						.build()
+				TestData.createSearchWashingMachineRequest()
+						.withPageIndex(0)
+						.withPageSize(10)
 		);
 
 		// THEN
@@ -128,10 +126,9 @@ class SearchIntegrationTest_OLD extends BaseIntegrationTest {
 		// GIVEN
 		// WHEN
 		Page<SearchWashingMachineResponse> actual = underTest.search(
-				TestData.createSearchWashingMachineRequest().toBuilder()
-						.pageSize(10)
-						.manufacturer(manufacturer)
-						.build()
+				TestData.createSearchWashingMachineRequest()
+						.withPageSize(10)
+						.withManufacturer(manufacturer)
 		);
 
 		// THEN
@@ -147,10 +144,9 @@ class SearchIntegrationTest_OLD extends BaseIntegrationTest {
 		// GIVEN
 		// WHEN
 		Page<SearchWashingMachineResponse> actual = underTest.search(
-				TestData.createSearchWashingMachineRequest().toBuilder()
-						.pageSize(10)
-						.damageType(damageType)
-						.build()
+				TestData.createSearchWashingMachineRequest()
+						.withPageSize(10)
+						.withDamageType(damageType)
 		);
 
 		// THEN
@@ -166,10 +162,9 @@ class SearchIntegrationTest_OLD extends BaseIntegrationTest {
 		// GIVEN
 		// WHEN
 		Page<SearchWashingMachineResponse> actual = underTest.search(
-				TestData.createSearchWashingMachineRequest().toBuilder()
-						.pageSize(10)
-						.returnType(returnType)
-						.build()
+				TestData.createSearchWashingMachineRequest()
+						.withPageSize(10)
+						.withReturnType(returnType)
 		);
 
 		// THEN
@@ -185,10 +180,9 @@ class SearchIntegrationTest_OLD extends BaseIntegrationTest {
 		// GIVEN
 		// WHEN
 		Page<SearchWashingMachineResponse> actual = underTest.search(
-				TestData.createSearchWashingMachineRequest().toBuilder()
-						.pageSize(10)
-						.identificationMode(identificationMode)
-						.build()
+				TestData.createSearchWashingMachineRequest()
+						.withPageSize(10)
+						.withIdentificationMode(identificationMode)
 		);
 
 		// THEN
@@ -204,10 +198,9 @@ class SearchIntegrationTest_OLD extends BaseIntegrationTest {
 		// GIVEN
 		// WHEN
 		Page<SearchWashingMachineResponse> actual = underTest.search(
-				TestData.createSearchWashingMachineRequest().toBuilder()
-						.pageSize(10)
-						.serialNumber(serialNumber)
-						.build()
+				TestData.createSearchWashingMachineRequest()
+						.withPageSize(10)
+						.withSerialNumber(serialNumber)
 		);
 
 		// THEN
@@ -223,10 +216,9 @@ class SearchIntegrationTest_OLD extends BaseIntegrationTest {
 		// GIVEN
 		// WHEN
 		Page<SearchWashingMachineResponse> actual = underTest.search(
-				TestData.createSearchWashingMachineRequest().toBuilder()
-						.pageSize(10)
-						.model(model)
-						.build()
+				TestData.createSearchWashingMachineRequest()
+						.withPageSize(10)
+						.withModel(model)
 		);
 
 		// THEN
@@ -242,10 +234,9 @@ class SearchIntegrationTest_OLD extends BaseIntegrationTest {
 		// GIVEN
 		// WHEN
 		Page<SearchWashingMachineResponse> actual = underTest.search(
-				TestData.createSearchWashingMachineRequest().toBuilder()
-						.pageSize(10)
-						.type(type)
-						.build()
+				TestData.createSearchWashingMachineRequest()
+						.withPageSize(10)
+						.withType(type)
 		);
 
 		// THEN
@@ -261,10 +252,9 @@ class SearchIntegrationTest_OLD extends BaseIntegrationTest {
 		// GIVEN
 		// WHEN
 		Page<SearchWashingMachineResponse> actual = underTest.search(
-				TestData.createSearchWashingMachineRequest().toBuilder()
-						.pageSize(10)
-						.recommendation(recommendation)
-						.build()
+				TestData.createSearchWashingMachineRequest()
+						.withPageSize(10)
+						.withRecommendation(recommendation)
 		);
 
 		// THEN
@@ -279,9 +269,8 @@ class SearchIntegrationTest_OLD extends BaseIntegrationTest {
 		// GIVEN
 		// WHEN
 		Page<SearchWashingMachineResponse> actual = underTest.search(
-				TestData.createSearchWashingMachineRequest().toBuilder()
-						.pageSize(10)
-						.build()
+				TestData.createSearchWashingMachineRequest()
+						.withPageSize(10)
 		);
 
 		// THEN
@@ -297,11 +286,10 @@ class SearchIntegrationTest_OLD extends BaseIntegrationTest {
 		// GIVEN
 		// WHEN
 		Page<SearchWashingMachineResponse> actual = underTest.search(
-				TestData.createSearchWashingMachineRequest().toBuilder()
-						.pageSize(10)
-						.manufacturer("WhirL")
-						.returnType(ReturnType.TRANSPORT)
-						.build()
+				TestData.createSearchWashingMachineRequest()
+						.withPageSize(10)
+						.withManufacturer("WhirL")
+						.withReturnType(ReturnType.TRANSPORT)
 		);
 
 		// THEN
@@ -318,12 +306,11 @@ class SearchIntegrationTest_OLD extends BaseIntegrationTest {
 		// GIVEN
 		// WHEN
 		Page<SearchWashingMachineResponse> actual = underTest.search(
-				TestData.createSearchWashingMachineRequest().toBuilder()
-						.pageSize(10)
-						.identificationMode(IdentificationMode.QR_CODE)
-						.model("MoDElC")
-						.type("tYPeX")
-						.build()
+				TestData.createSearchWashingMachineRequest()
+						.withPageSize(10)
+						.withIdentificationMode(IdentificationMode.QR_CODE)
+						.withModel("MoDElC")
+						.withType("tYPeX")
 		);
 
 		// THEN
@@ -349,9 +336,8 @@ class SearchIntegrationTest_OLD extends BaseIntegrationTest {
 		@MethodSource("localeProvider")
 		void should_ThrowCustomException_When_InvalidDate(String locale) throws Exception {
 			// GIVEN
-			SearchWashingMachineRequest request = TestData.createSearchWashingMachineRequest().toBuilder()
-					.createdAt("invalid date")
-					.build();
+			SearchWashingMachineRequest request = TestData.createSearchWashingMachineRequest()
+					.withCreatedAt("invalid date");
 
 			// WHEN
 			ResultActions resultActions = mockMvc.perform(
@@ -371,10 +357,9 @@ class SearchIntegrationTest_OLD extends BaseIntegrationTest {
 			// GIVEN
 			// WHEN
 			ResultActions resultActions = performRequest(
-					TestData.createSearchWashingMachineRequest().toBuilder()
-							.pageSize(10)
-							.serialNumber("serial8")
-							.build()
+					TestData.createSearchWashingMachineRequest()
+							.withPageSize(10)
+							.withSerialNumber("serial8")
 			);
 
 			// THEN

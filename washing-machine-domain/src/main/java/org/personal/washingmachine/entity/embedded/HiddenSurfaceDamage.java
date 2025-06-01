@@ -14,7 +14,7 @@ import static org.personal.washingmachine.enums.Recommendation.*;
 import static org.personal.washingmachine.enums.Recommendation.NONE;
 
 @Getter
-@Builder
+@With
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Embeddable

@@ -133,13 +133,12 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 			// GIVEN
 			// WHEN
 			ResultActions resultActions = performRequest(
-					TestData.createSaveWashingMachineRequest().toBuilder()
-							.serialNumber("I'm ready to be saved in DB")
-							.washingMachineDetail(
-									TestData.createValidSaveWashingMachineDetailRequest().toBuilder()
-											.packageDirty(true)
-											.build())
-							.build()
+					TestData.createSaveWashingMachineRequest()
+							.withSerialNumber("I'm ready to be saved in DB")
+							.withWashingMachineDetail(
+									TestData.createValidSaveWashingMachineDetailRequest()
+											.withPackageDirty(true)
+							)
 			);
 
 			// THEN
@@ -151,13 +150,12 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ThrowCustomException_When_SerialNumberAlreadyTaken() throws Exception {
 			// GIVEN
-			CreateWashingMachineRequest request = TestData.createSaveWashingMachineRequest().toBuilder()
-					.serialNumber("I already exist in DB")
-					.washingMachineDetail(
-							TestData.createValidSaveWashingMachineDetailRequest().toBuilder()
-									.packageDamaged(true)
-									.build())
-					.build();
+			CreateWashingMachineRequest request = TestData.createSaveWashingMachineRequest()
+					.withSerialNumber("I already exist in DB")
+					.withWashingMachineDetail(
+							TestData.createValidSaveWashingMachineDetailRequest()
+									.withPackageDamaged(true)
+					);
 
 			performRequest(request);
 
