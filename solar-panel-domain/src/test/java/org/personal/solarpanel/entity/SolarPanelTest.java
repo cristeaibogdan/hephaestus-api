@@ -58,14 +58,11 @@ class SolarPanelTest {
 	void should_ReturnRecommendationRecycle_When_DamageIsModifiedWithSetter() {
 		// GIVEN
 		SolarPanel solarPanel = validSolarPanel.setDamage(
-				validDamage.setHotSpots(true) // will return Repair recommendation
-		);
-		// WHEN
-		solarPanel.setDamage(
 				validDamage.setHotSpots(true)
 						.setSnailTrails(true)
 						.setMicroCracks(true)
 		);
+		// WHEN
 		Recommendation actual = solarPanel.getRecommendation();
 
 		// THEN

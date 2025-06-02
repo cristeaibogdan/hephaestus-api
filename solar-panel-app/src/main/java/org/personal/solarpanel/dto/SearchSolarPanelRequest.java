@@ -2,10 +2,10 @@ package org.personal.solarpanel.dto;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Pattern;
-import lombok.Builder;
+import lombok.With;
 import org.personal.solarpanel.enums.Recommendation;
 
-@Builder(toBuilder = true)
+@With
 public record SearchSolarPanelRequest(
 		@Min(value = 0, message = "{NUMERIC_MINIMUM_VALUE}")
 		int pageIndex,

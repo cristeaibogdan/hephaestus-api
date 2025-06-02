@@ -17,12 +17,11 @@ class HiddenSurfaceDamageTest {
 		@Test
 		void should_ReturnNONE_When_ValuesAreDefault() {
 			// GIVEN
-			HiddenSurfaceDamage underTest = HiddenSurfaceDamage.builder()
-					.hiddenSurfacesScratchesLength(0)
-					.hiddenSurfacesDentsDepth(0)
-					.hiddenSurfacesMinorDamage("")
-					.hiddenSurfacesMajorDamage("")
-					.build();
+			HiddenSurfaceDamage underTest = new HiddenSurfaceDamage()
+					.withHiddenSurfacesScratchesLength(0)
+					.withHiddenSurfacesDentsDepth(0)
+					.withHiddenSurfacesMinorDamage("")
+					.withHiddenSurfacesMajorDamage("");
 
 			// WHEN
 			Recommendation actual = underTest.calculate();
@@ -34,9 +33,8 @@ class HiddenSurfaceDamageTest {
 		@Test
 		void should_ReturnRESALE_When_MinorDamageIsSpecified() {
 			// GIVEN
-			HiddenSurfaceDamage underTest = HiddenSurfaceDamage.builder()
-					.hiddenSurfacesMinorDamage("testing property")
-					.build();
+			HiddenSurfaceDamage underTest = new HiddenSurfaceDamage()
+					.withHiddenSurfacesMinorDamage("testing property");
 
 			// WHEN
 			Recommendation actual = underTest.calculate();
@@ -52,9 +50,8 @@ class HiddenSurfaceDamageTest {
 		@Test
 		void should_ReturnNONE_When_ScratchesLengthIsZero() {
 			// GIVEN
-			HiddenSurfaceDamage underTest = HiddenSurfaceDamage.builder()
-					.hiddenSurfacesScratchesLength(0)
-					.build();
+			HiddenSurfaceDamage underTest = new HiddenSurfaceDamage()
+					.withHiddenSurfacesScratchesLength(0);
 
 			// WHEN
 			Recommendation actual = underTest.calculateForScratches();
@@ -67,9 +64,8 @@ class HiddenSurfaceDamageTest {
 		@ValueSource(doubles = {0.5, 1, 6, 6.5})
 		void should_ReturnRESALE_When_ScratchesLengthAreUnder7cm(double scratchLength) {
 			// GIVEN
-			HiddenSurfaceDamage underTest = HiddenSurfaceDamage.builder()
-					.hiddenSurfacesScratchesLength(scratchLength)
-					.build();
+			HiddenSurfaceDamage underTest = new HiddenSurfaceDamage()
+					.withHiddenSurfacesScratchesLength(scratchLength);
 
 			// WHEN
 			Recommendation actual = underTest.calculateForScratches();
@@ -82,9 +78,8 @@ class HiddenSurfaceDamageTest {
 		@ValueSource(doubles = {7, 7.5, 10})
 		void should_ReturnOUTLET_When_ScratchesLengthAreEqualOrOver7cm(double scratchLength) {
 			// GIVEN
-			HiddenSurfaceDamage underTest = HiddenSurfaceDamage.builder()
-					.hiddenSurfacesScratchesLength(scratchLength)
-					.build();
+			HiddenSurfaceDamage underTest = new HiddenSurfaceDamage()
+					.withHiddenSurfacesScratchesLength(scratchLength);
 
 			// WHEN
 			Recommendation actual = underTest.calculateForScratches();
@@ -100,9 +95,8 @@ class HiddenSurfaceDamageTest {
 		@Test
 		void should_ReturnNONE_When_HiddenSurfacesDentsIsZero() {
 			// GIVEN
-			HiddenSurfaceDamage underTest = HiddenSurfaceDamage.builder()
-					.hiddenSurfacesDentsDepth(0)
-					.build();
+			HiddenSurfaceDamage underTest = new HiddenSurfaceDamage()
+					.withHiddenSurfacesDentsDepth(0);
 
 			// WHEN
 			Recommendation actual = underTest.calculateForDents();
@@ -115,9 +109,8 @@ class HiddenSurfaceDamageTest {
 		@ValueSource(doubles = {0.5, 1, 6, 6.5})
 		void should_ReturnRESALE_When_DentsAreUnder7cm(double dentDepth) {
 			// GIVEN
-			HiddenSurfaceDamage underTest = HiddenSurfaceDamage.builder()
-					.hiddenSurfacesDentsDepth(dentDepth)
-					.build();
+			HiddenSurfaceDamage underTest = new HiddenSurfaceDamage()
+					.withHiddenSurfacesDentsDepth(dentDepth);
 
 			// WHEN
 			Recommendation actual = underTest.calculateForDents();
@@ -130,9 +123,8 @@ class HiddenSurfaceDamageTest {
 		@ValueSource(doubles = {7, 7.5, 10})
 		void should_ReturnOUTLET_When_DentsAreEqualOrOver7cm(double dentDepth) {
 			// GIVEN
-			HiddenSurfaceDamage underTest = HiddenSurfaceDamage.builder()
-					.hiddenSurfacesDentsDepth(dentDepth)
-					.build();
+			HiddenSurfaceDamage underTest = new HiddenSurfaceDamage()
+					.withHiddenSurfacesDentsDepth(dentDepth);
 
 			// WHEN
 			Recommendation actual = underTest.calculateForDents();
@@ -148,9 +140,8 @@ class HiddenSurfaceDamageTest {
 		@Test
 		void should_ReturnRESALE_When_HiddenSurfacesHasMinorDamageSpecified() {
 			// GIVEN
-			HiddenSurfaceDamage underTest = HiddenSurfaceDamage.builder()
-					.hiddenSurfacesMinorDamage("I'm the tested property")
-					.build();
+			HiddenSurfaceDamage underTest = new HiddenSurfaceDamage()
+					.withHiddenSurfacesMinorDamage("I'm the tested property");
 
 			// WHEN
 			Recommendation actual = underTest.calculateForMinorDamage();
@@ -162,9 +153,8 @@ class HiddenSurfaceDamageTest {
 		@Test
 		void should_ReturnNONE_When_HiddenSurfacesHasMinorDamageUnspecified() {
 			// GIVEN
-			HiddenSurfaceDamage underTest = HiddenSurfaceDamage.builder()
-					.hiddenSurfacesMinorDamage("")
-					.build();
+			HiddenSurfaceDamage underTest = new HiddenSurfaceDamage()
+					.withHiddenSurfacesMinorDamage("");
 
 			// WHEN
 			Recommendation actual = underTest.calculateForMinorDamage();
@@ -180,9 +170,8 @@ class HiddenSurfaceDamageTest {
 		@Test
 		void should_ReturnOUTLET_When_HiddenSurfacesHasMajorDamageSpecified() {
 			// GIVEN
-			HiddenSurfaceDamage underTest = HiddenSurfaceDamage.builder()
-					.hiddenSurfacesMajorDamage("I'm the tested property")
-					.build();
+			HiddenSurfaceDamage underTest = new HiddenSurfaceDamage()
+					.withHiddenSurfacesMajorDamage("I'm the tested property");
 
 			// WHEN
 			Recommendation actual = underTest.calculateForMajorDamage();
@@ -194,9 +183,8 @@ class HiddenSurfaceDamageTest {
 		@Test
 		void should_ReturnNONE_When_HiddenSurfacesHasMajorDamageUnspecified() {
 			// GIVEN
-			HiddenSurfaceDamage underTest = HiddenSurfaceDamage.builder()
-					.hiddenSurfacesMajorDamage("")
-					.build();
+			HiddenSurfaceDamage underTest = new HiddenSurfaceDamage()
+					.withHiddenSurfacesMajorDamage("");
 
 			// WHEN
 			Recommendation actual = underTest.calculateForMajorDamage();

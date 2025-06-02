@@ -98,9 +98,8 @@ class RegisterIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			ResultActions resultActions = performRequest(UserTestData.createUserRequest().toBuilder()
-					.email("takenEmail@yahoo.com")
-					.build());
+			ResultActions resultActions = performRequest(UserTestData.createUserRequest()
+					.withEmail("takenEmail@yahoo.com"));
 
 			// THEN
 			resultActions
@@ -116,9 +115,8 @@ class RegisterIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			ResultActions resultActions = performRequest(UserTestData.createUserRequest().toBuilder()
-					.username("Taken")
-					.build());
+			ResultActions resultActions = performRequest(UserTestData.createUserRequest()
+					.withUsername("Taken"));
 
 			// THEN
 			resultActions

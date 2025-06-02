@@ -12,8 +12,7 @@ import org.personal.solarpanel.enums.Recommendation;
 
 import static lombok.AccessLevel.PROTECTED;
 
-@Getter
-@Setter
+@Getter @Setter
 @NoArgsConstructor(access = PROTECTED)
 @Entity
 @Table(schema = "public", name = "damage")

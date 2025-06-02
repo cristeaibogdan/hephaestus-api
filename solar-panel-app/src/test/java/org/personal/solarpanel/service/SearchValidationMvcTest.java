@@ -40,10 +40,9 @@ class SearchValidationMvcTest {
 		// GIVEN
 		// WHEN
 		ResultActions resultActions = performRequest(
-				TestData.createSearchSolarPanelRequest().toBuilder()
-						.pageIndex(-100)
-						.pageSize(5)
-						.build()
+				TestData.createSearchSolarPanelRequest()
+						.withPageIndex(-100)
+						.withPageSize(5)
 		);
 
 		// THEN
@@ -58,10 +57,9 @@ class SearchValidationMvcTest {
 		// GIVEN
 		// WHEN
 		ResultActions resultActions = performRequest(
-				TestData.createSearchSolarPanelRequest().toBuilder()
-						.pageIndex(0)
-						.pageSize(0)
-						.build()
+				TestData.createSearchSolarPanelRequest()
+						.withPageIndex(0)
+						.withPageSize(0)
 		);
 
 		// THEN
@@ -77,11 +75,10 @@ class SearchValidationMvcTest {
 		// GIVEN
 		// WHEN
 		ResultActions resultActions = performRequest(
-				TestData.createSearchSolarPanelRequest().toBuilder()
-						.pageIndex(0)
-						.pageSize(1)
-						.sortDirection(sortDirection)
-						.build()
+				TestData.createSearchSolarPanelRequest()
+						.withPageIndex(0)
+						.withPageSize(1)
+						.withSortDirection(sortDirection)
 		);
 
 		// THEN
@@ -100,11 +97,10 @@ class SearchValidationMvcTest {
 
 		// WHEN
 		ResultActions resultActions = performRequest(
-				TestData.createSearchSolarPanelRequest().toBuilder()
-						.pageIndex(0)
-						.pageSize(1)
-						.sortDirection(sortDirection)
-						.build()
+				TestData.createSearchSolarPanelRequest()
+						.withPageIndex(0)
+						.withPageSize(1)
+						.withSortDirection(sortDirection)
 		);
 
 		// THEN

@@ -21,7 +21,6 @@ import static org.personal.washingmachine.enums.Recommendation.*;
 
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor(access = PROTECTED)
 @AllArgsConstructor
 @Entity

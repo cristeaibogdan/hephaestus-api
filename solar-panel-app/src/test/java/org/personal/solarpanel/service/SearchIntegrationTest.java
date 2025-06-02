@@ -78,10 +78,9 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 
 			// WHEN
 			Page<SearchSolarPanelResponse> actual = underTest.search(
-					TestData.createSearchSolarPanelRequest().toBuilder()
-							.pageIndex(0)
-							.pageSize(2)
-							.build()
+					TestData.createSearchSolarPanelRequest()
+							.withPageIndex(0)
+							.withPageSize(2)
 			);
 
 			// THEN
@@ -102,10 +101,9 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 
 			// WHEN
 			Page<SearchSolarPanelResponse> actual = underTest.search(
-					TestData.createSearchSolarPanelRequest().toBuilder()
-							.pageIndex(0)
-							.pageSize(3)
-							.build()
+					TestData.createSearchSolarPanelRequest()
+							.withPageIndex(0)
+							.withPageSize(3)
 			);
 
 			// THEN
@@ -124,11 +122,10 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 
 			// WHEN
 			Page<SearchSolarPanelResponse> actual = underTest.search(
-					TestData.createSearchSolarPanelRequest().toBuilder()
-							.pageIndex(0)
-							.pageSize(3)
-							.sortByField(null)
-							.build()
+					TestData.createSearchSolarPanelRequest()
+							.withPageIndex(0)
+							.withPageSize(3)
+							.withSortByField(null)
 			);
 
 			// THEN
@@ -150,12 +147,11 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 
 			// WHEN
 			Page<SearchSolarPanelResponse> actual = underTest.search(
-					TestData.createSearchSolarPanelRequest().toBuilder()
-							.pageIndex(0)
-							.pageSize(3)
-							.sortByField("Needed to pass the first check in if()")
-							.sortDirection(null)
-							.build()
+					TestData.createSearchSolarPanelRequest()
+							.withPageIndex(0)
+							.withPageSize(3)
+							.withSortByField("Needed to pass the first check in if()")
+							.withSortDirection(null)
 			);
 
 			// THEN
@@ -182,12 +178,11 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 
 			// WHEN
 			Page<SearchSolarPanelResponse> actual = underTest.search(
-					TestData.createSearchSolarPanelRequest().toBuilder()
-							.pageIndex(0)
-							.pageSize(3)
-							.sortByField("serialNumber")
-							.sortDirection("")
-							.build()
+					TestData.createSearchSolarPanelRequest()
+							.withPageIndex(0)
+							.withPageSize(3)
+							.withSortByField("serialNumber")
+							.withSortDirection("")
 			);
 
 			// THEN
@@ -210,12 +205,11 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 
 			// WHEN
 			Page<SearchSolarPanelResponse> actual = underTest.search(
-					TestData.createSearchSolarPanelRequest().toBuilder()
-							.pageIndex(0)
-							.pageSize(4)
-							.sortByField("some gibberish")
-							.sortDirection("desc")
-							.build()
+					TestData.createSearchSolarPanelRequest()
+							.withPageIndex(0)
+							.withPageSize(4)
+							.withSortByField("some gibberish")
+							.withSortDirection("desc")
 			);
 
 			// THEN
@@ -238,12 +232,11 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 
 			// WHEN
 			Page<SearchSolarPanelResponse> actual = underTest.search(
-					TestData.createSearchSolarPanelRequest().toBuilder()
-							.pageIndex(0)
-							.pageSize(4)
-							.sortByField("manufacturer")
-							.sortDirection("asc")
-							.build()
+					TestData.createSearchSolarPanelRequest()
+							.withPageIndex(0)
+							.withPageSize(4)
+							.withSortByField("manufacturer")
+							.withSortDirection("asc")
 			);
 
 			// THEN
@@ -265,12 +258,11 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 
 			// WHEN
 			Page<SearchSolarPanelResponse> actual = underTest.search(
-					TestData.createSearchSolarPanelRequest().toBuilder()
-							.pageIndex(0)
-							.pageSize(4)
-							.sortByField("model")
-							.sortDirection("desc")
-							.build()
+					TestData.createSearchSolarPanelRequest()
+							.withPageIndex(0)
+							.withPageSize(4)
+							.withSortByField("model")
+							.withSortDirection("desc")
 			);
 
 			// THEN
@@ -292,12 +284,11 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 
 			// WHEN
 			Page<SearchSolarPanelResponse> actual = underTest.search(
-					TestData.createSearchSolarPanelRequest().toBuilder()
-							.pageIndex(0)
-							.pageSize(4)
-							.sortByField("type")
-							.sortDirection("asc")
-							.build()
+					TestData.createSearchSolarPanelRequest()
+							.withPageIndex(0)
+							.withPageSize(4)
+							.withSortByField("type")
+							.withSortDirection("asc")
 			);
 
 			// THEN
@@ -319,12 +310,11 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 
 			// WHEN
 			Page<SearchSolarPanelResponse> actual = underTest.search(
-					TestData.createSearchSolarPanelRequest().toBuilder()
-							.pageIndex(0)
-							.pageSize(4)
-							.sortByField("serialNumber")
-							.sortDirection("asc")
-							.build()
+					TestData.createSearchSolarPanelRequest()
+							.withPageIndex(0)
+							.withPageSize(4)
+							.withSortByField("serialNumber")
+							.withSortDirection("asc")
 			);
 
 			// THEN
@@ -346,12 +336,11 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 
 			// WHEN
 			Page<SearchSolarPanelResponse> actual = underTest.search(
-					TestData.createSearchSolarPanelRequest().toBuilder()
-							.pageIndex(0)
-							.pageSize(4)
-							.sortByField("recommendation")
-							.sortDirection("asc")
-							.build()
+					TestData.createSearchSolarPanelRequest()
+							.withPageIndex(0)
+							.withPageSize(4)
+							.withSortByField("recommendation")
+							.withSortDirection("asc")
 			);
 
 			// THEN
@@ -373,12 +362,11 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 
 			// WHEN
 			Page<SearchSolarPanelResponse> actual = underTest.search(
-					TestData.createSearchSolarPanelRequest().toBuilder()
-							.pageIndex(0)
-							.pageSize(4)
-							.sortByField("createdAt")
-							.sortDirection("asc")
-							.build()
+					TestData.createSearchSolarPanelRequest()
+							.withPageIndex(0)
+							.withPageSize(4)
+							.withSortByField("createdAt")
+							.withSortDirection("asc")
 			);
 
 			// THEN
@@ -401,11 +389,10 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 
 			// WHEN
 			Page<SearchSolarPanelResponse> actual = underTest.search(
-					TestData.createSearchSolarPanelRequest().toBuilder()
-							.pageIndex(0)
-							.pageSize(4)
-							.manufacturer(manufacturer)
-							.build()
+					TestData.createSearchSolarPanelRequest()
+							.withPageIndex(0)
+							.withPageSize(4)
+							.withManufacturer(manufacturer)
 			);
 
 			// THEN
@@ -429,11 +416,10 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 
 			// WHEN
 			Page<SearchSolarPanelResponse> actual = underTest.search(
-					TestData.createSearchSolarPanelRequest().toBuilder()
-							.pageIndex(0)
-							.pageSize(4)
-							.model(model)
-							.build()
+					TestData.createSearchSolarPanelRequest()
+							.withPageIndex(0)
+							.withPageSize(4)
+							.withModel(model)
 			);
 
 			// THEN
@@ -457,11 +443,10 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 
 			// WHEN
 			Page<SearchSolarPanelResponse> actual = underTest.search(
-					TestData.createSearchSolarPanelRequest().toBuilder()
-							.pageIndex(0)
-							.pageSize(4)
-							.type(type)
-							.build()
+					TestData.createSearchSolarPanelRequest()
+							.withPageIndex(0)
+							.withPageSize(4)
+							.withType(type)
 			);
 
 			// THEN
@@ -483,11 +468,10 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 
 			// WHEN
 			Page<SearchSolarPanelResponse> actual = underTest.search(
-					TestData.createSearchSolarPanelRequest().toBuilder()
-							.pageIndex(0)
-							.pageSize(3)
-							.serialNumber(serialNumber)
-							.build()
+					TestData.createSearchSolarPanelRequest()
+							.withPageIndex(0)
+							.withPageSize(3)
+							.withSerialNumber(serialNumber)
 			);
 
 			// THEN
@@ -512,11 +496,10 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 
 			// WHEN
 			Page<SearchSolarPanelResponse> actual = underTest.search(
-					TestData.createSearchSolarPanelRequest().toBuilder()
-							.pageIndex(0)
-							.pageSize(6)
-							.recommendation(recommendation)
-							.build()
+					TestData.createSearchSolarPanelRequest()
+							.withPageIndex(0)
+							.withPageSize(6)
+							.withRecommendation(recommendation)
 			);
 
 			// THEN
@@ -539,12 +522,11 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 
 			// WHEN
 			Page<SearchSolarPanelResponse> actual = underTest.search(
-					TestData.createSearchSolarPanelRequest().toBuilder()
-							.pageIndex(0)
-							.pageSize(5)
-							.manufacturer("Tesla")
-							.type("TypeY")
-							.build()
+					TestData.createSearchSolarPanelRequest()
+							.withPageIndex(0)
+							.withPageSize(5)
+							.withManufacturer("Tesla")
+							.withType("TypeY")
 			);
 
 			// THEN
@@ -569,10 +551,9 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 
 			// WHEN
 			ResultActions resultActions = performRequest(
-					TestData.createSearchSolarPanelRequest().toBuilder()
-							.pageIndex(0)
-							.pageSize(2)
-							.build()
+					TestData.createSearchSolarPanelRequest()
+							.withPageIndex(0)
+							.withPageSize(2)
 			);
 
 			// THEN
@@ -586,10 +567,9 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 			// GIVEN
 			// WHEN
 			ResultActions resultActions = performRequest(
-					TestData.createSearchSolarPanelRequest().toBuilder()
-							.pageIndex(0)
-							.pageSize(2)
-							.build()
+					TestData.createSearchSolarPanelRequest()
+							.withPageIndex(0)
+							.withPageSize(2)
 			);
 
 			// THEN
@@ -603,9 +583,8 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 			// GIVEN
 			// WHEN
 			ResultActions resultActions = performRequest(
-					TestData.createSearchSolarPanelRequest().toBuilder()
-							.createdAt("invalid date")
-							.build()
+					TestData.createSearchSolarPanelRequest()
+							.withCreatedAt("invalid date")
 			);
 
 			// THEN

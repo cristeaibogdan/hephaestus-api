@@ -1,8 +1,8 @@
 package org.personal.washingmachine.dto;
 
-import lombok.Builder;
+import lombok.With;
 
-@Builder(toBuilder = true)
+@With
 public record CreateUserRequest(
         String code,
         String organization,

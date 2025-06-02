@@ -2,12 +2,12 @@ package org.personal.washingmachine.dto;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
-import lombok.Builder;
+import lombok.With;
 import org.personal.washingmachine.enums.DamageType;
 import org.personal.washingmachine.enums.IdentificationMode;
 import org.personal.washingmachine.enums.ReturnType;
 
-@Builder(toBuilder = true)
+@With
 public record CreateWashingMachineRequest(
 		@NotBlank(message = "{FIELD_NOT_BLANK}")
 		String category,
@@ -29,10 +29,10 @@ public record CreateWashingMachineRequest(
 		DamageType damageType,
 
 		@Valid @NotNull(message = "{FIELD_NOT_NULL}")
-		WashingMachineDetail washingMachineDetail
+		WashingMachineDetailRequest washingMachineDetail
 ) {
-	@Builder(toBuilder = true)
-	public record WashingMachineDetail(
+	@With
+	public record WashingMachineDetailRequest(
 			// PACKAGE
 			boolean packageDamaged,
 			boolean packageDirty,

@@ -45,10 +45,9 @@ class SearchValidationMvcTest {
 		// GIVEN
 		// WHEN
 		ResultActions resultActions = performRequest(
-				TestData.createSearchWashingMachineRequest().toBuilder()
-						.pageIndex(-1)
-						.pageSize(1)
-						.build()
+				TestData.createSearchWashingMachineRequest()
+						.withPageIndex(-1)
+						.withPageSize(1)
 		);
 
 		// THEN
@@ -63,10 +62,9 @@ class SearchValidationMvcTest {
 		// GIVEN
 		// WHEN
 		ResultActions resultActions = performRequest(
-				TestData.createSearchWashingMachineRequest().toBuilder()
-						.pageIndex(0)
-						.pageSize(0)
-						.build()
+				TestData.createSearchWashingMachineRequest()
+						.withPageIndex(0)
+						.withPageSize(0)
 		);
 
 		// THEN
@@ -82,11 +80,10 @@ class SearchValidationMvcTest {
 		// GIVEN
 		// WHEN
 		ResultActions resultActions = performRequest(
-				TestData.createSearchWashingMachineRequest().toBuilder()
-						.pageIndex(0)
-						.pageSize(1)
-						.sortDirection(sortDirection)
-						.build()
+				TestData.createSearchWashingMachineRequest()
+						.withPageIndex(0)
+						.withPageSize(1)
+						.withSortDirection(sortDirection)
 		);
 
 		// THEN
@@ -105,11 +102,10 @@ class SearchValidationMvcTest {
 
 		// WHEN
 		ResultActions resultActions = performRequest(
-				TestData.createSearchWashingMachineRequest().toBuilder()
-						.pageIndex(0)
-						.pageSize(1)
-						.sortDirection(sortDirection)
-						.build()
+				TestData.createSearchWashingMachineRequest()
+						.withPageIndex(0)
+						.withPageSize(1)
+						.withSortDirection(sortDirection)
 		);
 
 		// THEN

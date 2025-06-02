@@ -10,10 +10,9 @@ class CostAssessmentTest {
 	@Test
 	void should_ReturnNONE_When_OneOfThePricesIsZero() {
 		// GIVEN
-		CostAssessment underTest = CostAssessment.builder()
-				.price(0)
-				.repairPrice(0)
-				.build();
+		CostAssessment underTest = new CostAssessment()
+				.withPrice(0)
+				.withRepairPrice(0);
 
 		// WHEN
 		Recommendation actual = underTest.calculate();
@@ -25,10 +24,9 @@ class CostAssessmentTest {
 	@Test
 	void should_ReturnDISASSEMBLE_When_RepairPriceIsEqualOrExceedsHalfOfPrice() {
 		// GIVEN
-		CostAssessment underTest = CostAssessment.builder()
-				.price(50)
-				.repairPrice(100)
-				.build();
+		CostAssessment underTest = new CostAssessment()
+				.withPrice(50)
+				.withRepairPrice(100);
 
 		// WHEN
 		Recommendation actual = underTest.calculate();
@@ -40,10 +38,9 @@ class CostAssessmentTest {
 	@Test
 	void should_ReturnREPAIR_When_RepairPriceIsBelowHalfOfPrice() {
 		// GIVEN
-		CostAssessment underTest = CostAssessment.builder()
-				.price(100)
-				.repairPrice(40)
-				.build();
+		CostAssessment underTest = new CostAssessment()
+				.withPrice(100)
+				.withRepairPrice(40);
 
 		// WHEN
 		Recommendation actual = underTest.calculate();
