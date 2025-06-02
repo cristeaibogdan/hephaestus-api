@@ -79,7 +79,7 @@ class CreateIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			underTest.save(request, List.of(MOCK_IMAGE_FILE));
+			underTest.create(request, List.of(MOCK_IMAGE_FILE));
 
 			// THEN
 			WashingMachine actual = repository.findBySerialNumber("I'm saved")
@@ -171,7 +171,7 @@ class CreateIntegrationTest extends BaseIntegrationTest {
 		private ResultActions performRequest(CreateWashingMachineRequest request) throws Exception {
 			String jsonRequest = jackson.writeValueAsString(request);
 			return mockMvc.perform(
-					multipart("/api/v1/washing-machines/save")
+					multipart("/api/v1/washing-machines/create")
 							.file(new MockMultipartFile( // avoids error Content-Type 'application/octet-stream' is not supported
 									"createWashingMachineRequest",
 									"I_Don't_Matter",

@@ -119,7 +119,7 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 	}
 
 	@Override
-	public void save(CreateWashingMachineRequest createWashingMachineRequest, List<MultipartFile> imageFiles) {
+	public void create(CreateWashingMachineRequest createWashingMachineRequest, List<MultipartFile> imageFiles) {
 
 		WashingMachine washingMachine = washingMachineMapper.toEntity(createWashingMachineRequest);
 
@@ -128,7 +128,7 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 			washingMachine.addImage(washingMachineImage);
 		});
 
-		service.save(washingMachine);
+		service.create(washingMachine);
 	}
 
 	@Override

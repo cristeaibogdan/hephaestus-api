@@ -18,8 +18,7 @@ public class WashingMachineService {
 				.orElseThrow(() -> new CustomException(ErrorCode.SERIAL_NUMBER_NOT_FOUND, serialNumber));
 	}
 
-	public void save(WashingMachine washingMachine) {
-
+	public void create(WashingMachine washingMachine) {
 		boolean existingSerialNumber = repository.existsBySerialNumber(washingMachine.getSerialNumber());
 		if (existingSerialNumber) {
 			throw new CustomException(ErrorCode.SERIAL_NUMBER_ALREADY_TAKEN);

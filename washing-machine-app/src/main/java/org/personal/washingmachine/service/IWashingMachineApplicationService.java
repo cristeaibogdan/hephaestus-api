@@ -31,10 +31,9 @@ public interface IWashingMachineApplicationService {
 			Set<@NotBlank(message = "{FIELD_NOT_BLANK}") String> serialNumbers
 	);
 
-	@PostMapping(value = "/save", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
-	void save(@Valid @RequestPart CreateWashingMachineRequest createWashingMachineRequest,
-			  @RequestPart List<MultipartFile> imageFiles);
+	void create(@Valid @RequestPart CreateWashingMachineRequest createWashingMachineRequest, @RequestPart List<MultipartFile> imageFiles);
 
 	@GetMapping("/{serialNumber}/recommendation")
 	Recommendation getRecommendation(@PathVariable String serialNumber);
