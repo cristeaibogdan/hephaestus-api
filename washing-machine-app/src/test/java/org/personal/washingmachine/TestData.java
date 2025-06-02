@@ -15,9 +15,9 @@ import org.personal.washingmachine.enums.ReturnType;
 
 public class TestData {
 
-	//TODO: Refactor SaveValidationMvcTest and either delete this method or refactor it
-	public static CreateWashingMachineRequest.WashingMachineDetail createValidSaveWashingMachineDetailRequest() {
-		return new CreateWashingMachineRequest.WashingMachineDetail(
+	//TODO: Refactor CreateValidationMvcTest and either delete this method or refactor it
+	public static CreateWashingMachineRequest.WashingMachineDetailRequest createValidWashingMachineDetailRequest() {
+		return new CreateWashingMachineRequest.WashingMachineDetailRequest(
 				true,
 				false,
 				false,
@@ -34,7 +34,7 @@ public class TestData {
 		);
 	}
 
-	public static CreateWashingMachineRequest createSaveWashingMachineRequest() {
+	public static CreateWashingMachineRequest createCreateWashingMachineRequest() {
 		return new CreateWashingMachineRequest(
 				"Washing Machine",
 				IdentificationMode.DATA_MATRIX,
@@ -44,7 +44,7 @@ public class TestData {
 				"serialNumber",
 				ReturnType.SERVICE,
 				DamageType.IN_USE,
-				new CreateWashingMachineRequest.WashingMachineDetail(
+				new CreateWashingMachineRequest.WashingMachineDetailRequest(
 						false,
 						false,
 						false,

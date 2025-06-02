@@ -1,8 +1,8 @@
 package org.personal.solarpanel.dto;
 
-import lombok.Builder;
+import lombok.With;
 
-@Builder(toBuilder = true)
+@With
 public record CreateSolarPanelRequest(
 		String category,
 		String manufacturer,

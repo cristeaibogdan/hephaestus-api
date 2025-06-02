@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class SaveIntegrationTest extends BaseIntegrationTest {
+class CreateIntegrationTest extends BaseIntegrationTest {
 
 	@Autowired SolarPanelApplicationService underTest;
 	@Autowired SolarPanelRepository repository;
@@ -80,9 +80,8 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnCurrentDate_For_createdAtField() {
 			// GIVEN
-			CreateSolarPanelRequest request = TestData.createValidSaveSolarPanelRequest().toBuilder()
-					.serialNumber("date-test")
-					.build();
+			CreateSolarPanelRequest request = TestData.createValidSaveSolarPanelRequest()
+					.withSerialNumber("date-test");
 
 			// WHEN
 			underTest.save(request);
@@ -113,9 +112,8 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ThrowCustomException_When_SerialNumberAlreadyTaken() throws Exception {
 			// GIVEN
-			CreateSolarPanelRequest request = TestData.createValidSaveSolarPanelRequest().toBuilder()
-					.serialNumber("duplicated serialNumber")
-					.build();
+			CreateSolarPanelRequest request = TestData.createValidSaveSolarPanelRequest()
+					.withSerialNumber("duplicated serialNumber");
 
 			performRequest(request);
 

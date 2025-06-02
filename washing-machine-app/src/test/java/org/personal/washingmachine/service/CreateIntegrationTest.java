@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class SaveIntegrationTest extends BaseIntegrationTest {
+class CreateIntegrationTest extends BaseIntegrationTest {
 
 	private static final MockMultipartFile MOCK_IMAGE_FILE = new MockMultipartFile( // API expects at least 1 image when saving.
 			"imageFiles",
@@ -61,7 +61,7 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 					"I'm saved",
 					ReturnType.SERVICE,
 					DamageType.IN_USE,
-					new CreateWashingMachineRequest.WashingMachineDetail(
+					new CreateWashingMachineRequest.WashingMachineDetailRequest(
 							true,
 							false,
 							true,
@@ -133,10 +133,10 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 			// GIVEN
 			// WHEN
 			ResultActions resultActions = performRequest(
-					TestData.createSaveWashingMachineRequest()
+					TestData.createCreateWashingMachineRequest()
 							.withSerialNumber("I'm ready to be saved in DB")
 							.withWashingMachineDetail(
-									TestData.createValidSaveWashingMachineDetailRequest()
+									TestData.createValidWashingMachineDetailRequest()
 											.withPackageDirty(true)
 							)
 			);
@@ -150,10 +150,10 @@ class SaveIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ThrowCustomException_When_SerialNumberAlreadyTaken() throws Exception {
 			// GIVEN
-			CreateWashingMachineRequest request = TestData.createSaveWashingMachineRequest()
+			CreateWashingMachineRequest request = TestData.createCreateWashingMachineRequest()
 					.withSerialNumber("I already exist in DB")
 					.withWashingMachineDetail(
-							TestData.createValidSaveWashingMachineDetailRequest()
+							TestData.createValidWashingMachineDetailRequest()
 									.withPackageDamaged(true)
 					);
 
