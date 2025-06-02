@@ -17,9 +17,9 @@ import java.util.Set;
 
 @RequestMapping("/v1/solar-panels")
 public interface ISolarPanelApplicationService {
-	@PostMapping("/save")
+	@PostMapping("/create")
 	@ResponseStatus(HttpStatus.CREATED)
-	void save(@RequestBody CreateSolarPanelRequest request);
+	void create(@RequestBody CreateSolarPanelRequest request);
 
 	@GetMapping("/{serialNumber}/recommendation")
 	Recommendation getRecommendation(@PathVariable String serialNumber);

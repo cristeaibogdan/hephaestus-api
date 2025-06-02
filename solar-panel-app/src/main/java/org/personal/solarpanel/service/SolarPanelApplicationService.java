@@ -39,7 +39,7 @@ public class SolarPanelApplicationService implements ISolarPanelApplicationServi
 	private final SolarPanelMapper mapper;
 
 	@Override
-	public void save(CreateSolarPanelRequest request) {
+	public void create(CreateSolarPanelRequest request) {
 		SolarPanel solarPanel = mapper.toEntity(request);
 
 		boolean existingSerialNumber = repository.existsBySerialNumber(solarPanel.getSerialNumber());

@@ -56,7 +56,7 @@ class CreateIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			underTest.save(request);
+			underTest.create(request);
 			SolarPanel actual = repository.findBySerialNumber("AX-098-200").orElseThrow();
 
 			// THEN
@@ -84,7 +84,7 @@ class CreateIntegrationTest extends BaseIntegrationTest {
 					.withSerialNumber("date-test");
 
 			// WHEN
-			underTest.save(request);
+			underTest.create(request);
 			SolarPanel actual = repository.findBySerialNumber("date-test").orElseThrow();
 
 			// THEN
@@ -128,7 +128,7 @@ class CreateIntegrationTest extends BaseIntegrationTest {
 
 	private ResultActions performRequest(CreateSolarPanelRequest request) throws Exception {
 		return mockMvc.perform(
-				post("/v1/solar-panels/save")
+				post("/v1/solar-panels/create")
 						.content(jackson.writeValueAsString(request))
 						.contentType(MediaType.APPLICATION_JSON)
 		);
