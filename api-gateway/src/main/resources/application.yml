@@ -14,7 +14,7 @@ spring:
         - id: washing-machine
           uri: http://localhost:8080
           predicates:
-            - Path=/api/v1/washing-machines/**, /api/v1/users/**, /v3/api-docs/washing-machine
+            - Path=/v1/washing-machines/**, /api/v1/users/**, /v3/api-docs/washing-machine
           filters:
             - RewritePath=/v3/api-docs/washing-machine, /v3/api-docs  # Forward to actual OpenAPI docs path
 

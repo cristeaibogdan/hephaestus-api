@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-@RequestMapping("/api/v1/washing-machines")
+@RequestMapping("/v1/washing-machines")
 public interface IWashingMachineApplicationService {
 	@PostMapping
 	Page<SearchWashingMachineResponse> search(@Valid @RequestBody SearchWashingMachineRequest searchWashingMachineRequest);
