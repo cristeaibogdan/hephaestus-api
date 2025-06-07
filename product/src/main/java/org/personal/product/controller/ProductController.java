@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/products")
+@RequestMapping("/v1/products")
 class ProductController {
 
 	private final ProductService productService;
@@ -29,7 +29,7 @@ class ProductController {
 	}
 
 	@GetMapping("/{qrCode}")
-	public GetProductIdentificationResponse getProductIdentification(@PathVariable String qrCode) {
+	GetProductIdentificationResponse getProductIdentification(@PathVariable String qrCode) {
 		return productService.getProductIdentification(qrCode);
 	}
 }
