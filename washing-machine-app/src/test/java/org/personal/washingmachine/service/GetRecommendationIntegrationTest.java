@@ -71,7 +71,7 @@ class GetRecommendationIntegrationTest extends BaseIntegrationTest {
 
 		private ResultActions performRequest(String serialNumber) throws Exception {
 			return mockMvc.perform(
-					get("/api/v1/washing-machines/{serialNumber}/recommendation", serialNumber)
+					get("/v1/washing-machines/{serialNumber}/recommendation", serialNumber)
 			);
 		}
 	}

@@ -65,7 +65,7 @@ class IsSerialNumberInUseIntegrationTest extends BaseIntegrationTest {
 
 	private ResultActions performRequest(String serialNumber) throws Exception {
 		return mockMvc.perform(
-				get("/api/v1/washing-machines/{serialNumber}/validate", serialNumber)
+				get("/v1/washing-machines/{serialNumber}/validate", serialNumber)
 		);
 	}
 }

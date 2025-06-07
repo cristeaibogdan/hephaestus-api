@@ -370,7 +370,7 @@ class SearchIntegrationTest_OLD extends BaseIntegrationTest {
 
 		private ResultActions performRequest(SearchWashingMachineRequest request) throws Exception {
 			return mockMvc.perform(
-					post("/api/v1/washing-machines")
+					post("/v1/washing-machines")
 							.content(jackson.writeValueAsString(request))
 							.contentType(MediaType.APPLICATION_JSON));
 		}

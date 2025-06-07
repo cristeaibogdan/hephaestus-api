@@ -91,7 +91,7 @@ class GetProductIdentificationIntegrationTest extends BaseIntegrationTest {
 
 		private ResultActions performRequest(String qrCode) throws Exception {
 			return mockMvc.perform(
-					get("/api/v1/products/{qrCode}", qrCode));
+					get("/v1/products/{qrCode}", qrCode));
 		}
 	}
 }

@@ -86,7 +86,7 @@ class GetManufacturersIntegrationTest extends BaseIntegrationTest {
 
 		private ResultActions performRequest(String category) throws Exception {
 			return mockMvc.perform(
-					get("/api/v1/products/{category}/manufacturers", category));
+					get("/v1/products/{category}/manufacturers", category));
 		}
 	}
 }

@@ -128,7 +128,7 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 
 		private ResultActions performRequest(Set<String> request) throws Exception {
 			return mockMvc.perform(
-					post("/api/v1/washing-machines/many")
+					post("/v1/washing-machines/many")
 							.content(jackson.writeValueAsString(request))
 							.contentType(MediaType.APPLICATION_JSON));
 		}

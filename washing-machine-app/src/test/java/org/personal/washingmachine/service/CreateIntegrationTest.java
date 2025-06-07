@@ -171,7 +171,7 @@ class CreateIntegrationTest extends BaseIntegrationTest {
 		private ResultActions performRequest(CreateWashingMachineRequest request) throws Exception {
 			String jsonRequest = jackson.writeValueAsString(request);
 			return mockMvc.perform(
-					multipart("/api/v1/washing-machines/create")
+					multipart("/v1/washing-machines/create")
 							.file(new MockMultipartFile( // avoids error Content-Type 'application/octet-stream' is not supported
 									"createWashingMachineRequest",
 									"I_Don't_Matter",
