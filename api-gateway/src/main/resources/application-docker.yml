@@ -10,6 +10,13 @@ spring:
           filters:
             - RewritePath=/v3/api-docs/washing-machine, /v3/api-docs  # Forward to actual OpenAPI docs path
 
+        - id: solar-panel
+          uri: http://hephaestus-solar-panel:8084
+          predicates:
+            - Path=/v1/solar-panels/**, /v3/api-docs/solar-panel
+          filters:
+            - RewritePath=/v3/api-docs/solar-panel, /v3/api-docs  # Forward to actual OpenAPI docs path
+
         - id: product
           uri: http://hephaestus-product:8081
           predicates:

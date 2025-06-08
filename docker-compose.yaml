@@ -8,6 +8,9 @@ services:
       PGDATA: /data/postgres
     volumes:
       - postgres-persistence:/data/postgres
+      # This line is run only once at startup.
+      # If you have issues, after updating the project,
+      # delete the volumes from Docker Desktop.
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - postgres
@@ -78,20 +81,19 @@ services:
       - zipkin
       - postgres
 
-#  TODO: setup solar panel
-#  solar-panel:
-#    image: solar-panel:latest
-#    container_name: hephaestus-solar-panel
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=docker
-#    ports:
-#      - "8084:8084"
-#    networks:
-#      - spring
-#      - postgres
-#    depends_on:
-#      - zipkin
-#      - postgres
+  solar-panel:
+    image: solar-panel-app:latest
+    container_name: hephaestus-solar-panel
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    ports:
+      - "8084:8084"
+    networks:
+      - spring
+      - postgres
+    depends_on:
+      - zipkin
+      - postgres
 
 networks:
   postgres:
