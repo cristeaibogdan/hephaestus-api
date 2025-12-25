@@ -82,7 +82,7 @@
         <!-- ***************************************** -->
 
         <dependency>
-            <!-- JDBC driver proxy intercepting all SQL calls, see spy.properties too -->
+            <!-- JDBC driver proxy intercepting all SQL calls -->
             <groupId>com.github.gavlyukovskiy</groupId>
             <artifactId>p6spy-spring-boot-starter</artifactId>
         </dependency>
