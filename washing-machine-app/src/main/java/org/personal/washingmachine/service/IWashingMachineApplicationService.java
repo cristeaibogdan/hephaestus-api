@@ -18,7 +18,7 @@ import java.util.Set;
 
 @RequestMapping("/v1/washing-machines")
 public interface IWashingMachineApplicationService {
-	@PostMapping
+	@PostMapping("/search")
 	Page<SearchWashingMachineResponse> search(@Valid @RequestBody SearchWashingMachineRequest searchWashingMachineRequest);
 
 	@GetMapping("/{serialNumber}")

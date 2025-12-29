@@ -24,7 +24,7 @@ public interface ISolarPanelApplicationService {
 	@GetMapping("/{serialNumber}/recommendation")
 	Recommendation getRecommendation(@PathVariable String serialNumber);
 
-	@PostMapping
+	@PostMapping("/search")
 	Page<SearchSolarPanelResponse> search(@Valid @RequestBody SearchSolarPanelRequest request);
 
 	@PostMapping("/many")

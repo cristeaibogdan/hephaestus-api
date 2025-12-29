@@ -600,7 +600,7 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 
 	private ResultActions performRequest(SearchSolarPanelRequest request) throws Exception {
 		return mockMvc.perform(
-				post("/v1/solar-panels")
+				post("/v1/solar-panels/search")
 						.content(jackson.writeValueAsString(request))
 						.contentType(MediaType.APPLICATION_JSON));
 	}
