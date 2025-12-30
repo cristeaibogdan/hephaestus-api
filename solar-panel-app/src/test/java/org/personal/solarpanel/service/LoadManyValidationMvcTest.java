@@ -12,9 +12,10 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -69,11 +70,42 @@ class LoadManyValidationMvcTest {
 				.andExpect(content().string(not(containsString("{"))));
 	}
 
+	@Test
+	void should_ThrowValidationException_When_SizeIsOverLimit() throws Exception {
+		// GIVEN
+		Set<String> request = IntStream.rangeClosed(1, 11)
+				.mapToObj(i -> "serial" + i)
+				.collect(Collectors.toSet());
+
+		// WHEN
+		ResultActions resultActions = performRequest(request);
+
+		// THEN
+		resultActions
+				.andExpect(status().isBadRequest())
+				.andExpect(content().string(not(containsString("{"))));
+	}
+
+	@Test
+	void should_ReturnStatusOk_When_SizeIsUnderLimit() throws Exception {
+		// GIVEN
+		Set<String> request = IntStream.rangeClosed(1, 10)
+				.mapToObj(i -> "serial" + i)
+				.collect(Collectors.toSet());
+
+		// WHEN
+		ResultActions resultActions = performRequest(request);
+
+		// THEN
+		resultActions.andExpect(status().isOk());
+	}
+
 	private ResultActions performRequest(Set<String> request) throws Exception {
 		return mockMvc.perform(
 				post("/v1/solar-panels/many")
 						.content(jackson.writeValueAsString(request))
-						.contentType(MediaType.APPLICATION_JSON));
+						.contentType(MediaType.APPLICATION_JSON)
+		);
 	}
 }
 

@@ -3,6 +3,7 @@ package org.personal.solarpanel.service;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import org.personal.solarpanel.dto.GetSolarPanelFullResponse;
 import org.personal.solarpanel.dto.CreateSolarPanelRequest;
 import org.personal.solarpanel.dto.SearchSolarPanelRequest;
@@ -31,6 +32,7 @@ public interface ISolarPanelApplicationService {
 	Map<String, GetSolarPanelFullResponse> loadMany(
 			@RequestBody
 			@NotEmpty(message = "{LIST_NOT_EMPTY}")
+			@Size(max = 10, message = "{LIST_MAX_SIZE}")
 			Set<@NotBlank(message = "{FIELD_NOT_BLANK}") String> serialNumbers
 	);
 }

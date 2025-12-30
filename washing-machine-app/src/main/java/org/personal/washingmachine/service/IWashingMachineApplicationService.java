@@ -3,6 +3,7 @@ package org.personal.washingmachine.service;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import org.personal.washingmachine.dto.*;
 import org.personal.washingmachine.enums.Recommendation;
 import org.personal.washingmachine.dto.GetWashingMachineReportResponse;
@@ -28,6 +29,7 @@ public interface IWashingMachineApplicationService {
 	Map<String, GetWashingMachineFullResponse> loadMany(
 			@RequestBody
 			@NotEmpty(message = "{LIST_NOT_EMPTY}")
+			@Size(max = 10, message = "{LIST_MAX_SIZE}")
 			Set<@NotBlank(message = "{FIELD_NOT_BLANK}") String> serialNumbers
 	);
 
