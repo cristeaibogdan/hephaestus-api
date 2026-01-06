@@ -12,7 +12,6 @@ import org.personal.washingmachine.entity.WashingMachineImage;
 import org.personal.washingmachine.enums.Recommendation;
 import org.personal.washingmachine.mapper.WashingMachineImageMapper;
 import org.personal.washingmachine.repository.WashingMachineRepository;
-import org.personal.washingmachine.service.utils.QueryDSLUtils;
 import org.personal.washingmachine.dto.GetWashingMachineReportResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -49,30 +48,53 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 				buildSort(request.sortByField(), request.sortDirection())
 		);
 
-		BooleanBuilder searchFilters = new BooleanBuilder()
-				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.identificationMode, request.identificationMode()))
-				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.manufacturer, request.manufacturer()))
+		BooleanBuilder searchPredicate = buildSearchPredicate(request);
 
-				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.model, request.model()))
-				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.type, request.type()))
-				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.serialNumber, request.serialNumber()))
-
-				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.returnType, request.returnType()))
-				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.damageType, request.damageType()))
-				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.recommendation, request.recommendation()))
-
-				.and(QueryDSLUtils.addTimestampEqualCondition(washingMachine.createdAt, parseToLocalDate(request.createdAt())));
-
-		Page<WashingMachine> responsePage = repository.findAll(searchFilters, pageRequest);
+		Page<WashingMachine> responsePage = repository.findAll(searchPredicate, pageRequest);
 
 		return responsePage.map(wm -> washingMachineMapper.toSearchWashingMachineResponse(wm));
 	}
 
-	private Optional<LocalDate> parseToLocalDate(String dateString) {
+	private BooleanBuilder buildSearchPredicate(SearchWashingMachineRequest request) {
+		BooleanBuilder predicate = new BooleanBuilder();
+
+		if (request.identificationMode() != null) {
+			predicate.and(washingMachine.identificationMode.eq(request.identificationMode()));
+		}
+		if (StringUtils.isNotBlank(request.manufacturer())) {
+			predicate.and(washingMachine.manufacturer.containsIgnoreCase(request.manufacturer()));
+		}
+		if (StringUtils.isNotBlank(request.model())) {
+			predicate.and(washingMachine.model.containsIgnoreCase(request.model()));
+		}
+		if (StringUtils.isNotBlank(request.type())) {
+			predicate.and(washingMachine.type.containsIgnoreCase(request.type()));
+		}
+		if (StringUtils.isNotBlank(request.serialNumber())) {
+			predicate.and(washingMachine.serialNumber.containsIgnoreCase(request.serialNumber()));
+		}
+		if (request.returnType() != null) {
+			predicate.and(washingMachine.returnType.eq(request.returnType()));
+		}
+		if (request.damageType() != null) {
+			predicate.and(washingMachine.damageType.eq(request.damageType()));
+		}
+		if (request.recommendation() != null) {
+			predicate.and(washingMachine.recommendation.eq(request.recommendation()));
+		}
+		if (StringUtils.isNotBlank(request.createdAt())) {
+			LocalDate searchDate = parseToLocalDate(request.createdAt());
+			predicate.and(washingMachine.createdAt.year().eq(searchDate.getYear()))
+					.and(washingMachine.createdAt.month().eq(searchDate.getMonthValue()))
+					.and(washingMachine.createdAt.dayOfMonth().eq(searchDate.getDayOfMonth()));
+		}
+
+		return predicate;
+	}
+
+	private LocalDate parseToLocalDate(String dateString) {
 		try {
-			return Optional.ofNullable(dateString)
-					.filter(s -> StringUtils.isNotBlank(s))
-					.map(s -> LocalDate.parse(s.trim()));
+			return LocalDate.parse(dateString);
 		} catch (DateTimeParseException e) {
 			throw new CustomException("Invalid date provided", ErrorCode.INVALID_DATE, e);
 		}

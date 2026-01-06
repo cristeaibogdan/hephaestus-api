@@ -33,6 +33,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+// TODO: Find a way to test search for createdAt property
 class SearchIntegrationTest extends BaseIntegrationTest {
 
 	@Autowired MockMvc mockMvc;

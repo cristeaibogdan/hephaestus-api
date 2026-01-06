@@ -7,8 +7,29 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
+/**
+ * Older implementation which was deprecated in favor of using plain old ifs to construct a predicate.
+ * Usage:
+ * <pre>{@code
+ * 	private BooleanBuilder buildSearchPredicate(SearchWashingMachineRequest request) {
+ * 		return new BooleanBuilder()
+ * 				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.identificationMode, request.identificationMode()))
+ * 				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.manufacturer, request.manufacturer()))
+ *
+ * 				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.model, request.model()))
+ * 				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.type, request.type()))
+ * 				.and(QueryDSLUtils.addStringLikeCondition(washingMachine.serialNumber, request.serialNumber()))
+ *
+ * 				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.returnType, request.returnType()))
+ * 				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.damageType, request.damageType()))
+ * 				.and(QueryDSLUtils.addEnumEqualCondition(washingMachine.recommendation, request.recommendation()))
+ *
+ * 				.and(QueryDSLUtils.addTimestampEqualCondition(washingMachine.createdAt, parseToLocalDate(request.createdAt())));
+ *        }
+ * }</pre>
+ */
+@Deprecated
 @NoArgsConstructor(access = AccessLevel.NONE)
 public final class QueryDSLUtils {
 
@@ -30,24 +51,18 @@ public final class QueryDSLUtils {
 				: null;
 	}
 
-	public static BooleanExpression addDateEqualCondition(DatePath<LocalDate> attribute, Optional<LocalDate> value) {
-		return value.map(v -> attribute.eq(v))
-				.orElse(null);
+	public static BooleanExpression addDateEqualCondition(DatePath<LocalDate> attribute, LocalDate value) {
+		return attribute.eq(value);
 	}
 
-	public static BooleanExpression addDateBetweenCondition(DatePath<LocalDate> attribute, Optional<LocalDate> startDate, Optional<LocalDate> endDate) {
-		if (startDate.isPresent() && endDate.isPresent()) {
-			return attribute.between(startDate.get(), endDate.get());
-		}
-		return null;
+	// TODO: Add an if to make sure the startDate is before the endDate
+	public static BooleanExpression addDateBetweenCondition(DatePath<LocalDate> attribute, LocalDate startDate, LocalDate endDate) {
+		return attribute.between(startDate, endDate);
 	}
 
-	public static BooleanExpression addTimestampEqualCondition(DateTimePath<LocalDateTime> attribute, Optional<LocalDate> value) {
-		return value.map(
-						v -> attribute.year().eq(v.getYear())
-								.and(attribute.month().eq(v.getMonthValue()))
-								.and(attribute.dayOfMonth().eq(v.getDayOfMonth()))
-				)
-				.orElse(null);
+	public static BooleanExpression addTimestampEqualCondition(DateTimePath<LocalDateTime> attribute, LocalDate value) {
+		return attribute.year().eq(value.getYear())
+				.and(attribute.month().eq(value.getMonthValue()))
+				.and(attribute.dayOfMonth().eq(value.getDayOfMonth()));
 	}
 }
