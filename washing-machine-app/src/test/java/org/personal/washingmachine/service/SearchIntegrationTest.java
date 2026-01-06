@@ -603,10 +603,10 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnFilteredList_By_createdAt() {
 			// GIVEN
-			saveToDBOnDate(TestData.createValidWashingMachine("serial1"), LocalDate.of(2024, 12, 2));
-			saveToDBOnDate(TestData.createValidWashingMachine("serial2"), LocalDate.of(2024, 12, 3));
-			saveToDBOnDate(TestData.createValidWashingMachine("serial3"), LocalDate.of(2024, 12, 3));
-			saveToDBOnDate(TestData.createValidWashingMachine("serial4"), LocalDate.of(2024, 12, 5));
+			saveToDBOnDate(LocalDate.of(2024, 12, 2), TestData.createValidWashingMachine("serial1"));
+			saveToDBOnDate(LocalDate.of(2024, 12, 3), TestData.createValidWashingMachine("serial2"));
+			saveToDBOnDate(LocalDate.of(2024, 12, 3), TestData.createValidWashingMachine("serial3"));
+			saveToDBOnDate(LocalDate.of(2024, 12, 5), TestData.createValidWashingMachine("serial4"));
 
 			// WHEN
 			Page<SearchWashingMachineResponse> actual = underTest.search(
@@ -705,9 +705,9 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 	 * - Clock is reset immediately after saving.
 	 * - Only intended for use in tests.
 	 */
-	private void saveToDBOnDate(WashingMachine washingMachine, LocalDate localDate) {
+	private void saveToDBOnDate(LocalDate localDate, WashingMachine... washingMachines) {
 		ClockHolder.setClock(ClockUtils.fixedClock(localDate));
-		repository.save(washingMachine);
+		repository.saveAll(List.of(washingMachines));
 		ClockHolder.reset();
 	}
 

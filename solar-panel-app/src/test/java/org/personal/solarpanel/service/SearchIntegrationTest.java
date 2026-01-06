@@ -515,10 +515,10 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_ReturnFilteredList_By_createdAt() {
 			// GIVEN
-			saveToDBOnDate(TestData.createValidSolarPanel("serial1"), LocalDate.of(2025, 12, 2));
-			saveToDBOnDate(TestData.createValidSolarPanel("serial2"), LocalDate.of(2025, 12, 3));
-			saveToDBOnDate(TestData.createValidSolarPanel("serial3"), LocalDate.of(2025, 12, 3));
-			saveToDBOnDate(TestData.createValidSolarPanel("serial4"), LocalDate.of(2025, 12, 5));
+			saveToDBOnDate(LocalDate.of(2025, 12, 2), TestData.createValidSolarPanel("serial1"));
+			saveToDBOnDate(LocalDate.of(2025, 12, 3), TestData.createValidSolarPanel("serial2"));
+			saveToDBOnDate(LocalDate.of(2025, 12, 3), TestData.createValidSolarPanel("serial3"));
+			saveToDBOnDate(LocalDate.of(2025, 12, 5), TestData.createValidSolarPanel("serial4"));
 
 			// WHEN
 			Page<SearchSolarPanelResponse> actual = underTest.search(
@@ -624,9 +624,9 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 		repository.saveAll(List.of(solarPanels));
 	}
 
-	private void saveToDBOnDate(SolarPanel solarPanel, LocalDate localDate) {
+	private void saveToDBOnDate(LocalDate localDate, SolarPanel... solarPanels) {
 		ClockHolder.setClock(ClockUtils.fixedClock(localDate));
-		repository.save(solarPanel);
+		repository.saveAll(List.of(solarPanels));
 		ClockHolder.reset();
 	}
 
