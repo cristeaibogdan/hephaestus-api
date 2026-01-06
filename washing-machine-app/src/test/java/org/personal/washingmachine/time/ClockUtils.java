@@ -1,4 +1,4 @@
-package org.personal.washingmachine;
+package org.personal.washingmachine.time;
 
 import java.time.Clock;
 import java.time.Instant;
