@@ -1,6 +1,6 @@
 package org.personal.washingmachine.config;
 
-import org.personal.washingmachine.time.ClockHolder;
+import org.personal.shared.time.ClockHolder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.auditing.DateTimeProvider;

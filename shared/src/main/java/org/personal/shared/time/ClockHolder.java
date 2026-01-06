@@ -1,4 +1,4 @@
-package org.personal.washingmachine.time;
+package org.personal.shared.time;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

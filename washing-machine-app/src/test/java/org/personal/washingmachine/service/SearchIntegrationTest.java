@@ -8,7 +8,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.personal.washingmachine.BaseIntegrationTest;
-import org.personal.washingmachine.time.ClockHolder;
+import org.personal.shared.time.ClockHolder;
 import org.personal.washingmachine.TestData;
 import org.personal.washingmachine.dto.SearchWashingMachineResponse;
 import org.personal.washingmachine.dto.SearchWashingMachineRequest;
