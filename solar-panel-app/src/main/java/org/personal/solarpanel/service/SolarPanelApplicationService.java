@@ -13,7 +13,6 @@ import org.personal.solarpanel.entity.SolarPanel;
 import org.personal.solarpanel.enums.Recommendation;
 import org.personal.solarpanel.mapper.SolarPanelMapper;
 import org.personal.solarpanel.repository.SolarPanelRepository;
-import org.personal.solarpanel.service.utils.QueryDSLUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -24,7 +23,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -65,24 +63,44 @@ public class SolarPanelApplicationService implements ISolarPanelApplicationServi
 				buildSort(request.sortByField(), request.sortDirection())
 		);
 
-		BooleanBuilder searchFilters = new BooleanBuilder()
-				.and(QueryDSLUtils.addStringLikeCondition(solarPanel.manufacturer, request.manufacturer()))
-				.and(QueryDSLUtils.addStringLikeCondition(solarPanel.model, request.model()))
-				.and(QueryDSLUtils.addStringLikeCondition(solarPanel.type, request.type()))
-				.and(QueryDSLUtils.addStringLikeCondition(solarPanel.serialNumber, request.serialNumber()))
-				.and(QueryDSLUtils.addEnumEqualCondition(solarPanel.recommendation, request.recommendation()))
-				.and(QueryDSLUtils.addTimestampEqualCondition(solarPanel.createdAt, parseToLocalDate(request.createdAt())));
+		BooleanBuilder searchPredicate = buildSearchPredicate(request);
 
-		Page<SolarPanel> responsePage = repository.findAll(searchFilters, pageRequest);
+		Page<SolarPanel> responsePage = repository.findAll(searchPredicate, pageRequest);
 
 		return responsePage.map(solarPanel -> mapper.toSearchSolarPanelResponse(solarPanel));
 	}
 
-	private Optional<LocalDate> parseToLocalDate(String dateString) { //TODO: Duplicated code.
+	private BooleanBuilder buildSearchPredicate(SearchSolarPanelRequest request) {
+		BooleanBuilder predicate = new BooleanBuilder();
+
+		if (StringUtils.isNotBlank(request.manufacturer())) {
+			predicate.and(solarPanel.manufacturer.containsIgnoreCase(request.manufacturer()));
+		}
+		if (StringUtils.isNotBlank(request.model())) {
+			predicate.and(solarPanel.model.containsIgnoreCase(request.model()));
+		}
+		if (StringUtils.isNotBlank(request.type())) {
+			predicate.and(solarPanel.type.containsIgnoreCase(request.type()));
+		}
+		if (StringUtils.isNotBlank(request.serialNumber())) {
+			predicate.and(solarPanel.serialNumber.containsIgnoreCase(request.serialNumber()));
+		}
+		if (request.recommendation() != null) {
+			predicate.and(solarPanel.recommendation.eq(request.recommendation()));
+		}
+		if (StringUtils.isNotBlank(request.createdAt())) {
+			LocalDate searchDate = parseToLocalDate(request.createdAt());
+			predicate.and(solarPanel.createdAt.year().eq(searchDate.getYear()))
+					.and(solarPanel.createdAt.month().eq(searchDate.getMonthValue()))
+					.and(solarPanel.createdAt.dayOfMonth().eq(searchDate.getDayOfMonth()));
+		}
+
+		return predicate;
+	}
+
+	private LocalDate parseToLocalDate(String dateString) { //TODO: Duplicated code.
 		try {
-			return Optional.ofNullable(dateString)
-					.filter(s -> StringUtils.isNotBlank(s))
-					.map(s -> LocalDate.parse(s.trim()));
+			return LocalDate.parse(dateString);
 		} catch (DateTimeParseException e) {
 			throw new CustomException("Invalid date provided", ErrorCode.INVALID_DATE, e);
 		}
