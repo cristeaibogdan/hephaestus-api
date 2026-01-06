@@ -10,6 +10,7 @@ import org.personal.washingmachine.enums.DamageType;
 import org.personal.washingmachine.enums.IdentificationMode;
 import org.personal.washingmachine.enums.Recommendation;
 import org.personal.washingmachine.enums.ReturnType;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -60,7 +61,8 @@ public class WashingMachine extends BaseEntity {
     private Recommendation recommendation;
 
     @Setter(NONE)
-    @CreationTimestamp
+    // @CreationTimestamp // Isn't test friendly
+	@CreatedDate // Spring assigns this at creation time: https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#auditing. Make sure app has @EnableJpaAuditing for it to work.
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 

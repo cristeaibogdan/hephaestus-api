@@ -8,6 +8,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.personal.washingmachine.BaseIntegrationTest;
+import org.personal.washingmachine.time.ClockHolder;
+import org.personal.washingmachine.ClockUtils;
 import org.personal.washingmachine.TestData;
 import org.personal.washingmachine.dto.SearchWashingMachineResponse;
 import org.personal.washingmachine.dto.SearchWashingMachineRequest;
@@ -23,6 +25,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
@@ -33,7 +36,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-// TODO: Find a way to test search for createdAt property
 class SearchIntegrationTest extends BaseIntegrationTest {
 
 	@Autowired MockMvc mockMvc;
@@ -599,6 +601,29 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 		}
 
 		@Test
+		void should_ReturnFilteredList_By_createdAt() {
+			// GIVEN
+			saveToDBOnDate(TestData.createValidWashingMachine("serial1"), LocalDate.of(2024, 12, 2));
+			saveToDBOnDate(TestData.createValidWashingMachine("serial2"), LocalDate.of(2024, 12, 3));
+			saveToDBOnDate(TestData.createValidWashingMachine("serial3"), LocalDate.of(2024, 12, 3));
+			saveToDBOnDate(TestData.createValidWashingMachine("serial4"), LocalDate.of(2024, 12, 5));
+
+			// WHEN
+			Page<SearchWashingMachineResponse> actual = underTest.search(
+					TestData.createSearchWashingMachineRequest()
+							.withPageIndex(0)
+							.withPageSize(4)
+							.withCreatedAt("2024-12-03")
+			);
+
+			// THEN
+			assertThat(actual.getContent())
+					.hasSize(2)
+					.extracting(wm -> wm.createdAt().toLocalDate())
+					.containsOnly(LocalDate.of(2024, 12, 3));
+		}
+
+		@Test
 		void should_ReturnFilteredList_By_ManufacturerAndReturnType() {
 			// GIVEN
 			saveToDB(
@@ -667,6 +692,23 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 
 	private void saveToDB(WashingMachine... washingMachines) {
 		repository.saveAll(List.of(washingMachines));
+	}
+
+	/**
+	 * Saves an entity with a specific creation date by temporarily fixing the clock.
+	 *
+	 * <p>Purpose:
+	 * - Makes tests deterministic when using @CreatedDate.
+	 * - Wraps ClockHolder set/reset for cleaner test code.
+	 *
+	 * <p>Note:
+	 * - Clock is reset immediately after saving.
+	 * - Only intended for use in tests.
+	 */
+	private void saveToDBOnDate(WashingMachine washingMachine, LocalDate localDate) {
+		ClockHolder.setClock(ClockUtils.fixedClock(localDate));
+		repository.save(washingMachine);
+		ClockHolder.reset();
 	}
 
 	@Nested
