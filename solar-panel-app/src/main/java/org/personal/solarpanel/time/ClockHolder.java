@@ -1,4 +1,4 @@
-package org.personal.washingmachine.time;
+package org.personal.solarpanel.time;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

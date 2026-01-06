@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" version="2.0">
+    <persistence-unit-metadata>
+        <persistence-unit-defaults>
+            <entity-listeners>
+                <!-- This globally applies AuditingEntityListener to all entities, enabling @CreatedDate, @LastModifiedDate, @CreatedBy, @LastModifiedBy without needing @EntityListeners on each entity -->
+                <entity-listener class="org.springframework.data.jpa.domain.support.AuditingEntityListener"/>
+            </entity-listeners>
+        </persistence-unit-defaults>
+    </persistence-unit-metadata>
+</entity-mappings>

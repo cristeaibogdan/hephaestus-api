@@ -15,12 +15,15 @@ import org.personal.solarpanel.entity.Damage;
 import org.personal.solarpanel.entity.SolarPanel;
 import org.personal.solarpanel.enums.Recommendation;
 import org.personal.solarpanel.repository.SolarPanelRepository;
+import org.personal.solarpanel.time.ClockHolder;
+import org.personal.solarpanel.time.ClockUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
@@ -510,6 +513,29 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 		}
 
 		@Test
+		void should_ReturnFilteredList_By_createdAt() {
+			// GIVEN
+			saveToDBOnDate(TestData.createValidSolarPanel("serial1"), LocalDate.of(2025, 12, 2));
+			saveToDBOnDate(TestData.createValidSolarPanel("serial2"), LocalDate.of(2025, 12, 3));
+			saveToDBOnDate(TestData.createValidSolarPanel("serial3"), LocalDate.of(2025, 12, 3));
+			saveToDBOnDate(TestData.createValidSolarPanel("serial4"), LocalDate.of(2025, 12, 5));
+
+			// WHEN
+			Page<SearchSolarPanelResponse> actual = underTest.search(
+					TestData.createSearchSolarPanelRequest()
+							.withPageIndex(0)
+							.withPageSize(4)
+							.withCreatedAt("2025-12-03")
+			);
+
+			// THEN
+			assertThat(actual.getContent())
+					.hasSize(2)
+					.extracting(wm -> wm.createdAt().toLocalDate())
+					.containsOnly(LocalDate.of(2025, 12, 3));
+		}
+
+		@Test
 		void should_ReturnFilteredList_By_ManufacturerAndType() {
 			// GIVEN
 			saveToDB(
@@ -596,6 +622,12 @@ class SearchIntegrationTest extends BaseIntegrationTest {
 
 	private void saveToDB(SolarPanel... solarPanels) {
 		repository.saveAll(List.of(solarPanels));
+	}
+
+	private void saveToDBOnDate(SolarPanel solarPanel, LocalDate localDate) {
+		ClockHolder.setClock(ClockUtils.fixedClock(localDate));
+		repository.save(solarPanel);
+		ClockHolder.reset();
 	}
 
 	private ResultActions performRequest(SearchSolarPanelRequest request) throws Exception {

@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
 import org.personal.solarpanel.enums.Recommendation;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 
@@ -33,7 +33,7 @@ public class SolarPanel extends BaseEntity {
 	private String serialNumber;
 
 	@Setter(NONE)
-	@CreationTimestamp
+	@CreatedDate
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
 
