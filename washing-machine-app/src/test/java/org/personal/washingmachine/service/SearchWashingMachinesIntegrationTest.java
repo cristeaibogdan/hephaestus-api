@@ -36,12 +36,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class SearchIntegrationTest extends BaseIntegrationTest {
+class SearchWashingMachinesIntegrationTest extends BaseIntegrationTest {
 
 	@Autowired MockMvc mockMvc;
 	@Autowired ObjectMapper jackson;
 
-	@Autowired WashingMachineApplicationService underTest;
+	@Autowired SearchWashingMachines underTest;
 	@Autowired WashingMachineRepository repository;
 
 	@BeforeEach

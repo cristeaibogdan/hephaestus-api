@@ -5,10 +5,8 @@ import com.querydsl.core.BooleanBuilder;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.personal.shared.clients.ProductClient;
 import org.personal.washingmachine.TestData;
 import org.personal.washingmachine.dto.SearchWashingMachineRequest;
-import org.personal.washingmachine.mapper.WashingMachineImageMapper;
 import org.personal.washingmachine.mapper.WashingMachineMapper;
 import org.personal.washingmachine.repository.WashingMachineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,18 +25,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(WashingMachineApplicationService.class)
-class SearchValidationMvcTest {
+@WebMvcTest(SearchWashingMachines.class)
+class SearchWashingMachinesValidationMvcTest {
 
 	@Autowired MockMvc mockMvc;
 	@Autowired ObjectMapper jackson;
 
-	@MockBean WashingMachineService service;
 	@MockBean WashingMachineRepository repository;
-	@MockBean WashingMachineReportGenerator reportGenerator;
-	@MockBean WashingMachineImageMapper washingMachineImageMapper;
 	@MockBean WashingMachineMapper washingMachineMapper;
-	@MockBean ProductClient productClient; //TODO: To be deleted
 
 	@Test
 	void should_ThrowValidationException_When_PageIndexIsNegative() throws Exception {

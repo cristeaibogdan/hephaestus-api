@@ -36,12 +36,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Deprecated
 @Disabled
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class SearchIntegrationTest_OLD extends BaseIntegrationTest {
+class SearchWashingMachinesIntegrationTest_OLD extends BaseIntegrationTest {
 
 	@Autowired MockMvc mockMvc;
 	@Autowired ObjectMapper jackson;
 
-	@Autowired WashingMachineApplicationService underTest;
+	@Autowired SearchWashingMachines underTest;
 	@Autowired WashingMachineRepository repository;
 
 	@BeforeAll
