@@ -1,6 +1,10 @@
 package org.personal.washingmachine.service;
 
 import com.querydsl.core.BooleanBuilder;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.personal.shared.clients.ProductClient;
@@ -16,8 +20,10 @@ import org.personal.washingmachine.dto.GetWashingMachineReportResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
@@ -30,8 +36,9 @@ import static org.personal.washingmachine.entity.QWashingMachine.washingMachine;
 
 @Service
 @RestController
+@RequestMapping("/v1/washing-machines")
 @RequiredArgsConstructor
-public class WashingMachineApplicationService implements IWashingMachineApplicationService {
+public class WashingMachineApplicationService {
 	private final WashingMachineService service;
 	private final WashingMachineRepository repository;
 	private final WashingMachineReportGenerator reportGenerator;
@@ -39,8 +46,8 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 	private final WashingMachineImageMapper washingMachineImageMapper;
 	private final WashingMachineMapper washingMachineMapper;
 
-	@Override
-	public Page<SearchWashingMachineResponse> search(SearchWashingMachineRequest request) {
+	@PostMapping("/search")
+	public Page<SearchWashingMachineResponse> search(@Valid @RequestBody SearchWashingMachineRequest request) {
 
 		PageRequest pageRequest = PageRequest.of(
 				request.pageIndex(),
@@ -134,14 +141,15 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 	 * <p> Use {@link org.personal.washingmachine.service.WashingMachineApplicationService#loadMany} instead.
 	 */
 	@Deprecated(since = "2024/11/21")
-	@Override
-	public GetWashingMachineFullResponse load(String serialNumber) {
+	@GetMapping("/{serialNumber}")
+	public GetWashingMachineFullResponse load(@PathVariable String serialNumber) {
 		WashingMachine washingMachine = service.findBySerialNumber(serialNumber);
 		return washingMachineMapper.toGetWashingMachineFullResponse(washingMachine);
 	}
 
-	@Override
-	public void create(CreateWashingMachineRequest createWashingMachineRequest, List<MultipartFile> imageFiles) {
+	@ResponseStatus(HttpStatus.CREATED)
+	@PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public void create(@Valid @RequestPart CreateWashingMachineRequest createWashingMachineRequest, @RequestPart List<MultipartFile> imageFiles) {
 
 		WashingMachine washingMachine = washingMachineMapper.toEntity(createWashingMachineRequest);
 
@@ -153,14 +161,14 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 		service.create(washingMachine);
 	}
 
-	@Override
-	public Recommendation getRecommendation(String serialNumber) {
+	@GetMapping("/{serialNumber}/recommendation")
+	public Recommendation getRecommendation(@PathVariable String serialNumber) {
 		return repository.getRecommendation(serialNumber)
 				.orElseThrow(() -> new CustomException(ErrorCode.SERIAL_NUMBER_NOT_FOUND, serialNumber));
 	}
 
-	@Override
-	public GetWashingMachineReportResponse getReport(String serialNumber) {
+	@GetMapping(value = "/{serialNumber}/report")
+	public GetWashingMachineReportResponse getReport(@PathVariable String serialNumber) {
 		WashingMachine washingMachine = service.findBySerialNumber(serialNumber);
 		return reportGenerator.getReport(washingMachine);
 	}
@@ -176,13 +184,18 @@ public class WashingMachineApplicationService implements IWashingMachineApplicat
 //		return productClient.getManufacturers(category);
 //	}
 
-	@Override
-	public boolean isSerialNumberInUse(String serialNumber) {
+	@GetMapping("/{serialNumber}/validate")
+	public boolean isSerialNumberInUse(@PathVariable String serialNumber) {
 		return repository.existsBySerialNumber(serialNumber);
 	}
 
-	@Override
-	public Map<String, GetWashingMachineFullResponse> loadMany(Set<String> serialNumbers) {
+	@PostMapping("/many")
+	public Map<String, GetWashingMachineFullResponse> loadMany(
+			@RequestBody
+			@NotEmpty(message = "{LIST_NOT_EMPTY}")
+			@Size(max = 10, message = "{LIST_MAX_SIZE}")
+			Set<@NotBlank(message = "{FIELD_NOT_BLANK}") String> serialNumbers
+	) {
 
 		List<WashingMachine> foundWashingMachines = repository.findAllBySerialNumberIn(serialNumbers);
 		if (foundWashingMachines.isEmpty()) {
