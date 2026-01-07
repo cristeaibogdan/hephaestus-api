@@ -27,7 +27,7 @@ import static org.personal.washingmachine.entity.QWashingMachine.washingMachine;
 @RestController
 @RequestMapping("/v1/washing-machines")
 @RequiredArgsConstructor
-public class SearchWashingMachines {
+class SearchWashingMachines {
 
 	private final WashingMachineRepository repository;
 	private final WashingMachineMapper washingMachineMapper;

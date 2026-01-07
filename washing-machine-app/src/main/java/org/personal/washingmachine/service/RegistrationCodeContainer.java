@@ -18,7 +18,7 @@ import java.util.Map;
  * In a multithreaded environment, additional synchronization
  * would be needed to ensure thread safety.</p>
  */
-public final class RegistrationCodeContainer {
+final class RegistrationCodeContainer {
 
 	/** Singleton instance of the {@code RegistrationCodeContainer} class. */
 	private static RegistrationCodeContainer instance;

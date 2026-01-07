@@ -28,7 +28,7 @@ import org.personal.washingmachine.mapper.WashingMachineMapper;
 @RestController
 @RequestMapping("/v1/washing-machines")
 @RequiredArgsConstructor
-public class WashingMachineApplicationService {
+class WashingMachineApplicationService {
 	private final WashingMachineService service;
 	private final WashingMachineRepository repository;
 	private final WashingMachineReportGenerator reportGenerator;

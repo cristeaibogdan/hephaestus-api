@@ -6,15 +6,13 @@ import org.personal.washingmachine.dto.GetOrganizationAndCountryResponse;
 import org.personal.washingmachine.dto.LoginUserRequest;
 import org.personal.washingmachine.dto.LoginUserResponse;
 import org.personal.washingmachine.entity.User;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
 
 import org.personal.washingmachine.mapper.UserMapper;
 
-@Service
 @RestController
 @RequiredArgsConstructor
-public class UserApplicationService implements IUserApplicationService { // TODO: Replace with proper authentication
+class UserApplicationService implements IUserApplicationService { // TODO: Replace with proper authentication
 	private final UserService service;
 	private final UserMapper userMapper;
 	private final RegistrationCodeContainer registrationCodeContainer = RegistrationCodeContainer.getInstance();
