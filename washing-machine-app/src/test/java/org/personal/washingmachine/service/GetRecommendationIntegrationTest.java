@@ -45,7 +45,7 @@ class GetRecommendationIntegrationTest extends BaseIntegrationTest {
 			// GIVEN
 			saveToDB(
 					TestData.createValidWashingMachine("I exist in DB")
-							.setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.OUTLET))
+							.setWashingMachineDamage(TestData.createWashingMachineDamageWithRecommendation(Recommendation.OUTLET))
 			);
 
 			// WHEN

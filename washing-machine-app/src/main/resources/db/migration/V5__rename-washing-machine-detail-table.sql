@@ -1,0 +1,2 @@
+ALTER TABLE washing_machine RENAME COLUMN washing_machine_detail_id TO washing_machine_damage_id;
+ALTER TABLE washing_machine_detail RENAME TO washing_machine_damage;

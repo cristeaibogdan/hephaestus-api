@@ -49,7 +49,7 @@ class CreateValidationMvcTest {
 				arguments(TestData.createCreateWashingMachineRequest().withSerialNumber(null), "serialNumber"),
 				arguments(TestData.createCreateWashingMachineRequest().withReturnType(null), "returnType"),
 				arguments(TestData.createCreateWashingMachineRequest().withDamageType(null), "damageType"),
-				arguments(TestData.createCreateWashingMachineRequest().withWashingMachineDetail(null), "washingMachineDetail")
+				arguments(TestData.createCreateWashingMachineRequest().withWashingMachineDamage(null), "washingMachineDamage")
 		);
 	}
 
@@ -88,34 +88,34 @@ class CreateValidationMvcTest {
 	}
 
 
-	static Stream<Arguments> getInvalidWashingMachineDetails() {
+	static Stream<Arguments> getInvalidWashingMachineDamages() {
 		return Stream.of(
-				arguments(TestData.createValidWashingMachineDetailRequest().withVisibleSurfacesScratchesLength(-1), "visibleSurfacesScratchesLength", -1),
-				arguments(TestData.createValidWashingMachineDetailRequest().withVisibleSurfacesScratchesLength(11), "visibleSurfacesScratchesLength", 11),
-				arguments(TestData.createValidWashingMachineDetailRequest().withVisibleSurfacesDentsDepth(-1), "visibleSurfacesDentsDepth", -1),
-				arguments(TestData.createValidWashingMachineDetailRequest().withVisibleSurfacesDentsDepth(11), "visibleSurfacesDentsDepth", 11),
-				arguments(TestData.createValidWashingMachineDetailRequest().withVisibleSurfacesMinorDamage(null), "visibleSurfacesMinorDamage", null),
-				arguments(TestData.createValidWashingMachineDetailRequest().withVisibleSurfacesMinorDamage("A".repeat(201)), "visibleSurfacesMinorDamage", "201 chars"),
-				arguments(TestData.createValidWashingMachineDetailRequest().withVisibleSurfacesMajorDamage(null), "visibleSurfacesMajorDamage", null),
-				arguments(TestData.createValidWashingMachineDetailRequest().withVisibleSurfacesMajorDamage("A".repeat(201)), "visibleSurfacesMajorDamage", "201 chars"),
-				arguments(TestData.createValidWashingMachineDetailRequest().withHiddenSurfacesScratchesLength(-1), "hiddenSurfacesScratchesLength", -1),
-				arguments(TestData.createValidWashingMachineDetailRequest().withHiddenSurfacesScratchesLength(11), "hiddenSurfacesScratchesLength", 11),
-				arguments(TestData.createValidWashingMachineDetailRequest().withHiddenSurfacesDentsDepth(-1), "hiddenSurfacesDentsDepth", -1),
-				arguments(TestData.createValidWashingMachineDetailRequest().withHiddenSurfacesDentsDepth(11), "hiddenSurfacesDentsDepth", 11),
-				arguments(TestData.createValidWashingMachineDetailRequest().withHiddenSurfacesMinorDamage(null), "hiddenSurfacesMinorDamage", null),
-				arguments(TestData.createValidWashingMachineDetailRequest().withHiddenSurfacesMinorDamage("A".repeat(201)), "hiddenSurfacesMinorDamage", "201 chars"),
-				arguments(TestData.createValidWashingMachineDetailRequest().withHiddenSurfacesMajorDamage(null), "hiddenSurfacesMajorDamage", null),
-				arguments(TestData.createValidWashingMachineDetailRequest().withHiddenSurfacesMajorDamage("A".repeat(201)), "hiddenSurfacesMajorDamage", "201 chars"),
-				arguments(TestData.createValidWashingMachineDetailRequest().withPrice(-1), "price", -1),
-				arguments(TestData.createValidWashingMachineDetailRequest().withRepairPrice(-1), "repairPrice", -1)
+				arguments(TestData.createValidWashingMachineDamageRequest().withVisibleSurfacesScratchesLength(-1), "visibleSurfacesScratchesLength", -1),
+				arguments(TestData.createValidWashingMachineDamageRequest().withVisibleSurfacesScratchesLength(11), "visibleSurfacesScratchesLength", 11),
+				arguments(TestData.createValidWashingMachineDamageRequest().withVisibleSurfacesDentsDepth(-1), "visibleSurfacesDentsDepth", -1),
+				arguments(TestData.createValidWashingMachineDamageRequest().withVisibleSurfacesDentsDepth(11), "visibleSurfacesDentsDepth", 11),
+				arguments(TestData.createValidWashingMachineDamageRequest().withVisibleSurfacesMinorDamage(null), "visibleSurfacesMinorDamage", null),
+				arguments(TestData.createValidWashingMachineDamageRequest().withVisibleSurfacesMinorDamage("A".repeat(201)), "visibleSurfacesMinorDamage", "201 chars"),
+				arguments(TestData.createValidWashingMachineDamageRequest().withVisibleSurfacesMajorDamage(null), "visibleSurfacesMajorDamage", null),
+				arguments(TestData.createValidWashingMachineDamageRequest().withVisibleSurfacesMajorDamage("A".repeat(201)), "visibleSurfacesMajorDamage", "201 chars"),
+				arguments(TestData.createValidWashingMachineDamageRequest().withHiddenSurfacesScratchesLength(-1), "hiddenSurfacesScratchesLength", -1),
+				arguments(TestData.createValidWashingMachineDamageRequest().withHiddenSurfacesScratchesLength(11), "hiddenSurfacesScratchesLength", 11),
+				arguments(TestData.createValidWashingMachineDamageRequest().withHiddenSurfacesDentsDepth(-1), "hiddenSurfacesDentsDepth", -1),
+				arguments(TestData.createValidWashingMachineDamageRequest().withHiddenSurfacesDentsDepth(11), "hiddenSurfacesDentsDepth", 11),
+				arguments(TestData.createValidWashingMachineDamageRequest().withHiddenSurfacesMinorDamage(null), "hiddenSurfacesMinorDamage", null),
+				arguments(TestData.createValidWashingMachineDamageRequest().withHiddenSurfacesMinorDamage("A".repeat(201)), "hiddenSurfacesMinorDamage", "201 chars"),
+				arguments(TestData.createValidWashingMachineDamageRequest().withHiddenSurfacesMajorDamage(null), "hiddenSurfacesMajorDamage", null),
+				arguments(TestData.createValidWashingMachineDamageRequest().withHiddenSurfacesMajorDamage("A".repeat(201)), "hiddenSurfacesMajorDamage", "201 chars"),
+				arguments(TestData.createValidWashingMachineDamageRequest().withPrice(-1), "price", -1),
+				arguments(TestData.createValidWashingMachineDamageRequest().withRepairPrice(-1), "repairPrice", -1)
 		);
 	}
 
 	@ParameterizedTest(name = "Validation fails for property {1}, with value {2}")
-	@MethodSource("getInvalidWashingMachineDetails")
-	void should_ThrowValidationException_When_ProvidedInvalidCreateWashingMachineDetailRequest(CreateWashingMachineRequest.WashingMachineDetailRequest dto, String propertyName, Object invalidValue) throws Exception {
+	@MethodSource("getInvalidWashingMachineDamages")
+	void should_ThrowValidationException_When_ProvidedInvalidCreateWashingMachineDamageRequest(CreateWashingMachineRequest.WashingMachineDamageRequest dto, String propertyName, Object invalidValue) throws Exception {
 		// GIVEN
-		CreateWashingMachineRequest request = TestData.createCreateWashingMachineRequest().withWashingMachineDetail(dto);
+		CreateWashingMachineRequest request = TestData.createCreateWashingMachineRequest().withWashingMachineDamage(dto);
 
 		// WHEN
 		ResultActions resultActions = performRequest(request);
@@ -126,30 +126,30 @@ class CreateValidationMvcTest {
 				.andExpect(content().string(containsString(propertyName)));
 	}
 
-	static Stream<Arguments> getValidCreateWashingMachineDetailRequests() {
+	static Stream<Arguments> getValidCreateWashingMachineDamageRequests() {
 		return Stream.of(
-				arguments(TestData.createValidWashingMachineDetailRequest().withVisibleSurfacesScratchesLength(0), "visibleSurfacesScratchesLength", 0),
-				arguments(TestData.createValidWashingMachineDetailRequest().withVisibleSurfacesScratchesLength(10), "visibleSurfacesScratchesLength", 10),
-				arguments(TestData.createValidWashingMachineDetailRequest().withVisibleSurfacesDentsDepth(0), "visibleSurfacesDentsDepth", 0),
-				arguments(TestData.createValidWashingMachineDetailRequest().withVisibleSurfacesDentsDepth(10), "visibleSurfacesDentsDepth", 10),
-				arguments(TestData.createValidWashingMachineDetailRequest().withVisibleSurfacesMinorDamage("B".repeat(200)), "visibleSurfacesMinorDamage", "200 chars"),
-				arguments(TestData.createValidWashingMachineDetailRequest().withVisibleSurfacesMajorDamage("B".repeat(200)), "visibleSurfacesMajorDamage", "200 chars"),
-				arguments(TestData.createValidWashingMachineDetailRequest().withHiddenSurfacesScratchesLength(0), "hiddenSurfacesScratchesLength", 0),
-				arguments(TestData.createValidWashingMachineDetailRequest().withHiddenSurfacesScratchesLength(10), "hiddenSurfacesScratchesLength", 10),
-				arguments(TestData.createValidWashingMachineDetailRequest().withHiddenSurfacesDentsDepth(0), "hiddenSurfacesDentsDepth", 0),
-				arguments(TestData.createValidWashingMachineDetailRequest().withHiddenSurfacesDentsDepth(10), "hiddenSurfacesDentsDepth", 10),
-				arguments(TestData.createValidWashingMachineDetailRequest().withHiddenSurfacesMinorDamage("B".repeat(200)), "hiddenSurfacesMinorDamage", "200 chars"),
-				arguments(TestData.createValidWashingMachineDetailRequest().withHiddenSurfacesMajorDamage("B".repeat(200)), "hiddenSurfacesMajorDamage", "200 chars"),
-				arguments(TestData.createValidWashingMachineDetailRequest().withPrice(0), "price", 0),
-				arguments(TestData.createValidWashingMachineDetailRequest().withRepairPrice(0), "repairPrice", 0)
+				arguments(TestData.createValidWashingMachineDamageRequest().withVisibleSurfacesScratchesLength(0), "visibleSurfacesScratchesLength", 0),
+				arguments(TestData.createValidWashingMachineDamageRequest().withVisibleSurfacesScratchesLength(10), "visibleSurfacesScratchesLength", 10),
+				arguments(TestData.createValidWashingMachineDamageRequest().withVisibleSurfacesDentsDepth(0), "visibleSurfacesDentsDepth", 0),
+				arguments(TestData.createValidWashingMachineDamageRequest().withVisibleSurfacesDentsDepth(10), "visibleSurfacesDentsDepth", 10),
+				arguments(TestData.createValidWashingMachineDamageRequest().withVisibleSurfacesMinorDamage("B".repeat(200)), "visibleSurfacesMinorDamage", "200 chars"),
+				arguments(TestData.createValidWashingMachineDamageRequest().withVisibleSurfacesMajorDamage("B".repeat(200)), "visibleSurfacesMajorDamage", "200 chars"),
+				arguments(TestData.createValidWashingMachineDamageRequest().withHiddenSurfacesScratchesLength(0), "hiddenSurfacesScratchesLength", 0),
+				arguments(TestData.createValidWashingMachineDamageRequest().withHiddenSurfacesScratchesLength(10), "hiddenSurfacesScratchesLength", 10),
+				arguments(TestData.createValidWashingMachineDamageRequest().withHiddenSurfacesDentsDepth(0), "hiddenSurfacesDentsDepth", 0),
+				arguments(TestData.createValidWashingMachineDamageRequest().withHiddenSurfacesDentsDepth(10), "hiddenSurfacesDentsDepth", 10),
+				arguments(TestData.createValidWashingMachineDamageRequest().withHiddenSurfacesMinorDamage("B".repeat(200)), "hiddenSurfacesMinorDamage", "200 chars"),
+				arguments(TestData.createValidWashingMachineDamageRequest().withHiddenSurfacesMajorDamage("B".repeat(200)), "hiddenSurfacesMajorDamage", "200 chars"),
+				arguments(TestData.createValidWashingMachineDamageRequest().withPrice(0), "price", 0),
+				arguments(TestData.createValidWashingMachineDamageRequest().withRepairPrice(0), "repairPrice", 0)
 		);
 	}
 
 	@ParameterizedTest(name = "Validation passes for property {1}, with value {2}")
-	@MethodSource("getValidCreateWashingMachineDetailRequests")
-	void should_PassValidation_When_ProvidedValidCreateWashingMachineDetailRequest(CreateWashingMachineRequest.WashingMachineDetailRequest dto, String propertyName, Object validValue) throws Exception {
+	@MethodSource("getValidCreateWashingMachineDamageRequests")
+	void should_PassValidation_When_ProvidedValidCreateWashingMachineDamageRequest(CreateWashingMachineRequest.WashingMachineDamageRequest dto, String propertyName, Object validValue) throws Exception {
 		// GIVEN
-		CreateWashingMachineRequest request = TestData.createCreateWashingMachineRequest().withWashingMachineDetail(dto);
+		CreateWashingMachineRequest request = TestData.createCreateWashingMachineRequest().withWashingMachineDamage(dto);
 
 		// WHEN
 		ResultActions resultActions = performRequest(request);

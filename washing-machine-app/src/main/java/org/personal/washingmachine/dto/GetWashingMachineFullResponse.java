@@ -24,10 +24,10 @@ public record GetWashingMachineFullResponse(
 		Recommendation recommendation,
 		LocalDateTime createdAt,
 
-        WashingMachineDetail washingMachineDetail,
+        WashingMachineDamage washingMachineDamage,
         List<GetWashingMachineImageResponse> washingMachineImages
 ) {
-	public record WashingMachineDetail(
+	public record WashingMachineDamage(
 			// PACKAGE
 			boolean applicablePackageDamage,
 

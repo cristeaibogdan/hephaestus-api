@@ -6,7 +6,7 @@ import org.personal.washingmachine.BaseIntegrationTest;
 import org.personal.washingmachine.TestData;
 import org.personal.washingmachine.dto.GetWashingMachineFullResponse;
 import org.personal.washingmachine.entity.WashingMachine;
-import org.personal.washingmachine.entity.WashingMachineDetail;
+import org.personal.washingmachine.entity.WashingMachineDamage;
 import org.personal.washingmachine.entity.WashingMachineImage;
 import org.personal.washingmachine.entity.embedded.CostAssessment;
 import org.personal.washingmachine.entity.embedded.HiddenSurfaceDamage;
@@ -58,7 +58,7 @@ class LoadIntegrationTest extends BaseIntegrationTest {
 					"The only one in DB",
 					"modelA",
 					"TypeZ",
-					new WashingMachineDetail(
+					new WashingMachineDamage(
 							new PackageDamage(true,false,false),
 							new VisibleSurfaceDamage(
 									0,
@@ -89,7 +89,7 @@ class LoadIntegrationTest extends BaseIntegrationTest {
 					DamageType.IN_USE,
 					Recommendation.RESALE,
 					LocalDateTime.now(),
-					new GetWashingMachineFullResponse.WashingMachineDetail(
+					new GetWashingMachineFullResponse.WashingMachineDamage(
 							true,
 							true,
 							false,

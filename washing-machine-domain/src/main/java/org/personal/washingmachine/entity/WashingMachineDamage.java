@@ -24,8 +24,8 @@ import static org.personal.washingmachine.enums.Recommendation.*;
 @NoArgsConstructor(access = PROTECTED)
 @AllArgsConstructor
 @Entity
-@Table(schema = "public", name = "washing_machine_detail")
-public class WashingMachineDetail extends BaseEntity {
+@Table(schema = "public", name = "washing_machine_damage")
+public class WashingMachineDamage extends BaseEntity {
 
     @Embedded
     private PackageDamage packageDamage;
@@ -39,12 +39,12 @@ public class WashingMachineDetail extends BaseEntity {
     @Embedded
     private CostAssessment costAssessment;
 
-    public WashingMachineDetail(WashingMachineDetail washingMachineDetail) {
+    public WashingMachineDamage(WashingMachineDamage washingMachineDamage) {
         this(
-            washingMachineDetail.getPackageDamage(),
-            washingMachineDetail.getVisibleSurfaceDamage(),
-            washingMachineDetail.getHiddenSurfaceDamage(),
-            washingMachineDetail.getCostAssessment()
+            washingMachineDamage.getPackageDamage(),
+            washingMachineDamage.getVisibleSurfaceDamage(),
+            washingMachineDamage.getHiddenSurfaceDamage(),
+            washingMachineDamage.getCostAssessment()
         );
     }
 
