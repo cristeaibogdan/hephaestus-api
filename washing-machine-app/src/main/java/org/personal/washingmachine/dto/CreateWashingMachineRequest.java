@@ -29,10 +29,10 @@ public record CreateWashingMachineRequest(
 		DamageType damageType,
 
 		@Valid @NotNull(message = "{FIELD_NOT_NULL}")
-		WashingMachineDetailRequest washingMachineDetail
+		WashingMachineDamageRequest washingMachineDamage
 ) {
 	@With
-	public record WashingMachineDetailRequest(
+	public record WashingMachineDamageRequest(
 			// PACKAGE
 			boolean packageDamaged,
 			boolean packageDirty,

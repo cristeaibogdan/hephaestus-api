@@ -51,7 +51,7 @@ class GetReportIntegrationTest extends BaseIntegrationTest {
 					"I will return a Report!",
 					"modelA",
 					"TypeZ",
-					TestData.createWashingMachineDetailWithRecommendation(Recommendation.RESALE)
+					TestData.createWashingMachineDamageWithRecommendation(Recommendation.RESALE)
 			));
 
 			// WHEN

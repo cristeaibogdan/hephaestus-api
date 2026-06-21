@@ -65,7 +65,7 @@ class SearchWashingMachinesIntegrationTest extends BaseIntegrationTest {
 							"serial10",
 							"modelOne",
 							"TypeOne",
-							TestData.createWashingMachineDetailWithRecommendation(Recommendation.DISASSEMBLE)
+							TestData.createWashingMachineDamageWithRecommendation(Recommendation.DISASSEMBLE)
 					)
 			);
 
@@ -362,10 +362,10 @@ class SearchWashingMachinesIntegrationTest extends BaseIntegrationTest {
 		void should_ReturnSortedListBy_AscendingRecommendation() {
 			// GIVEN
 			saveToDB(
-					TestData.createValidWashingMachine("serial1").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.REPAIR)),
-					TestData.createValidWashingMachine("serial2").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.RESALE)),
-					TestData.createValidWashingMachine("serial3").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.OUTLET)),
-					TestData.createValidWashingMachine("serial4").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.REPAIR))
+					TestData.createValidWashingMachine("serial1").setWashingMachineDamage(TestData.createWashingMachineDamageWithRecommendation(Recommendation.REPAIR)),
+					TestData.createValidWashingMachine("serial2").setWashingMachineDamage(TestData.createWashingMachineDamageWithRecommendation(Recommendation.RESALE)),
+					TestData.createValidWashingMachine("serial3").setWashingMachineDamage(TestData.createWashingMachineDamageWithRecommendation(Recommendation.OUTLET)),
+					TestData.createValidWashingMachine("serial4").setWashingMachineDamage(TestData.createWashingMachineDamageWithRecommendation(Recommendation.REPAIR))
 			);
 
 			// WHEN
@@ -573,16 +573,16 @@ class SearchWashingMachinesIntegrationTest extends BaseIntegrationTest {
 		void should_ReturnFilteredList_By_Recommendation(Recommendation recommendation) {
 			// GIVEN
 			saveToDB(
-					TestData.createValidWashingMachine("serial1").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.RESALE)),
-					TestData.createValidWashingMachine("serial2").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.RESALE)),
-					TestData.createValidWashingMachine("serial3").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.DISASSEMBLE)),
-					TestData.createValidWashingMachine("serial4").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.DISASSEMBLE)),
-					TestData.createValidWashingMachine("serial5").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.OUTLET)),
-					TestData.createValidWashingMachine("serial6").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.OUTLET)),
-					TestData.createValidWashingMachine("serial7").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.REPAIR)),
-					TestData.createValidWashingMachine("serial8").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.REPAIR)),
-					TestData.createValidWashingMachine("serial9").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.REPACKAGE)),
-					TestData.createValidWashingMachine("serial10").setWashingMachineDetail(TestData.createWashingMachineDetailWithRecommendation(Recommendation.REPACKAGE))
+					TestData.createValidWashingMachine("serial1").setWashingMachineDamage(TestData.createWashingMachineDamageWithRecommendation(Recommendation.RESALE)),
+					TestData.createValidWashingMachine("serial2").setWashingMachineDamage(TestData.createWashingMachineDamageWithRecommendation(Recommendation.RESALE)),
+					TestData.createValidWashingMachine("serial3").setWashingMachineDamage(TestData.createWashingMachineDamageWithRecommendation(Recommendation.DISASSEMBLE)),
+					TestData.createValidWashingMachine("serial4").setWashingMachineDamage(TestData.createWashingMachineDamageWithRecommendation(Recommendation.DISASSEMBLE)),
+					TestData.createValidWashingMachine("serial5").setWashingMachineDamage(TestData.createWashingMachineDamageWithRecommendation(Recommendation.OUTLET)),
+					TestData.createValidWashingMachine("serial6").setWashingMachineDamage(TestData.createWashingMachineDamageWithRecommendation(Recommendation.OUTLET)),
+					TestData.createValidWashingMachine("serial7").setWashingMachineDamage(TestData.createWashingMachineDamageWithRecommendation(Recommendation.REPAIR)),
+					TestData.createValidWashingMachine("serial8").setWashingMachineDamage(TestData.createWashingMachineDamageWithRecommendation(Recommendation.REPAIR)),
+					TestData.createValidWashingMachine("serial9").setWashingMachineDamage(TestData.createWashingMachineDamageWithRecommendation(Recommendation.REPACKAGE)),
+					TestData.createValidWashingMachine("serial10").setWashingMachineDamage(TestData.createWashingMachineDamageWithRecommendation(Recommendation.REPACKAGE))
 			);
 
 			// WHEN

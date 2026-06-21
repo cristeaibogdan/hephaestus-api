@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
 import org.personal.washingmachine.enums.DamageType;
 import org.personal.washingmachine.enums.IdentificationMode;
 import org.personal.washingmachine.enums.Recommendation;
@@ -67,9 +66,9 @@ public class WashingMachine extends BaseEntity {
     private LocalDateTime createdAt;
 
     @Setter(NONE) @Getter(NONE)
-    @JoinColumn(name = "washing_machine_detail_id")
+    @JoinColumn(name = "washing_machine_damage_id")
     @OneToOne(cascade = CascadeType.ALL)
-    private WashingMachineDetail washingMachineDetail;
+    private WashingMachineDamage washingMachineDamage;
 
     // TODO: Consider adding nonNull argument in constructor argument.
     @Setter(NONE) @Getter(NONE)
@@ -77,7 +76,7 @@ public class WashingMachine extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<WashingMachineImage> washingMachineImages = new ArrayList<>();
 
-    public WashingMachine(String category, String manufacturer, DamageType damageType, ReturnType returnType, IdentificationMode identificationMode, String serialNumber, String model, String type, WashingMachineDetail washingMachineDetail) {
+    public WashingMachine(String category, String manufacturer, DamageType damageType, ReturnType returnType, IdentificationMode identificationMode, String serialNumber, String model, String type, WashingMachineDamage washingMachineDamage) {
         this.category = category;
         this.manufacturer = manufacturer;
         this.damageType = damageType;
@@ -86,24 +85,24 @@ public class WashingMachine extends BaseEntity {
         this.serialNumber = serialNumber;
         this.model = model;
         this.type = type;
-        this.washingMachineDetail = washingMachineDetail;
-        this.recommendation = this.washingMachineDetail.getRecommendation();
+        this.washingMachineDamage = washingMachineDamage;
+        this.recommendation = this.washingMachineDamage.getRecommendation();
     }
 
-    public WashingMachineDetail getWashingMachineDetail() {
-        return new WashingMachineDetail(this.washingMachineDetail);
+    public WashingMachineDamage getWashingMachineDamage() {
+        return new WashingMachineDamage(this.washingMachineDamage);
     }
 
     /**
-     * <p> <b>In the context of</b> syncing WashingMachineDetail with Recommendation </p>
+     * <p> <b>In the context of</b> syncing WashingMachineDamage with Recommendation </p>
      * <p> <b>facing</b> the need for custom setter logic </p>
      * <p> <b>we decided</b> to implement a setter that updates the recommendation and supports fluent chaining (with lombok chaining) </p>
      * <p> <b>to achieve</b> easier test instance creation, </p>
      * <p> <b>accepting</b> that this custom approach may be unfamiliar to some developers. </p>
      */
-    public WashingMachine setWashingMachineDetail(WashingMachineDetail washingMachineDetail) {
-        this.washingMachineDetail = washingMachineDetail;
-        this.recommendation = this.washingMachineDetail.getRecommendation();
+    public WashingMachine setWashingMachineDamage(WashingMachineDamage washingMachineDamage) {
+        this.washingMachineDamage = washingMachineDamage;
+        this.recommendation = this.washingMachineDamage.getRecommendation();
         return this;
     }
 

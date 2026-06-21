@@ -3,7 +3,7 @@ package org.personal.washingmachine;
 import org.personal.washingmachine.dto.CreateWashingMachineRequest;
 import org.personal.washingmachine.dto.SearchWashingMachineRequest;
 import org.personal.washingmachine.entity.WashingMachine;
-import org.personal.washingmachine.entity.WashingMachineDetail;
+import org.personal.washingmachine.entity.WashingMachineDamage;
 import org.personal.washingmachine.entity.embedded.CostAssessment;
 import org.personal.washingmachine.entity.embedded.HiddenSurfaceDamage;
 import org.personal.washingmachine.entity.embedded.PackageDamage;
@@ -16,8 +16,8 @@ import org.personal.washingmachine.enums.ReturnType;
 public class TestData {
 
 	//TODO: Refactor CreateValidationMvcTest and either delete this method or refactor it
-	public static CreateWashingMachineRequest.WashingMachineDetailRequest createValidWashingMachineDetailRequest() {
-		return new CreateWashingMachineRequest.WashingMachineDetailRequest(
+	public static CreateWashingMachineRequest.WashingMachineDamageRequest createValidWashingMachineDamageRequest() {
+		return new CreateWashingMachineRequest.WashingMachineDamageRequest(
 				true,
 				false,
 				false,
@@ -44,7 +44,7 @@ public class TestData {
 				"serialNumber",
 				ReturnType.SERVICE,
 				DamageType.IN_USE,
-				new CreateWashingMachineRequest.WashingMachineDetailRequest(
+				new CreateWashingMachineRequest.WashingMachineDamageRequest(
 						false,
 						false,
 						false,
@@ -80,8 +80,8 @@ public class TestData {
 		);
 	}
 
-	private static WashingMachineDetail createWashingMachineDetail() {
-		return new WashingMachineDetail(
+	private static WashingMachineDamage createWashingMachineDamage() {
+		return new WashingMachineDamage(
 				new PackageDamage(
 						false,
 						false,
@@ -100,9 +100,9 @@ public class TestData {
 		);
 	}
 
-	public static WashingMachineDetail createWashingMachineDetailWithRecommendation(Recommendation expected) {
+	public static WashingMachineDamage createWashingMachineDamageWithRecommendation(Recommendation expected) {
 		return switch (expected) {
-			case REPACKAGE -> createWashingMachineDetail()
+			case REPACKAGE -> createWashingMachineDamage()
 					.setPackageDamage(
 							new PackageDamage(
 									true,
@@ -110,7 +110,7 @@ public class TestData {
 									true
 							)
 					);
-			case RESALE -> createWashingMachineDetail()
+			case RESALE -> createWashingMachineDamage()
 					.setPackageDamage(
 							new PackageDamage(
 									true,
@@ -118,7 +118,7 @@ public class TestData {
 									false
 							)
 					);
-			case OUTLET -> createWashingMachineDetail()
+			case OUTLET -> createWashingMachineDamage()
 					.setVisibleSurfaceDamage(
 							new VisibleSurfaceDamage(
 									0,
@@ -127,21 +127,21 @@ public class TestData {
 									"Major Damage is present"
 							)
 					);
-			case REPAIR -> createWashingMachineDetail()
+			case REPAIR -> createWashingMachineDamage()
 					.setCostAssessment(
 							new CostAssessment(
 								500,
 								100
 							)
 					);
-			case DISASSEMBLE -> createWashingMachineDetail()
+			case DISASSEMBLE -> createWashingMachineDamage()
 					.setCostAssessment(
 							new CostAssessment(
 									500,
 									400
 							)
 					);
-			case NONE -> createWashingMachineDetail();
+			case NONE -> createWashingMachineDamage();
 		};
 	}
 
@@ -155,7 +155,7 @@ public class TestData {
 				serialNumber,
 				"modelOne",
 				"typeOne",
-				new WashingMachineDetail(
+				new WashingMachineDamage(
 						new PackageDamage(
 								true, // To avoid Invalid recommendation issued NONE
 								false,

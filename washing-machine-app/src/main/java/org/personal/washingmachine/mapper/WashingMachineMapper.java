@@ -5,7 +5,7 @@ import org.personal.washingmachine.dto.CreateWashingMachineRequest;
 import org.personal.washingmachine.dto.GetWashingMachineFullResponse;
 import org.personal.washingmachine.dto.SearchWashingMachineResponse;
 import org.personal.washingmachine.entity.WashingMachine;
-import org.personal.washingmachine.entity.WashingMachineDetail;
+import org.personal.washingmachine.entity.WashingMachineDamage;
 import org.personal.washingmachine.entity.embedded.CostAssessment;
 import org.personal.washingmachine.entity.embedded.HiddenSurfaceDamage;
 import org.personal.washingmachine.entity.embedded.PackageDamage;
@@ -31,34 +31,34 @@ public final class WashingMachineMapper {
 				entity.getRecommendation(),
 				entity.getCreatedAt(),
 
-				new GetWashingMachineFullResponse.WashingMachineDetail(
-						entity.getWashingMachineDetail().getPackageDamage().isApplicable(),
-						entity.getWashingMachineDetail().getPackageDamage().isPackageDamaged(),
-						entity.getWashingMachineDetail().getPackageDamage().isPackageDirty(),
-						entity.getWashingMachineDetail().getPackageDamage().isPackageMaterialAvailable(),
+				new GetWashingMachineFullResponse.WashingMachineDamage(
+						entity.getWashingMachineDamage().getPackageDamage().isApplicable(),
+						entity.getWashingMachineDamage().getPackageDamage().isPackageDamaged(),
+						entity.getWashingMachineDamage().getPackageDamage().isPackageDirty(),
+						entity.getWashingMachineDamage().getPackageDamage().isPackageMaterialAvailable(),
 
-						entity.getWashingMachineDetail().getVisibleSurfaceDamage().isApplicable(),
-						entity.getWashingMachineDetail().getVisibleSurfaceDamage().hasScratches(),
-						entity.getWashingMachineDetail().getVisibleSurfaceDamage().getVisibleSurfacesScratchesLength(),
-						entity.getWashingMachineDetail().getVisibleSurfaceDamage().hasDents(),
-						entity.getWashingMachineDetail().getVisibleSurfaceDamage().getVisibleSurfacesDentsDepth(),
-						entity.getWashingMachineDetail().getVisibleSurfaceDamage().hasMinorDamage(),
-						entity.getWashingMachineDetail().getVisibleSurfaceDamage().getVisibleSurfacesMinorDamage(),
-						entity.getWashingMachineDetail().getVisibleSurfaceDamage().hasMajorDamage(),
-						entity.getWashingMachineDetail().getVisibleSurfaceDamage().getVisibleSurfacesMajorDamage(),
+						entity.getWashingMachineDamage().getVisibleSurfaceDamage().isApplicable(),
+						entity.getWashingMachineDamage().getVisibleSurfaceDamage().hasScratches(),
+						entity.getWashingMachineDamage().getVisibleSurfaceDamage().getVisibleSurfacesScratchesLength(),
+						entity.getWashingMachineDamage().getVisibleSurfaceDamage().hasDents(),
+						entity.getWashingMachineDamage().getVisibleSurfaceDamage().getVisibleSurfacesDentsDepth(),
+						entity.getWashingMachineDamage().getVisibleSurfaceDamage().hasMinorDamage(),
+						entity.getWashingMachineDamage().getVisibleSurfaceDamage().getVisibleSurfacesMinorDamage(),
+						entity.getWashingMachineDamage().getVisibleSurfaceDamage().hasMajorDamage(),
+						entity.getWashingMachineDamage().getVisibleSurfaceDamage().getVisibleSurfacesMajorDamage(),
 
-						entity.getWashingMachineDetail().getHiddenSurfaceDamage().isApplicable(),
-						entity.getWashingMachineDetail().getHiddenSurfaceDamage().hasScratches(),
-						entity.getWashingMachineDetail().getHiddenSurfaceDamage().getHiddenSurfacesScratchesLength(),
-						entity.getWashingMachineDetail().getHiddenSurfaceDamage().hasDents(),
-						entity.getWashingMachineDetail().getHiddenSurfaceDamage().getHiddenSurfacesDentsDepth(),
-						entity.getWashingMachineDetail().getHiddenSurfaceDamage().hasMinorDamage(),
-						entity.getWashingMachineDetail().getHiddenSurfaceDamage().getHiddenSurfacesMinorDamage(),
-						entity.getWashingMachineDetail().getHiddenSurfaceDamage().hasMajorDamage(),
-						entity.getWashingMachineDetail().getHiddenSurfaceDamage().getHiddenSurfacesMajorDamage(),
+						entity.getWashingMachineDamage().getHiddenSurfaceDamage().isApplicable(),
+						entity.getWashingMachineDamage().getHiddenSurfaceDamage().hasScratches(),
+						entity.getWashingMachineDamage().getHiddenSurfaceDamage().getHiddenSurfacesScratchesLength(),
+						entity.getWashingMachineDamage().getHiddenSurfaceDamage().hasDents(),
+						entity.getWashingMachineDamage().getHiddenSurfaceDamage().getHiddenSurfacesDentsDepth(),
+						entity.getWashingMachineDamage().getHiddenSurfaceDamage().hasMinorDamage(),
+						entity.getWashingMachineDamage().getHiddenSurfaceDamage().getHiddenSurfacesMinorDamage(),
+						entity.getWashingMachineDamage().getHiddenSurfaceDamage().hasMajorDamage(),
+						entity.getWashingMachineDamage().getHiddenSurfaceDamage().getHiddenSurfacesMajorDamage(),
 
-						entity.getWashingMachineDetail().getCostAssessment().getPrice(),
-						entity.getWashingMachineDetail().getCostAssessment().getRepairPrice()
+						entity.getWashingMachineDamage().getCostAssessment().getPrice(),
+						entity.getWashingMachineDamage().getCostAssessment().getRepairPrice()
 				),
 				washingMachineImageMapper.toGetWashingMachineImageResponses(entity.getWashingMachineImages())
 		);
@@ -89,27 +89,27 @@ public final class WashingMachineMapper {
 				dto.serialNumber(),
 				dto.model(),
 				dto.type(),
-				new WashingMachineDetail(
+				new WashingMachineDamage(
 						new PackageDamage(
-								dto.washingMachineDetail().packageDamaged(),
-								dto.washingMachineDetail().packageDirty(),
-								dto.washingMachineDetail().packageMaterialAvailable()
+								dto.washingMachineDamage().packageDamaged(),
+								dto.washingMachineDamage().packageDirty(),
+								dto.washingMachineDamage().packageMaterialAvailable()
 						),
 						new VisibleSurfaceDamage(
-								dto.washingMachineDetail().visibleSurfacesScratchesLength(),
-								dto.washingMachineDetail().visibleSurfacesDentsDepth(),
-								dto.washingMachineDetail().visibleSurfacesMinorDamage(),
-								dto.washingMachineDetail().visibleSurfacesMajorDamage()
+								dto.washingMachineDamage().visibleSurfacesScratchesLength(),
+								dto.washingMachineDamage().visibleSurfacesDentsDepth(),
+								dto.washingMachineDamage().visibleSurfacesMinorDamage(),
+								dto.washingMachineDamage().visibleSurfacesMajorDamage()
 						),
 						new HiddenSurfaceDamage(
-								dto.washingMachineDetail().hiddenSurfacesScratchesLength(),
-								dto.washingMachineDetail().hiddenSurfacesDentsDepth(),
-								dto.washingMachineDetail().hiddenSurfacesMinorDamage(),
-								dto.washingMachineDetail().hiddenSurfacesMajorDamage()
+								dto.washingMachineDamage().hiddenSurfacesScratchesLength(),
+								dto.washingMachineDamage().hiddenSurfacesDentsDepth(),
+								dto.washingMachineDamage().hiddenSurfacesMinorDamage(),
+								dto.washingMachineDamage().hiddenSurfacesMajorDamage()
 						),
 						new CostAssessment(
-								dto.washingMachineDetail().price(),
-								dto.washingMachineDetail().repairPrice()
+								dto.washingMachineDamage().price(),
+								dto.washingMachineDamage().repairPrice()
 						)
 				)
 		);

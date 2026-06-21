@@ -13,7 +13,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.personal.washingmachine.enums.Recommendation.REPACKAGE;
 
-class WashingMachineDetailTest {
+class WashingMachineDamageTest {
 
 	@Nested
 	class testGetRecommendation {
@@ -21,7 +21,7 @@ class WashingMachineDetailTest {
 		@Test
 		void should_ReturnREPACKAGE_When_PackageMaterialAvailableIsTrue() {
 			// GIVEN
-			WashingMachineDetail underTest = new WashingMachineDetail(
+			WashingMachineDamage underTest = new WashingMachineDamage(
 				new PackageDamage(false, false, true),
 					new VisibleSurfaceDamage(
 							0,
@@ -48,7 +48,7 @@ class WashingMachineDetailTest {
 		@Test
 		void should_ThrowCustomException_When_DtoHasNoApplicableDamage() {
 			// GIVEN
-			WashingMachineDetail underTest = new WashingMachineDetail(
+			WashingMachineDamage underTest = new WashingMachineDamage(
 					new PackageDamage(false, false, false),
 					new VisibleSurfaceDamage(
 							0,
