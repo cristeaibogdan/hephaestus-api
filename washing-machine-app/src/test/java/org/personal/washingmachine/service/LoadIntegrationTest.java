@@ -115,7 +115,7 @@ class LoadIntegrationTest extends BaseIntegrationTest {
 							0,
 							0
 					),
-					List.of(new GetWashingMachineFullResponse.GetWashingMachineImageResponse(
+					List.of(new GetWashingMachineFullResponse.Image(
 							"some random prefix",
 							new byte[0]
 					))

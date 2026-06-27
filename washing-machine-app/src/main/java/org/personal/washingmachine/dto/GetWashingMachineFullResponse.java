@@ -25,7 +25,7 @@ public record GetWashingMachineFullResponse(
 		LocalDateTime createdAt,
 
         WashingMachineDamage washingMachineDamage,
-        List<GetWashingMachineImageResponse> washingMachineImages
+        List<Image> images
 ) {
 	public record WashingMachineDamage(
 			// PACKAGE
@@ -70,7 +70,7 @@ public record GetWashingMachineFullResponse(
 			int repairPrice
 	) {}
 
-	public record GetWashingMachineImageResponse(
+	public record Image(
 			String imagePrefix,
 			byte[] image
 	) { }
