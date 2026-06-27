@@ -89,7 +89,7 @@ class LoadIntegrationTest extends BaseIntegrationTest {
 					DamageType.IN_USE,
 					Recommendation.RESALE,
 					LocalDateTime.now(),
-					new GetWashingMachineFullResponse.WashingMachineDamage(
+					new GetWashingMachineFullResponse.Damage(
 							true,
 							true,
 							false,
@@ -115,7 +115,7 @@ class LoadIntegrationTest extends BaseIntegrationTest {
 							0,
 							0
 					),
-					List.of(new GetWashingMachineFullResponse.GetWashingMachineImageResponse(
+					List.of(new GetWashingMachineFullResponse.Image(
 							"some random prefix",
 							new byte[0]
 					))

@@ -31,7 +31,7 @@ public final class WashingMachineMapper {
 				entity.getRecommendation(),
 				entity.getCreatedAt(),
 
-				new GetWashingMachineFullResponse.WashingMachineDamage(
+				new GetWashingMachineFullResponse.Damage(
 						entity.getWashingMachineDamage().getPackageDamage().isApplicable(),
 						entity.getWashingMachineDamage().getPackageDamage().isPackageDamaged(),
 						entity.getWashingMachineDamage().getPackageDamage().isPackageDirty(),

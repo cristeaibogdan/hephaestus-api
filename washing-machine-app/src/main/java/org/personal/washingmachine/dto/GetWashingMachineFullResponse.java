@@ -24,10 +24,10 @@ public record GetWashingMachineFullResponse(
 		Recommendation recommendation,
 		LocalDateTime createdAt,
 
-        WashingMachineDamage washingMachineDamage,
-        List<GetWashingMachineImageResponse> washingMachineImages
+        Damage damage,
+        List<Image> images
 ) {
-	public record WashingMachineDamage(
+	public record Damage(
 			// PACKAGE
 			boolean applicablePackageDamage,
 
@@ -70,7 +70,7 @@ public record GetWashingMachineFullResponse(
 			int repairPrice
 	) {}
 
-	public record GetWashingMachineImageResponse(
+	public record Image(
 			String imagePrefix,
 			byte[] image
 	) { }

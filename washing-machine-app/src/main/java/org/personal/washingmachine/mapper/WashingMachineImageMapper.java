@@ -14,9 +14,9 @@ import java.util.List;
 @Component
 public final class WashingMachineImageMapper {
 
-	public List<GetWashingMachineFullResponse.GetWashingMachineImageResponse> toGetWashingMachineImageResponses(List<WashingMachineImage> entities) {
+	public List<GetWashingMachineFullResponse.Image> toGetWashingMachineImageResponses(List<WashingMachineImage> entities) {
 		return entities.stream()
-				.map(entity -> new GetWashingMachineFullResponse.GetWashingMachineImageResponse(
+				.map(entity -> new GetWashingMachineFullResponse.Image(
 						entity.getImagePrefix(),
 						entity.getImage()))
 				.toList();
