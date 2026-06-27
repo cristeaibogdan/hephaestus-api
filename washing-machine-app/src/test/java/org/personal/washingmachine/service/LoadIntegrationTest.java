@@ -89,7 +89,7 @@ class LoadIntegrationTest extends BaseIntegrationTest {
 					DamageType.IN_USE,
 					Recommendation.RESALE,
 					LocalDateTime.now(),
-					new GetWashingMachineFullResponse.WashingMachineDamage(
+					new GetWashingMachineFullResponse.Damage(
 							true,
 							true,
 							false,
