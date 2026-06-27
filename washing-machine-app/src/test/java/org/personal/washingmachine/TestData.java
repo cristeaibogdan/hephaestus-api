@@ -16,8 +16,8 @@ import org.personal.washingmachine.enums.ReturnType;
 public class TestData {
 
 	//TODO: Refactor CreateValidationMvcTest and either delete this method or refactor it
-	public static CreateWashingMachineRequest.WashingMachineDamageRequest createValidWashingMachineDamageRequest() {
-		return new CreateWashingMachineRequest.WashingMachineDamageRequest(
+	public static CreateWashingMachineRequest.Damage createValidDamage() {
+		return new CreateWashingMachineRequest.Damage(
 				true,
 				false,
 				false,
@@ -44,7 +44,7 @@ public class TestData {
 				"serialNumber",
 				ReturnType.SERVICE,
 				DamageType.IN_USE,
-				new CreateWashingMachineRequest.WashingMachineDamageRequest(
+				new CreateWashingMachineRequest.Damage(
 						false,
 						false,
 						false,

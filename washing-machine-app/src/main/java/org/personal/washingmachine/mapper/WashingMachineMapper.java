@@ -91,25 +91,25 @@ public final class WashingMachineMapper {
 				dto.type(),
 				new WashingMachineDamage(
 						new PackageDamage(
-								dto.washingMachineDamage().packageDamaged(),
-								dto.washingMachineDamage().packageDirty(),
-								dto.washingMachineDamage().packageMaterialAvailable()
+								dto.damage().packageDamaged(),
+								dto.damage().packageDirty(),
+								dto.damage().packageMaterialAvailable()
 						),
 						new VisibleSurfaceDamage(
-								dto.washingMachineDamage().visibleSurfacesScratchesLength(),
-								dto.washingMachineDamage().visibleSurfacesDentsDepth(),
-								dto.washingMachineDamage().visibleSurfacesMinorDamage(),
-								dto.washingMachineDamage().visibleSurfacesMajorDamage()
+								dto.damage().visibleSurfacesScratchesLength(),
+								dto.damage().visibleSurfacesDentsDepth(),
+								dto.damage().visibleSurfacesMinorDamage(),
+								dto.damage().visibleSurfacesMajorDamage()
 						),
 						new HiddenSurfaceDamage(
-								dto.washingMachineDamage().hiddenSurfacesScratchesLength(),
-								dto.washingMachineDamage().hiddenSurfacesDentsDepth(),
-								dto.washingMachineDamage().hiddenSurfacesMinorDamage(),
-								dto.washingMachineDamage().hiddenSurfacesMajorDamage()
+								dto.damage().hiddenSurfacesScratchesLength(),
+								dto.damage().hiddenSurfacesDentsDepth(),
+								dto.damage().hiddenSurfacesMinorDamage(),
+								dto.damage().hiddenSurfacesMajorDamage()
 						),
 						new CostAssessment(
-								dto.washingMachineDamage().price(),
-								dto.washingMachineDamage().repairPrice()
+								dto.damage().price(),
+								dto.damage().repairPrice()
 						)
 				)
 		);
