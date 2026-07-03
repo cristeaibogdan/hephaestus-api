@@ -35,4 +35,8 @@ public interface ISolarPanelApplicationService {
 			@Size(max = 10, message = "{LIST_MAX_SIZE}")
 			Set<@NotBlank(message = "{FIELD_NOT_BLANK}") String> serialNumbers
 	);
+
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@DeleteMapping("/{serialNumber}")
+	void delete(@PathVariable String serialNumber);
 }
