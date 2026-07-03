@@ -121,4 +121,13 @@ class WashingMachineApplicationService {
 		serialNumbers.forEach(sn -> result.putIfAbsent(sn, null));
 		return result;
 	}
+
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@DeleteMapping("/{serialNumber}")
+	public void delete(@PathVariable String serialNumber) {
+		if (!repository.existsBySerialNumber(serialNumber)) {
+			throw new CustomException(ErrorCode.SERIAL_NUMBER_NOT_FOUND, serialNumber);
+		}
+		repository.deleteBySerialNumber(serialNumber);
+	}
 }

@@ -17,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
@@ -151,5 +152,13 @@ public class SolarPanelApplicationService implements ISolarPanelApplicationServi
 
 		serialNumbers.forEach(serialNumber -> result.putIfAbsent(serialNumber, null));
 		return result;
+	}
+
+	@Override
+	public void delete(@PathVariable String serialNumber) {
+		if (!repository.existsBySerialNumber(serialNumber)) {
+			throw new CustomException(ErrorCode.SERIAL_NUMBER_NOT_FOUND, serialNumber);
+		}
+		repository.deleteBySerialNumber(serialNumber);
 	}
 }

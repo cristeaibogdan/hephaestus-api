@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,4 +25,11 @@ public interface SolarPanelRepository extends JpaRepository<SolarPanel, Long>, Q
 		WHERE sp.serialNumber = ?1
 		""")
 	Optional<Recommendation> getRecommendation(String serialNumber);
+
+	/**
+	 * Derived delete/update queries aren't auto-transactional like save()/deleteById() —
+	 * without this, Hibernate has no EntityManager transaction to run the remove() in.
+	 */
+	@Transactional
+	void deleteBySerialNumber(String serialNumber);
 }
