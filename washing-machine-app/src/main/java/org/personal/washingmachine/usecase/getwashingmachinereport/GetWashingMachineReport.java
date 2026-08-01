@@ -1,7 +1,6 @@
 package org.personal.washingmachine.usecase.getwashingmachinereport;
 
 import lombok.RequiredArgsConstructor;
-import org.personal.washingmachine.dto.GetWashingMachineReportResponse;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.service.WashingMachineService;
 import org.springframework.web.bind.annotation.*;
