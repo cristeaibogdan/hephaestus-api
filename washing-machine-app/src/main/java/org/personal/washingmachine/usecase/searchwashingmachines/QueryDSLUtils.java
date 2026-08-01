@@ -1,4 +1,4 @@
-package org.personal.washingmachine.service.utils;
+package org.personal.washingmachine.usecase.searchwashingmachines;
 
 import com.querydsl.core.types.dsl.*;
 import lombok.AccessLevel;
@@ -31,36 +31,36 @@ import java.time.LocalDateTime;
  */
 @Deprecated
 @NoArgsConstructor(access = AccessLevel.NONE)
-public final class QueryDSLUtils {
+final class QueryDSLUtils {
 
-	public static BooleanExpression addStringLikeCondition(StringPath attribute, String value) {
+	static BooleanExpression addStringLikeCondition(StringPath attribute, String value) {
 		return StringUtils.isNotBlank(value)
 				? attribute.containsIgnoreCase(value.trim())
 				: null;
 	}
 
-	public static <T extends Enum<T>> BooleanExpression addEnumEqualCondition(EnumPath<T> attribute, T value) {
+	static <T extends Enum<T>> BooleanExpression addEnumEqualCondition(EnumPath<T> attribute, T value) {
 		return (value != null)
 				? attribute.eq(value)
 				: null;
 	}
 
-	public static BooleanExpression addIntegerEqualCondition(NumberPath<Integer> attribute, Integer value) {
+	static BooleanExpression addIntegerEqualCondition(NumberPath<Integer> attribute, Integer value) {
 		return (value != null)
 				? attribute.eq(value)
 				: null;
 	}
 
-	public static BooleanExpression addDateEqualCondition(DatePath<LocalDate> attribute, LocalDate value) {
+	static BooleanExpression addDateEqualCondition(DatePath<LocalDate> attribute, LocalDate value) {
 		return attribute.eq(value);
 	}
 
 	// TODO: Add an if to make sure the startDate is before the endDate
-	public static BooleanExpression addDateBetweenCondition(DatePath<LocalDate> attribute, LocalDate startDate, LocalDate endDate) {
+	static BooleanExpression addDateBetweenCondition(DatePath<LocalDate> attribute, LocalDate startDate, LocalDate endDate) {
 		return attribute.between(startDate, endDate);
 	}
 
-	public static BooleanExpression addTimestampEqualCondition(DateTimePath<LocalDateTime> attribute, LocalDate value) {
+	static BooleanExpression addTimestampEqualCondition(DateTimePath<LocalDateTime> attribute, LocalDate value) {
 		return attribute.year().eq(value.getYear())
 				.and(attribute.month().eq(value.getMonthValue()))
 				.and(attribute.dayOfMonth().eq(value.getDayOfMonth()));
