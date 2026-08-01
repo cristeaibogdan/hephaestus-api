@@ -1,19 +1,13 @@
-package org.personal.washingmachine.service;
+package org.personal.washingmachine.usecase.createwashingmachine;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.personal.shared.clients.ProductClient;
-import org.personal.washingmachine.TestData;
-import org.personal.washingmachine.dto.*;
-import org.personal.washingmachine.mapper.WashingMachineImageMapper;
-import org.personal.washingmachine.mapper.WashingMachineMapper;
-import org.personal.washingmachine.repository.WashingMachineRepository;
+import org.personal.washingmachine.service.WashingMachineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
@@ -27,19 +21,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(WashingMachineApplicationService.class)
-@Import({WashingMachineImageMapper.class, WashingMachineMapper.class})
-class CreateValidationMvcTest {
+@WebMvcTest(CreateWashingMachine.class)
+class CreateWashingMachineValidationMvcTest {
 
 	@Autowired MockMvc mockMvc;
 	@Autowired ObjectMapper jackson;
 
 	@MockBean WashingMachineService service;
-	@MockBean WashingMachineRepository repository;
-	@MockBean WashingMachineReportGenerator reportGenerator;
-	@MockBean ProductClient productClient; //TODO: To be deleted
 
-	static Stream<Arguments> getInvalidCreateWashingMachineRequestsWithNullValues() {
+	static Stream<Arguments> getInvalidHandleWashingMachineRequestsWithNullValues() {
 		return Stream.of(
 				arguments(TestData.createCreateWashingMachineRequest().withCategory(null), "category"),
 				arguments(TestData.createCreateWashingMachineRequest().withIdentificationMode(null), "identificationMode"),
@@ -54,8 +44,8 @@ class CreateValidationMvcTest {
 	}
 
 	@ParameterizedTest(name = "Validation fails for property {1}, with value null")
-	@MethodSource("getInvalidCreateWashingMachineRequestsWithNullValues")
-	void should_ThrowValidationException_When_CreateWashingMachineRequestPropertyIsNull(CreateWashingMachineRequest request, String propertyName) throws Exception {
+	@MethodSource("getInvalidHandleWashingMachineRequestsWithNullValues")
+	void should_ThrowValidationException_When_handleWashingMachineRequestPropertyIsNull(CreateWashingMachineRequest request, String propertyName) throws Exception {
 		// GIVEN
 		// WHEN
 		ResultActions resultActions = performRequest(request);
@@ -66,7 +56,7 @@ class CreateValidationMvcTest {
 				.andExpect(content().string(containsString(propertyName)));
 	}
 
-	static Stream<Arguments> getInvalidCreateWashingMachineRequestsWithBlankValues() {
+	static Stream<Arguments> getInvalidHandleWashingMachineRequestsWithBlankValues() {
 		return Stream.of(
 				arguments(TestData.createCreateWashingMachineRequest().withCategory("  "), "category"),
 				arguments(TestData.createCreateWashingMachineRequest().withManufacturer("  "), "manufacturer"),
@@ -75,8 +65,8 @@ class CreateValidationMvcTest {
 	}
 
 	@ParameterizedTest(name = "Validation fails for property {1}, with value (blank string)")
-	@MethodSource("getInvalidCreateWashingMachineRequestsWithBlankValues")
-	void should_ThrowValidationException_When_CreateWashingMachineRequestPropertyIsBlank(CreateWashingMachineRequest request, String propertyName) throws Exception {
+	@MethodSource("getInvalidHandleWashingMachineRequestsWithBlankValues")
+	void should_ThrowValidationException_When_handleWashingMachineRequestPropertyIsBlank(CreateWashingMachineRequest request, String propertyName) throws Exception {
 		// GIVEN
 		// WHEN
 		ResultActions resultActions = performRequest(request);
@@ -113,7 +103,7 @@ class CreateValidationMvcTest {
 
 	@ParameterizedTest(name = "Validation fails for property {1}, with value {2}")
 	@MethodSource("getInvalidWashingMachineDamages")
-	void should_ThrowValidationException_When_ProvidedInvalidCreateWashingMachineDamageRequest(CreateWashingMachineRequest.Damage dto, String propertyName, Object invalidValue) throws Exception {
+	void should_ThrowValidationException_When_ProvidedInvalidHandleWashingMachineDamageRequest(CreateWashingMachineRequest.Damage dto, String propertyName, Object invalidValue) throws Exception {
 		// GIVEN
 		CreateWashingMachineRequest request = TestData.createCreateWashingMachineRequest().withDamage(dto);
 
@@ -126,7 +116,7 @@ class CreateValidationMvcTest {
 				.andExpect(content().string(containsString(propertyName)));
 	}
 
-	static Stream<Arguments> getValidCreateWashingMachineDamageRequests() {
+	static Stream<Arguments> getValidHandleWashingMachineDamageRequests() {
 		return Stream.of(
 				arguments(TestData.createValidDamage().withVisibleSurfacesScratchesLength(0), "visibleSurfacesScratchesLength", 0),
 				arguments(TestData.createValidDamage().withVisibleSurfacesScratchesLength(10), "visibleSurfacesScratchesLength", 10),
@@ -146,8 +136,8 @@ class CreateValidationMvcTest {
 	}
 
 	@ParameterizedTest(name = "Validation passes for property {1}, with value {2}")
-	@MethodSource("getValidCreateWashingMachineDamageRequests")
-	void should_PassValidation_When_ProvidedValidCreateWashingMachineDamageRequest(CreateWashingMachineRequest.Damage dto, String propertyName, Object validValue) throws Exception {
+	@MethodSource("getValidHandleWashingMachineDamageRequests")
+	void should_PassValidation_When_ProvidedValidHandleWashingMachineDamageRequest(CreateWashingMachineRequest.Damage dto, String propertyName, Object validValue) throws Exception {
 		// GIVEN
 		CreateWashingMachineRequest request = TestData.createCreateWashingMachineRequest().withDamage(dto);
 

@@ -1,24 +1,18 @@
 package org.personal.washingmachine.service;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
-import org.personal.shared.clients.ProductClient;
 import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
 import org.personal.washingmachine.dto.*;
 import org.personal.washingmachine.entity.WashingMachine;
-import org.personal.washingmachine.entity.WashingMachineImage;
 import org.personal.washingmachine.enums.Recommendation;
-import org.personal.washingmachine.mapper.WashingMachineImageMapper;
 import org.personal.washingmachine.repository.WashingMachineRepository;
 import org.personal.washingmachine.dto.GetWashingMachineReportResponse;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -33,7 +27,6 @@ class WashingMachineApplicationService {
 	private final WashingMachineRepository repository;
 	private final WashingMachineReportGenerator reportGenerator;
 
-	private final WashingMachineImageMapper washingMachineImageMapper;
 	private final WashingMachineMapper washingMachineMapper;
 
 	/**
@@ -52,20 +45,6 @@ class WashingMachineApplicationService {
 		return washingMachineMapper.toGetWashingMachineFullResponse(washingMachine);
 	}
 
-	@ResponseStatus(HttpStatus.CREATED)
-	@PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public void create(@Valid @RequestPart CreateWashingMachineRequest createWashingMachineRequest, @RequestPart List<MultipartFile> imageFiles) {
-
-		WashingMachine washingMachine = washingMachineMapper.toEntity(createWashingMachineRequest);
-
-		imageFiles.forEach(image -> {
-			WashingMachineImage washingMachineImage = washingMachineImageMapper.toEntity(image);
-			washingMachine.addImage(washingMachineImage);
-		});
-
-		service.create(washingMachine);
-	}
-
 	@GetMapping("/{serialNumber}/recommendation")
 	public Recommendation getRecommendation(@PathVariable String serialNumber) {
 		return repository.getRecommendation(serialNumber)
@@ -77,17 +56,6 @@ class WashingMachineApplicationService {
 		WashingMachine washingMachine = service.findBySerialNumber(serialNumber);
 		return reportGenerator.getReport(washingMachine);
 	}
-
-	// *****************************************
-	// Exception Propagation Test Endpoint
-	// *****************************************
-	//TODO: To be deleted
-	private final ProductClient productClient;
-
-//	@Override
-//	public List<String> getManufacturers(String category) {
-//		return productClient.getManufacturers(category);
-//	}
 
 	@PostMapping("/many")
 	public Map<String, GetWashingMachineFullResponse> loadMany(

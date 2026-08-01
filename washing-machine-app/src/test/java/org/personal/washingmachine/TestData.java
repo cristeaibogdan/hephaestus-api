@@ -1,6 +1,5 @@
 package org.personal.washingmachine;
 
-import org.personal.washingmachine.dto.CreateWashingMachineRequest;
 import org.personal.washingmachine.dto.SearchWashingMachineRequest;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineDamage;
@@ -14,54 +13,6 @@ import org.personal.washingmachine.enums.Recommendation;
 import org.personal.washingmachine.enums.ReturnType;
 
 public class TestData {
-
-	//TODO: Refactor CreateValidationMvcTest and either delete this method or refactor it
-	public static CreateWashingMachineRequest.Damage createValidDamage() {
-		return new CreateWashingMachineRequest.Damage(
-				true,
-				false,
-				false,
-				0,
-				0,
-				"",
-				"",
-				0,
-				0,
-				"",
-				"",
-				0,
-				0
-		);
-	}
-
-	public static CreateWashingMachineRequest createCreateWashingMachineRequest() {
-		return new CreateWashingMachineRequest(
-				"Washing Machine",
-				IdentificationMode.DATA_MATRIX,
-				"WhirlPool",
-				"model100",
-				"type200",
-				"serialNumber",
-				ReturnType.SERVICE,
-				DamageType.IN_USE,
-				new CreateWashingMachineRequest.Damage(
-						false,
-						false,
-						false,
-						0,
-						0,
-						"",
-						"",
-						0,
-						0,
-						"",
-						"",
-						0,
-						0
-				)
-		);
-	}
-
 	public static SearchWashingMachineRequest createSearchWashingMachineRequest() {
 		return new SearchWashingMachineRequest(
 				0,

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
+//TODO: Not used.
 @FeignClient(
         value = "PRODUCT",
         configuration = CustomErrorDecoder.class,

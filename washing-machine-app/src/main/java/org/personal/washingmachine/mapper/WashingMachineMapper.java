@@ -1,15 +1,9 @@
 package org.personal.washingmachine.mapper;
 
 import lombok.RequiredArgsConstructor;
-import org.personal.washingmachine.dto.CreateWashingMachineRequest;
 import org.personal.washingmachine.dto.GetWashingMachineFullResponse;
 import org.personal.washingmachine.dto.SearchWashingMachineResponse;
 import org.personal.washingmachine.entity.WashingMachine;
-import org.personal.washingmachine.entity.WashingMachineDamage;
-import org.personal.washingmachine.entity.embedded.CostAssessment;
-import org.personal.washingmachine.entity.embedded.HiddenSurfaceDamage;
-import org.personal.washingmachine.entity.embedded.PackageDamage;
-import org.personal.washingmachine.entity.embedded.VisibleSurfaceDamage;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -79,39 +73,4 @@ public final class WashingMachineMapper {
 		);
 	}
 
-	public WashingMachine toEntity(CreateWashingMachineRequest dto) {
-		return new WashingMachine(
-				dto.category(),
-				dto.manufacturer(),
-				dto.damageType(),
-				dto.returnType(),
-				dto.identificationMode(),
-				dto.serialNumber(),
-				dto.model(),
-				dto.type(),
-				new WashingMachineDamage(
-						new PackageDamage(
-								dto.damage().packageDamaged(),
-								dto.damage().packageDirty(),
-								dto.damage().packageMaterialAvailable()
-						),
-						new VisibleSurfaceDamage(
-								dto.damage().visibleSurfacesScratchesLength(),
-								dto.damage().visibleSurfacesDentsDepth(),
-								dto.damage().visibleSurfacesMinorDamage(),
-								dto.damage().visibleSurfacesMajorDamage()
-						),
-						new HiddenSurfaceDamage(
-								dto.damage().hiddenSurfacesScratchesLength(),
-								dto.damage().hiddenSurfacesDentsDepth(),
-								dto.damage().hiddenSurfacesMinorDamage(),
-								dto.damage().hiddenSurfacesMajorDamage()
-						),
-						new CostAssessment(
-								dto.damage().price(),
-								dto.damage().repairPrice()
-						)
-				)
-		);
-	}
 }

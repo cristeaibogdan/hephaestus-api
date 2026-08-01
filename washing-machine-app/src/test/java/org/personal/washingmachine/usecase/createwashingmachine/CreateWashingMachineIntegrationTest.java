@@ -1,12 +1,10 @@
-package org.personal.washingmachine.service;
+package org.personal.washingmachine.usecase.createwashingmachine;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.personal.washingmachine.BaseIntegrationTest;
-import org.personal.washingmachine.TestData;
-import org.personal.washingmachine.dto.CreateWashingMachineRequest;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.enums.DamageType;
 import org.personal.washingmachine.enums.IdentificationMode;
@@ -27,7 +25,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class CreateIntegrationTest extends BaseIntegrationTest {
+class CreateWashingMachineIntegrationTest extends BaseIntegrationTest {
 
 	private static final MockMultipartFile MOCK_IMAGE_FILE = new MockMultipartFile( // API expects at least 1 image when saving.
 			"imageFiles",
@@ -38,7 +36,7 @@ class CreateIntegrationTest extends BaseIntegrationTest {
 	@Autowired MockMvc mockMvc;
 	@Autowired ObjectMapper jackson;
 
-	@Autowired WashingMachineApplicationService underTest;
+	@Autowired CreateWashingMachine underTest;
 	@Autowired WashingMachineRepository repository;
 
 	@BeforeEach
@@ -79,7 +77,7 @@ class CreateIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			underTest.create(request, List.of(MOCK_IMAGE_FILE));
+			underTest.handle(request, List.of(MOCK_IMAGE_FILE));
 
 			// THEN
 			WashingMachine actual = repository.findBySerialNumber("I'm saved")

@@ -1,4 +1,4 @@
-package org.personal.washingmachine.dto;
+package org.personal.washingmachine.usecase.createwashingmachine;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
@@ -8,7 +8,7 @@ import org.personal.washingmachine.enums.IdentificationMode;
 import org.personal.washingmachine.enums.ReturnType;
 
 @With
-public record CreateWashingMachineRequest(
+record CreateWashingMachineRequest(
 		@NotBlank(message = "{FIELD_NOT_BLANK}")
 		String category,
 		@NotNull(message = "{FIELD_NOT_NULL}")
@@ -32,7 +32,7 @@ public record CreateWashingMachineRequest(
 		Damage damage
 ) {
 	@With
-	public record Damage(
+	record Damage(
 			// PACKAGE
 			boolean packageDamaged,
 			boolean packageDirty,
