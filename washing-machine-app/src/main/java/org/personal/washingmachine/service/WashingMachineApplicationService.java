@@ -89,11 +89,6 @@ class WashingMachineApplicationService {
 //		return productClient.getManufacturers(category);
 //	}
 
-	@GetMapping("/{serialNumber}/validate")
-	public boolean isSerialNumberInUse(@PathVariable String serialNumber) {
-		return repository.existsBySerialNumber(serialNumber);
-	}
-
 	@PostMapping("/many")
 	public Map<String, GetWashingMachineFullResponse> loadMany(
 			@RequestBody
