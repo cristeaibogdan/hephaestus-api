@@ -1,4 +1,4 @@
-package org.personal.washingmachine.service;
+package org.personal.washingmachine.usecase.getwashingmachinerecommendation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
@@ -25,7 +25,7 @@ class GetRecommendationIntegrationTest extends BaseIntegrationTest {
 	@Autowired MockMvc mockMvc;
 	@Autowired ObjectMapper jackson;
 
-	@Autowired WashingMachineApplicationService underTest;
+	@Autowired GetWashingMachineRecommendation underTest;
 	@Autowired WashingMachineRepository repository;
 
 	@BeforeEach
