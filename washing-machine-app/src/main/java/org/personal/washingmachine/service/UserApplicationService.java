@@ -1,7 +1,7 @@
 package org.personal.washingmachine.service;
 
 import lombok.RequiredArgsConstructor;
-import org.personal.washingmachine.dto.GetOrganizationAndCountryResponse;
+import org.personal.washingmachine.usecase.user.RegistrationCodeContainer;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,10 +12,5 @@ class UserApplicationService { // TODO: Replace with proper authentication
 	@GetMapping("/api/v1/users/{registrationCode}")
 	public boolean isValidRegistrationCode(@PathVariable String registrationCode) {
 		return registrationCodeContainer.exists(registrationCode);
-	}
-
-	@GetMapping("/api/v1/users/{registrationCode}/organization-and-country")
-	public GetOrganizationAndCountryResponse getOrganizationAndCountry(@PathVariable String registrationCode) {
-		return registrationCodeContainer.getOrganizationAndCountry(registrationCode);
 	}
 }

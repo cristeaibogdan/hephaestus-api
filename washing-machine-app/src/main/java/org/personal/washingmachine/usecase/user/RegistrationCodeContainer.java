@@ -1,8 +1,8 @@
-package org.personal.washingmachine.service;
+package org.personal.washingmachine.usecase.user;
 
 import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
-import org.personal.washingmachine.dto.GetOrganizationAndCountryResponse;
+import org.personal.washingmachine.usecase.user.getorganizationandcountry.GetOrganizationAndCountryResponse;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.Map;
  * In a multithreaded environment, additional synchronization
  * would be needed to ensure thread safety.</p>
  */
-final class RegistrationCodeContainer {
+public final class RegistrationCodeContainer {// TODO: Shared across use case, what to do?
 
 	/** Singleton instance of the {@code RegistrationCodeContainer} class. */
 	private static RegistrationCodeContainer instance;
