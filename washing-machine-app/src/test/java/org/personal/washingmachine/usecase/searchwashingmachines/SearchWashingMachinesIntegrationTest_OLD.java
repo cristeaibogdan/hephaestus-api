@@ -1,4 +1,4 @@
-package org.personal.washingmachine.service;
+package org.personal.washingmachine.usecase.searchwashingmachines;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
@@ -7,9 +7,6 @@ import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.personal.washingmachine.BaseIntegrationTest;
-import org.personal.washingmachine.TestData;
-import org.personal.washingmachine.dto.SearchWashingMachineResponse;
-import org.personal.washingmachine.dto.SearchWashingMachineRequest;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.enums.DamageType;
 import org.personal.washingmachine.enums.IdentificationMode;
@@ -91,7 +88,7 @@ class SearchWashingMachinesIntegrationTest_OLD extends BaseIntegrationTest {
 		);
 
 		// WHEN
-		Page<SearchWashingMachineResponse> actual = underTest.search(
+		Page<SearchWashingMachineResponse> actual = underTest.handle(
 				TestData.createSearchWashingMachineRequest()
 						.withPageIndex(0)
 						.withPageSize(1)
@@ -109,7 +106,7 @@ class SearchWashingMachinesIntegrationTest_OLD extends BaseIntegrationTest {
 	void should_ReturnTenWashingMachines() {
 		// GIVEN
 		// WHEN
-		Page<SearchWashingMachineResponse> actual = underTest.search(
+		Page<SearchWashingMachineResponse> actual = underTest.handle(
 				TestData.createSearchWashingMachineRequest()
 						.withPageIndex(0)
 						.withPageSize(10)
@@ -125,7 +122,7 @@ class SearchWashingMachinesIntegrationTest_OLD extends BaseIntegrationTest {
 	void should_ReturnFilteredList_By_Manufacturer(String manufacturer) {
 		// GIVEN
 		// WHEN
-		Page<SearchWashingMachineResponse> actual = underTest.search(
+		Page<SearchWashingMachineResponse> actual = underTest.handle(
 				TestData.createSearchWashingMachineRequest()
 						.withPageSize(10)
 						.withManufacturer(manufacturer)
@@ -143,7 +140,7 @@ class SearchWashingMachinesIntegrationTest_OLD extends BaseIntegrationTest {
 	void should_ReturnFilteredList_By_DamageType(DamageType damageType) {
 		// GIVEN
 		// WHEN
-		Page<SearchWashingMachineResponse> actual = underTest.search(
+		Page<SearchWashingMachineResponse> actual = underTest.handle(
 				TestData.createSearchWashingMachineRequest()
 						.withPageSize(10)
 						.withDamageType(damageType)
@@ -161,7 +158,7 @@ class SearchWashingMachinesIntegrationTest_OLD extends BaseIntegrationTest {
 	void should_ReturnFilteredList_By_ReturnType(ReturnType returnType) {
 		// GIVEN
 		// WHEN
-		Page<SearchWashingMachineResponse> actual = underTest.search(
+		Page<SearchWashingMachineResponse> actual = underTest.handle(
 				TestData.createSearchWashingMachineRequest()
 						.withPageSize(10)
 						.withReturnType(returnType)
@@ -179,7 +176,7 @@ class SearchWashingMachinesIntegrationTest_OLD extends BaseIntegrationTest {
 	void should_ReturnFilteredList_By_IdentificationMode(IdentificationMode identificationMode) {
 		// GIVEN
 		// WHEN
-		Page<SearchWashingMachineResponse> actual = underTest.search(
+		Page<SearchWashingMachineResponse> actual = underTest.handle(
 				TestData.createSearchWashingMachineRequest()
 						.withPageSize(10)
 						.withIdentificationMode(identificationMode)
@@ -197,7 +194,7 @@ class SearchWashingMachinesIntegrationTest_OLD extends BaseIntegrationTest {
 	void should_ReturnFilteredList_By_SerialNumber(String serialNumber) {
 		// GIVEN
 		// WHEN
-		Page<SearchWashingMachineResponse> actual = underTest.search(
+		Page<SearchWashingMachineResponse> actual = underTest.handle(
 				TestData.createSearchWashingMachineRequest()
 						.withPageSize(10)
 						.withSerialNumber(serialNumber)
@@ -215,7 +212,7 @@ class SearchWashingMachinesIntegrationTest_OLD extends BaseIntegrationTest {
 	void should_ReturnFilteredList_By_Model(String model) {
 		// GIVEN
 		// WHEN
-		Page<SearchWashingMachineResponse> actual = underTest.search(
+		Page<SearchWashingMachineResponse> actual = underTest.handle(
 				TestData.createSearchWashingMachineRequest()
 						.withPageSize(10)
 						.withModel(model)
@@ -233,7 +230,7 @@ class SearchWashingMachinesIntegrationTest_OLD extends BaseIntegrationTest {
 	void should_ReturnFilteredList_By_Type(String type) {
 		// GIVEN
 		// WHEN
-		Page<SearchWashingMachineResponse> actual = underTest.search(
+		Page<SearchWashingMachineResponse> actual = underTest.handle(
 				TestData.createSearchWashingMachineRequest()
 						.withPageSize(10)
 						.withType(type)
@@ -251,7 +248,7 @@ class SearchWashingMachinesIntegrationTest_OLD extends BaseIntegrationTest {
 	void should_ReturnFilteredList_By_Recommendation(Recommendation recommendation) {
 		// GIVEN
 		// WHEN
-		Page<SearchWashingMachineResponse> actual = underTest.search(
+		Page<SearchWashingMachineResponse> actual = underTest.handle(
 				TestData.createSearchWashingMachineRequest()
 						.withPageSize(10)
 						.withRecommendation(recommendation)
@@ -268,7 +265,7 @@ class SearchWashingMachinesIntegrationTest_OLD extends BaseIntegrationTest {
 	void should_ReturnListWithDescendingDates() {
 		// GIVEN
 		// WHEN
-		Page<SearchWashingMachineResponse> actual = underTest.search(
+		Page<SearchWashingMachineResponse> actual = underTest.handle(
 				TestData.createSearchWashingMachineRequest()
 						.withPageSize(10)
 		);
@@ -285,7 +282,7 @@ class SearchWashingMachinesIntegrationTest_OLD extends BaseIntegrationTest {
 	void should_ReturnFilteredList_By_ManufacturerAndReturnType() {
 		// GIVEN
 		// WHEN
-		Page<SearchWashingMachineResponse> actual = underTest.search(
+		Page<SearchWashingMachineResponse> actual = underTest.handle(
 				TestData.createSearchWashingMachineRequest()
 						.withPageSize(10)
 						.withManufacturer("WhirL")
@@ -305,7 +302,7 @@ class SearchWashingMachinesIntegrationTest_OLD extends BaseIntegrationTest {
 	void should_ReturnFilteredList_By_IdentificationModeAndModelAndType() {
 		// GIVEN
 		// WHEN
-		Page<SearchWashingMachineResponse> actual = underTest.search(
+		Page<SearchWashingMachineResponse> actual = underTest.handle(
 				TestData.createSearchWashingMachineRequest()
 						.withPageSize(10)
 						.withIdentificationMode(IdentificationMode.QR_CODE)

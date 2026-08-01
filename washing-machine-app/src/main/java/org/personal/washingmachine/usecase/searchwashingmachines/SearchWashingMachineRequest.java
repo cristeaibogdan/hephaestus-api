@@ -1,4 +1,4 @@
-package org.personal.washingmachine.dto;
+package org.personal.washingmachine.usecase.searchwashingmachines;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Pattern;
@@ -10,7 +10,7 @@ import org.personal.washingmachine.enums.ReturnType;
 
 //@Builder(toBuilder = true) // Nostalgia for mutable objects.
 @With // Prefer @With to @Builder, it's much cleaner
-public record SearchWashingMachineRequest(
+record SearchWashingMachineRequest(
 		@Min(value = 0, message = "{NUMERIC_MINIMUM_VALUE}")
 		int pageIndex,
 		@Min(value = 1, message = "{NUMERIC_MINIMUM_VALUE}")

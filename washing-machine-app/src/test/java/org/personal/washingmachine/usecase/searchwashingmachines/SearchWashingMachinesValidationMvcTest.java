@@ -1,13 +1,10 @@
-package org.personal.washingmachine.service;
+package org.personal.washingmachine.usecase.searchwashingmachines;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.querydsl.core.BooleanBuilder;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.personal.washingmachine.TestData;
-import org.personal.washingmachine.dto.SearchWashingMachineRequest;
-import org.personal.washingmachine.mapper.WashingMachineMapper;
 import org.personal.washingmachine.repository.WashingMachineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -32,7 +29,6 @@ class SearchWashingMachinesValidationMvcTest {
 	@Autowired ObjectMapper jackson;
 
 	@MockBean WashingMachineRepository repository;
-	@MockBean WashingMachineMapper washingMachineMapper;
 
 	@Test
 	void should_ThrowValidationException_When_PageIndexIsNegative() throws Exception {

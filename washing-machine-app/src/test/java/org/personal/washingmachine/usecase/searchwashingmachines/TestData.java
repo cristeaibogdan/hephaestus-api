@@ -1,4 +1,4 @@
-package org.personal.washingmachine;
+package org.personal.washingmachine.usecase.searchwashingmachines;
 
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineDamage;
@@ -11,8 +11,24 @@ import org.personal.washingmachine.enums.IdentificationMode;
 import org.personal.washingmachine.enums.Recommendation;
 import org.personal.washingmachine.enums.ReturnType;
 
-public class TestData {
-
+class TestData {
+	static SearchWashingMachineRequest createSearchWashingMachineRequest() {
+		return new SearchWashingMachineRequest(
+				0,
+				2,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null,
+				null
+		);
+	}
 
 	private static WashingMachineDamage createWashingMachineDamage() {
 		return new WashingMachineDamage(
@@ -34,7 +50,7 @@ public class TestData {
 		);
 	}
 
-	public static WashingMachineDamage createWashingMachineDamageWithRecommendation(Recommendation expected) {
+	static WashingMachineDamage createWashingMachineDamageWithRecommendation(Recommendation expected) {
 		return switch (expected) {
 			case REPACKAGE -> createWashingMachineDamage()
 					.setPackageDamage(
@@ -79,7 +95,7 @@ public class TestData {
 		};
 	}
 
-	public static WashingMachine createValidWashingMachine(String serialNumber) {
+	static WashingMachine createValidWashingMachine(String serialNumber) {
 		return new WashingMachine(
 				"Washing Machine",
 				"WhirlPool",

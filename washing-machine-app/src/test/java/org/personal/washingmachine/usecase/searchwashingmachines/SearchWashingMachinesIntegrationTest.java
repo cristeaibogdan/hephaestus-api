@@ -1,4 +1,4 @@
-package org.personal.washingmachine.service;
+package org.personal.washingmachine.usecase.searchwashingmachines;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,9 +9,6 @@ import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.personal.washingmachine.BaseIntegrationTest;
 import org.personal.shared.time.ClockHolder;
-import org.personal.washingmachine.TestData;
-import org.personal.washingmachine.dto.SearchWashingMachineResponse;
-import org.personal.washingmachine.dto.SearchWashingMachineRequest;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.enums.DamageType;
 import org.personal.washingmachine.enums.IdentificationMode;
@@ -84,7 +81,7 @@ class SearchWashingMachinesIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchWashingMachineResponse> actual = underTest.search(
+			Page<SearchWashingMachineResponse> actual = underTest.handle(
 					TestData.createSearchWashingMachineRequest()
 							.withPageIndex(0)
 							.withPageSize(1)
@@ -108,7 +105,7 @@ class SearchWashingMachinesIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchWashingMachineResponse> actual = underTest.search(
+			Page<SearchWashingMachineResponse> actual = underTest.handle(
 					TestData.createSearchWashingMachineRequest()
 							.withPageIndex(0)
 							.withPageSize(3)
@@ -129,7 +126,7 @@ class SearchWashingMachinesIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchWashingMachineResponse> actual = underTest.search(
+			Page<SearchWashingMachineResponse> actual = underTest.handle(
 					TestData.createSearchWashingMachineRequest()
 							.withPageIndex(0)
 							.withPageSize(3)
@@ -154,7 +151,7 @@ class SearchWashingMachinesIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchWashingMachineResponse> actual = underTest.search(
+			Page<SearchWashingMachineResponse> actual = underTest.handle(
 					TestData.createSearchWashingMachineRequest()
 							.withPageIndex(0)
 							.withPageSize(3)
@@ -182,7 +179,7 @@ class SearchWashingMachinesIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchWashingMachineResponse> actual = underTest.search(
+			Page<SearchWashingMachineResponse> actual = underTest.handle(
 					TestData.createSearchWashingMachineRequest()
 							.withPageIndex(0)
 							.withPageSize(4)
@@ -211,7 +208,7 @@ class SearchWashingMachinesIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchWashingMachineResponse> actual = underTest.search(
+			Page<SearchWashingMachineResponse> actual = underTest.handle(
 					TestData.createSearchWashingMachineRequest()
 							.withPageIndex(0)
 							.withPageSize(3)
@@ -238,7 +235,7 @@ class SearchWashingMachinesIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchWashingMachineResponse> actual = underTest.search(
+			Page<SearchWashingMachineResponse> actual = underTest.handle(
 					TestData.createSearchWashingMachineRequest()
 							.withPageIndex(0)
 							.withPageSize(4)
@@ -265,7 +262,7 @@ class SearchWashingMachinesIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchWashingMachineResponse> actual = underTest.search(
+			Page<SearchWashingMachineResponse> actual = underTest.handle(
 					TestData.createSearchWashingMachineRequest()
 							.withPageIndex(0)
 							.withPageSize(4)
@@ -291,7 +288,7 @@ class SearchWashingMachinesIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchWashingMachineResponse> actual = underTest.search(
+			Page<SearchWashingMachineResponse> actual = underTest.handle(
 					TestData.createSearchWashingMachineRequest()
 							.withPageIndex(0)
 							.withPageSize(4)
@@ -317,7 +314,7 @@ class SearchWashingMachinesIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchWashingMachineResponse> actual = underTest.search(
+			Page<SearchWashingMachineResponse> actual = underTest.handle(
 					TestData.createSearchWashingMachineRequest()
 							.withPageIndex(0)
 							.withPageSize(4)
@@ -343,7 +340,7 @@ class SearchWashingMachinesIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchWashingMachineResponse> actual = underTest.search(
+			Page<SearchWashingMachineResponse> actual = underTest.handle(
 					TestData.createSearchWashingMachineRequest()
 							.withPageIndex(0)
 							.withPageSize(4)
@@ -369,7 +366,7 @@ class SearchWashingMachinesIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchWashingMachineResponse> actual = underTest.search(
+			Page<SearchWashingMachineResponse> actual = underTest.handle(
 					TestData.createSearchWashingMachineRequest()
 							.withPageIndex(0)
 							.withPageSize(4)
@@ -395,7 +392,7 @@ class SearchWashingMachinesIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchWashingMachineResponse> actual = underTest.search(
+			Page<SearchWashingMachineResponse> actual = underTest.handle(
 					TestData.createSearchWashingMachineRequest()
 							.withPageIndex(0)
 							.withPageSize(4)
@@ -422,7 +419,7 @@ class SearchWashingMachinesIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchWashingMachineResponse> actual = underTest.search(
+			Page<SearchWashingMachineResponse> actual = underTest.handle(
 					TestData.createSearchWashingMachineRequest()
 							.withPageIndex(0)
 							.withPageSize(4)
@@ -450,7 +447,7 @@ class SearchWashingMachinesIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchWashingMachineResponse> actual = underTest.search(
+			Page<SearchWashingMachineResponse> actual = underTest.handle(
 					TestData.createSearchWashingMachineRequest()
 							.withPageIndex(0)
 							.withPageSize(6)
@@ -476,7 +473,7 @@ class SearchWashingMachinesIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchWashingMachineResponse> actual = underTest.search(
+			Page<SearchWashingMachineResponse> actual = underTest.handle(
 					TestData.createSearchWashingMachineRequest()
 							.withPageIndex(0)
 							.withPageSize(4)
@@ -500,7 +497,7 @@ class SearchWashingMachinesIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchWashingMachineResponse> actual = underTest.search(
+			Page<SearchWashingMachineResponse> actual = underTest.handle(
 					TestData.createSearchWashingMachineRequest()
 							.withPageIndex(0)
 							.withPageSize(4)
@@ -527,7 +524,7 @@ class SearchWashingMachinesIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchWashingMachineResponse> actual = underTest.search(
+			Page<SearchWashingMachineResponse> actual = underTest.handle(
 					TestData.createSearchWashingMachineRequest()
 							.withPageIndex(0)
 							.withPageSize(5)
@@ -554,7 +551,7 @@ class SearchWashingMachinesIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchWashingMachineResponse> actual = underTest.search(
+			Page<SearchWashingMachineResponse> actual = underTest.handle(
 					TestData.createSearchWashingMachineRequest()
 							.withPageIndex(0)
 							.withPageSize(5)
@@ -586,7 +583,7 @@ class SearchWashingMachinesIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchWashingMachineResponse> actual = underTest.search(
+			Page<SearchWashingMachineResponse> actual = underTest.handle(
 					TestData.createSearchWashingMachineRequest()
 							.withPageIndex(0)
 							.withPageSize(10)
@@ -609,7 +606,7 @@ class SearchWashingMachinesIntegrationTest extends BaseIntegrationTest {
 			saveToDBOnDate(LocalDate.of(2024, 12, 5), TestData.createValidWashingMachine("serial4"));
 
 			// WHEN
-			Page<SearchWashingMachineResponse> actual = underTest.search(
+			Page<SearchWashingMachineResponse> actual = underTest.handle(
 					TestData.createSearchWashingMachineRequest()
 							.withPageIndex(0)
 							.withPageSize(4)
@@ -634,7 +631,7 @@ class SearchWashingMachinesIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchWashingMachineResponse> actual = underTest.search(
+			Page<SearchWashingMachineResponse> actual = underTest.handle(
 					TestData.createSearchWashingMachineRequest()
 							.withPageIndex(0)
 							.withPageSize(4)
@@ -670,7 +667,7 @@ class SearchWashingMachinesIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Page<SearchWashingMachineResponse> actual = underTest.search(
+			Page<SearchWashingMachineResponse> actual = underTest.handle(
 					TestData.createSearchWashingMachineRequest()
 							.withPageIndex(0)
 							.withPageSize(3)

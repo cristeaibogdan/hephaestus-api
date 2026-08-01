@@ -1,4 +1,4 @@
-package org.personal.washingmachine.dto;
+package org.personal.washingmachine.usecase.searchwashingmachines;
 
 import org.personal.washingmachine.enums.DamageType;
 import org.personal.washingmachine.enums.IdentificationMode;
@@ -7,7 +7,7 @@ import org.personal.washingmachine.enums.ReturnType;
 
 import java.time.LocalDateTime;
 
-public record SearchWashingMachineResponse(
+record SearchWashingMachineResponse(
         String category,
 
         String manufacturer,
