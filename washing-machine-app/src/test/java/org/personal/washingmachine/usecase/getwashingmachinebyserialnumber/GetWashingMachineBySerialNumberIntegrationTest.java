@@ -3,7 +3,6 @@ package org.personal.washingmachine.usecase.getwashingmachinebyserialnumber;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
 import org.personal.washingmachine.BaseIntegrationTest;
-import org.personal.washingmachine.TestData;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineDamage;
 import org.personal.washingmachine.entity.WashingMachineImage;

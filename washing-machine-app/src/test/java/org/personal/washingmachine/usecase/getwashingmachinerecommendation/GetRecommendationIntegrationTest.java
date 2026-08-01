@@ -3,7 +3,6 @@ package org.personal.washingmachine.usecase.getwashingmachinerecommendation;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
 import org.personal.washingmachine.BaseIntegrationTest;
-import org.personal.washingmachine.TestData;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.enums.Recommendation;
 import org.personal.washingmachine.repository.WashingMachineRepository;
