@@ -1,10 +1,9 @@
-package org.personal.washingmachine.service;
+package org.personal.washingmachine.usecase.getwashingmachinebyserialnumber;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
 import org.personal.washingmachine.BaseIntegrationTest;
 import org.personal.washingmachine.TestData;
-import org.personal.washingmachine.dto.GetWashingMachineFullResponse;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineDamage;
 import org.personal.washingmachine.entity.WashingMachineImage;
@@ -31,12 +30,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class LoadIntegrationTest extends BaseIntegrationTest {
+class GetWashingMachineBySerialNumberIntegrationTest extends BaseIntegrationTest {
 
 	@Autowired MockMvc mockMvc;
 	@Autowired ObjectMapper jackson;
 
-	@Autowired WashingMachineApplicationService underTest;
+	@Autowired GetWashingMachineBySerialNumber underTest;
 	@Autowired WashingMachineRepository repository;
 
 	@BeforeEach

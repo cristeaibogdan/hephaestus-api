@@ -1,4 +1,4 @@
-package org.personal.washingmachine.dto;
+package org.personal.washingmachine.usecase.getwashingmachinebyserialnumber;
 
 import org.personal.washingmachine.enums.DamageType;
 import org.personal.washingmachine.enums.IdentificationMode;
@@ -8,7 +8,7 @@ import org.personal.washingmachine.enums.ReturnType;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public record GetWashingMachineFullResponse(
+record GetWashingMachineFullResponse(
 		String category,
 
 		String manufacturer,
@@ -27,7 +27,7 @@ public record GetWashingMachineFullResponse(
         Damage damage,
         List<Image> images
 ) {
-	public record Damage(
+	record Damage(
 			// PACKAGE
 			boolean applicablePackageDamage,
 
@@ -70,7 +70,7 @@ public record GetWashingMachineFullResponse(
 			int repairPrice
 	) {}
 
-	public record Image(
+	record Image(
 			String imagePrefix,
 			byte[] image
 	) { }
