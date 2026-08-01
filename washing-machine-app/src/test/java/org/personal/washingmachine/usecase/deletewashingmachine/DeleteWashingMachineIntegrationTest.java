@@ -1,10 +1,9 @@
-package org.personal.washingmachine.service;
+package org.personal.washingmachine.usecase.deletewashingmachine;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.personal.washingmachine.BaseIntegrationTest;
-import org.personal.washingmachine.TestData;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.repository.WashingMachineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +18,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class DeleteIntegrationTest extends BaseIntegrationTest {
+class DeleteWashingMachineIntegrationTest extends BaseIntegrationTest {
 
 	@Autowired MockMvc mockMvc;
 
-	@Autowired WashingMachineApplicationService underTest;
+	@Autowired DeleteWashingMachine underTest;
 	@Autowired WashingMachineRepository repository;
 
 	@BeforeEach
