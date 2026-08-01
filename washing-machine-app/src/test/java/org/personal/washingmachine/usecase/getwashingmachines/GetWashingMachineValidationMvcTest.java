@@ -1,10 +1,7 @@
-package org.personal.washingmachine.service;
+package org.personal.washingmachine.usecase.getwashingmachines;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import org.personal.shared.clients.ProductClient;
-import org.personal.washingmachine.mapper.WashingMachineImageMapper;
-import org.personal.washingmachine.mapper.WashingMachineMapper;
 import org.personal.washingmachine.repository.WashingMachineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -24,20 +21,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(WashingMachineApplicationService.class)
-class LoadManyValidationMvcTest {
+@WebMvcTest(GetWashingMachine.class)
+class GetWashingMachineValidationMvcTest {
 
 	@Autowired MockMvc mockMvc;
 	@Autowired ObjectMapper jackson;
 
-	@MockBean WashingMachineApplicationService underTest;
-
-	@MockBean WashingMachineService service;
+	@MockBean GetWashingMachine underTest;
 	@MockBean WashingMachineRepository repository;
-	@MockBean WashingMachineReportGenerator reportGenerator;
-	@MockBean WashingMachineImageMapper washingMachineImageMapper;
-	@MockBean WashingMachineMapper washingMachineMapper;
-	@MockBean ProductClient productClient; //TODO: To be deleted
 
 	@Test
 	void should_ThrowValidationException_When_SerialNumbersIsEmpty() throws Exception {

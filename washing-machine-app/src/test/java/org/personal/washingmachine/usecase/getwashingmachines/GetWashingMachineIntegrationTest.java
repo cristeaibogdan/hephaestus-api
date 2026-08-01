@@ -1,10 +1,8 @@
-package org.personal.washingmachine.service;
+package org.personal.washingmachine.usecase.getwashingmachines;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
 import org.personal.washingmachine.BaseIntegrationTest;
-import org.personal.washingmachine.TestData;
-import org.personal.washingmachine.dto.GetWashingMachineFullResponse;
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.repository.WashingMachineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +18,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class LoadManyIntegrationTest extends BaseIntegrationTest {
+class GetWashingMachineIntegrationTest extends BaseIntegrationTest {
 
 	@Autowired MockMvc mockMvc;
 	@Autowired ObjectMapper jackson;
 
-	@Autowired WashingMachineApplicationService underTest;
+	@Autowired GetWashingMachine underTest;
 	@Autowired WashingMachineRepository repository;
 
 	@BeforeEach
@@ -46,7 +44,7 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Map<String, GetWashingMachineFullResponse> actual = underTest.loadMany(Set.of("serial1", "serial2"));
+			Map<String, GetWashingMachineFullResponse> actual = underTest.handle(Set.of("serial1", "serial2"));
 
 			// THEN
 			assertThat(actual)
@@ -70,7 +68,7 @@ class LoadManyIntegrationTest extends BaseIntegrationTest {
 			notFoundMap.put("Nothing", null);
 
 			// WHEN
-			Map<String, GetWashingMachineFullResponse> actual = underTest.loadMany(Set.of(
+			Map<String, GetWashingMachineFullResponse> actual = underTest.handle(Set.of(
 					"serial1",
 					"serial2",
 					"I don't exist",

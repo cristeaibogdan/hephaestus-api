@@ -1,8 +1,5 @@
 package org.personal.washingmachine.service;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
@@ -13,9 +10,6 @@ import org.personal.washingmachine.repository.WashingMachineRepository;
 import org.personal.washingmachine.dto.GetWashingMachineReportResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.*;
-import java.util.stream.Collectors;
 
 import org.personal.washingmachine.mapper.WashingMachineMapper;
 
@@ -55,34 +49,6 @@ class WashingMachineApplicationService {
 	public GetWashingMachineReportResponse getReport(@PathVariable String serialNumber) {
 		WashingMachine washingMachine = service.findBySerialNumber(serialNumber);
 		return reportGenerator.getReport(washingMachine);
-	}
-
-	@PostMapping("/many")
-	public Map<String, GetWashingMachineFullResponse> loadMany(
-			@RequestBody
-			@NotEmpty(message = "{LIST_NOT_EMPTY}")
-			@Size(max = 10, message = "{LIST_MAX_SIZE}")
-			Set<@NotBlank(message = "{FIELD_NOT_BLANK}") String> serialNumbers
-	) {
-
-		List<WashingMachine> foundWashingMachines = repository.findAllBySerialNumberIn(serialNumbers);
-		if (foundWashingMachines.isEmpty()) {
-			throw new CustomException(ErrorCode.SERIAL_NUMBERS_NOT_FOUND, serialNumbers.toString());
-		}
-
-		return buildResponseMap(foundWashingMachines, serialNumbers);
-	}
-
-	private Map<String, GetWashingMachineFullResponse> buildResponseMap(List<WashingMachine> foundWashingMachines, Set<String> serialNumbers) {
-		Map<String, GetWashingMachineFullResponse> result = foundWashingMachines.stream()
-				.map(wm -> washingMachineMapper.toGetWashingMachineFullResponse(wm))
-				.collect(Collectors.toMap(
-						wm -> wm.serialNumber(),
-						wm -> wm
-				));
-
-		serialNumbers.forEach(sn -> result.putIfAbsent(sn, null));
-		return result;
 	}
 
 	@ResponseStatus(HttpStatus.NO_CONTENT)
