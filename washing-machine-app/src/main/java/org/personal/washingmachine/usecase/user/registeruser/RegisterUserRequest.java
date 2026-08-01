@@ -1,9 +1,9 @@
-package org.personal.washingmachine.dto;
+package org.personal.washingmachine.usecase.user.registeruser;
 
 import lombok.With;
 
 @With
-public record CreateUserRequest(
+record RegisterUserRequest(
         String code,
         String organization,
         String country,

@@ -1,12 +1,10 @@
-package org.personal.washingmachine.service;
+package org.personal.washingmachine.usecase.user.registeruser;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.personal.washingmachine.BaseIntegrationTest;
-import org.personal.washingmachine.UserTestData;
-import org.personal.washingmachine.dto.CreateUserRequest;
 import org.personal.washingmachine.entity.User;
 import org.personal.washingmachine.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +21,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class RegisterIntegrationTest extends BaseIntegrationTest {
+class RegisterUserIntegrationTest extends BaseIntegrationTest {
 
 	@Autowired MockMvc mockMvc;
 	@Autowired ObjectMapper jackson;
 
-	@Autowired UserApplicationService underTest;
+	@Autowired RegisterUser underTest;
 	@Autowired UserRepository repository;
 
 	@BeforeEach
@@ -41,7 +39,7 @@ class RegisterIntegrationTest extends BaseIntegrationTest {
 		@Test
 		void should_saveRequest_With_AllPropertiesInDB() {
 			// GIVEN
-			CreateUserRequest request = new CreateUserRequest(
+			RegisterUserRequest request = new RegisterUserRequest(
 					"RX1001",
 					"Bosch",
 					"Poland",
@@ -124,7 +122,7 @@ class RegisterIntegrationTest extends BaseIntegrationTest {
 					.andExpect(content().string(not(containsString("Internal Translation Error"))));
 		}
 
-		private ResultActions performRequest(CreateUserRequest request) throws Exception {
+		private ResultActions performRequest(RegisterUserRequest request) throws Exception {
 			return mockMvc.perform(
 					post("/api/v1/users/register")
 							.content(jackson.writeValueAsString(request))
