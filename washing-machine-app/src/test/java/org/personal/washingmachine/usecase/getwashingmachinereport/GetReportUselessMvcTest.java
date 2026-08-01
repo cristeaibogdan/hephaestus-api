@@ -1,12 +1,11 @@
-package org.personal.washingmachine.service;
+package org.personal.washingmachine.usecase.getwashingmachinereport;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.personal.shared.clients.ProductClient;
 import org.personal.shared.exception.CustomException;
 import org.personal.shared.exception.ErrorCode;
-import org.personal.washingmachine.repository.WashingMachineRepository;
+import org.personal.washingmachine.service.WashingMachineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -20,16 +19,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Deprecated @Disabled
-@WebMvcTest(WashingMachineApplicationService.class)
+@WebMvcTest(GetWashingMachineReport.class)
 class GetReportUselessMvcTest {
 
 	@Autowired MockMvc mockMvc;
 	@Autowired ObjectMapper jackson;
 
 	@MockBean WashingMachineService service;
-	@MockBean WashingMachineRepository repository;
-	@MockBean WashingMachineReportGenerator reportGenerator;
-	@MockBean ProductClient productClient; //TODO: To be deleted
+	@MockBean ReportGenerator reportGenerator;
 
 	/* // TODO: POINT OF DISCUSSION
 	What is really tested in here?

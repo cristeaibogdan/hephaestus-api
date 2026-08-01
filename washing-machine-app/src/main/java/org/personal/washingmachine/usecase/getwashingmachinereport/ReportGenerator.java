@@ -1,4 +1,4 @@
-package org.personal.washingmachine.service;
+package org.personal.washingmachine.usecase.getwashingmachinereport;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,9 +26,9 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-class WashingMachineReportGenerator {
+class ReportGenerator {
 
-	public GetWashingMachineReportResponse getReport(WashingMachine washingMachine) {
+	GetWashingMachineReportResponse getReport(WashingMachine washingMachine) {
 		StopWatch stopWatch = StopWatch.createStarted();
 
 		try {
@@ -51,7 +51,8 @@ class WashingMachineReportGenerator {
 			// Export report
 			return new GetWashingMachineReportResponse(
 					JasperExportManager.exportReportToPdf(filledReport),
-					washingMachine.getCreatedAt().toString());
+					washingMachine.getCreatedAt().toString()
+			);
 
 		} catch (JRException e) {
 			throw new CustomException(e, ErrorCode.REPORT_GENERATION_FAIL);

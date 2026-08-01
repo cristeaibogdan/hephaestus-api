@@ -1,4 +1,4 @@
-package org.personal.washingmachine.service;
+package org.personal.washingmachine.usecase.getwashingmachinereport;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
@@ -28,7 +28,7 @@ class GetReportIntegrationTest extends BaseIntegrationTest {
 	@Autowired MockMvc mockMvc;
 	@Autowired ObjectMapper jackson;
 
-	@Autowired WashingMachineApplicationService underTest;
+	@Autowired GetWashingMachineReport underTest;
 	@Autowired WashingMachineRepository repository;
 
 	@BeforeEach
@@ -55,7 +55,7 @@ class GetReportIntegrationTest extends BaseIntegrationTest {
 			));
 
 			// WHEN
-			GetWashingMachineReportResponse actual = underTest.getReport("I will return a Report!");
+			GetWashingMachineReportResponse actual = underTest.handle("I will return a Report!");
 
 			// THEN
 			assertThat(actual.report())
