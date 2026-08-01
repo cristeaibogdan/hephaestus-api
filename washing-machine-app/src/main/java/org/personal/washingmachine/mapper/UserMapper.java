@@ -1,7 +1,6 @@
 package org.personal.washingmachine.mapper;
 
 import org.personal.washingmachine.dto.CreateUserRequest;
-import org.personal.washingmachine.dto.LoginUserResponse;
 import org.personal.washingmachine.entity.User;
 import org.springframework.stereotype.Component;
 
@@ -19,13 +18,4 @@ public final class UserMapper {
 		);
 	}
 
-	public LoginUserResponse toLoginUserResponse(User entity) {
-		return new LoginUserResponse(
-				entity.getCode(),
-				entity.getOrganization(),
-				entity.getCountry(),
-				entity.getEmail(),
-				entity.getUsername()
-		);
-	}
 }

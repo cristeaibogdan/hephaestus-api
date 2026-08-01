@@ -1,13 +1,10 @@
-package org.personal.washingmachine.service;
+package org.personal.washingmachine.usecase.user.loginuser;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.personal.washingmachine.BaseIntegrationTest;
-import org.personal.washingmachine.UserTestData;
-import org.personal.washingmachine.dto.LoginUserRequest;
-import org.personal.washingmachine.dto.LoginUserResponse;
 import org.personal.washingmachine.entity.User;
 import org.personal.washingmachine.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +25,7 @@ class LoginIntegrationTest extends BaseIntegrationTest {
 	@Autowired MockMvc mockMvc;
 	@Autowired ObjectMapper jackson;
 
-	@Autowired UserApplicationService underTest;
+	@Autowired LoginUser underTest;
 	@Autowired UserRepository repository;
 
 	@BeforeEach
@@ -61,7 +58,7 @@ class LoginIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			LoginUserResponse actual = underTest.login(
+			LoginUserResponse actual = underTest.handle(
 					new LoginUserRequest("unique_username", "somePassword")
 			);
 

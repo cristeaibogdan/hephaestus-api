@@ -1,6 +1,6 @@
-package org.personal.washingmachine.dto;
+package org.personal.washingmachine.usecase.user.loginuser;
 
-public record LoginUserResponse(
+record LoginUserResponse(
         String code,
         String organization,
         String country,

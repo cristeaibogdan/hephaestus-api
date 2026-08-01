@@ -3,8 +3,6 @@ package org.personal.washingmachine.service;
 import lombok.RequiredArgsConstructor;
 import org.personal.washingmachine.dto.CreateUserRequest;
 import org.personal.washingmachine.dto.GetOrganizationAndCountryResponse;
-import org.personal.washingmachine.dto.LoginUserRequest;
-import org.personal.washingmachine.dto.LoginUserResponse;
 import org.personal.washingmachine.entity.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -33,11 +31,5 @@ class UserApplicationService { // TODO: Replace with proper authentication
 	public void register(CreateUserRequest createUserRequest) {
 		User user = userMapper.toEntity(createUserRequest);
 		service.register(user);
-	}
-
-	@PostMapping("/api/v1/users/login")
-	public LoginUserResponse login(LoginUserRequest loginUserRequest) {
-		User user = service.login(loginUserRequest.username(), loginUserRequest.password());
-		return userMapper.toLoginUserResponse(user);
 	}
 }
