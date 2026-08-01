@@ -1,14 +1,12 @@
-package org.personal.washingmachine.service;
+package org.personal.washingmachine.usecase.user.checkregistrationcodeexists;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.personal.washingmachine.repository.UserRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 
-class IsValidRegistrationCodeSocialTest {
-	UserApplicationService underTest = new UserApplicationService();
+class CheckRegistrationCodeExistsTest {
+	CheckRegistrationCodeExists underTest = new CheckRegistrationCodeExists();
 
 	@ParameterizedTest(name = "Registration code {0} is valid")
 	@ValueSource(strings = {
@@ -20,7 +18,7 @@ class IsValidRegistrationCodeSocialTest {
 	void should_ReturnTrue_When_RegistrationCodeValid(String registrationCode) {
 		// GIVEN
 		// WHEN
-		boolean actual = underTest.isValidRegistrationCode(registrationCode);
+		boolean actual = underTest.handle(registrationCode);
 
 		// THEN
 		assertThat(actual).isTrue();
@@ -31,7 +29,7 @@ class IsValidRegistrationCodeSocialTest {
 	void should_ReturnFalse_When_RegistrationCodeInvalid(String registrationCode) {
 		// GIVEN
 		// WHEN
-		boolean actual = underTest.isValidRegistrationCode(registrationCode);
+		boolean actual = underTest.handle(registrationCode);
 
 		// THEN
 		assertThat(actual).isFalse();
