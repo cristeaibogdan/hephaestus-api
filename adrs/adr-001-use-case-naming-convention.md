@@ -1,3 +1,8 @@
+TODO: 
+- Simplify this ADR - too many rules, and exceptions and decision taking.
+- Refers to use-case and endpoint, we should pick one and stick to it.
+
+
 # Use Case Naming Convention
 
 ## Status
@@ -93,7 +98,7 @@ record SearchUserResponse(
 |  POST  |    /tickets/search    | Search |  Ticket  | SearchTicket  | SearchTicketRequest <br/> SearchTicketResponse |
 |  GET   |  /tickets/{ticketId}  |  Get   |  Ticket  |   GetTicket   |    GetTicketRequest <br/> GetTicketResponse    |
 
-## Example implementations
+### Examples
 1) Request and Response, POST endpoint `/users`
 ```java
 class CreateUser {
@@ -150,6 +155,23 @@ record SearchUserResponse(
 		String country,
 		String address
 ) {}
+```
+
+### Handle existence/uniqueness endpoints
+Name the use case `Check{Entity}{Property}Exists` or `Check{Entity}{Property}Availability`.
+
+Because these names stack multiple concepts (Check + Entity + Property + Exists/Availability),
+they grow long quickly. If the entity is unambiguous from the module it lives in, you may drop it:
+`Check{Property}Exists` or `Check{Property}Availability`.
+
+### Example
+```java
+class CheckSerialNumberExists {
+	@GetMapping("/washing-machines/{serialNumber}/exists")
+	boolean handle(@PathVariable String serialNumber) {
+		return repository.existsBySerialNumber(serialNumber);
+	}
+}
 ```
 
 ## Consequences
