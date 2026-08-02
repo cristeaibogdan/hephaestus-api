@@ -1,4 +1,4 @@
-package org.personal.washingmachine.usecase.searchwashingmachines;
+package org.personal.washingmachine.usecase.searchwashingmachine;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
@@ -33,12 +33,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Deprecated
 @Disabled
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class SearchWashingMachinesIntegrationTest_OLD extends BaseIntegrationTest {
+class SearchWashingMachineIntegrationTest_OLD extends BaseIntegrationTest {
 
 	@Autowired MockMvc mockMvc;
 	@Autowired ObjectMapper jackson;
 
-	@Autowired SearchWashingMachines underTest;
+	@Autowired
+	SearchWashingMachine underTest;
 	@Autowired WashingMachineRepository repository;
 
 	@BeforeAll

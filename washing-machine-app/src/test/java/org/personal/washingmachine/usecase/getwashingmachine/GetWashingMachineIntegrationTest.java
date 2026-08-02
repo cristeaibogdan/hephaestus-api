@@ -1,4 +1,4 @@
-package org.personal.washingmachine.usecase.getwashingmachinebyserialnumber;
+package org.personal.washingmachine.usecase.getwashingmachine;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
@@ -29,12 +29,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class GetWashingMachineBySerialNumberIntegrationTest extends BaseIntegrationTest {
+class GetWashingMachineIntegrationTest extends BaseIntegrationTest {
 
 	@Autowired MockMvc mockMvc;
 	@Autowired ObjectMapper jackson;
 
-	@Autowired GetWashingMachineBySerialNumber underTest;
+	@Autowired GetWashingMachine underTest;
 	@Autowired WashingMachineRepository repository;
 
 	@BeforeEach
@@ -76,7 +76,7 @@ class GetWashingMachineBySerialNumberIntegrationTest extends BaseIntegrationTest
 			);
 			saveToDB(washingMachine);
 
-			GetWashingMachineFullResponse expected = new GetWashingMachineFullResponse(
+			GetWashingMachineResponse expected = new GetWashingMachineResponse(
 					"Washing Machine",
 					"Gorenje",
 					IdentificationMode.DATA_MATRIX,
@@ -87,7 +87,7 @@ class GetWashingMachineBySerialNumberIntegrationTest extends BaseIntegrationTest
 					DamageType.IN_USE,
 					Recommendation.RESALE,
 					LocalDateTime.now(),
-					new GetWashingMachineFullResponse.Damage(
+					new GetWashingMachineResponse.Damage(
 							true,
 							true,
 							false,
@@ -113,14 +113,14 @@ class GetWashingMachineBySerialNumberIntegrationTest extends BaseIntegrationTest
 							0,
 							0
 					),
-					List.of(new GetWashingMachineFullResponse.Image(
+					List.of(new GetWashingMachineResponse.Image(
 							"some random prefix",
 							new byte[0]
 					))
 			);
 
 			// WHEN
-			GetWashingMachineFullResponse actual = underTest.load("The only one in DB");
+			GetWashingMachineResponse actual = underTest.handle("The only one in DB");
 
 			// THEN
 			assertThat(actual).usingRecursiveComparison()
@@ -134,7 +134,7 @@ class GetWashingMachineBySerialNumberIntegrationTest extends BaseIntegrationTest
 			saveToDB(TestData.createValidWashingMachine("current-date-test"));
 
 			// WHEN
-			GetWashingMachineFullResponse actual = underTest.load("current-date-test");
+			GetWashingMachineResponse actual = underTest.handle("current-date-test");
 
 			// THEN
 			assertThat(actual.createdAt().toLocalDate())

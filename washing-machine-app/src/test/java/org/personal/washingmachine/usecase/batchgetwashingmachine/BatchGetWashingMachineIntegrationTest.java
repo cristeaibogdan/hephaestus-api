@@ -1,4 +1,4 @@
-package org.personal.washingmachine.usecase.getwashingmachines;
+package org.personal.washingmachine.usecase.batchgetwashingmachine;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
@@ -18,12 +18,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class GetWashingMachineIntegrationTest extends BaseIntegrationTest {
+class BatchGetWashingMachineIntegrationTest extends BaseIntegrationTest {
 
 	@Autowired MockMvc mockMvc;
 	@Autowired ObjectMapper jackson;
 
-	@Autowired GetWashingMachine underTest;
+	@Autowired BatchGetWashingMachine underTest;
 	@Autowired WashingMachineRepository repository;
 
 	@BeforeEach
@@ -44,7 +44,7 @@ class GetWashingMachineIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			Map<String, GetWashingMachineFullResponse> actual = underTest.handle(Set.of("serial1", "serial2"));
+			Map<String, BatchGetWashingMachineResponse> actual = underTest.handle(Set.of("serial1", "serial2"));
 
 			// THEN
 			assertThat(actual)
@@ -63,12 +63,12 @@ class GetWashingMachineIntegrationTest extends BaseIntegrationTest {
 					TestData.createValidWashingMachine("serial2")
 			);
 
-			Map<String, GetWashingMachineFullResponse> notFoundMap = new HashMap<>();
+			Map<String, BatchGetWashingMachineResponse> notFoundMap = new HashMap<>();
 			notFoundMap.put("I don't exist", null);
 			notFoundMap.put("Nothing", null);
 
 			// WHEN
-			Map<String, GetWashingMachineFullResponse> actual = underTest.handle(Set.of(
+			Map<String, BatchGetWashingMachineResponse> actual = underTest.handle(Set.of(
 					"serial1",
 					"serial2",
 					"I don't exist",

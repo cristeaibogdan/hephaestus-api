@@ -1,4 +1,4 @@
-package org.personal.washingmachine.usecase.getwashingmachinebyserialnumber;
+package org.personal.washingmachine.usecase.getwashingmachine;
 
 import org.personal.washingmachine.enums.DamageType;
 import org.personal.washingmachine.enums.IdentificationMode;
@@ -8,7 +8,7 @@ import org.personal.washingmachine.enums.ReturnType;
 import java.time.LocalDateTime;
 import java.util.List;
 
-record GetWashingMachineFullResponse(
+record GetWashingMachineResponse(
 		String category,
 
 		String manufacturer,

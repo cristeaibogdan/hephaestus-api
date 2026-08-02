@@ -1,4 +1,4 @@
-package org.personal.washingmachine.usecase.getwashingmachinebyserialnumber;
+package org.personal.washingmachine.usecase.batchgetwashingmachine;
 
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineDamage;
@@ -11,7 +11,7 @@ import org.personal.washingmachine.enums.IdentificationMode;
 import org.personal.washingmachine.enums.ReturnType;
 
 class TestData {
-	static WashingMachine createValidWashingMachine(String serialNumber) {
+	public static WashingMachine createValidWashingMachine(String serialNumber) {
 		return new WashingMachine(
 				"Washing Machine",
 				"WhirlPool",

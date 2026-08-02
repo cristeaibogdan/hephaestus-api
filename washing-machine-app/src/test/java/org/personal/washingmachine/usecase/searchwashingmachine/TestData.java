@@ -1,4 +1,4 @@
-package org.personal.washingmachine.usecase.searchwashingmachines;
+package org.personal.washingmachine.usecase.searchwashingmachine;
 
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineDamage;

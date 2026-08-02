@@ -1,4 +1,4 @@
-package org.personal.washingmachine.usecase.getwashingmachines;
+package org.personal.washingmachine.usecase.batchgetwashingmachine;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -21,13 +21,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(GetWashingMachine.class)
-class GetWashingMachineValidationMvcTest {
+@WebMvcTest(BatchGetWashingMachine.class)
+class BatchGetWashingMachineValidationMvcTest {
 
 	@Autowired MockMvc mockMvc;
 	@Autowired ObjectMapper jackson;
 
-	@MockBean GetWashingMachine underTest;
+	@MockBean BatchGetWashingMachine underTest;
 	@MockBean WashingMachineRepository repository;
 
 	@Test

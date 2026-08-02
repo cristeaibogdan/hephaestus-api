@@ -1,4 +1,4 @@
-package org.personal.washingmachine.usecase.getwashingmachinebyserialnumber;
+package org.personal.washingmachine.usecase.getwashingmachine;
 
 import lombok.RequiredArgsConstructor;
 import org.personal.washingmachine.entity.WashingMachine;
@@ -10,28 +10,27 @@ import java.util.List;
 
 /**
  * @deprecated
- * <p> <b>In the context of</b> providing an API for retrieving a single {@link GetWashingMachineFullResponse} by serial number, </p>
+ * <p> <b>In the context of</b> providing an API for retrieving a single {@link GetWashingMachineResponse} by serial number, </p>
  * <p> <b>facing</b> the concern that clients might call this method in a loop to retrieve multiple DTOs, </p>
- * <p> <b>we decided</b> to deprecate this method and introduce {@link org.personal.washingmachine.usecase.getwashingmachines.GetWashingMachine#handle} </p>
+ * <p> <b>we decided</b> to deprecate this method and introduce {@link org.personal.washingmachine.usecase.batchgetwashingmachine.BatchGetWashingMachine#handle} </p>
  * <p> <b>to achieve</b> improved performance by reducing the number of network requests, </p>
  * <p> <b>accepting</b> that clients need to wrap single serial numbers in a list. </p>
- * <p> Use {@link GetWashingMachineBySerialNumber#handle} instead.
+ * <p> Use {@link org.personal.washingmachine.usecase.batchgetwashingmachine.BatchGetWashingMachine#handle} instead.
  */
-// TODO: After renaming, make sure to fix the javadoc above.
 @Deprecated(since = "2024/11/21")
 @RestController
 @RequiredArgsConstructor
-class GetWashingMachineBySerialNumber {
+class GetWashingMachine {
 	private final WashingMachineService service;
 
 	@GetMapping("/v1/washing-machines/{serialNumber}")
-	GetWashingMachineFullResponse load(@PathVariable String serialNumber) {
+	GetWashingMachineResponse handle(@PathVariable String serialNumber) {
 		WashingMachine washingMachine = service.findBySerialNumber(serialNumber);
-		return toGetWashingMachineFullResponse(washingMachine);
+		return toGetWashingMachineResponse(washingMachine);
 	}
 
-	private GetWashingMachineFullResponse toGetWashingMachineFullResponse(WashingMachine entity) {
-		return new GetWashingMachineFullResponse(
+	private GetWashingMachineResponse toGetWashingMachineResponse(WashingMachine entity) {
+		return new GetWashingMachineResponse(
 				entity.getCategory(),
 				entity.getManufacturer(),
 				entity.getIdentificationMode(),
@@ -43,7 +42,7 @@ class GetWashingMachineBySerialNumber {
 				entity.getRecommendation(),
 				entity.getCreatedAt(),
 
-				new GetWashingMachineFullResponse.Damage(
+				new GetWashingMachineResponse.Damage(
 						entity.getWashingMachineDamage().getPackageDamage().isApplicable(),
 						entity.getWashingMachineDamage().getPackageDamage().isPackageDamaged(),
 						entity.getWashingMachineDamage().getPackageDamage().isPackageDirty(),
@@ -76,9 +75,9 @@ class GetWashingMachineBySerialNumber {
 		);
 	}
 
-	private List<GetWashingMachineFullResponse.Image> toGetWashingMachineImageResponses(List<WashingMachineImage> entities) {
+	private List<GetWashingMachineResponse.Image> toGetWashingMachineImageResponses(List<WashingMachineImage> entities) {
 		return entities.stream()
-				.map(entity -> new GetWashingMachineFullResponse.Image(
+				.map(entity -> new GetWashingMachineResponse.Image(
 						entity.getImagePrefix(),
 						entity.getImage()))
 				.toList();

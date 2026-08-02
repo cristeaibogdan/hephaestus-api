@@ -1,4 +1,4 @@
-package org.personal.washingmachine.usecase.searchwashingmachines;
+package org.personal.washingmachine.usecase.searchwashingmachine;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.querydsl.core.BooleanBuilder;
@@ -22,8 +22,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(SearchWashingMachines.class)
-class SearchWashingMachinesValidationMvcTest {
+@WebMvcTest(SearchWashingMachine.class)
+class SearchWashingMachineValidationMvcTest {
 
 	@Autowired MockMvc mockMvc;
 	@Autowired ObjectMapper jackson;

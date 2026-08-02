@@ -1,4 +1,4 @@
-package org.personal.washingmachine.usecase.searchwashingmachines;
+package org.personal.washingmachine.usecase.searchwashingmachine;
 
 import org.personal.washingmachine.enums.DamageType;
 import org.personal.washingmachine.enums.IdentificationMode;

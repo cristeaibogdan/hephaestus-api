@@ -1,4 +1,4 @@
-package org.personal.washingmachine.usecase.searchwashingmachines;
+package org.personal.washingmachine.usecase.searchwashingmachine;
 
 import com.querydsl.core.BooleanBuilder;
 import jakarta.validation.Valid;
@@ -22,11 +22,9 @@ import static org.personal.washingmachine.entity.QWashingMachine.washingMachine;
 
 @RestController
 @RequiredArgsConstructor
-class SearchWashingMachines {
-
+class SearchWashingMachine {
 	private final WashingMachineRepository repository;
 
-	//TODO: Have a look at the naming convention, should we use plural or not?
 	@PostMapping("/v1/washing-machines/search")
 	Page<SearchWashingMachineResponse> handle(@Valid @RequestBody SearchWashingMachineRequest request) {
 

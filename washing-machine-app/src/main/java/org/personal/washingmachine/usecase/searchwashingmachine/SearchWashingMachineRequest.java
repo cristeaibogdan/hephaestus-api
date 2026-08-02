@@ -1,4 +1,4 @@
-package org.personal.washingmachine.usecase.searchwashingmachines;
+package org.personal.washingmachine.usecase.searchwashingmachine;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Pattern;

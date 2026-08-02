@@ -1,4 +1,4 @@
-package org.personal.washingmachine.usecase.getwashingmachines;
+package org.personal.washingmachine.usecase.batchgetwashingmachine;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -18,11 +18,11 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-class GetWashingMachine {
+class BatchGetWashingMachine {
 	private final WashingMachineRepository repository;
 
 	@PostMapping("/v1/washing-machines/many")
-	Map<String, GetWashingMachineFullResponse> handle(
+	Map<String, BatchGetWashingMachineResponse> handle(
 			@RequestBody
 			@NotEmpty(message = "{LIST_NOT_EMPTY}")
 			@Size(max = 10, message = "{LIST_MAX_SIZE}")
@@ -36,9 +36,9 @@ class GetWashingMachine {
 		return buildResponseMap(foundWashingMachines, serialNumbers);
 	}
 
-	private Map<String, GetWashingMachineFullResponse> buildResponseMap(List<WashingMachine> foundWashingMachines, Set<String> serialNumbers) {
-		Map<String, GetWashingMachineFullResponse> result = foundWashingMachines.stream()
-				.map(wm -> toGetWashingMachineFullResponse(wm))
+	private Map<String, BatchGetWashingMachineResponse> buildResponseMap(List<WashingMachine> foundWashingMachines, Set<String> serialNumbers) {
+		Map<String, BatchGetWashingMachineResponse> result = foundWashingMachines.stream()
+				.map(wm -> toBatchGetWashingMachineResponse(wm))
 				.collect(Collectors.toMap(
 						wm -> wm.serialNumber(),
 						wm -> wm
@@ -48,8 +48,8 @@ class GetWashingMachine {
 		return result;
 	}
 
-	private GetWashingMachineFullResponse toGetWashingMachineFullResponse(WashingMachine entity) {
-		return new GetWashingMachineFullResponse(
+	private BatchGetWashingMachineResponse toBatchGetWashingMachineResponse(WashingMachine entity) {
+		return new BatchGetWashingMachineResponse(
 				entity.getCategory(),
 				entity.getManufacturer(),
 				entity.getIdentificationMode(),
@@ -61,7 +61,7 @@ class GetWashingMachine {
 				entity.getRecommendation(),
 				entity.getCreatedAt(),
 
-				new GetWashingMachineFullResponse.Damage(
+				new BatchGetWashingMachineResponse.Damage(
 						entity.getWashingMachineDamage().getPackageDamage().isApplicable(),
 						entity.getWashingMachineDamage().getPackageDamage().isPackageDamaged(),
 						entity.getWashingMachineDamage().getPackageDamage().isPackageDirty(),
@@ -90,13 +90,13 @@ class GetWashingMachine {
 						entity.getWashingMachineDamage().getCostAssessment().getPrice(),
 						entity.getWashingMachineDamage().getCostAssessment().getRepairPrice()
 				),
-				toGetWashingMachineImageResponses(entity.getWashingMachineImages())
+				toImages(entity.getWashingMachineImages())
 		);
 	}
 
-	private List<GetWashingMachineFullResponse.Image> toGetWashingMachineImageResponses(List<WashingMachineImage> entities) {
+	private List<BatchGetWashingMachineResponse.Image> toImages(List<WashingMachineImage> entities) {
 		return entities.stream()
-				.map(entity -> new GetWashingMachineFullResponse.Image(
+				.map(entity -> new BatchGetWashingMachineResponse.Image(
 						entity.getImagePrefix(),
 						entity.getImage()))
 				.toList();
