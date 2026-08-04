@@ -1,12 +1,12 @@
-package org.personal.washingmachine.usecase.user.checkregistrationcodeexists;
+package org.personal.washingmachine.usecase.user.existsbyregistrationcode;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class CheckRegistrationCodeExistsTest {
-	CheckRegistrationCodeExists underTest = new CheckRegistrationCodeExists();
+class ExistsByRegistrationCodeTest {
+	ExistsByRegistrationCode underTest = new ExistsByRegistrationCode();
 
 	@ParameterizedTest(name = "Registration code {0} is valid")
 	@ValueSource(strings = {

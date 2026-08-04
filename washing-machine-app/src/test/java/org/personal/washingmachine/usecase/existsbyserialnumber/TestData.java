@@ -1,4 +1,4 @@
-package org.personal.washingmachine.usecase.checkserialnumberexists;
+package org.personal.washingmachine.usecase.existsbyserialnumber;
 
 import org.personal.washingmachine.entity.WashingMachine;
 import org.personal.washingmachine.entity.WashingMachineDamage;

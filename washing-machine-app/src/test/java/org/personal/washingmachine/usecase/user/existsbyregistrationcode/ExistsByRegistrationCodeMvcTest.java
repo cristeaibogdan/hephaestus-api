@@ -1,4 +1,4 @@
-package org.personal.washingmachine.usecase.user.checkregistrationcodeexists;
+package org.personal.washingmachine.usecase.user.existsbyregistrationcode;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,8 +11,8 @@ import org.springframework.test.web.servlet.ResultActions;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(CheckRegistrationCodeExists.class)
-class CheckRegistrationCodeExistsMvcTest {
+@WebMvcTest(ExistsByRegistrationCode.class)
+class ExistsByRegistrationCodeMvcTest {
 	@Autowired MockMvc mockMvc;
 	@Autowired ObjectMapper jackson;
 
@@ -30,7 +30,7 @@ class CheckRegistrationCodeExistsMvcTest {
 
 	private ResultActions performRequest(String registrationCode) throws Exception {
 		return mockMvc.perform(
-				get("/api/v1/users/{registrationCode}", registrationCode)
+				get("/v1/users/{registrationCode}/exists", registrationCode)
 		);
 	}
 }

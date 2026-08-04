@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 class BatchGetWashingMachine {
 	private final WashingMachineRepository repository;
 
-	@PostMapping("/v1/washing-machines/many")
+	@PostMapping("/v1/washing-machines/batch/get")
 	Map<String, BatchGetWashingMachineResponse> handle(
 			@RequestBody
 			@NotEmpty(message = "{LIST_NOT_EMPTY}")

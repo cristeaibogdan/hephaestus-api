@@ -1,4 +1,4 @@
-package org.personal.washingmachine.usecase.checkserialnumberexists;
+package org.personal.washingmachine.usecase.existsbyserialnumber;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,12 +18,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class CheckSerialNumberExistsTest extends BaseIntegrationTest {
+class ExistsBySerialNumberTest extends BaseIntegrationTest {
 
 	@Autowired MockMvc mockMvc;
 	@Autowired ObjectMapper jackson;
 
-	@Autowired CheckSerialNumberExists underTest;
+	@Autowired
+	ExistsBySerialNumber underTest;
 	@Autowired WashingMachineRepository repository;
 
 	@BeforeEach
@@ -64,7 +65,7 @@ class CheckSerialNumberExistsTest extends BaseIntegrationTest {
 
 	private ResultActions performRequest(String serialNumber) throws Exception {
 		return mockMvc.perform(
-				get("/v1/washing-machines/{serialNumber}/validate", serialNumber)
+				get("/v1/washing-machines/{serialNumber}/exists", serialNumber)
 		);
 	}
 }

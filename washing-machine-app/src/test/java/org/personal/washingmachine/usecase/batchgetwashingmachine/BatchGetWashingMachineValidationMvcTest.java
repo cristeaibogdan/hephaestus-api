@@ -100,7 +100,7 @@ class BatchGetWashingMachineValidationMvcTest {
 
 	private ResultActions performRequest(Set<String> request) throws Exception {
 		return mockMvc.perform(
-				post("/v1/washing-machines/many")
+				post("/v1/washing-machines/batch/get")
 						.content(jackson.writeValueAsString(request))
 						.contentType(MediaType.APPLICATION_JSON)
 		);
