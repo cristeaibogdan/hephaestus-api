@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 class LoginUser {
 	private final UserService service;
 
-	@PostMapping("/api/v1/users/login")
+	@PostMapping("/v1/users/login")
 	LoginUserResponse handle(@RequestBody LoginUserRequest loginUserRequest) {
 		User user = service.login(loginUserRequest.username(), loginUserRequest.password());
 		return toLoginUserResponse(user);

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 class RegisterUser { // TODO: Replace with proper authentication
 	private final UserService service;
 
-	@PostMapping("/api/v1/users/register")
+	@PostMapping("/v1/users/register")
 	@ResponseStatus(HttpStatus.CREATED)
 	void register(@RequestBody RegisterUserRequest registerUserRequest) {
 		User user = toEntity(registerUserRequest);
