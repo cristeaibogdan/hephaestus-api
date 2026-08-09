@@ -176,12 +176,34 @@ class ExistsBySerialNumber {
 **Negatives:**
 - Reduced naming flexibility may frustrate developers who prefer different conventions
 - Requires discipline during code reviews to enforce
-- Can lead to a large number of use case classes over time
+- Leads to a large number of use case classes over time
 
 ## Compliance
-- Enforced via code review; ArchUnit enforcement possible in future.
+- Enforced via code review; ArchUnit enforcement possible in the future.
 
 ## References
 - https://alistair.cockburn.us/hexagonal-architecture
 - https://www.youtube.com/watch?v=bKxkIjfTAnQ&list=PL1msPBH9ZGkhpANkreFA_teOnloVdLuCx
 - https://www.youtube.com/watch?v=H7HWOlANX78
+
+## Concerns
+- How would a use case be versioned?
+=== SOLUTION ===
+???
+
+- Since I'm going for granular use cases, it's hard to see all endpoint urls. What are my options here?
+  I was thinking of an enum that would allow me to centralize the endpoints. I could use it for tests too, so I
+  won't have to change the endpoint in 2 place (test + class).
+=== SOLUTION ===
+```java
+@RestController
+class DeleteWashingMachine {
+    static final String PATH = "/api/washing-machines/{id}";
+
+    @DeleteMapping(PATH)
+    ResponseEntity<Void> handle(@PathVariable Long id) { ... }
+}
+
+// Reuse in tests:
+mockMvc.perform(delete(DeleteWashingMachine.PATH, id))
+```

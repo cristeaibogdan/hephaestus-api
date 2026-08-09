@@ -124,7 +124,7 @@ class RegisterUserIntegrationTest extends BaseIntegrationTest {
 
 		private ResultActions performRequest(RegisterUserRequest request) throws Exception {
 			return mockMvc.perform(
-					post("/api/v1/users/register")
+					post(RegisterUser.PATH)
 							.content(jackson.writeValueAsString(request))
 							.contentType(MediaType.APPLICATION_JSON));
 		}
