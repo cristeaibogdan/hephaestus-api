@@ -30,7 +30,7 @@ class ExistsByRegistrationCodeMvcTest {
 
 	private ResultActions performRequest(String registrationCode) throws Exception {
 		return mockMvc.perform(
-				get("/v1/users/{registrationCode}/exists", registrationCode)
+				get(ExistsByRegistrationCode.PATH, registrationCode)
 		);
 	}
 }

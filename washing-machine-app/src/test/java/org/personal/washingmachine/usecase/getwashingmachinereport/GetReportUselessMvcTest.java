@@ -70,6 +70,6 @@ class GetReportUselessMvcTest {
 
 	private ResultActions performRequest(String serialNumber) throws Exception {
 		return mockMvc.perform(
-				get("/v1/washing-machines/{serialNumber}/report", serialNumber));
+				get(GetWashingMachineReport.PATH, serialNumber));
 	}
 }

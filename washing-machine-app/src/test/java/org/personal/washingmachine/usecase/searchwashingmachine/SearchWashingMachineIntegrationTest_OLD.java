@@ -368,9 +368,10 @@ class SearchWashingMachineIntegrationTest_OLD extends BaseIntegrationTest {
 
 		private ResultActions performRequest(SearchWashingMachineRequest request) throws Exception {
 			return mockMvc.perform(
-					post("/v1/washing-machines")
+					post(SearchWashingMachine.PATH)
 							.content(jackson.writeValueAsString(request))
-							.contentType(MediaType.APPLICATION_JSON));
+							.contentType(MediaType.APPLICATION_JSON)
+			);
 		}
 	}
 }

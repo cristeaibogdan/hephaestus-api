@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 class GetOrganizationAndCountry { // TODO: Replace with proper authentication
 	private final RegistrationCodeContainer registrationCodeContainer = RegistrationCodeContainer.getInstance();
 
-	@GetMapping("/v1/users/{registrationCode}/organization-and-country")
+	static final String PATH = "/v1/users/{registrationCode}/organization-and-country";
+
+	@GetMapping(PATH)
 	GetOrganizationAndCountryResponse handle(@PathVariable String registrationCode) {
 		return registrationCodeContainer.getOrganizationAndCountry(registrationCode);
 	}

@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.*;
 class GetWashingMachineRecommendation {
 	private final WashingMachineRepository repository;
 
-	@GetMapping("/v1/washing-machines/{serialNumber}/recommendation")
+	static final String PATH = "/v1/washing-machines/{serialNumber}/recommendation";
+
+	@GetMapping(PATH)
 	Recommendation handle(@PathVariable String serialNumber) {
 		return repository.getRecommendation(serialNumber)
 				.orElseThrow(() -> new CustomException(ErrorCode.SERIAL_NUMBER_NOT_FOUND, serialNumber));

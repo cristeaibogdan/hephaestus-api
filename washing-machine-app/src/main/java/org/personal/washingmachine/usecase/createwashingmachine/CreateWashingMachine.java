@@ -26,8 +26,10 @@ import java.util.List;
 class CreateWashingMachine {
 	private final WashingMachineService service;
 
+	static final String PATH = "/v1/washing-machines/create";
+
 	@ResponseStatus(HttpStatus.CREATED)
-	@PostMapping(value = "/v1/washing-machines/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value = PATH, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	void handle(@Valid @RequestPart CreateWashingMachineRequest createWashingMachineRequest, @RequestPart List<MultipartFile> imageFiles) {
 
 		WashingMachine washingMachine = toWashingMachineEntity(createWashingMachineRequest);

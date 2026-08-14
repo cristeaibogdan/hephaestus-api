@@ -23,7 +23,9 @@ import java.util.List;
 class GetWashingMachine {
 	private final WashingMachineService service;
 
-	@GetMapping("/v1/washing-machines/{serialNumber}")
+	static final String PATH = "/v1/washing-machines/{serialNumber}";
+
+	@GetMapping(PATH)
 	GetWashingMachineResponse handle(@PathVariable String serialNumber) {
 		WashingMachine washingMachine = service.findBySerialNumber(serialNumber);
 		return toGetWashingMachineResponse(washingMachine);

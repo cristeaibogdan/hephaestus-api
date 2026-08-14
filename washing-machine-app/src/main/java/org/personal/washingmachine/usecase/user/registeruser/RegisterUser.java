@@ -15,7 +15,7 @@ class RegisterUser { // TODO: Replace with proper authentication
 
 	@PostMapping(PATH)
 	@ResponseStatus(HttpStatus.CREATED)
-	void register(@RequestBody RegisterUserRequest registerUserRequest) {
+	void handle(@RequestBody RegisterUserRequest registerUserRequest) {
 		User user = toEntity(registerUserRequest);
 		service.register(user);
 	}

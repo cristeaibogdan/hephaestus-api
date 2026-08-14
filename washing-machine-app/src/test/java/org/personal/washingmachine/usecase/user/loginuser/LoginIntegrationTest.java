@@ -118,7 +118,7 @@ class LoginIntegrationTest extends BaseIntegrationTest {
 
 		private ResultActions performRequest(LoginUserRequest request) throws Exception {
 			return mockMvc.perform(
-					post("/api/v1/users/login")
+					post(LoginUser.PATH)
 							.content(jackson.writeValueAsString(request))
 							.contentType(MediaType.APPLICATION_JSON));
 		}

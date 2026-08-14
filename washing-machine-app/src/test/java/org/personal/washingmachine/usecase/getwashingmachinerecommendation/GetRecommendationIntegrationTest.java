@@ -70,7 +70,7 @@ class GetRecommendationIntegrationTest extends BaseIntegrationTest {
 
 		private ResultActions performRequest(String serialNumber) throws Exception {
 			return mockMvc.perform(
-					get("/v1/washing-machines/{serialNumber}/recommendation", serialNumber)
+					get(GetWashingMachineRecommendation.PATH, serialNumber)
 			);
 		}
 	}

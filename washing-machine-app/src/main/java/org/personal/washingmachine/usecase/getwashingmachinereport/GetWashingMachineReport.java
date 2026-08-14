@@ -11,7 +11,9 @@ class GetWashingMachineReport {
 	private final WashingMachineService service;
 	private final ReportGenerator reportGenerator;
 
-	@GetMapping(value = "/v1/washing-machines/{serialNumber}/report")
+	static final String PATH = "/v1/washing-machines/{serialNumber}/report";
+
+	@GetMapping(value = PATH)
 	GetWashingMachineReportResponse handle(@PathVariable String serialNumber) {
 		WashingMachine washingMachine = service.findBySerialNumber(serialNumber);
 		return reportGenerator.getReport(washingMachine);

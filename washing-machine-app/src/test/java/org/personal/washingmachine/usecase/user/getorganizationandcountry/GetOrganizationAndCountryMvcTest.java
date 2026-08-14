@@ -43,6 +43,7 @@ class GetOrganizationAndCountryMvcTest {
 
 	private ResultActions performRequest(String registrationCode) throws Exception {
 		return mockMvc.perform(
-				get("/v1/users/{registrationCode}/organization-and-country", registrationCode));
+				get(GetOrganizationAndCountry.PATH, registrationCode)
+		);
 	}
 }

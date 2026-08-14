@@ -45,7 +45,7 @@ class DeleteWashingMachineIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			underTest.delete("Delete me!");
+			underTest.handle("Delete me!");
 
 			// THEN
 			assertThat(repository.findBySerialNumber("Delete me!")).isEmpty();
@@ -86,7 +86,7 @@ class DeleteWashingMachineIntegrationTest extends BaseIntegrationTest {
 
 		private ResultActions performRequest(String serialNumber) throws Exception {
 			return mockMvc.perform(
-					delete("/v1/washing-machines/{serialNumber}", serialNumber)
+					delete(DeleteWashingMachine.PATH, serialNumber)
 			);
 		}
 	}

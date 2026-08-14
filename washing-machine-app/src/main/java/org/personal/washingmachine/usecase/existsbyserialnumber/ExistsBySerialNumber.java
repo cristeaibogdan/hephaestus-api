@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.*;
 class ExistsBySerialNumber {
 	private final WashingMachineRepository repository;
 
-	@GetMapping("/v1/washing-machines/{serialNumber}/exists")
+	static final String PATH = "/v1/washing-machines/{serialNumber}/exists";
+
+	@GetMapping(PATH)
 	boolean handle(@PathVariable String serialNumber) {
 		return repository.existsBySerialNumber(serialNumber);
 	}

@@ -49,7 +49,7 @@ class RegisterUserIntegrationTest extends BaseIntegrationTest {
 			);
 
 			// WHEN
-			underTest.register(request);
+			underTest.handle(request);
 
 			// THEN
 			User actual = repository.findByUsernameAndPassword("unique_username", "somePassword")

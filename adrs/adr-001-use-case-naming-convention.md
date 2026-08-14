@@ -190,20 +190,3 @@ class ExistsBySerialNumber {
 - How would a use case be versioned?
 === SOLUTION ===
 ???
-
-- Since I'm going for granular use cases, it's hard to see all endpoint urls. What are my options here?
-  I was thinking of an enum that would allow me to centralize the endpoints. I could use it for tests too, so I
-  won't have to change the endpoint in 2 place (test + class).
-=== SOLUTION ===
-```java
-@RestController
-class DeleteWashingMachine {
-    static final String PATH = "/api/washing-machines/{id}";
-
-    @DeleteMapping(PATH)
-    ResponseEntity<Void> handle(@PathVariable Long id) { ... }
-}
-
-// Reuse in tests:
-mockMvc.perform(delete(DeleteWashingMachine.PATH, id))
-```

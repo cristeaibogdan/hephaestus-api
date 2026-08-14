@@ -25,9 +25,10 @@ import static org.personal.washingmachine.entity.QWashingMachine.washingMachine;
 class SearchWashingMachine {
 	private final WashingMachineRepository repository;
 
-	@PostMapping("/v1/washing-machines/search")
-	Page<SearchWashingMachineResponse> handle(@Valid @RequestBody SearchWashingMachineRequest request) {
+	static final String PATH = "/v1/washing-machines/search";
 
+	@PostMapping(PATH)
+	Page<SearchWashingMachineResponse> handle(@Valid @RequestBody SearchWashingMachineRequest request) {
 		PageRequest pageRequest = PageRequest.of(
 				request.pageIndex(),
 				request.pageSize(),

@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.*;
 class DeleteWashingMachine {
 	private final WashingMachineRepository repository;
 
+	static final String PATH = "/v1/washing-machines/{serialNumber}";
+
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@DeleteMapping("/v1/washing-machines/{serialNumber}")
-	void delete(@PathVariable String serialNumber) {
+	@DeleteMapping(PATH)
+	void handle(@PathVariable String serialNumber) {
 		if (!repository.existsBySerialNumber(serialNumber)) {
 			throw new CustomException(ErrorCode.SERIAL_NUMBER_NOT_FOUND, serialNumber);
 		}
