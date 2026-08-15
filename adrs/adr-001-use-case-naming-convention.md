@@ -185,8 +185,3 @@ class ExistsBySerialNumber {
 - https://alistair.cockburn.us/hexagonal-architecture
 - https://www.youtube.com/watch?v=bKxkIjfTAnQ&list=PL1msPBH9ZGkhpANkreFA_teOnloVdLuCx
 - https://www.youtube.com/watch?v=H7HWOlANX78
-
-## Concerns
-- How would a use case be versioned?
-=== SOLUTION ===
-???
