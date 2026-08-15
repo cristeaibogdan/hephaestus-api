@@ -52,6 +52,10 @@ Use standard HTTP methods and resource nouns whenever they clearly convey the en
 |  GET   | /users/{userId} |  Get   |  User  |  GetUser   |    GetUserRequest <br/> GetUserResponse    |
 |  PUT   | /users/{userId} | Update |  User  | UpdateUser | UpdateUserRequest <br/> UpdateUserResponse |
 
+> **Note:** If a resource has other POST-based use cases (`search`, `batch/get`, ...),
+> give Create an explicit segment too, for symmetry. If Create is the only POST
+> on that resource, leave it bare (`POST /users`).
+
 Example with nested class:
 ```java
 class UpdateUser {
