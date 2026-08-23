@@ -32,7 +32,7 @@ class BatchGetWashingMachine {
 	) {
 		List<WashingMachine> foundWashingMachines = repository.findAllBySerialNumberIn(serialNumbers);
 		if (foundWashingMachines.isEmpty()) {
-			throw new CustomException(ErrorCode.SERIAL_NUMBERS_NOT_FOUND, serialNumbers);
+			throw new CustomException(ErrorCode.SERIAL_NUMBERS_NOT_FOUND, serialNumbers.toString());
 		}
 
 		return buildResponseMap(foundWashingMachines, serialNumbers);
