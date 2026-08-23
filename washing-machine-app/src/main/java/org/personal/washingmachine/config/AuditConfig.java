@@ -23,7 +23,7 @@ import java.util.Optional;
  * All entities are annotated with @AuditingEntityListener (see orm.xml).
  */
 @EnableJpaAuditing(dateTimeProviderRef = "auditingDateTimeProvider")
-public class AuditConfig {
+class AuditConfig {
 
 	/**
 	 * Provides a DateTimeProvider for Spring Data JPA auditing.
@@ -33,7 +33,7 @@ public class AuditConfig {
 	 * - Uses system clock in production; tests can override via {@link ClockHolder} methods.
 	 */
 	@Bean
-	public DateTimeProvider auditingDateTimeProvider() {
+	DateTimeProvider auditingDateTimeProvider() {
 		return () -> Optional.of(LocalDateTime.now(ClockHolder.getClock()));
 	}
 }

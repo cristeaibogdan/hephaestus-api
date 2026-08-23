@@ -1,0 +1,77 @@
+package org.personal.washingmachine.usecase.getwashingmachine;
+
+import org.personal.washingmachine.enums.DamageType;
+import org.personal.washingmachine.enums.IdentificationMode;
+import org.personal.washingmachine.enums.Recommendation;
+import org.personal.washingmachine.enums.ReturnType;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+record GetWashingMachineResponse(
+		String category,
+
+		String manufacturer,
+		IdentificationMode identificationMode,
+
+		String model,
+		String type,
+		String serialNumber,
+
+		ReturnType returnType,
+		DamageType damageType,
+
+		Recommendation recommendation,
+		LocalDateTime createdAt,
+
+        Damage damage,
+        List<Image> images
+) {
+	record Damage(
+			// PACKAGE
+			boolean applicablePackageDamage,
+
+			boolean packageDamaged,
+			boolean packageDirty,
+			boolean packageMaterialAvailable,
+
+			// VISIBLE SURFACES
+			boolean applicableVisibleSurfacesDamage,
+
+			boolean visibleSurfacesHasScratches,
+			double visibleSurfacesScratchesLength,
+
+			boolean visibleSurfacesHasDents,
+			double visibleSurfacesDentsDepth,
+
+			boolean visibleSurfacesHasMinorDamage,
+			String visibleSurfacesMinorDamage,
+
+			boolean visibleSurfacesHasMajorDamage,
+			String visibleSurfacesMajorDamage,
+
+			// HIDDEN SURFACES
+			boolean applicableHiddenSurfacesDamage,
+
+			boolean hiddenSurfacesHasScratches,
+			double hiddenSurfacesScratchesLength,
+
+			boolean hiddenSurfacesHasDents,
+			double hiddenSurfacesDentsDepth,
+
+			boolean hiddenSurfacesHasMinorDamage,
+			String hiddenSurfacesMinorDamage,
+
+			boolean hiddenSurfacesHasMajorDamage,
+			String hiddenSurfacesMajorDamage,
+
+			// PRICING
+			int price,
+			int repairPrice
+	) {}
+
+	record Image(
+			String imagePrefix,
+			byte[] image
+	) { }
+}
