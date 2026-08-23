@@ -18,35 +18,32 @@ import lombok.Getter;
  * <p> d. Scenario where you send back the information provided by the user
  * <pre>{@code throw new CustomException(ErrorCode.SERIAL_NUMBER_NOT_FOUND, serialNumber)}</pre>
 */
-
 @Getter
 public class CustomException extends RuntimeException {
 
     private final ErrorCode errorCode;
-    private final Object[] params;
+    private final String[] parameters;
 
-    public CustomException(ErrorCode errorCode, Object... params) {
+    public CustomException(ErrorCode errorCode, String... parameters) {
         this.errorCode = errorCode;
-        this.params = params;
+        this.parameters = parameters;
     }
 
-    public CustomException(String message, ErrorCode errorCode,  Object... params) {
+    public CustomException(String message, ErrorCode errorCode, String... parameters) {
         super(message);
         this.errorCode = errorCode;
-        this.params = params;
+        this.parameters = parameters;
     }
 
-    public CustomException(Throwable cause, ErrorCode errorCode, Object... params) {
+    public CustomException(Throwable cause, ErrorCode errorCode, String... parameters) {
         super(cause);
         this.errorCode = errorCode;
-        this.params = params;
+        this.parameters = parameters;
     }
 
-    public CustomException(String message, Throwable cause, ErrorCode errorCode, Object... params) {
+    public CustomException(String message, Throwable cause, ErrorCode errorCode, String... parameters) {
         super(message, cause);
         this.errorCode = errorCode;
-        this.params = params;
+        this.parameters = parameters;
     }
-
-
 }

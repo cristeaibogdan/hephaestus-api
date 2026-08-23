@@ -103,7 +103,7 @@ public class SolarPanelApplicationService implements ISolarPanelApplicationServi
 		try {
 			return LocalDate.parse(dateString);
 		} catch (DateTimeParseException e) {
-			throw new CustomException("Invalid date provided", ErrorCode.INVALID_DATE, e);
+			throw new CustomException("Invalid date provided", e, ErrorCode.INVALID_DATE);
 		}
 	}
 
@@ -136,7 +136,7 @@ public class SolarPanelApplicationService implements ISolarPanelApplicationServi
 
 		List<SolarPanel> solarPanels = repository.findAllBySerialNumberIn(serialNumbers);
 		if(solarPanels.isEmpty()) {
-			throw new CustomException(ErrorCode.SERIAL_NUMBERS_NOT_FOUND, serialNumbers);
+			throw new CustomException(ErrorCode.SERIAL_NUMBERS_NOT_FOUND, serialNumbers.toString());
 		}
 
 		return buildResponseMap(solarPanels, serialNumbers);

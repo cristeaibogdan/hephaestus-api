@@ -10,7 +10,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 /**
  * <p> This class tests that every key in {@link org.personal.shared.exception.ErrorCode} is present in all files of type: messages_*locale*.properties
  */
-
 class ErrorCodeMessagesTest {
 
 	@ParameterizedTest
@@ -21,7 +20,7 @@ class ErrorCodeMessagesTest {
 			"messages_ro",
 			"messages_sl"
 	})
-	public void should_Pass_When_AllEnumKeysArePresentInMessagesFiles(String bundleName) {
+	void should_Pass_When_AllEnumKeysArePresentInMessagesFiles(String bundleName) {
 		// GIVEN
 		ResourceBundle resourceBundle = ResourceBundle.getBundle(bundleName);
 

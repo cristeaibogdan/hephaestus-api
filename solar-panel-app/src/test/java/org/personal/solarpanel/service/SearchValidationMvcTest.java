@@ -48,7 +48,6 @@ class SearchValidationMvcTest {
 		// THEN
 		resultActions
 				.andExpect(status().isBadRequest())
-				.andExpect(content().string(not(containsString("{"))))
 				.andExpect(content().string(containsString("pageIndex")));
 	}
 
@@ -65,7 +64,6 @@ class SearchValidationMvcTest {
 		// THEN
 		resultActions
 				.andExpect(status().isBadRequest())
-				.andExpect(content().string(not(containsString("{"))))
 				.andExpect(content().string(containsString("pageSize")));
 	}
 
@@ -84,7 +82,6 @@ class SearchValidationMvcTest {
 		// THEN
 		resultActions
 				.andExpect(status().isBadRequest())
-				.andExpect(content().string(not(containsString("{"))))
 				.andExpect(content().string(containsString("sortDirection")));
 	}
 

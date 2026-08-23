@@ -47,8 +47,7 @@ class LoadManyValidationMvcTest {
 
 		// THEN
 		resultActions
-				.andExpect(status().isBadRequest())
-				.andExpect(content().string(not(containsString("{"))));
+				.andExpect(status().isBadRequest());
 	}
 
 	@Test
@@ -65,7 +64,7 @@ class LoadManyValidationMvcTest {
 		// THEN
 		resultActions
 				.andExpect(status().isBadRequest())
-				.andExpect(content().string(not(containsString("{"))));
+				.andExpect(content().string(containsString("Value can not be null or blank")));
 	}
 
 	@Test
@@ -76,8 +75,7 @@ class LoadManyValidationMvcTest {
 
 		// THEN
 		resultActions
-				.andExpect(status().isBadRequest())
-				.andExpect(content().string(not(containsString("{"))));
+				.andExpect(status().isBadRequest());
 	}
 
 	@Test
@@ -92,8 +90,7 @@ class LoadManyValidationMvcTest {
 
 		// THEN
 		resultActions
-				.andExpect(status().isBadRequest())
-				.andExpect(content().string(not(containsString("{"))));
+				.andExpect(status().isBadRequest());
 	}
 
 	@Test

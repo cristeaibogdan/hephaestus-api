@@ -89,7 +89,7 @@ class SearchWashingMachines {
 		try {
 			return LocalDate.parse(dateString);
 		} catch (DateTimeParseException e) {
-			throw new CustomException("Invalid date provided", ErrorCode.INVALID_DATE, e);
+			throw new CustomException("Invalid date provided", e, ErrorCode.INVALID_DATE);
 		}
 	}
 
