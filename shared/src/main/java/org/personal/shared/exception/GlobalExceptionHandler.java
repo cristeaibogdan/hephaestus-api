@@ -5,15 +5,18 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
+import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.validation.BindException;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.List;
-import java.util.Locale;
+import java.util.stream.Stream;
 
 import static org.springframework.http.HttpStatus.*;
 import static org.springframework.http.ResponseEntity.status;
@@ -28,7 +31,6 @@ import static org.springframework.http.ResponseEntity.status;
  * <p> 4. Throw new {@link org.personal.shared.exception.CustomException} wherever needed
  * <p> If the key is not found in MessageSource, a default message is sent: Internal Translation Error
  */
-
 @Slf4j
 @RestControllerAdvice
 @RequiredArgsConstructor
@@ -36,58 +38,91 @@ class GlobalExceptionHandler {
 	private final MessageSource messageSource;
 
 	@ExceptionHandler(Exception.class)
-	ResponseEntity<String> handleAnyException(Exception e, HttpServletRequest request) throws Exception {
-
-		if(e instanceof NoResourceFoundException) {
-			throw e;
+	ProblemDetail onAnyException(Exception e, HttpServletRequest request) throws Exception {
+		if (e instanceof NoResourceFoundException) {
+			throw e; // if you don't want to handle certain exceptions (security, ...), re-throw
 		}
 
 		String userMessage = messageSource.getMessage(
 				ErrorCode.GENERAL.name(),
 				null,
 				"Internal Translation Error",
-				request.getLocale());
+				request.getLocale()
+		);
+
 		log.error("Unexpected {}: {}", ErrorCode.GENERAL, userMessage, e);
-		return status(INTERNAL_SERVER_ERROR)
-				.body(userMessage);
+		ProblemDetail problemDetail = ProblemDetail.forStatus(INTERNAL_SERVER_ERROR);
+		problemDetail.setDetail(userMessage);
+		return problemDetail;
 	}
 
 	@ExceptionHandler(CustomException.class)
-	ResponseEntity<String> handleCustomException(CustomException e, HttpServletRequest request) {
+	ProblemDetail onCustomException(CustomException e, HttpServletRequest request) {
 		String userMessage = messageSource.getMessage(
 				e.getErrorCode().name(),
-				e.getParams(),
+				e.getParameters(),
 				"Internal Translation Error",
-				request.getLocale());
+				request.getLocale()
+		);
 		log.error("CustomException {}: {}", e.getErrorCode(), userMessage, e);
-		return status(e.getErrorCode().statusCode)
-				.body(userMessage);
+
+		ProblemDetail problemDetail = ProblemDetail.forStatus(e.getErrorCode().statusCode);
+		problemDetail.setDetail(userMessage);
+		return problemDetail;
 	}
 
-	@ExceptionHandler(MethodArgumentNotValidException.class)
-	ResponseEntity<List<String>> handleValidationException(MethodArgumentNotValidException e) {
-		List<String> validationErrors = e.getBindingResult().getFieldErrors().stream()
-				.map(fieldError -> fieldError.getField() + ": " + fieldError.getDefaultMessage())
+	@ExceptionHandler(BindException.class)
+	ProblemDetail onValidationException(BindException e) {
+		// Field errors: violations tied to a single property (e.g. @NotBlank on a field)
+		List<ValidationError> errors = e.getBindingResult().getFieldErrors().stream()
+				.map(this::toValidationError)
 				.toList();
-		log.error("Validation failed. Returning: {}", validationErrors, e);
-		return status(BAD_REQUEST)
-				.body(validationErrors);
+
+		// Global errors: violations tied to the object as a whole (e.g. class-level
+		// cross-field validators like @PasswordsMatch), no single field to blame
+		List<ValidationError> globalErrors = e.getBindingResult().getGlobalErrors().stream()
+				.map(this::toValidationError)
+				.toList();
+
+		List<ValidationError> allErrors = List.copyOf(
+				Stream.concat(
+						errors.stream(),
+						globalErrors.stream()
+				).toList()
+		);
+
+		log.error("Object validation failed: {}", allErrors, e);
+
+		ProblemDetail problemDetail = ProblemDetail.forStatus(BAD_REQUEST);
+		problemDetail.setTitle("Your request is not valid.");
+		problemDetail.setDetail("Your request is not valid — check the highlighted fields.");
+		problemDetail.setProperty("errors", allErrors);
+		return problemDetail;
 	}
 
 	@ExceptionHandler(HandlerMethodValidationException.class)
-	ResponseEntity<List<String>> handleMethodParameterValidationException(HandlerMethodValidationException e) {
-		List<String> validationErrors = e.getAllValidationResults().stream()
-				.flatMap(result -> result.getResolvableErrors().stream())
-				.map(error -> error.getDefaultMessage())
+	ProblemDetail onMethodParameterValidationException(HandlerMethodValidationException e) {
+		List<ValidationError> validationErrors = e.getAllValidationResults().stream()
+				.flatMap(result -> result.getResolvableErrors().stream()
+						.map(error -> new ValidationError(
+										error.getDefaultMessage(),
+										toJsonPointer(result.getMethodParameter().getParameterName())
+								)
+						)
+				)
 				.toList();
-		log.error("Method parameter validation failed. Returning: {}", validationErrors, e);
-		return ResponseEntity
-				.status(BAD_REQUEST)
-				.body(validationErrors);
+
+		log.error("Method parameter validation failed: {}", validationErrors, e);
+
+		ProblemDetail problemDetail = ProblemDetail.forStatus(BAD_REQUEST);
+		problemDetail.setTitle("Your request is not valid.");
+		problemDetail.setDetail("Your request is not valid — check the highlighted fields.");
+		problemDetail.setProperty("errors", validationErrors);
+		return problemDetail;
 	}
 
 // ************************************************************
-// *** OPENFEIGN EXCEPTIONS
+// *** OPENFEIGN EXCEPTIONS - START
 // ************************************************************
 
 	@ExceptionHandler(FeignPropagatedException.class)
@@ -113,5 +148,39 @@ class GlobalExceptionHandler {
 
 		return status(SERVICE_UNAVAILABLE)
 				.body(userMessage);
+	}
+
+// ************************************************************
+// *** OPENFEIGN EXCEPTIONS - STOP
+// ************************************************************
+
+	private ValidationError toValidationError(FieldError fieldError) {
+		return new ValidationError(fieldError.getDefaultMessage(), toJsonPointer(fieldError.getField()));
+	}
+
+	private ValidationError toValidationError(ObjectError objectError) {
+		return new ValidationError(objectError.getDefaultMessage(), "#");
+	}
+
+	/**
+	 * Converts a Spring field path into a JSON Pointer (RFC 6901) fragment,
+	 * so clients can locate the offending value directly in the request body.
+	 *
+	 * <p>Input → Output:
+	 * <pre>
+	 *   "address.street"   → "#/address/street"
+	 *   "items[2].name"     → "#/items/2/name"
+	 *   "items[0].tags[1]"  → "#/items/0/tags/1"
+	 *   null / ""           → "#" (whole document — used for global/object errors)
+	 * </pre>
+	 */
+	private String toJsonPointer(String fieldPath) {
+		if (fieldPath == null || fieldPath.isBlank()) {
+			return "#";
+		}
+		String pointer = fieldPath
+				.replaceAll("\\[(\\d+)]", "/$1")
+				.replace('.', '/');
+		return "#/" + pointer;
 	}
 }

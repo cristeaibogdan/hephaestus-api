@@ -5,10 +5,8 @@ import org.springframework.http.HttpStatus;
 /**
  * <p> Enum responsible for holding keys that are used in {@link org.personal.shared.exception.GlobalExceptionHandler} to retrieve translated user messages.
  * <p> Keys should be descriptive and illustrate why the exception was thrown in the first place.
- * <p> By default the status code is set to {@link HttpStatus#INTERNAL_SERVER_ERROR INTERNAL_SERVER_ERROR}, but can be modified for each key.
  */
 public enum ErrorCode {
-
     // DEFAULT ERROR
     GENERAL (HttpStatus.INTERNAL_SERVER_ERROR),
 

@@ -45,9 +45,12 @@ class SearchWashingMachinesValidationMvcTest {
 		);
 
 		// THEN
+		// TODO: containsString("pageIndex") is loose — only confirms the substring appears
+		//       somewhere in the ProblemDetail body, not that it's actually errors[].jsonPointer.
+		//       Tighten with jsonPath("$.errors[?(@.jsonPointer == '#/pageIndex')]").exists() if this
+		//       test starts giving false positives. To be researched more.
 		resultActions
 				.andExpect(status().isBadRequest())
-				.andExpect(content().string(not(containsString("{"))))
 				.andExpect(content().string(containsString("pageIndex")));
 	}
 
@@ -64,7 +67,6 @@ class SearchWashingMachinesValidationMvcTest {
 		// THEN
 		resultActions
 				.andExpect(status().isBadRequest())
-				.andExpect(content().string(not(containsString("{"))))
 				.andExpect(content().string(containsString("pageSize")));
 	}
 
@@ -83,7 +85,6 @@ class SearchWashingMachinesValidationMvcTest {
 		// THEN
 		resultActions
 				.andExpect(status().isBadRequest())
-				.andExpect(content().string(not(containsString("{"))))
 				.andExpect(content().string(containsString("sortDirection")));
 	}
 
